@@ -2,7 +2,7 @@ const express = require("express");
 
 const crtl = require("../../controllers/users/auth");
 
-const { validateBody, authenticate, upload } = require("../../middlewares");
+const { validateBody } = require("../../middlewares");
 
 const { schemas } = require("../../models/users");
 
