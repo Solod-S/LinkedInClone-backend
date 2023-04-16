@@ -1,12 +1,15 @@
 const bcrypt = require("bcrypt");
 const { User } = require("../../models/users");
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");
 const uuid = require("uuid");
 
-const { controllersWraper, sendEmail } = require("../../helpers");
+const { sendEmail } = require("../../helpers");
 const { HttpError } = require("../../routes/errors/HttpErrors");
 
-const { SECRET_KEY, BASE_URL } = process.env;
+const {
+  // SECRET_KEY,
+  BASE_URL,
+} = process.env;
 
 const register = async (rec, res) => {
   const { email, password } = rec.body;
@@ -23,7 +26,6 @@ const register = async (rec, res) => {
     password: hashPassword,
     verificationCode,
   });
-
   const verifyEmail = {
     to: email,
     subject: "Verify email",
@@ -38,6 +40,4 @@ const register = async (rec, res) => {
   });
 };
 
-module.exports = {
-  register: controllersWraper(register),
-};
+module.exports = register;
