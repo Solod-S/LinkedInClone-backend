@@ -10,8 +10,7 @@ const router = express.Router();
 
 //  sign-up
 router.post("/register", validateBody(schemas.registerSchema), crtl.users.register);
-
-//  verify
 router.get("/verify/:verificationCode", crtl.users.verifyEmail);
+// router.post("/verify", validateBody(schemas.emailSchema), crtl.resendVerifyEmail);
 
 module.exports = router;

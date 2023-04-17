@@ -5,11 +5,12 @@ const uuid = require("uuid");
 
 const { sendEmail } = require("../../helpers");
 const { HttpError } = require("../../routes/errors/HttpErrors");
+const { createVerifyEmail } = require("../../helpers");
 
-const {
-  // SECRET_KEY,
-  BASE_URL,
-} = process.env;
+// const {
+//   // SECRET_KEY,
+//   BASE_URL,
+// } = process.env;
 
 const register = async (rec, res) => {
   const { email, password } = rec.body;
@@ -26,11 +27,8 @@ const register = async (rec, res) => {
     password: hashPassword,
     verificationCode,
   });
-  const verifyEmail = {
-    to: email,
-    subject: "Verify email",
-    html: `<a target="_blank" href="${BASE_URL}/auth/verify/${verificationCode}" >Click to verify email</a>`,
-  };
+
+  const verifyEmail = createVerifyEmail(email, verificationCode);
 
   await sendEmail(verifyEmail);
 

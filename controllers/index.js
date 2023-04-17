@@ -1,4 +1,4 @@
-const users = require("./users");
+const users = require("./auth");
 // const ingredients = require('./ingredients');
 // const recipes = require("./recipes");
 // const favorite = require("./favorite");
