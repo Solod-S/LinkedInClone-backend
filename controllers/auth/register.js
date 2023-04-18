@@ -33,8 +33,7 @@ const register = async (rec, res) => {
   await sendEmail(verifyEmail);
 
   res.status(201).json({
-    email: newUser.email,
-    name: newUser.name,
+    data: { email: newUser.email, name: newUser.name },
   });
 };
 
