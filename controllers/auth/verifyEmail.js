@@ -1,5 +1,4 @@
 const { User } = require("../../models/users");
-// const createError = require("http-errors");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
 

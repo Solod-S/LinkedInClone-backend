@@ -14,6 +14,7 @@ const name = "Serg";
 const password = "123456";
 let veifyCode = "";
 let email = "";
+let token = "";
 
 describe("Auth Test Suite", () => {
   let server;
@@ -29,7 +30,7 @@ describe("Auth Test Suite", () => {
     await server.close();
   });
 
-  test("register status 201 check", async () => {
+  test("Register with valid body, 201 check", async () => {
     const res = await request(app)
       .post("/auth/register")
       .send({
@@ -45,7 +46,7 @@ describe("Auth Test Suite", () => {
     expect(typeof res.body.data.name).toBe("string");
   });
 
-  test("register status 409 check", async () => {
+  test("Register with the same email, 409 check", async () => {
     const res = await request(app)
       .post("/auth/register")
       .send({
@@ -59,10 +60,9 @@ describe("Auth Test Suite", () => {
     expect(res.body).toHaveProperty("message", "This email already in use");
   });
 
-  test("Verify email 200 check", async () => {
+  test("Verify email with valid varification code, 200 check", async () => {
     const getVerificationCode = async (email) => {
       const { verificationCode } = await User.findOne({ email });
-      console.log(`email`, email);
       return verificationCode;
     };
 
@@ -78,7 +78,7 @@ describe("Auth Test Suite", () => {
     });
   }, 10000);
 
-  test("Verify email 404 check", async () => {
+  test("Verify email with invalid varification code, 404 check", async () => {
     const wrongVeifyCode = "be48c234-0783-4d6f-86fd-e8093dcc8211";
 
     const res = await request(app).get(`/auth/verify/${wrongVeifyCode}`).set("Accept", "application/json");
@@ -99,9 +99,10 @@ describe("Auth Test Suite", () => {
       .set("Accept", "application/json");
 
     expect(res.status).toBe(200);
-
     expect(typeof res.body.data.token).toBe("string");
     expect(res.body.data.currentUser instanceof Object).toBe(true);
+
+    token = res.body.data.token;
   }, 10000);
 
   test("Login with invalid body, 400 check", async () => {
@@ -115,5 +116,118 @@ describe("Auth Test Suite", () => {
       .set("Accept", "application/json");
 
     expect(res.status).toBe(400);
+  }, 10000);
+
+  test("Login without body, 400 check", async () => {
+    const res = await request(app).post(`/auth/login`).set("Accept", "application/json");
+
+    expect(res.status).toBe(400);
+    expect(res.body).toEqual({
+      message: '"email" is required',
+    });
+  }, 10000);
+
+  test("Login without password, 400 check", async () => {
+    const res = await request(app)
+      .post(`/auth/login`)
+      .send({
+        email,
+      })
+      .set("Accept", "application/json");
+
+    expect(res.status).toBe(400);
+    expect(res.body).toEqual({
+      message: '"password" is required',
+    });
+  }, 10000);
+
+  test("Login without email, 400 check", async () => {
+    const res = await request(app)
+      .post(`/auth/login`)
+      .send({
+        password,
+      })
+      .set("Accept", "application/json");
+
+    expect(res.status).toBe(400);
+    expect(res.body).toEqual({
+      message: '"email" is required',
+    });
+  }, 10000);
+
+  test("Login with wrong email, 404 check", async () => {
+    const res = await request(app)
+      .post(`/auth/login`)
+      .send({
+        email: `das${email}`,
+        password,
+      })
+      .set("Accept", "application/json");
+
+    expect(res.status).toBe(404);
+    expect(res.body).toEqual({
+      message: "Email wrong or invalid",
+    });
+  }, 10000);
+
+  test("Login with incorrect password, 404 check", async () => {
+    const res = await request(app)
+      .post(`/auth/login`)
+      .send({
+        email,
+        password: "sdxczsaf12412",
+      })
+      .set("Accept", "application/json");
+
+    expect(res.status).toBe(404);
+    expect(res.body).toEqual({
+      message: "Password wrong or invalid",
+    });
+  }, 10000);
+
+  test("Login with invalid password, 400 check", async () => {
+    const res = await request(app)
+      .post(`/auth/login`)
+      .send({
+        email,
+        password: "222",
+      })
+      .set("Accept", "application/json");
+
+    expect(res.status).toBe(400);
+    expect(res.body).toEqual({
+      message: '"password" length must be at least 6 characters long',
+    });
+  }, 10000);
+
+  test("Get current with valid token, 200 check", async () => {
+    const res = await request(app).get(`/auth/current`).set("Authorization", `Bearer ${token}`);
+
+    expect(res.status).toBe(200);
+    expect(typeof res.body.data).toBe("object");
+    expect(typeof res.body.status).toBe("string");
+    expect(typeof res.body.code).toBe("number");
+    expect(typeof res.body.data).toBe("object");
+    expect(typeof res.body.data._id).toBe("string");
+    expect(typeof res.body.data.name).toBe("string");
+    expect(typeof res.body.data.email).toBe("string");
+    expect(typeof res.body.data.password).toBe("string");
+    expect(typeof res.body.data.token).toBe("string");
+    expect(typeof res.body.data.verify).toBe("boolean");
+    expect(typeof res.body.data.subscription).toBe("boolean");
+    expect(typeof res.body.data.favorite).toBe("object");
+    expect(typeof res.body.data.verificationCode).toBe("string");
+    expect(typeof res.body.data.createdAt).toBe("string");
+    expect(typeof res.body.data.updatedAt).toBe("string");
+  }, 10000);
+
+  test("Get current with invalid token, 200 check", async () => {
+    const wrongToken = "be48c234-0783-4d6f-86fd-e8093dcc8211";
+    const res = await request(app).get(`/auth/current`).set("Authorization", `Bearer ${wrongToken}`);
+
+    expect(res.status).toBe(401);
+    expect(res.body).toEqual({
+      message: "Unauthorized",
+    });
   }, 10000);
 });

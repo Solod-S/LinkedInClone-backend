@@ -1,6 +1,5 @@
-const jwt = require("jsonwebtoken");
-
 const { User } = require("../models/users");
+const jwt = require("jsonwebtoken");
 
 const { HttpError } = require("../routes/errors/HttpErrors");
 
