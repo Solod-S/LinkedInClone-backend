@@ -33,6 +33,7 @@ const register = async (rec, res) => {
   await sendEmail(verifyEmail);
 
   res.status(201).json({
+    status: "succes",
     data: { email: newUser.email, name: newUser.name },
   });
 };

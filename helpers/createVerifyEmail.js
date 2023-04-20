@@ -1,7 +1,4 @@
-const {
-  // SECRET_KEY,
-  BASE_URL,
-} = process.env;
+const { BASE_URL } = process.env;
 
 const createVerifyEmail = (email, verificationCode) => ({
   to: email,

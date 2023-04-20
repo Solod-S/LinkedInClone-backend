@@ -29,6 +29,7 @@ const login = async (req, res) => {
 
   const currentUser = await User.findOne({ token });
   res.json({
+    status: "succes",
     data: { currentUser, token },
   });
 };

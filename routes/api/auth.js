@@ -2,7 +2,7 @@ const express = require("express");
 
 const crtl = require("../../controllers");
 
-const { validateBody } = require("../../middlewares");
+const { validateBody, authenticate } = require("../../middlewares");
 
 const { schemas } = require("../../models/users");
 
@@ -15,5 +15,6 @@ router.get("/verify/:verificationCode", crtl.users.verifyEmail);
 
 //  sign-in
 router.post("/login", validateBody(schemas.loginSchema), crtl.users.login);
+router.get("/current", authenticate, crtl.users.getCurrent);
 
 module.exports = router;
