@@ -221,9 +221,39 @@ describe("Auth Test Suite", () => {
     expect(typeof res.body.data.updatedAt).toBe("string");
   }, 10000);
 
-  test("Get current with invalid token, 200 check", async () => {
+  test("Get current with invalid token, 401 check", async () => {
     const wrongToken = "be48c234-0783-4d6f-86fd-e8093dcc8211";
     const res = await request(app).get(`/auth/current`).set("Authorization", `Bearer ${wrongToken}`);
+
+    expect(res.status).toBe(401);
+    expect(res.body).toEqual({
+      message: "Unauthorized",
+    });
+  }, 10000);
+
+  test("Logout with valid token, 200 check", async () => {
+    const wrongToken = "be48c234-0783-4d6f-86fd-e8093dcc8211";
+    const res = await request(app).get(`/auth/logout`).set("Authorization", `Bearer ${token}`);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      status: "succes",
+      message: "Logout successful",
+    });
+  }, 10000);
+
+  test("Logout with invalid token, 401 check", async () => {
+    const wrongToken = "be48c234-0783-4d6f-86fd-e8093dcc8211";
+    const res = await request(app).get(`/auth/logout`).set("Authorization", `Bearer ${wrongToken}`);
+
+    expect(res.status).toBe(401);
+    expect(res.body).toEqual({
+      message: "Unauthorized",
+    });
+  }, 10000);
+
+  test("Logout without token, 401 check", async () => {
+    const wrongToken = "be48c234-0783-4d6f-86fd-e8093dcc8211";
+    const res = await request(app).get(`/auth/logout`);
 
     expect(res.status).toBe(401);
     expect(res.body).toEqual({

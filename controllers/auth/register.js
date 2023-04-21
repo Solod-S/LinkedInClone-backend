@@ -29,7 +29,7 @@ const register = async (rec, res) => {
   });
 
   const verifyEmail = createVerifyEmail(email, verificationCode);
-
+  console.log(verifyEmail);
   await sendEmail(verifyEmail);
 
   res.status(201).json({

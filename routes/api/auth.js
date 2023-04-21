@@ -15,6 +15,10 @@ router.get("/verify/:verificationCode", crtl.users.verifyEmail);
 
 //  sign-in
 router.post("/login", validateBody(schemas.loginSchema), crtl.users.login);
+
+//  chek user
 router.get("/current", authenticate, crtl.users.getCurrent);
+// logout
+router.get("/logout", authenticate, crtl.users.logout);
 
 module.exports = router;
