@@ -32,7 +32,7 @@ describe("Auth Test Suite", () => {
 
   test("Register with valid body, 201 check", async () => {
     const res = await request(app)
-      .post("/auth/register")
+      .post("/auth/devregister")
       .send({
         email,
         name,
@@ -48,7 +48,7 @@ describe("Auth Test Suite", () => {
 
   test("Register with the same email, 409 check", async () => {
     const res = await request(app)
-      .post("/auth/register")
+      .post("/auth/devregister")
       .send({
         email,
         name,
