@@ -15,6 +15,7 @@ const password = "123456";
 let veifyCode = "";
 let email = "";
 let token = "";
+const wrongToken = "be48c234-0783-4d6f-86fd-e8093dcc8211";
 
 describe("Auth Test Suite", () => {
   let server;
@@ -211,6 +212,7 @@ describe("Auth Test Suite", () => {
     expect(typeof res.body.data._id).toBe("string");
     expect(typeof res.body.data.name).toBe("string");
     expect(typeof res.body.data.email).toBe("string");
+    expect(typeof res.body.data.avatarURL).toBe("string");
     expect(typeof res.body.data.password).toBe("string");
     expect(typeof res.body.data.token).toBe("string");
     expect(typeof res.body.data.verify).toBe("boolean");
@@ -222,7 +224,6 @@ describe("Auth Test Suite", () => {
   }, 10000);
 
   test("Get current with invalid token, 401 check", async () => {
-    const wrongToken = "be48c234-0783-4d6f-86fd-e8093dcc8211";
     const res = await request(app).get(`/auth/current`).set("Authorization", `Bearer ${wrongToken}`);
 
     expect(res.status).toBe(401);
@@ -232,7 +233,6 @@ describe("Auth Test Suite", () => {
   }, 10000);
 
   test("Logout with valid token, 200 check", async () => {
-    const wrongToken = "be48c234-0783-4d6f-86fd-e8093dcc8211";
     const res = await request(app).get(`/auth/logout`).set("Authorization", `Bearer ${token}`);
     expect(res.status).toBe(200);
     expect(res.body).toEqual({
@@ -242,7 +242,6 @@ describe("Auth Test Suite", () => {
   }, 10000);
 
   test("Logout with invalid token, 401 check", async () => {
-    const wrongToken = "be48c234-0783-4d6f-86fd-e8093dcc8211";
     const res = await request(app).get(`/auth/logout`).set("Authorization", `Bearer ${wrongToken}`);
 
     expect(res.status).toBe(401);
@@ -252,12 +251,55 @@ describe("Auth Test Suite", () => {
   }, 10000);
 
   test("Logout without token, 401 check", async () => {
-    const wrongToken = "be48c234-0783-4d6f-86fd-e8093dcc8211";
     const res = await request(app).get(`/auth/logout`);
 
     expect(res.status).toBe(401);
     expect(res.body).toEqual({
       message: "Unauthorized",
     });
+  }, 10000);
+
+  test("Dell user with invalid token, 401 check", async () => {
+    const res = await request(app).get(`/auth/dell`).set("Authorization", `Bearer ${wrongToken}`);
+
+    expect(res.status).toBe(401);
+    expect(typeof res.body.message).toBe("string");
+  }, 10000);
+
+  test("Dell user without token, 401 check", async () => {
+    const res = await request(app).get(`/auth/dell`);
+
+    expect(res.status).toBe(401);
+    expect(typeof res.body.message).toBe("string");
+  }, 10000);
+
+  test("Dell user with valid token, 200 check", async () => {
+    const data = await request(app)
+      .post(`/auth/login`)
+      .send({
+        email,
+        password,
+      })
+      .set("Accept", "application/json");
+
+    token = data.body.data.token;
+
+    const res = await request(app).get(`/auth/dell`).set("Authorization", `Bearer ${token}`);
+
+    expect(res.status).toBe(200);
+    expect(typeof res.body.data).toBe("object");
+    expect(typeof res.body.status).toBe("string");
+    expect(typeof res.body.data).toBe("object");
+    expect(typeof res.body.data._id).toBe("string");
+    expect(typeof res.body.data.name).toBe("string");
+    expect(typeof res.body.data.email).toBe("string");
+    expect(typeof res.body.data.password).toBe("string");
+    expect(typeof res.body.data.token).toBe("string");
+    expect(typeof res.body.data.verify).toBe("boolean");
+    expect(typeof res.body.data.subscription).toBe("boolean");
+    expect(typeof res.body.data.favorite).toBe("object");
+    expect(typeof res.body.data.verificationCode).toBe("string");
+    expect(typeof res.body.data.createdAt).toBe("string");
+    expect(typeof res.body.data.updatedAt).toBe("string");
   }, 10000);
 });
