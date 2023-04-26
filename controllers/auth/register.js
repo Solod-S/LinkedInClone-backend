@@ -23,15 +23,15 @@ const register = async (rec, res) => {
     ...rec.body,
     password: hashPassword,
     verificationCode,
+    avatarURL,
   });
 
   const verifyEmail = createVerifyEmail(email, verificationCode);
-  console.log(verifyEmail);
   await sendEmail(verifyEmail);
 
   res.status(201).json({
     status: "succes",
-    data: { email: newUser.email, name: newUser.name, avatarURL },
+    data: { email: newUser.email, name: newUser.name },
   });
 };
 
