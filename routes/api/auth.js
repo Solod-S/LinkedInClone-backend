@@ -12,7 +12,7 @@ const router = express.Router();
 router.post("/register", validateBody(schemas.registerSchema), crtl.users.register);
 router.post("/devregister", validateBody(schemas.registerSchema), crtl.users.devRegister);
 router.get("/verify/:verificationCode", crtl.users.verifyEmail);
-// router.post("/verify", validateBody(schemas.emailSchema), crtl.resendVerifyEmail);
+router.post("/verify", validateBody(schemas.emailSchema), crtl.users.resendVerifyEmail);
 
 //  sign-in
 router.post("/login", validateBody(schemas.loginSchema), crtl.users.login);

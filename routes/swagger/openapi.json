@@ -13,6 +13,30 @@
     {
       "name": "Auth",
       "description": "Authorization endpoints"
+    },
+    {
+      "name": "Posts",
+      "description": "Posts endpoints"
+    },
+    {
+      "name": "Comments",
+      "description": "Comments endpoints"
+    },
+    {
+      "name": "Favorite",
+      "description": "Favorite endpoints"
+    },
+    {
+      "name": "Own posts",
+      "description": "Own posts endpoints"
+    },
+    {
+      "name": "Popular",
+      "description": "Popular endpoints"
+    },
+    {
+      "name": "Search",
+      "description": "Search endpoints"
     }
   ],
   "paths": {
@@ -47,6 +71,65 @@
           "409": {
             "description": "User with this email is already registered",
             "content": {}
+          }
+        }
+      }
+    },
+    "/auth/verify": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User's email verification",
+        "parameters": [],
+        "requestBody": {
+          "description": "Email verification body",
+          "required": "true",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailVerificstionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful verification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Response message",
+                      "example": "success"
+                    },
+                    "code": {
+                      "type": "number",
+                      "description": "Response message",
+                      "example": "201"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Response message",
+                      "example": "Email already verified"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -86,8 +169,19 @@
           "name": {
             "type": "string",
             "description": "User's name",
-            "example": "Olena Bielova"
+            "example": "Sergey Nikolayovich"
           },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          }
+        }
+      },
+      "EmailVerificstionRequest": {
+        "required": ["email"],
+        "type": "object",
+        "properties": {
           "email": {
             "type": "string",
             "description": "User's email",
