@@ -4,6 +4,7 @@ const { HttpError } = require("../../routes/errors/HttpErrors");
 
 const verifyEmail = async (req, res) => {
   const { verificationCode } = req.params;
+
   const user = await User.findOne({ verificationCode: verificationCode });
 
   if (!user) {

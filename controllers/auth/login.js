@@ -1,13 +1,14 @@
 const { User } = require("../../models/users");
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-
 const { SECRET_KEY } = process.env;
 
 const login = async (req, res) => {
   const { email, password } = req.body;
+
   const user = await User.findOne({ email });
 
   if (!user) {

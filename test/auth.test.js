@@ -61,6 +61,69 @@ describe("Auth Test Suite", () => {
     expect(res.body).toHaveProperty("message", "This email already in use");
   });
 
+  test("Register without email, 400 check", async () => {
+    const res = await request(app)
+      .post("/auth/devregister")
+      .send({
+        name,
+        password,
+      })
+      .set("Accept", "application/json");
+
+    expect(res.status).toBe(400);
+    expect(res.body).toHaveProperty("message", '"email" is required');
+  });
+
+  test("Register without name, 400 check", async () => {
+    const res = await request(app)
+      .post("/auth/devregister")
+      .send({
+        email,
+        password,
+      })
+      .set("Accept", "application/json");
+
+    expect(res.status).toBe(400);
+    expect(res.body).toHaveProperty("message", '"name" is required');
+  });
+
+  test("Register without password, 400 check", async () => {
+    const res = await request(app)
+      .post("/auth/devregister")
+      .send({
+        email,
+        name,
+      })
+      .set("Accept", "application/json");
+
+    expect(res.status).toBe(400);
+    expect(res.body).toHaveProperty("message", '"password" is required');
+  });
+
+  test("Send verify email without body, 400 check", async () => {
+    const res = await request(app).post(`/auth/devverify`).set("Accept", "application/json");
+
+    expect(res.status).toBe(400);
+    expect(res.body).toEqual({
+      message: '"email" is required',
+    });
+  }, 10000);
+
+  test("Send verify email with valid email, 201 check", async () => {
+    const res = await request(app)
+      .post(`/auth/devverify`)
+      .send({
+        email,
+      })
+      .set("Accept", "application/json");
+
+    expect(res.status).toBe(201);
+    expect(res.body).toEqual({
+      status: "success",
+      code: 201,
+    });
+  }, 10000);
+
   test("Verify email with valid varification code, 200 check", async () => {
     const getVerificationCode = async (email) => {
       const { verificationCode } = await User.findOne({ email });
@@ -76,6 +139,20 @@ describe("Auth Test Suite", () => {
       status: "success",
       code: 200,
       message: "Verification successful",
+    });
+  }, 10000);
+
+  test("Send verify email with valid email to verified user, 401 check", async () => {
+    const res = await request(app)
+      .post(`/auth/devverify`)
+      .send({
+        email,
+      })
+      .set("Accept", "application/json");
+
+    expect(res.status).toBe(401);
+    expect(res.body).toEqual({
+      message: "Email already verified",
     });
   }, 10000);
 
