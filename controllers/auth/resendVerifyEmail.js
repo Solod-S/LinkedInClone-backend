@@ -17,8 +17,8 @@ const resendVerifyEmail = async (req, res) => {
     throw HttpError(401, "Email already verified");
   }
 
-  // const verifyEmail = createVerifyEmail(email, user.verificationCode);
-  // await sendEmail(verifyEmail);
+  const verifyEmail = createVerifyEmail(email, user.verificationCode);
+  await sendEmail(verifyEmail);
 
   res.status(201).json({
     status: "success",

@@ -78,7 +78,7 @@
     "/auth/verify": {
       "post": {
         "tags": ["Auth"],
-        "summary": "User's email verification",
+        "summary": "Send user verification link by email",
         "parameters": [],
         "requestBody": {
           "description": "Email verification body",
@@ -116,6 +116,53 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Response message",
+                      "example": "Email already verified"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User authentication",
+        "parameters": [],
+        "requestBody": {
+          "description": "Authentication's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Email or password is invalid",
             "content": {
               "application/json": {
                 "schema": {
@@ -186,6 +233,68 @@
             "type": "string",
             "description": "User's email",
             "format": "email"
+          }
+        }
+      },
+      "LoginRequest": {
+        "required": ["email", "password"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "1234qwer"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "status",
+            "format": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "currentUser": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "User's id",
+                    "example": "642831f346155749a2b6e944"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "User's name",
+                    "example": "Sergey Nikolayovich"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "User's email",
+                    "format": "email"
+                  },
+
+                  "avatarURL": {
+                    "type": "string",
+                    "description": "User's avatar link",
+                    "example": "User's avatar link"
+                  }
+                }
+              },
+              "token": {
+                "type": "string",
+                "description": "Session's access token (needed for all requests)",
+                "format": "string"
+              }
+            }
           }
         }
       }
