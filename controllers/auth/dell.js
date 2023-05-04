@@ -1,5 +1,7 @@
 const { User } = require("../../models/users");
 
+const { userTransformer } = require("../../helpers/index");
+
 const dell = async (req, res) => {
   const { _id } = req.user;
 
@@ -9,7 +11,7 @@ const dell = async (req, res) => {
     return res.status(404).json({ error: "User not found" });
   }
 
-  res.status(200).json({ status: "success", data: deletedUser });
+  res.status(200).json({ status: "success", data: { deletedUser: userTransformer(deletedUser) } });
 };
 
 module.exports = dell;

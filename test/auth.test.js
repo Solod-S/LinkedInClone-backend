@@ -337,14 +337,14 @@ describe("Auth Test Suite", () => {
   }, 10000);
 
   test("Dell user with invalid token, 401 check", async () => {
-    const res = await request(app).get(`/auth/dell`).set("Authorization", `Bearer ${wrongToken}`);
+    const res = await request(app).del(`/auth/dell`).set("Authorization", `Bearer ${wrongToken}`);
 
     expect(res.status).toBe(401);
     expect(typeof res.body.message).toBe("string");
   }, 10000);
 
   test("Dell user without token, 401 check", async () => {
-    const res = await request(app).get(`/auth/dell`);
+    const res = await request(app).del(`/auth/dell`);
 
     expect(res.status).toBe(401);
     expect(typeof res.body.message).toBe("string");
@@ -361,7 +361,7 @@ describe("Auth Test Suite", () => {
 
     token = data.body.data.token;
 
-    const res = await request(app).get(`/auth/dell`).set("Authorization", `Bearer ${token}`);
+    const res = await request(app).del(`/auth/dell`).set("Authorization", `Bearer ${token}`);
 
     expect(res.status).toBe(200);
     expect(typeof res.body.data).toBe("object");
