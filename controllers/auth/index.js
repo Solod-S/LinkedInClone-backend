@@ -7,7 +7,7 @@ const devResendVerifyEmail = require("./devResendVerifyEmail");
 const login = require("./login");
 const getCurrent = require("./getCurrent");
 const logout = require("./logout");
-const dell = require("./dell");
+const del = require("./del");
 
 module.exports = {
   register: ctrlWrapper(register),
@@ -18,5 +18,5 @@ module.exports = {
   login: ctrlWrapper(login),
   getCurrent: ctrlWrapper(getCurrent),
   logout: ctrlWrapper(logout),
-  dell: ctrlWrapper(dell),
+  del: ctrlWrapper(del),
 };

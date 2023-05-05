@@ -41,6 +41,10 @@ const userSchema = Schema(
       type: Array,
       default: [],
     },
+    posts: {
+      type: Array,
+      default: [],
+    },
     verificationCode: {
       type: String,
       default: "",

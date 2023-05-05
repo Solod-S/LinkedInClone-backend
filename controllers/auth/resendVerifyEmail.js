@@ -1,4 +1,4 @@
-const { User } = require("../../models/users");
+const { User } = require("../../models/");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
 const { sendEmail } = require("../../helpers");
@@ -22,7 +22,6 @@ const resendVerifyEmail = async (req, res) => {
 
   res.status(201).json({
     status: "success",
-    code: 201,
   });
 };
 

@@ -1,8 +1,8 @@
-const { User } = require("../../models/users");
+const { User } = require("../../models/");
 
 const { userTransformer } = require("../../helpers/index");
 
-const dell = async (req, res) => {
+const del = async (req, res) => {
   const { _id } = req.user;
 
   const deletedUser = await User.findOneAndDelete({ _id });
@@ -14,4 +14,4 @@ const dell = async (req, res) => {
   res.status(200).json({ status: "success", data: { deletedUser: userTransformer(deletedUser) } });
 };
 
-module.exports = dell;
+module.exports = del;

@@ -20,8 +20,8 @@ router.get("/current", authenticate, users.getCurrent);
 // logout
 router.get("/logout", authenticate, users.logout);
 
-// dell-user
-router.delete("/dell", authenticate, users.dell);
+// del-user
+router.delete("/del", authenticate, users.del);
 
 // dev
 router.post("/devregister", validateBody(schemas.registerSchema), users.devRegister);

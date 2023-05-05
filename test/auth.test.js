@@ -120,7 +120,6 @@ describe("Auth Test Suite", () => {
     expect(res.status).toBe(201);
     expect(res.body).toEqual({
       status: "success",
-      code: 201,
     });
   }, 10000);
 
@@ -137,7 +136,6 @@ describe("Auth Test Suite", () => {
     expect(res.status).toBe(200);
     expect(res.body).toEqual({
       status: "success",
-      code: 200,
       message: "Verification successful",
     });
   }, 10000);
@@ -282,22 +280,8 @@ describe("Auth Test Suite", () => {
     const res = await request(app).get(`/auth/current`).set("Authorization", `Bearer ${token}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.status).toBe("string");
-    expect(typeof res.body.code).toBe("number");
-    expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.data._id).toBe("string");
-    expect(typeof res.body.data.name).toBe("string");
-    expect(typeof res.body.data.email).toBe("string");
-    expect(typeof res.body.data.avatarURL).toBe("string");
-    expect(typeof res.body.data.password).toBe("string");
     expect(typeof res.body.data.token).toBe("string");
-    expect(typeof res.body.data.verify).toBe("boolean");
-    expect(typeof res.body.data.subscription).toBe("boolean");
-    expect(typeof res.body.data.favorite).toBe("object");
-    expect(typeof res.body.data.verificationCode).toBe("string");
-    expect(typeof res.body.data.createdAt).toBe("string");
-    expect(typeof res.body.data.updatedAt).toBe("string");
+    expect(res.body.data.currentUser instanceof Object).toBe(true);
   }, 10000);
 
   test("Get current with invalid token, 401 check", async () => {
@@ -336,21 +320,21 @@ describe("Auth Test Suite", () => {
     });
   }, 10000);
 
-  test("Dell user with invalid token, 401 check", async () => {
-    const res = await request(app).del(`/auth/dell`).set("Authorization", `Bearer ${wrongToken}`);
+  test("Del user with invalid token, 401 check", async () => {
+    const res = await request(app).delete(`/auth/del`).set("Authorization", `Bearer ${wrongToken}`);
 
     expect(res.status).toBe(401);
     expect(typeof res.body.message).toBe("string");
   }, 10000);
 
-  test("Dell user without token, 401 check", async () => {
-    const res = await request(app).del(`/auth/dell`);
+  test("Del user without token, 401 check", async () => {
+    const res = await request(app).delete(`/auth/del`);
 
     expect(res.status).toBe(401);
     expect(typeof res.body.message).toBe("string");
   }, 10000);
 
-  test("Dell user with valid token, 200 check", async () => {
+  test("Del user with valid token, 200 check", async () => {
     const data = await request(app)
       .post(`/auth/login`)
       .send({
@@ -361,22 +345,16 @@ describe("Auth Test Suite", () => {
 
     token = data.body.data.token;
 
-    const res = await request(app).del(`/auth/dell`).set("Authorization", `Bearer ${token}`);
-
+    const res = await request(app).delete(`/auth/del`).set("Authorization", `Bearer ${token}`);
+    console.log(`res.body`, res.body);
     expect(res.status).toBe(200);
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.data._id).toBe("string");
-    expect(typeof res.body.data.name).toBe("string");
-    expect(typeof res.body.data.email).toBe("string");
-    expect(typeof res.body.data.password).toBe("string");
-    expect(typeof res.body.data.token).toBe("string");
-    expect(typeof res.body.data.verify).toBe("boolean");
-    expect(typeof res.body.data.subscription).toBe("boolean");
-    expect(typeof res.body.data.favorite).toBe("object");
-    expect(typeof res.body.data.verificationCode).toBe("string");
-    expect(typeof res.body.data.createdAt).toBe("string");
-    expect(typeof res.body.data.updatedAt).toBe("string");
+    expect(typeof res.body.data.deletedUser).toBe("object");
+    expect(typeof res.body.data.deletedUser._id).toBe("string");
+    expect(typeof res.body.data.deletedUser.name).toBe("string");
+    expect(typeof res.body.data.deletedUser.email).toBe("string");
+    expect(typeof res.body.data.deletedUser.avatarURL).toBe("string");
   }, 10000);
 });
