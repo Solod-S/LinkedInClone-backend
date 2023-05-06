@@ -1,5 +1,4 @@
 const userTransformer = (user) => {
-  console.log(user);
   return {
     _id: user._id,
     name: user.name,

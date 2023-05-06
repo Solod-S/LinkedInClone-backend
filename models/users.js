@@ -74,7 +74,7 @@ const subscribeSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required(),
 });
 
-const schemas = {
+const userSchemas = {
   registerSchema,
   emailSchema,
   loginSchema,
@@ -85,5 +85,5 @@ const User = model("user", userSchema);
 
 module.exports = {
   User,
-  schemas,
+  userSchemas,
 };

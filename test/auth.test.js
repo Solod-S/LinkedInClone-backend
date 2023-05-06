@@ -1,6 +1,6 @@
 const request = require("supertest");
 const mongoose = require("mongoose");
-const { User } = require("../models/users");
+const { User } = require("../models");
 
 const Chance = require("chance");
 const chance = new Chance();
@@ -17,7 +17,7 @@ let email = "";
 let token = "";
 const wrongToken = "be48c234-0783-4d6f-86fd-e8093dcc8211";
 
-describe("Auth Test Suite", () => {
+describe("User Test Suite", () => {
   let server;
 
   beforeAll(async () => {
@@ -33,7 +33,7 @@ describe("Auth Test Suite", () => {
 
   test("Register with valid body, 201 check", async () => {
     const res = await request(app)
-      .post("/auth/devregister")
+      .post("/user/devregister")
       .send({
         email,
         name,
@@ -49,7 +49,7 @@ describe("Auth Test Suite", () => {
 
   test("Register with the same email, 409 check", async () => {
     const res = await request(app)
-      .post("/auth/devregister")
+      .post("/user/devregister")
       .send({
         email,
         name,
@@ -63,7 +63,7 @@ describe("Auth Test Suite", () => {
 
   test("Register without email, 400 check", async () => {
     const res = await request(app)
-      .post("/auth/devregister")
+      .post("/user/devregister")
       .send({
         name,
         password,
@@ -76,7 +76,7 @@ describe("Auth Test Suite", () => {
 
   test("Register without name, 400 check", async () => {
     const res = await request(app)
-      .post("/auth/devregister")
+      .post("/user/devregister")
       .send({
         email,
         password,
@@ -89,7 +89,7 @@ describe("Auth Test Suite", () => {
 
   test("Register without password, 400 check", async () => {
     const res = await request(app)
-      .post("/auth/devregister")
+      .post("/user/devregister")
       .send({
         email,
         name,
@@ -101,7 +101,7 @@ describe("Auth Test Suite", () => {
   });
 
   test("Send verify email without body, 400 check", async () => {
-    const res = await request(app).post(`/auth/devverify`).set("Accept", "application/json");
+    const res = await request(app).post(`/user/devverify`).set("Accept", "application/json");
 
     expect(res.status).toBe(400);
     expect(res.body).toEqual({
@@ -111,7 +111,7 @@ describe("Auth Test Suite", () => {
 
   test("Send verify email with valid email, 201 check", async () => {
     const res = await request(app)
-      .post(`/auth/devverify`)
+      .post(`/user/devverify`)
       .send({
         email,
       })
@@ -131,7 +131,7 @@ describe("Auth Test Suite", () => {
 
     veifyCode = await getVerificationCode(email);
 
-    const res = await request(app).get(`/auth/verify/${veifyCode}`).set("Accept", "application/json");
+    const res = await request(app).get(`/user/verify/${veifyCode}`).set("Accept", "application/json");
 
     expect(res.status).toBe(200);
     expect(res.body).toEqual({
@@ -142,7 +142,7 @@ describe("Auth Test Suite", () => {
 
   test("Send verify email with valid email to verified user, 401 check", async () => {
     const res = await request(app)
-      .post(`/auth/devverify`)
+      .post(`/user/devverify`)
       .send({
         email,
       })
@@ -157,7 +157,7 @@ describe("Auth Test Suite", () => {
   test("Verify email with invalid varification code, 404 check", async () => {
     const wrongVeifyCode = "be48c234-0783-4d6f-86fd-e8093dcc8211";
 
-    const res = await request(app).get(`/auth/verify/${wrongVeifyCode}`).set("Accept", "application/json");
+    const res = await request(app).get(`/user/verify/${wrongVeifyCode}`).set("Accept", "application/json");
 
     expect(res.status).toBe(404);
     expect(res.body).toEqual({
@@ -167,7 +167,7 @@ describe("Auth Test Suite", () => {
 
   test("Login with valid body, return token and users object, 200 check", async () => {
     const res = await request(app)
-      .post(`/auth/login`)
+      .post(`/user/login`)
       .send({
         email,
         password,
@@ -183,7 +183,7 @@ describe("Auth Test Suite", () => {
 
   test("Login with invalid body, 400 check", async () => {
     const res = await request(app)
-      .post(`/auth/login`)
+      .post(`/user/login`)
       .send({
         email,
         password,
@@ -195,7 +195,7 @@ describe("Auth Test Suite", () => {
   }, 10000);
 
   test("Login without body, 400 check", async () => {
-    const res = await request(app).post(`/auth/login`).set("Accept", "application/json");
+    const res = await request(app).post(`/user/login`).set("Accept", "application/json");
 
     expect(res.status).toBe(400);
     expect(res.body).toEqual({
@@ -205,7 +205,7 @@ describe("Auth Test Suite", () => {
 
   test("Login without password, 400 check", async () => {
     const res = await request(app)
-      .post(`/auth/login`)
+      .post(`/user/login`)
       .send({
         email,
       })
@@ -219,7 +219,7 @@ describe("Auth Test Suite", () => {
 
   test("Login without email, 400 check", async () => {
     const res = await request(app)
-      .post(`/auth/login`)
+      .post(`/user/login`)
       .send({
         password,
       })
@@ -233,7 +233,7 @@ describe("Auth Test Suite", () => {
 
   test("Login with wrong email, 404 check", async () => {
     const res = await request(app)
-      .post(`/auth/login`)
+      .post(`/user/login`)
       .send({
         email: `das${email}`,
         password,
@@ -248,7 +248,7 @@ describe("Auth Test Suite", () => {
 
   test("Login with incorrect password, 404 check", async () => {
     const res = await request(app)
-      .post(`/auth/login`)
+      .post(`/user/login`)
       .send({
         email,
         password: "sdxczsaf12412",
@@ -263,7 +263,7 @@ describe("Auth Test Suite", () => {
 
   test("Login with invalid password, 400 check", async () => {
     const res = await request(app)
-      .post(`/auth/login`)
+      .post(`/user/login`)
       .send({
         email,
         password: "222",
@@ -277,7 +277,7 @@ describe("Auth Test Suite", () => {
   }, 10000);
 
   test("Get current with valid token, 200 check", async () => {
-    const res = await request(app).get(`/auth/current`).set("Authorization", `Bearer ${token}`);
+    const res = await request(app).get(`/user/current`).set("Authorization", `Bearer ${token}`);
 
     expect(res.status).toBe(200);
     expect(typeof res.body.data.token).toBe("string");
@@ -285,7 +285,7 @@ describe("Auth Test Suite", () => {
   }, 10000);
 
   test("Get current with invalid token, 401 check", async () => {
-    const res = await request(app).get(`/auth/current`).set("Authorization", `Bearer ${wrongToken}`);
+    const res = await request(app).get(`/user/current`).set("Authorization", `Bearer ${wrongToken}`);
 
     expect(res.status).toBe(401);
     expect(res.body).toEqual({
@@ -294,7 +294,7 @@ describe("Auth Test Suite", () => {
   }, 10000);
 
   test("Logout with valid token, 200 check", async () => {
-    const res = await request(app).get(`/auth/logout`).set("Authorization", `Bearer ${token}`);
+    const res = await request(app).get(`/user/logout`).set("Authorization", `Bearer ${token}`);
     expect(res.status).toBe(200);
     expect(res.body).toEqual({
       status: "succes",
@@ -303,7 +303,7 @@ describe("Auth Test Suite", () => {
   }, 10000);
 
   test("Logout with invalid token, 401 check", async () => {
-    const res = await request(app).get(`/auth/logout`).set("Authorization", `Bearer ${wrongToken}`);
+    const res = await request(app).get(`/user/logout`).set("Authorization", `Bearer ${wrongToken}`);
 
     expect(res.status).toBe(401);
     expect(res.body).toEqual({
@@ -312,7 +312,7 @@ describe("Auth Test Suite", () => {
   }, 10000);
 
   test("Logout without token, 401 check", async () => {
-    const res = await request(app).get(`/auth/logout`);
+    const res = await request(app).get(`/user/logout`);
 
     expect(res.status).toBe(401);
     expect(res.body).toEqual({
@@ -321,14 +321,14 @@ describe("Auth Test Suite", () => {
   }, 10000);
 
   test("Del user with invalid token, 401 check", async () => {
-    const res = await request(app).delete(`/auth/del`).set("Authorization", `Bearer ${wrongToken}`);
+    const res = await request(app).delete(`/user/del`).set("Authorization", `Bearer ${wrongToken}`);
 
     expect(res.status).toBe(401);
     expect(typeof res.body.message).toBe("string");
   }, 10000);
 
   test("Del user without token, 401 check", async () => {
-    const res = await request(app).delete(`/auth/del`);
+    const res = await request(app).delete(`/user/del`);
 
     expect(res.status).toBe(401);
     expect(typeof res.body.message).toBe("string");
@@ -336,7 +336,7 @@ describe("Auth Test Suite", () => {
 
   test("Del user with valid token, 200 check", async () => {
     const data = await request(app)
-      .post(`/auth/login`)
+      .post(`/user/login`)
       .send({
         email,
         password,
@@ -345,8 +345,7 @@ describe("Auth Test Suite", () => {
 
     token = data.body.data.token;
 
-    const res = await request(app).delete(`/auth/del`).set("Authorization", `Bearer ${token}`);
-    console.log(`res.body`, res.body);
+    const res = await request(app).delete(`/user/del`).set("Authorization", `Bearer ${token}`);
     expect(res.status).toBe(200);
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.status).toBe("string");

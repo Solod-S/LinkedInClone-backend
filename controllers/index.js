@@ -1,15 +1,17 @@
-const users = require("./auth");
-// const ingredients = require('./ingredients');
-// const recipes = require("./recipes");
+const users = require("./user");
+const ownPosts = require("./ownPosts");
+// const posts = require('./posts');
+// const comments = require("./comments");
 // const favorite = require("./favorite");
-// const ownRecipes = require('./ownRecipes');
-// const shoppingList = require('./shoppingList');
+// const popular = require('./popular');
+// const search = require('./search');
 
 module.exports = {
   users,
-  // ingredients,
-  // recipes,
+  ownPosts,
+  // posts,
+  // comments,
   // favorite,
-  // ownRecipes,
-  // shoppingList,
+  // popular,
+  // search
 };

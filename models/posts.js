@@ -32,20 +32,24 @@ const post = Schema(
       required: true,
     },
   },
-  { timestamps: true }
+  { versionKey: false, timestamps: true }
 );
 
 post.post("save", mongooseErrorHandler);
 
 const Post = model("Post", post);
 
-const postSchema = Joi.object({
+const myPostSchema = Joi.object({
   image: Joi.string(),
   video: Joi.string(),
   description: Joi.string().required(),
 });
 
+const postSchemas = {
+  myPostSchema,
+};
+
 module.exports = {
   Post,
-  postSchema,
+  postSchemas,
 };

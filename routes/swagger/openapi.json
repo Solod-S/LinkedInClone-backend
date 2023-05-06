@@ -21,6 +21,10 @@
       "description": "User operation endpoints"
     },
     {
+      "name": "Own posts",
+      "description": "Own posts endpoints"
+    },
+    {
       "name": "Posts",
       "description": "Posts endpoints"
     },
@@ -33,10 +37,6 @@
       "description": "Favorite endpoints"
     },
     {
-      "name": "Own posts",
-      "description": "Own posts endpoints"
-    },
-    {
       "name": "Popular",
       "description": "Popular endpoints"
     },
@@ -46,7 +46,7 @@
     }
   ],
   "paths": {
-    "/auth/register": {
+    "/user/register": {
       "post": {
         "tags": ["User"],
         "summary": "User registration",
@@ -110,7 +110,7 @@
         }
       }
     },
-    "/auth/verify": {
+    "/user/verify": {
       "post": {
         "tags": ["User"],
         "summary": "Send verification link by email",
@@ -186,7 +186,7 @@
         }
       }
     },
-    "/auth/login": {
+    "/user/login": {
       "post": {
         "tags": ["User"],
         "summary": "User authentication",
@@ -250,7 +250,7 @@
         }
       }
     },
-    "/auth/current": {
+    "/user/current": {
       "get": {
         "tags": ["User"],
         "summary": "Get user information",
@@ -287,7 +287,7 @@
         }
       }
     },
-    "/auth/logout": {
+    "/user/logout": {
       "get": {
         "tags": ["User"],
         "summary": "User logout",
@@ -324,7 +324,7 @@
         }
       }
     },
-    "/auth/del": {
+    "/user/del": {
       "delete": {
         "tags": ["User"],
         "summary": "Delete user",
@@ -352,6 +352,71 @@
                       "type": "string",
                       "description": "Response message",
                       "example": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/own-posts/add": {
+      "post": {
+        "tags": ["Own posts"],
+        "summary": "Create a new post",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "requestBody": {
+          "description": "Post object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OwnPostsNewPostRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OwnPostsNewPostResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Response message",
+                      "example": "\"key\" is required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Response message",
+                      "example": "Unauthorized"
                     }
                   }
                 }
@@ -592,6 +657,83 @@
                 "description": "Session's access token (needed for all requests)",
                 "format": "string",
                 "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NTJhZGFlZGQ2MjkyZWIyMWIyZmIxNSIsImlhdCI6MTY4MzE0MTYwNCwiZXhwIjoxNjg1NjYxNjA0fQ.cOanoicelwJOE_Gsx2SEmNyQ60qOAzqURs9gvgHqf1c"
+              }
+            }
+          }
+        }
+      },
+      "OwnPostsNewPostRequest": {
+        "required": ["description"],
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Post's text",
+            "example": "Tequila is an excellent teacher… Just last night it taught me to count… One Tequila, Two Tequila, Three Tequila, Floor!"
+          },
+          "image": {
+            "type": "string",
+            "description": "Image's link",
+            "example": "https://www.tastingtable.com/img/gallery/why-tequila-cant-be-made-outside-of-mexico/l-intro-1679569930.jpg"
+          }
+        }
+      },
+      "OwnPostsNewPostResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "newPost": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "description": "Image's link",
+                    "example": "https://t1.gstatic.com/licensed-image?q=tbn:ANd9GcTVNBVgDTZrFvUARECMzBrur7L34aGgMgeqrY3JE6rWUauX3cRgAjXim93D7cn2UTQM"
+                  },
+                  "video": {
+                    "type": "string",
+                    "description": "Video's link",
+                    "example": "https://youtu.be/VAH-ixdFWFs"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Post's text",
+                    "example": "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up."
+                  },
+                  "likes": {
+                    "type": "array",
+                    "description": "Likes",
+                    "example": "6452b1d7f6a29d84c5b089fb"
+                  },
+                  "comments": {
+                    "type": "array",
+                    "description": "Comments",
+                    "example": "6452b1d7f6a29d84c5b089fb"
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "User's id",
+                    "example": "6452b1d7f6a29d84c5b089fb"
+                  },
+                  "_id": {
+                    "type": "string",
+                    "description": "Post's id",
+                    "example": "642831f346155749a2b6e944"
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Post's time",
+                    "example": "0 seconds ago"
+                  }
+                }
               }
             }
           }

@@ -1,30 +1,28 @@
-const express = require("express");
+const userRouter = require("express").Router();
 
 const { users } = require("../../controllers");
 const { validateBody, authenticate } = require("../../middlewares");
-const { schemas } = require("../../models/users");
-
-const router = express.Router();
+const { userSchemas } = require("../../models");
 
 //  sign-up
-router.post("/register", validateBody(schemas.registerSchema), users.register);
-router.get("/verify/:verificationCode", users.verifyEmail);
-router.post("/verify", validateBody(schemas.emailSchema), users.resendVerifyEmail);
+userRouter.post("/register", validateBody(userSchemas.registerSchema), users.register);
+userRouter.get("/verify/:verificationCode", users.verifyEmail);
+userRouter.post("/verify", validateBody(userSchemas.emailSchema), users.resendVerifyEmail);
 
 //  sign-in
-router.post("/login", validateBody(schemas.loginSchema), users.login);
+userRouter.post("/login", validateBody(userSchemas.loginSchema), users.login);
 
 //  chek user
-router.get("/current", authenticate, users.getCurrent);
+userRouter.get("/current", authenticate, users.getCurrent);
 
 // logout
-router.get("/logout", authenticate, users.logout);
+userRouter.get("/logout", authenticate, users.logout);
 
 // del-user
-router.delete("/del", authenticate, users.del);
+userRouter.delete("/del", authenticate, users.del);
 
 // dev
-router.post("/devregister", validateBody(schemas.registerSchema), users.devRegister);
-router.post("/devverify", validateBody(schemas.emailSchema), users.devResendVerifyEmail);
+userRouter.post("/devregister", validateBody(userSchemas.registerSchema), users.devRegister);
+userRouter.post("/devverify", validateBody(userSchemas.emailSchema), users.devResendVerifyEmail);
 
-module.exports = router;
+module.exports = userRouter;
