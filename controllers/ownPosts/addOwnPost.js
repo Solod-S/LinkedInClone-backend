@@ -2,7 +2,7 @@ const { Post } = require("../../models");
 
 const { ownPostTransformer } = require("../../helpers/index");
 
-const addNewPost = async (req, res, next) => {
+const addOwnPost = async (req, res, next) => {
   const newPost = await Post.create({
     ...req.body,
     owner: req.user._id,
@@ -11,4 +11,4 @@ const addNewPost = async (req, res, next) => {
   res.json({ status: "success", data: { newPost: ownPostTransformer(newPost) } });
 };
 
-module.exports = addNewPost;
+module.exports = addOwnPost;

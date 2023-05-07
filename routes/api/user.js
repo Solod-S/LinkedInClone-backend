@@ -19,9 +19,9 @@ userRouter.get("/current", authenticate, users.getCurrent);
 userRouter.get("/logout", authenticate, users.logout);
 
 // del-user
-userRouter.delete("/del", authenticate, users.del);
+userRouter.delete("/remove", authenticate, users.remove);
 
-// dev
+// dev endpoints
 userRouter.post("/devregister", validateBody(userSchemas.registerSchema), users.devRegister);
 userRouter.post("/devverify", validateBody(userSchemas.emailSchema), users.devResendVerifyEmail);
 

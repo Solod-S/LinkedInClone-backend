@@ -1,6 +1,10 @@
 const ctrlWrapper = require("../../middlewares/ctrlWrapper");
-const addNewPost = require("./addNewPost");
+const getOwnPosts = require("./getOwnPosts");
+const addOwnPost = require("./addOwnPost");
+const removeOwnPost = require("./removeOwnPost");
 
 module.exports = {
-  addNewPost: ctrlWrapper(addNewPost),
+  getOwnPosts: ctrlWrapper(getOwnPosts),
+  addOwnPost: ctrlWrapper(addOwnPost),
+  removeOwnPost: ctrlWrapper(removeOwnPost),
 };

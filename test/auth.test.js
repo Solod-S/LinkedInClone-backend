@@ -8,14 +8,12 @@ const chance = new Chance();
 const app = require("../app");
 
 require("dotenv").config();
-const { DB_HOST } = process.env;
+const { DB_HOST, VALID_PASS, WRONG_TOKEN, WRONG_VERIFY_CODE, INVALID_PASS } = process.env;
 
 const name = "Serg";
-const password = "123456";
-let veifyCode = "";
-let email = "";
-let token = "";
-const wrongToken = "be48c234-0783-4d6f-86fd-e8093dcc8211";
+let veifyCode = null;
+let email = null;
+let token = null;
 
 describe("User Test Suite", () => {
   let server;
@@ -37,7 +35,7 @@ describe("User Test Suite", () => {
       .send({
         email,
         name,
-        password,
+        password: VALID_PASS,
       })
       .set("Accept", "application/json");
 
@@ -53,7 +51,7 @@ describe("User Test Suite", () => {
       .send({
         email,
         name,
-        password,
+        password: VALID_PASS,
       })
       .set("Accept", "application/json");
 
@@ -66,7 +64,7 @@ describe("User Test Suite", () => {
       .post("/user/devregister")
       .send({
         name,
-        password,
+        password: VALID_PASS,
       })
       .set("Accept", "application/json");
 
@@ -79,7 +77,7 @@ describe("User Test Suite", () => {
       .post("/user/devregister")
       .send({
         email,
-        password,
+        password: VALID_PASS,
       })
       .set("Accept", "application/json");
 
@@ -155,9 +153,7 @@ describe("User Test Suite", () => {
   }, 10000);
 
   test("Verify email with invalid varification code, 404 check", async () => {
-    const wrongVeifyCode = "be48c234-0783-4d6f-86fd-e8093dcc8211";
-
-    const res = await request(app).get(`/user/verify/${wrongVeifyCode}`).set("Accept", "application/json");
+    const res = await request(app).get(`/user/verify/${WRONG_VERIFY_CODE}`).set("Accept", "application/json");
 
     expect(res.status).toBe(404);
     expect(res.body).toEqual({
@@ -170,7 +166,7 @@ describe("User Test Suite", () => {
       .post(`/user/login`)
       .send({
         email,
-        password,
+        password: VALID_PASS,
       })
       .set("Accept", "application/json");
 
@@ -186,7 +182,7 @@ describe("User Test Suite", () => {
       .post(`/user/login`)
       .send({
         email,
-        password,
+        password: VALID_PASS,
         name,
       })
       .set("Accept", "application/json");
@@ -221,7 +217,7 @@ describe("User Test Suite", () => {
     const res = await request(app)
       .post(`/user/login`)
       .send({
-        password,
+        password: VALID_PASS,
       })
       .set("Accept", "application/json");
 
@@ -236,7 +232,7 @@ describe("User Test Suite", () => {
       .post(`/user/login`)
       .send({
         email: `das${email}`,
-        password,
+        password: VALID_PASS,
       })
       .set("Accept", "application/json");
 
@@ -266,7 +262,7 @@ describe("User Test Suite", () => {
       .post(`/user/login`)
       .send({
         email,
-        password: "222",
+        password: INVALID_PASS,
       })
       .set("Accept", "application/json");
 
@@ -285,7 +281,7 @@ describe("User Test Suite", () => {
   }, 10000);
 
   test("Get current with invalid token, 401 check", async () => {
-    const res = await request(app).get(`/user/current`).set("Authorization", `Bearer ${wrongToken}`);
+    const res = await request(app).get(`/user/current`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
 
     expect(res.status).toBe(401);
     expect(res.body).toEqual({
@@ -303,7 +299,7 @@ describe("User Test Suite", () => {
   }, 10000);
 
   test("Logout with invalid token, 401 check", async () => {
-    const res = await request(app).get(`/user/logout`).set("Authorization", `Bearer ${wrongToken}`);
+    const res = await request(app).get(`/user/logout`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
 
     expect(res.status).toBe(401);
     expect(res.body).toEqual({
@@ -321,14 +317,14 @@ describe("User Test Suite", () => {
   }, 10000);
 
   test("Del user with invalid token, 401 check", async () => {
-    const res = await request(app).delete(`/user/del`).set("Authorization", `Bearer ${wrongToken}`);
+    const res = await request(app).delete(`/user/remove`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
 
     expect(res.status).toBe(401);
     expect(typeof res.body.message).toBe("string");
   }, 10000);
 
   test("Del user without token, 401 check", async () => {
-    const res = await request(app).delete(`/user/del`);
+    const res = await request(app).delete(`/user/remove`);
 
     expect(res.status).toBe(401);
     expect(typeof res.body.message).toBe("string");
@@ -339,13 +335,13 @@ describe("User Test Suite", () => {
       .post(`/user/login`)
       .send({
         email,
-        password,
+        password: VALID_PASS,
       })
       .set("Accept", "application/json");
 
     token = data.body.data.token;
 
-    const res = await request(app).delete(`/user/del`).set("Authorization", `Bearer ${token}`);
+    const res = await request(app).delete(`/user/remove`).set("Authorization", `Bearer ${token}`);
     expect(res.status).toBe(200);
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.status).toBe("string");

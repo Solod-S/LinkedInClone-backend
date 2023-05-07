@@ -78,14 +78,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Response message",
-                      "example": "\"key\" is not allowed"
-                    }
-                  }
+                  "$ref": "#/components/schemas/BadRequestResponse"
                 }
               }
             }
@@ -95,14 +88,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Response message",
-                      "example": "This email already in use"
-                    }
-                  }
+                  "$ref": "#/components/schemas/UserRegistrationErrorResponse"
                 }
               }
             }
@@ -132,19 +118,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "description": "Status",
-                      "example": "success"
-                    },
-                    "code": {
-                      "type": "number",
-                      "description": "Response message",
-                      "example": "201"
-                    }
-                  }
+                  "$ref": "#/components/schemas/UserVerificstionResponse"
                 }
               }
             }
@@ -154,31 +128,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Response message",
-                      "example": "\"email\" is required"
-                    }
-                  }
+                  "$ref": "#/components/schemas/BadRequestResponse"
                 }
               }
             }
           },
           "401": {
-            "description": "Unauthorized",
+            "description": "Already verified",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Response message",
-                      "example": "Email already verified"
-                    }
-                  }
+                  "$ref": "#/components/schemas/UserVerificstionErrorResponse"
                 }
               }
             }
@@ -218,31 +178,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Response message",
-                      "example": "\"key\" is required"
-                    }
-                  }
+                  "$ref": "#/components/schemas/BadRequestResponse"
                 }
               }
             }
           },
-          "401": {
+          "404": {
             "description": "Email or password is invalid",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Response message",
-                      "example": "Email/Password wrong or invalid"
-                    }
-                  }
+                  "$ref": "#/components/schemas/UserLoginErrorResponse"
                 }
               }
             }
@@ -268,18 +214,11 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
+            "description": "Token is invalid",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Response message",
-                      "example": "Unauthorized"
-                    }
-                  }
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
                 }
               }
             }
@@ -305,18 +244,11 @@
             }
           },
           "401": {
-            "description": "User not found",
+            "description": "Token is invalid",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Response message",
-                      "example": "User not found"
-                    }
-                  }
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
                 }
               }
             }
@@ -324,7 +256,7 @@
         }
       }
     },
-    "/user/del": {
+    "/user/remove": {
       "delete": {
         "tags": ["User"],
         "summary": "Delete user",
@@ -336,24 +268,47 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserLoginResponse"
+                  "$ref": "#/components/schemas/UserDeleteResponse"
                 }
               }
             }
           },
           "401": {
-            "description": "User not found",
+            "description": "Token is invalid",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Response message",
-                      "example": "User not found"
-                    }
-                  }
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/own-posts": {
+      "get": {
+        "tags": ["Own posts"],
+        "summary": "Get all own posts",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successfully fetch all your posts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OwnPostsGetPostsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
                 }
               }
             }
@@ -380,7 +335,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful login",
+            "description": "Successfully created a new post",
             "content": {
               "application/json": {
                 "schema": {
@@ -394,14 +349,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Response message",
-                      "example": "\"key\" is required"
-                    }
-                  }
+                  "$ref": "#/components/schemas/BadRequestResponse"
                 }
               }
             }
@@ -411,14 +359,47 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Response message",
-                      "example": "Unauthorized"
-                    }
-                  }
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/own-posts/remove/{postId}": {
+      "delete": {
+        "tags": ["Own posts"],
+        "summary": "Delete own post",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true,
+            "description": "Post id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully removed a post",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OwnPostsRemoveResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
                 }
               }
             }
@@ -429,6 +410,28 @@
   },
   "components": {
     "schemas": {
+      "BadRequestResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "\"key\" is required"
+          }
+        }
+      },
+      "UnauthorizedResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Unauthorized"
+          }
+        }
+      },
       "UserRegistrationRequest": {
         "type": "object",
         "required": ["name", "email", "password"],
@@ -476,6 +479,17 @@
           }
         }
       },
+      "UserRegistrationErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "This email already in use"
+          }
+        }
+      },
       "UserVerificstionRequest": {
         "required": ["email"],
         "type": "object",
@@ -484,6 +498,33 @@
             "type": "string",
             "description": "User's email",
             "format": "email"
+          }
+        }
+      },
+      "UserVerificstionResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Verification successful"
+          }
+        }
+      },
+      "UserVerificstionErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "example": "Email already verified"
           }
         }
       },
@@ -551,6 +592,16 @@
           }
         }
       },
+      "UserLoginErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "example": "Email/Password wrong or invalid"
+          }
+        }
+      },
       "UserLogOutResponse": {
         "type": "object",
         "properties": {
@@ -561,7 +612,7 @@
           },
           "message": {
             "type": "string",
-            "description": "User logged out",
+            "description": "Response message",
             "example": "Logout successful"
           }
         }
@@ -651,12 +702,89 @@
                     "example": "User's avatar link"
                   }
                 }
+              }
+            }
+          }
+        }
+      },
+      "OwnPostsGetPostsResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "ownPosts": {
+                "type": "array",
+                "description": "All your posts",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "image": {
+                      "type": "string",
+                      "description": "Image's link",
+                      "example": "https://t1.gstatic.com/licensed-image?q=tbn:ANd9GcTVNBVgDTZrFvUARECMzBrur7L34aGgMgeqrY3JE6rWUauX3cRgAjXim93D7cn2UTQM"
+                    },
+                    "video": {
+                      "type": "string",
+                      "description": "Video's link",
+                      "example": "https://youtu.be/VAH-ixdFWFs"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Post's text",
+                      "example": "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up."
+                    },
+                    "likes": {
+                      "type": "array",
+                      "description": "Likes",
+                      "example": "6452b1d7f6a29d84c5b089fb"
+                    },
+                    "comments": {
+                      "type": "array",
+                      "description": "Comments",
+                      "example": "6452b1d7f6a29d84c5b089fb"
+                    },
+                    "owner": {
+                      "type": "string",
+                      "description": "User's id",
+                      "example": "6452b1d7f6a29d84c5b089fb"
+                    },
+                    "_id": {
+                      "type": "string",
+                      "description": "Post's id",
+                      "example": "642831f346155749a2b6e944"
+                    },
+                    "postedAtHuman": {
+                      "type": "string",
+                      "description": "Post's time",
+                      "example": "43 minutes ago"
+                    }
+                  }
+                }
               },
-              "token": {
-                "type": "string",
-                "description": "Session's access token (needed for all requests)",
+              "totalPages": {
+                "type": "number",
+                "description": "Status",
                 "format": "string",
-                "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NTJhZGFlZGQ2MjkyZWIyMWIyZmIxNSIsImlhdCI6MTY4MzE0MTYwNCwiZXhwIjoxNjg1NjYxNjA0fQ.cOanoicelwJOE_Gsx2SEmNyQ60qOAzqURs9gvgHqf1c"
+                "example": 1
+              },
+              "currentPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "perPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
               }
             }
           }
@@ -731,7 +859,68 @@
                   "postedAtHuman": {
                     "type": "string",
                     "description": "Post's time",
-                    "example": "0 seconds ago"
+                    "example": "43 minutes ago"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "OwnPostsRemoveResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "deletedPost": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "description": "Image's link",
+                    "example": "https://t1.gstatic.com/licensed-image?q=tbn:ANd9GcTVNBVgDTZrFvUARECMzBrur7L34aGgMgeqrY3JE6rWUauX3cRgAjXim93D7cn2UTQM"
+                  },
+                  "video": {
+                    "type": "string",
+                    "description": "Video's link",
+                    "example": "https://youtu.be/VAH-ixdFWFs"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Post's text",
+                    "example": "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up."
+                  },
+                  "likes": {
+                    "type": "array",
+                    "description": "Likes",
+                    "example": "6452b1d7f6a29d84c5b089fb"
+                  },
+                  "comments": {
+                    "type": "array",
+                    "description": "Comments",
+                    "example": "6452b1d7f6a29d84c5b089fb"
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "User's id",
+                    "example": "6452b1d7f6a29d84c5b089fb"
+                  },
+                  "_id": {
+                    "type": "string",
+                    "description": "Post's id",
+                    "example": "642831f346155749a2b6e944"
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Post's time",
+                    "example": "43 minutes ago"
                   }
                 }
               }
