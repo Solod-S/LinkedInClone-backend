@@ -725,16 +725,6 @@
                 "items": {
                   "type": "object",
                   "properties": {
-                    "image": {
-                      "type": "string",
-                      "description": "Image's link",
-                      "example": "https://t1.gstatic.com/licensed-image?q=tbn:ANd9GcTVNBVgDTZrFvUARECMzBrur7L34aGgMgeqrY3JE6rWUauX3cRgAjXim93D7cn2UTQM"
-                    },
-                    "video": {
-                      "type": "string",
-                      "description": "Video's link",
-                      "example": "https://youtu.be/VAH-ixdFWFs"
-                    },
                     "description": {
                       "type": "string",
                       "description": "Post's text",
@@ -742,13 +732,28 @@
                     },
                     "likes": {
                       "type": "array",
-                      "description": "Likes",
-                      "example": "6452b1d7f6a29d84c5b089fb"
+                      "description": "Array of users IDs wich liked the post",
+                      "items": {
+                        "type": "string",
+                        "description": "User ID"
+                      }
                     },
                     "comments": {
                       "type": "array",
-                      "description": "Comments",
-                      "example": "6452b1d7f6a29d84c5b089fb"
+                      "description": "Array of comment IDs associated with the post",
+                      "items": {
+                        "type": "string",
+                        "description": "Comment ID"
+                      }
+                    },
+                    "mediaFiles": {
+                      "type": "array",
+                      "description": "Array of media file IDs associated with the post",
+                      "items": {
+                        "type": "string",
+                        "description": "ID of a media file",
+                        "example": "6457a79b23576cf0aa13adec"
+                      }
                     },
                     "owner": {
                       "type": "string",
@@ -799,10 +804,10 @@
             "description": "Post's text",
             "example": "Tequila is an excellent teacher… Just last night it taught me to count… One Tequila, Two Tequila, Three Tequila, Floor!"
           },
-          "image": {
+          "mediaFiles": {
             "type": "string",
-            "description": "Image's link",
-            "example": "https://www.tastingtable.com/img/gallery/why-tequila-cant-be-made-outside-of-mexico/l-intro-1679569930.jpg"
+            "description": "Media files",
+            "example": "6457a79b23576cf0aa13adec"
           }
         }
       },
@@ -821,16 +826,6 @@
               "newPost": {
                 "type": "object",
                 "properties": {
-                  "image": {
-                    "type": "string",
-                    "description": "Image's link",
-                    "example": "https://t1.gstatic.com/licensed-image?q=tbn:ANd9GcTVNBVgDTZrFvUARECMzBrur7L34aGgMgeqrY3JE6rWUauX3cRgAjXim93D7cn2UTQM"
-                  },
-                  "video": {
-                    "type": "string",
-                    "description": "Video's link",
-                    "example": "https://youtu.be/VAH-ixdFWFs"
-                  },
                   "description": {
                     "type": "string",
                     "description": "Post's text",
@@ -838,13 +833,28 @@
                   },
                   "likes": {
                     "type": "array",
-                    "description": "Likes",
-                    "example": "6452b1d7f6a29d84c5b089fb"
+                    "description": "Array of users IDs wich liked the post",
+                    "items": {
+                      "type": "string",
+                      "description": "User ID"
+                    }
                   },
                   "comments": {
                     "type": "array",
-                    "description": "Comments",
-                    "example": "6452b1d7f6a29d84c5b089fb"
+                    "description": "Array of comment IDs associated with the post",
+                    "items": {
+                      "type": "string",
+                      "description": "Comment ID"
+                    }
+                  },
+                  "mediaFiles": {
+                    "type": "array",
+                    "description": "Array of media file IDs associated with the post",
+                    "items": {
+                      "type": "string",
+                      "description": "ID of a media file",
+                      "example": "6457a79b23576cf0aa13adec"
+                    }
                   },
                   "owner": {
                     "type": "string",
@@ -882,16 +892,6 @@
               "deletedPost": {
                 "type": "object",
                 "properties": {
-                  "image": {
-                    "type": "string",
-                    "description": "Image's link",
-                    "example": "https://t1.gstatic.com/licensed-image?q=tbn:ANd9GcTVNBVgDTZrFvUARECMzBrur7L34aGgMgeqrY3JE6rWUauX3cRgAjXim93D7cn2UTQM"
-                  },
-                  "video": {
-                    "type": "string",
-                    "description": "Video's link",
-                    "example": "https://youtu.be/VAH-ixdFWFs"
-                  },
                   "description": {
                     "type": "string",
                     "description": "Post's text",
@@ -899,13 +899,30 @@
                   },
                   "likes": {
                     "type": "array",
-                    "description": "Likes",
-                    "example": "6452b1d7f6a29d84c5b089fb"
+                    "description": "Array of users IDs wich liked the post",
+                    "items": {
+                      "type": "string",
+                      "description": "User ID",
+                      "example": "6449029e52c57b5203665225"
+                    }
                   },
                   "comments": {
                     "type": "array",
-                    "description": "Comments",
-                    "example": "6452b1d7f6a29d84c5b089fb"
+                    "description": "Array of comment IDs associated with the post",
+                    "items": {
+                      "type": "string",
+                      "description": "Comment ID",
+                      "example": "2449029e32a57b5203665225"
+                    }
+                  },
+                  "mediaFiles": {
+                    "type": "array",
+                    "description": "Array of media file IDs associated with the post",
+                    "items": {
+                      "type": "string",
+                      "description": "ID of a media file",
+                      "example": "6457a79b23576cf0aa13adec"
+                    }
                   },
                   "owner": {
                     "type": "string",

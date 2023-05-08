@@ -17,7 +17,8 @@ const getOwnPosts = async (req, res, next) => {
   const ownPosts = await Post.find({ owner: _id })
     .sort({ createdAt: -1 })
     .skip((page - 1) * perPage)
-    .limit(perPage);
+    .limit(perPage)
+    .populate({ path: "mediaFiles", select: "url type providerPublicId" });
 
   res.json({
     status: "success",

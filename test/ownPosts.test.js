@@ -33,8 +33,6 @@ describe("Own-post Test Suite", () => {
     expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
     expect(Array.isArray(res.body.data.ownPosts)).toBe(true);
-    expect(res.body.data.ownPosts.every((post) => typeof post.image === "string")).toBe(true);
-    expect(res.body.data.ownPosts.every((post) => typeof post.video === "string")).toBe(true);
     expect(res.body.data.ownPosts.every((post) => typeof post.description === "string")).toBe(true);
     expect(res.body.data.ownPosts.every((post) => Array.isArray(post.likes))).toBe(true);
     expect(res.body.data.ownPosts.every((post) => Array.isArray(post.comments))).toBe(true);
@@ -51,14 +49,15 @@ describe("Own-post Test Suite", () => {
     expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
     expect(Array.isArray(res.body.data.ownPosts)).toBe(true);
-    expect(res.body.data.ownPosts.every((post) => typeof post.image === "string")).toBe(true);
-    expect(res.body.data.ownPosts.every((post) => typeof post.video === "string")).toBe(true);
     expect(res.body.data.ownPosts.every((post) => typeof post.description === "string")).toBe(true);
     expect(res.body.data.ownPosts.every((post) => Array.isArray(post.likes))).toBe(true);
     expect(res.body.data.ownPosts.every((post) => Array.isArray(post.comments))).toBe(true);
     expect(res.body.data.ownPosts.every((post) => typeof post.owner === "string")).toBe(true);
     expect(res.body.data.ownPosts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.ownPosts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
+    expect(res.body.data.ownPosts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
+    expect(res.body.data.ownPosts.every((post) => Array.isArray(post.comments))).toBe(true);
+    expect(res.body.data.ownPosts.every((post) => Array.isArray(post.likes))).toBe(true);
   }, 10000);
 
   test("Get all own posts with invalid token, 401 check", async () => {
@@ -79,8 +78,6 @@ describe("Own-post Test Suite", () => {
     const res = await request(app).post(`/own-posts/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({
       description:
         "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.",
-      image:
-        "https://t1.gstatic.com/licensed-image?q=tbn:ANd9GcTVNBVgDTZrFvUARECMzBrur7L34aGgMgeqrY3JE6rWUauX3cRgAjXim93D7cn2UTQM",
     });
 
     postId = res.body.data.newPost._id;
@@ -90,8 +87,6 @@ describe("Own-post Test Suite", () => {
     expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.newPost).toBe("object");
-    expect(typeof res.body.data.newPost.image).toBe("string");
-    expect(typeof res.body.data.newPost.video).toBe("string");
     expect(typeof res.body.data.newPost.description).toBe("string");
     expect(typeof res.body.data.newPost.likes).toBe("object");
     expect(typeof res.body.data.newPost.comments).toBe("object");
@@ -104,8 +99,6 @@ describe("Own-post Test Suite", () => {
     const res = await request(app).post(`/own-posts/add`).set("Authorization", `Bearer ${WRONG_TOKEN}`).send({
       description:
         "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.",
-      image:
-        "https://t1.gstatic.com/licensed-image?q=tbn:ANd9GcTVNBVgDTZrFvUARECMzBrur7L34aGgMgeqrY3JE6rWUauX3cRgAjXim93D7cn2UTQM",
     });
 
     expect(res.status).toBe(401);
@@ -144,8 +137,6 @@ describe("Own-post Test Suite", () => {
     expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.deletedPost).toBe("object");
-    expect(typeof res.body.data.deletedPost.image).toBe("string");
-    expect(typeof res.body.data.deletedPost.video).toBe("string");
     expect(typeof res.body.data.deletedPost.description).toBe("string");
     expect(typeof res.body.data.deletedPost.likes).toBe("object");
     expect(typeof res.body.data.deletedPost.comments).toBe("object");

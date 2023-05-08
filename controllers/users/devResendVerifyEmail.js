@@ -1,10 +1,8 @@
-const { User } = require("../../models/");
+const { User } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { sendEmail } = require("../../helpers");
-const { createVerifyEmail } = require("../../helpers");
 
-const resendVerifyEmail = async (req, res) => {
+const devResendVerifyEmail = async (req, res) => {
   const { email } = req.body;
 
   const user = await User.findOne({ email });
@@ -17,12 +15,9 @@ const resendVerifyEmail = async (req, res) => {
     throw HttpError(401, "Email already verified");
   }
 
-  const verifyEmail = createVerifyEmail(email, user.verificationCode);
-  await sendEmail(verifyEmail);
-
   res.status(201).json({
     status: "success",
   });
 };
 
-module.exports = resendVerifyEmail;
+module.exports = devResendVerifyEmail;

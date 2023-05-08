@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 const Joi = require("joi");
 
-const mongooseErrorHandler = require("../helpers/handleMongooseError");
+const mongooseErrorHandler = require("../helpers/utils/handleMongooseError");
 
 const emailRegexp = /^\w+([-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -81,7 +81,7 @@ const userSchemas = {
   subscribeSchema,
 };
 
-const User = model("user", userSchema);
+const User = model("User", userSchema);
 
 module.exports = {
   User,

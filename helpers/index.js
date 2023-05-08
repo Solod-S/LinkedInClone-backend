@@ -1,8 +1,9 @@
-const handleMongooseError = require("./handleMongooseError");
-const sendEmail = require("./sendEmail");
-const createVerifyEmail = require("./createVerifyEmail");
+const handleMongooseError = require("./utils/handleMongooseError");
+const sendEmail = require("./email/sendEmail");
+const createVerifyEmail = require("./email/createVerifyEmail");
 const userTransformer = require("./transformer/userTransformer");
 const ownPostTransformer = require("./transformer/ownPostTransformer");
+const mediaFileTransformer = require("./transformer/mediaFileTransformer");
 
 module.exports = {
   handleMongooseError,
@@ -10,4 +11,5 @@ module.exports = {
   createVerifyEmail,
   userTransformer,
   ownPostTransformer,
+  mediaFileTransformer,
 };

@@ -1,18 +1,10 @@
 const { Schema, model } = require("mongoose");
 const Joi = require("joi");
 
-const mongooseErrorHandler = require("../helpers/handleMongooseError");
+const mongooseErrorHandler = require("../helpers/utils/handleMongooseError");
 
-const post = Schema(
+const postSchema = Schema(
   {
-    image: {
-      type: String,
-      default: "",
-    },
-    video: {
-      type: String,
-      default: "",
-    },
     description: {
       type: String,
       required: true,
@@ -31,18 +23,18 @@ const post = Schema(
       ref: "user",
       required: true,
     },
+    mediaFiles: [{ type: Schema.Types.ObjectId, ref: "MediaFile" }],
   },
   { versionKey: false, timestamps: true }
 );
 
-post.post("save", mongooseErrorHandler);
+postSchema.post("save", mongooseErrorHandler);
 
-const Post = model("Post", post);
+const Post = model("Post", postSchema);
 
 const myPostSchema = Joi.object({
-  image: Joi.string(),
-  video: Joi.string(),
   description: Joi.string().required(),
+  mediaFiles: Joi.string(),
 });
 
 const postSchemas = {
