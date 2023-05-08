@@ -21,6 +21,10 @@
       "description": "User operation endpoints"
     },
     {
+      "name": "Media files",
+      "description": "Media files endpoints"
+    },
+    {
       "name": "Own posts",
       "description": "Own posts endpoints"
     },
@@ -269,6 +273,36 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UserDeleteResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/media-files": {
+      "get": {
+        "tags": ["Media files"],
+        "summary": "Get all media files",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successfully fetch all media files",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaFilesAllMediaResponse"
                 }
               }
             }
@@ -702,6 +736,94 @@
                     "example": "User's avatar link"
                   }
                 }
+              }
+            }
+          }
+        }
+      },
+      "MediaFilesAllMediaResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "ownMediaFiles": {
+                "type": "array",
+                "description": "All media files",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "description": "Media type",
+                      "example": "img"
+                    },
+                    "url": {
+                      "type": "string",
+                      "description": "Media file url",
+                      "example": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                    },
+                    "providerPublicId": {
+                      "type": "string",
+                      "description": "Cloudinary id",
+                      "example": "mnf8tsnyxfhztfemh4dq"
+                    },
+                    "owner": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "description": "User id",
+                          "example": "6452b1d7f6a29d84c5b089fb"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "User name",
+                          "example": "Sergey"
+                        },
+                        "avatarURL": {
+                          "type": "string",
+                          "description": "User name",
+                          "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                        }
+                      }
+                    },
+                    "postId": {
+                      "type": "string",
+                      "description": "Post's id",
+                      "example": "64578c032ce9cc5ad13e723a"
+                    },
+                    "postedAtHuman": {
+                      "type": "string",
+                      "description": "Post's time",
+                      "example": "16 hours ago"
+                    }
+                  }
+                }
+              },
+              "totalPages": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "currentPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "perPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 10
               }
             }
           }
