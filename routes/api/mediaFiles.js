@@ -11,6 +11,6 @@ mediaFilesRouter.post("/add", authenticate, validateBody(mediaFileSchemas.mediaF
 mediaFilesRouter.get("/", authenticate, mediaFiles.getAllMediaFiles);
 
 //  delete own media-file
-// mediaFilesRouter.delete("/remove/:mediaFileId", authenticate, ownPosts.removeOwnPost);
+mediaFilesRouter.delete("/remove/:mediaFileId", authenticate, mediaFiles.removeMediaFile);
 
 module.exports = mediaFilesRouter;
