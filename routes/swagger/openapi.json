@@ -320,6 +320,57 @@
         }
       }
     },
+    "/media-files/add": {
+      "post": {
+        "tags": ["Media files"],
+        "summary": "Create a new media file",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "requestBody": {
+          "description": "Media file's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MediaFilesCreateMediaRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully create a new media file",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaFilesCreateMediaResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/own-posts": {
       "get": {
         "tags": ["Own posts"],
@@ -761,12 +812,12 @@
                   "properties": {
                     "type": {
                       "type": "string",
-                      "description": "Media type",
+                      "description": "Media file's type",
                       "example": "img"
                     },
                     "url": {
                       "type": "string",
-                      "description": "Media file url",
+                      "description": "Media file's url",
                       "example": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
                     },
                     "providerPublicId": {
@@ -779,7 +830,7 @@
                       "properties": {
                         "_id": {
                           "type": "string",
-                          "description": "User id",
+                          "description": "User's id",
                           "example": "6452b1d7f6a29d84c5b089fb"
                         },
                         "name": {
@@ -824,6 +875,88 @@
                 "description": "Status",
                 "format": "string",
                 "example": 10
+              }
+            }
+          }
+        }
+      },
+      "MediaFilesCreateMediaRequest": {
+        "required": ["type", "url", "postId"],
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Media file's type",
+            "example": "img"
+          },
+          "url": {
+            "type": "string",
+            "description": "Media file's url",
+            "example": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+          },
+          "providerPublicId": {
+            "type": "string",
+            "description": "Cloudinary id",
+            "example": "mnf8tsnyxfhztfemh4dq"
+          },
+          "postId": {
+            "type": "string",
+            "description": "Post's id",
+            "example": "64578c032ce9cc5ad13e723a"
+          }
+        }
+      },
+      "MediaFilesCreateMediaResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "newMediaFile": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "description": "Media file's type",
+                    "example": "img"
+                  },
+                  "url": {
+                    "type": "string",
+                    "description": "Media file's url",
+                    "example": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                  },
+                  "providerPublicId": {
+                    "type": "string",
+                    "description": "Cloudinary id",
+                    "example": "mnf8tsnyxfhztfemh4dq"
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "User's id",
+                    "example": "6452b1d7f6a29d84c5b089fb"
+                  },
+                  "postId": {
+                    "type": "string",
+                    "description": "Post's id",
+                    "example": "mnf8tsnyxfhztfemh4dq"
+                  },
+                  "_id": {
+                    "type": "string",
+                    "description": "Post's id",
+                    "example": "642831f346155749a2b6e944"
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Post's time",
+                    "example": "43 minutes ago"
+                  }
+                }
               }
             }
           }

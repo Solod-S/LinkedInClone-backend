@@ -10,7 +10,7 @@ const mediaFileSchema = new Schema(
     providerPublicId: { type: String },
     // this is => cloudinaryResource.public_id,
     owner: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    postId: { type: Schema.Types.ObjectId, ref: "Post" },
+    postId: { type: Schema.Types.ObjectId, ref: "Post", required: true },
   },
   { versionKey: false, timestamps: true }
 );
