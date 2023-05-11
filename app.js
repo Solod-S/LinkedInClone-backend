@@ -17,8 +17,8 @@ app.use(express.json());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/user", userRouter);
-app.use("/own-posts", ownPostsRouter);
 app.use("/media-files", mediaFilesRouter);
+app.use("/own-posts", ownPostsRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });

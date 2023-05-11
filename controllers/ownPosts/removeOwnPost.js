@@ -9,7 +9,7 @@ const removeOwnPost = async (req, res, next) => {
 
   const post = await Post.findById({ _id: postId });
 
-  if ((await post.owner.toString()) !== _id.toString()) {
+  if (!post || (await post.owner.toString()) !== _id.toString()) {
     throw HttpError(404, "Not found");
   }
 

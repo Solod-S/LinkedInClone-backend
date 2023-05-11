@@ -10,6 +10,9 @@ mediaFilesRouter.post("/add", authenticate, validateBody(mediaFileSchemas.mediaF
 //  get all media-files
 mediaFilesRouter.get("/", authenticate, mediaFiles.getAllMediaFiles);
 
+//  get media-file by id
+mediaFilesRouter.get("/:mediaFileId", authenticate, mediaFiles.getMediaFileById);
+
 //  delete own media-file
 mediaFilesRouter.delete("/remove/:mediaFileId", authenticate, mediaFiles.removeMediaFile);
 

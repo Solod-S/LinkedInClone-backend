@@ -9,7 +9,7 @@ const removeMediaFile = async (req, res, next) => {
 
   const mediaFile = await MediaFile.findById({ _id: mediaFileId });
 
-  if ((await mediaFile.owner.toString()) !== _id.toString()) {
+  if (!mediaFile || (await mediaFile.owner.toString()) !== _id.toString()) {
     throw HttpError(404, "Not found");
   }
 
@@ -19,7 +19,7 @@ const removeMediaFile = async (req, res, next) => {
     throw HttpError(404, "Not found");
   }
 
-  res.json({ status: "success", data: { deletedPost: mediaFileTransformer(result) } });
+  res.json({ status: "success", data: { deletedMediaFile: mediaFileTransformer(result) } });
 };
 
 module.exports = removeMediaFile;

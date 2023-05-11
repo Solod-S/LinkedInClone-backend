@@ -18,6 +18,9 @@ userRouter.get("/current", authenticate, users.getCurrent);
 // logout
 userRouter.get("/logout", authenticate, users.logout);
 
+// get user by id
+userRouter.get("/:userId", authenticate, users.getUserById);
+
 // del-user
 userRouter.delete("/remove", authenticate, users.remove);
 

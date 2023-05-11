@@ -320,6 +320,56 @@
         }
       }
     },
+    "/media-files/{mediaFileId}": {
+      "get": {
+        "tags": ["Media files"],
+        "summary": "Get media file",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "mediaFileId",
+            "required": true,
+            "description": "Media file id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully get a media file",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaFilesGetMediaResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/media-files/add": {
       "post": {
         "tags": ["Media files"],
@@ -364,6 +414,56 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/media-files/remove/{mediaFileId}": {
+      "delete": {
+        "tags": ["Media files"],
+        "summary": "Delete own media file",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "mediaFileId",
+            "required": true,
+            "description": "Media file id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully removed a media file",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaFilesRemoveMediaResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
                 }
               }
             }
@@ -488,6 +588,16 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -495,6 +605,17 @@
   },
   "components": {
     "schemas": {
+      "UnauthorizedResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Unauthorized"
+          }
+        }
+      },
       "BadRequestResponse": {
         "type": "object",
         "properties": {
@@ -506,14 +627,14 @@
           }
         }
       },
-      "UnauthorizedResponse": {
+      "NotFoundResponse": {
         "type": "object",
         "properties": {
           "message": {
             "type": "string",
             "description": "Response message",
             "format": "string",
-            "example": "Unauthorized"
+            "example": "Not found"
           }
         }
       },
@@ -880,6 +1001,62 @@
           }
         }
       },
+      "MediaFilesGetMediaResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "mediaFile": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "description": "Media file's type",
+                    "example": "img"
+                  },
+                  "url": {
+                    "type": "string",
+                    "description": "Media file's url",
+                    "example": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                  },
+                  "providerPublicId": {
+                    "type": "string",
+                    "description": "Cloudinary id",
+                    "example": "mnf8tsnyxfhztfemh4dq"
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "User's id",
+                    "example": "6452b1d7f6a29d84c5b089fb"
+                  },
+                  "postId": {
+                    "type": "string",
+                    "description": "Post's id",
+                    "example": "mnf8tsnyxfhztfemh4dq"
+                  },
+                  "_id": {
+                    "type": "string",
+                    "description": "Post's id",
+                    "example": "642831f346155749a2b6e944"
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Post's time",
+                    "example": "43 minutes ago"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "MediaFilesCreateMediaRequest": {
         "required": ["type", "url", "postId"],
         "type": "object",
@@ -919,6 +1096,62 @@
             "type": "object",
             "properties": {
               "newMediaFile": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "description": "Media file's type",
+                    "example": "img"
+                  },
+                  "url": {
+                    "type": "string",
+                    "description": "Media file's url",
+                    "example": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                  },
+                  "providerPublicId": {
+                    "type": "string",
+                    "description": "Cloudinary id",
+                    "example": "mnf8tsnyxfhztfemh4dq"
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "User's id",
+                    "example": "6452b1d7f6a29d84c5b089fb"
+                  },
+                  "postId": {
+                    "type": "string",
+                    "description": "Post's id",
+                    "example": "mnf8tsnyxfhztfemh4dq"
+                  },
+                  "_id": {
+                    "type": "string",
+                    "description": "Post's id",
+                    "example": "642831f346155749a2b6e944"
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Post's time",
+                    "example": "43 minutes ago"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "MediaFilesRemoveMediaResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "deletedMediaFile": {
                 "type": "object",
                 "properties": {
                   "type": {
