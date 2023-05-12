@@ -1,4 +1,4 @@
-const { MediaFile } = require("../../models");
+const { MediaFile, Post } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
 const { mediaFileTransformer } = require("../../helpers/index");
@@ -18,6 +18,8 @@ const removeMediaFile = async (req, res, next) => {
   if (!result) {
     throw HttpError(404, "Not found");
   }
+
+  await Post.updateOne({ mediaFiles: { $elemMatch: { $eq: mediaFileId } } }, { $pull: { mediaFiles: mediaFileId } });
 
   res.json({ status: "success", data: { deletedMediaFile: mediaFileTransformer(result) } });
 };

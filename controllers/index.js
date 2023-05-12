@@ -1,6 +1,7 @@
 const users = require("./users");
 const ownPosts = require("./ownPosts");
 const mediaFiles = require("./mediaFiles");
+const likes = require("./likes");
 
 // const posts = require('./posts');
 // const comments = require("./comments");
@@ -12,6 +13,7 @@ module.exports = {
   users,
   ownPosts,
   mediaFiles,
+  likes,
   // posts,
   // comments,
   // favorite,

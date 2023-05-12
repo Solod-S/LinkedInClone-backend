@@ -48,6 +48,9 @@ describe("Own-post Test Suite", () => {
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
+    expect(typeof res.body.data.totalPages).toBe("number");
+    expect(typeof res.body.data.currentPage).toBe("number");
+    expect(typeof res.body.data.perPage).toBe("number");
     expect(Array.isArray(res.body.data.ownPosts)).toBe(true);
     expect(res.body.data.ownPosts.every((post) => typeof post.description === "string")).toBe(true);
     expect(res.body.data.ownPosts.every((post) => Array.isArray(post.likes))).toBe(true);
@@ -68,7 +71,7 @@ describe("Own-post Test Suite", () => {
   }, 10000);
 
   test("Get all own posts with invalid token + pagination, 401 check", async () => {
-    const res = await request(app).get(`/own-posts`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+    const res = await request(app).get(`/own-posts?page=2&perPage=12`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
 
     expect(res.status).toBe(401);
     expect(res.body).toHaveProperty("message", "Unauthorized");

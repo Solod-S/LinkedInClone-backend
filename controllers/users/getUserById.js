@@ -14,7 +14,10 @@ const getUserById = async (req, res, next) => {
     throw HttpError(404, "Not found");
   }
 
-  const posts = await Post.find({ owner: userId });
+  const posts = await Post.find({ owner: userId }).populate({
+    path: "mediaFiles",
+    select: "owner _id type url providerPublicId postId ",
+  });
 
   res.status(200).json({
     status: "succes",

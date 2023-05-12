@@ -170,11 +170,14 @@ describe("User Test Suite", () => {
       })
       .set("Accept", "application/json");
 
+    token = res.body.data.token;
+
     expect(res.status).toBe(200);
     expect(typeof res.body.data.token).toBe("string");
-    expect(res.body.data.currentUser instanceof Object).toBe(true);
-
-    token = res.body.data.token;
+    expect(res.body.data.user instanceof Object).toBe(true);
+    expect(typeof res.body.data.user._id).toBe("string");
+    expect(typeof res.body.data.user.email).toBe("string");
+    expect(typeof res.body.data.user.avatarURL).toBe("string");
   }, 10000);
 
   test("Login with invalid body, 400 check", async () => {
@@ -277,7 +280,10 @@ describe("User Test Suite", () => {
 
     expect(res.status).toBe(200);
     expect(typeof res.body.data.token).toBe("string");
-    expect(res.body.data.currentUser instanceof Object).toBe(true);
+    expect(res.body.data.user instanceof Object).toBe(true);
+    expect(typeof res.body.data.user._id).toBe("string");
+    expect(typeof res.body.data.user.email).toBe("string");
+    expect(typeof res.body.data.user.avatarURL).toBe("string");
   }, 10000);
 
   test("Get current with invalid token, 401 check", async () => {
@@ -346,10 +352,10 @@ describe("User Test Suite", () => {
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.data.deletedUser).toBe("object");
-    expect(typeof res.body.data.deletedUser._id).toBe("string");
-    expect(typeof res.body.data.deletedUser.name).toBe("string");
-    expect(typeof res.body.data.deletedUser.email).toBe("string");
-    expect(typeof res.body.data.deletedUser.avatarURL).toBe("string");
+    expect(typeof res.body.data.user).toBe("object");
+    expect(typeof res.body.data.user._id).toBe("string");
+    expect(typeof res.body.data.user.name).toBe("string");
+    expect(typeof res.body.data.user.email).toBe("string");
+    expect(typeof res.body.data.user.avatarURL).toBe("string");
   }, 10000);
 });

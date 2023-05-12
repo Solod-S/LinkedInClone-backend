@@ -10,10 +10,7 @@ const postSchema = Schema(
       required: true,
       default: "",
     },
-    likes: {
-      type: Array,
-      default: [],
-    },
+    likes: [{ type: Schema.Types.ObjectId, ref: "Like" }],
     comments: {
       type: Array,
       default: [],

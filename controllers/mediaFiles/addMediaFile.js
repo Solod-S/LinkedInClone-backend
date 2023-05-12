@@ -8,8 +8,7 @@ const addMediaFile = async (req, res, next) => {
     owner: req.user._id,
   });
 
-  res.json({ status: "success", data: { newMediaFile: mediaFileTransformer(newMediaFile) } });
+  res.json({ status: "success", data: { mediaFile: mediaFileTransformer(newMediaFile) } });
 };
 
 module.exports = addMediaFile;
-// newMediaFile: newMediaFile.map((file) => mediaFileTransformer(file));
