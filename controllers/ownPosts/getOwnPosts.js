@@ -31,7 +31,17 @@ const getOwnPosts = async (req, res, next) => {
     .sort({ createdAt: -1 })
     .skip(skip < 0 ? 0 : skip)
     .limit(perPage)
-    .populate({ path: "mediaFiles", select: "url type providerPublicId" });
+    .populate({
+      path: "comments",
+      select: "owner description likes mediaFiles createdAt updatedAt",
+      populate: { path: "owner", select: "_id name avatarURL" },
+    })
+    .populate({
+      path: "mediaFiles",
+      select: "url type providerPublicId",
+      populate: { path: "owner", select: "_id name avatarURL" },
+    })
+    .populate({ path: "likes", select: "owner type", populate: { path: "owner", select: "_id name avatarURL" } });
 
   res.json({
     status: "success",

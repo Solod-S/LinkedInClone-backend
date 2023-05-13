@@ -1,9 +1,7 @@
-const { User } = require("../../models");
-const { Post } = require("../../models");
+const { User, Post } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { userTransformer } = require("../../helpers/index");
-const { ownPostTransformer } = require("../../helpers/index");
+const { ownPostTransformer, userTransformer } = require("../../helpers/index");
 
 const getUserById = async (req, res, next) => {
   const { userId } = req.params;
@@ -14,10 +12,21 @@ const getUserById = async (req, res, next) => {
     throw HttpError(404, "Not found");
   }
 
-  const posts = await Post.find({ owner: userId }).populate({
-    path: "mediaFiles",
-    select: "owner _id type url providerPublicId postId ",
-  });
+  const posts = await Post.find({ owner: userId })
+    .populate({
+      path: "mediaFiles",
+      select: "url type providerPublicId",
+      populate: { path: "owner", select: "_id name avatarURL" },
+    })
+    .populate({ path: "likes", select: "owner type", populate: { path: "owner", select: "_id name avatarURL" } })
+    .populate({
+      path: "comments",
+      populate: [
+        { path: "owner", select: "_id name avatarURL" },
+        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id name avatarURL" } },
+        { path: "mediaFiles", select: "url type owner", populate: { path: "owner", select: "_id name avatarURL" } },
+      ],
+    });
 
   res.status(200).json({
     status: "succes",
@@ -26,3 +35,9 @@ const getUserById = async (req, res, next) => {
 };
 
 module.exports = getUserById;
+
+// .populate({
+//   path: "comments",
+//   select: "description createdAt ",
+//   populate: { path: "owner", select: "_id name avatarURL" },
+// });

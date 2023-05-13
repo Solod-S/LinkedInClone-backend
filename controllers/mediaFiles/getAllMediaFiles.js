@@ -31,7 +31,17 @@ const getAllMediaFiles = async (req, res, next) => {
     .sort({ createdAt: -1 })
     .skip(skip < 0 ? 0 : skip)
     .limit(perPage)
-    .populate({ path: "owner", select: "_id name avatarURL" });
+    .populate({ path: "owner", select: "_id name avatarURL" })
+    .populate({
+      path: "postId",
+      select: "_id description likes comments mediaFiles owner type",
+      populate: { path: "likes", select: "_id type owner", populate: { path: "owner", select: "_id name avatarURL" } },
+    })
+    .populate({
+      path: "commentId",
+      select: "_id description likes comments mediaFiles owner type",
+      populate: { path: "likes", select: "_id type owner", populate: { path: "owner", select: "_id name avatarURL" } },
+    });
 
   res.json({
     status: "success",

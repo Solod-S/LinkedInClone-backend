@@ -979,10 +979,61 @@
                     },
                     "comments": {
                       "type": "array",
-                      "description": "Array of comment IDs associated with the post",
+                      "description": "Array of media files associated with the post",
                       "items": {
-                        "type": "string",
-                        "description": "Comment ID"
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "Media file's id",
+                            "example": "6457a79b23576cf0aa13adec"
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "Media file's type",
+                            "example": "img"
+                          },
+                          "url": {
+                            "type": "string",
+                            "description": "Media file's url",
+                            "example": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          },
+                          "providerPublicId": {
+                            "type": "string",
+                            "description": "Cloudinary id",
+                            "example": "mnf8tsnyxfhztfemh4dq"
+                          },
+                          "owner": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "description": "Owner file's id",
+                                "example": "6452b1d7f6a29d84c5b089fb"
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "Owner name",
+                                "example": "Sergey"
+                              },
+                              "avatarURL": {
+                                "type": "string",
+                                "description": "Owner name",
+                                "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                              }
+                            }
+                          },
+                          "postId": {
+                            "type": "string",
+                            "description": "Post's id",
+                            "example": "64578c032ce9cc5ad13e723a"
+                          },
+                          "postedAtHuman": {
+                            "type": "string",
+                            "description": "Post's time",
+                            "example": "43 minutes ago"
+                          }
+                        }
                       }
                     },
                     "mediaFiles": {
@@ -1012,9 +1063,24 @@
                             "example": "mnf8tsnyxfhztfemh4dq"
                           },
                           "owner": {
-                            "type": "string",
-                            "description": "User's id",
-                            "example": "6452b1d7f6a29d84c5b089fb"
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "description": "Owner file's id",
+                                "example": "6452b1d7f6a29d84c5b089fb"
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "Owner name",
+                                "example": "Sergey"
+                              },
+                              "avatarURL": {
+                                "type": "string",
+                                "description": "Owner name",
+                                "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                              }
+                            }
                           },
                           "postId": {
                             "type": "string",
@@ -1030,9 +1096,24 @@
                       }
                     },
                     "owner": {
-                      "type": "string",
-                      "description": "User's id",
-                      "example": "6452b1d7f6a29d84c5b089fb"
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "description": "Owner file's id",
+                          "example": "6452b1d7f6a29d84c5b089fb"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "Owner name",
+                          "example": "Sergey"
+                        },
+                        "avatarURL": {
+                          "type": "string",
+                          "description": "Owner name",
+                          "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                        }
+                      }
                     },
                     "_id": {
                       "type": "string",

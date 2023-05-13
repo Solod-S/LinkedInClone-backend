@@ -4,7 +4,10 @@ const { likes } = require("../../controllers");
 const { validateBody, authenticate } = require("../../middlewares");
 const { likeSchemas } = require("../../models");
 
-//  create a media-file
-likesRouter.post("/add", authenticate, validateBody(likeSchemas.LikesSchema), likes.addLike);
+//  create a like
+likesRouter.post("/add", authenticate, validateBody(likeSchemas.likesSchema), likes.addLike);
+
+//  delete own like
+likesRouter.delete("/remove/:likeId", authenticate, likes.removeLike);
 
 module.exports = likesRouter;

@@ -1,32 +1,38 @@
-const { Like, Post } = require("../../models");
+const { Like, Post, Comment } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
 
 const addLike = async (req, res, next) => {
-  const { postId } = req.body;
+  const { _id } = req.user;
+  const { location, type } = req.body;
 
-  const post = await Post.findById({ _id: postId });
+  const locationId = location === "posts" ? req.body.postId : req.body.commentId;
+  const serachParams = location === "posts" ? { postId: req.body.postId } : { commentId: req.body.commentId };
+  const id = location === "posts" ? req.body.postId : req.body.commentId;
 
-  if (!post) {
+  const Model = location === "posts" ? Post : Comment;
+
+  const data = await Model.findById({ _id: locationId });
+
+  if (!data) {
     throw HttpError(404, "Not found");
   }
-
-  const likeIsExist = await Like.findOne({ postId });
+  const likeIsExist = await Like.findOne({ ...serachParams, owner: _id });
 
   if (likeIsExist) {
-    const updatedLike = await Like.findOneAndUpdate({ type: req.body.type });
-    updatedLike.type = req.body.type;
+    const updatedLike = await Like.findOneAndUpdate({ _id: likeIsExist._id }, { type });
 
-    res.json({ status: "success", data: { like: updatedLike, post } });
+    updatedLike.type = type;
+
+    res.json({ status: "success", data: { like: updatedLike } });
   } else {
-    console.log("!likeIsExist");
     const like = await Like.create({
       ...req.body,
-      owner: req.user._id,
+      owner: _id,
     });
-    const updatedPost = await Post.findByIdAndUpdate(postId, { $push: { likes: like._id } }, { new: true });
+    await Model.findByIdAndUpdate({ _id: id }, { $push: { likes: like._id } }, { new: true });
 
-    res.json({ status: "success", data: { like, post: updatedPost } });
+    res.json({ status: "success", data: { like } });
   }
 };
 

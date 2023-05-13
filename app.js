@@ -5,7 +5,7 @@ require("dotenv").config();
 const swaggerUi = require("swagger-ui-express");
 
 const swaggerDocument = require("./routes/swagger/openapi.json");
-const { userRouter, ownPostsRouter, mediaFilesRouter, likesRouter } = require("./routes/api/");
+const { userRouter, ownPostsRouter, mediaFilesRouter, likesRouter, commentsRouter } = require("./routes/api/");
 
 const app = express();
 
@@ -20,6 +20,7 @@ app.use("/user", userRouter);
 app.use("/media-files", mediaFilesRouter);
 app.use("/own-posts", ownPostsRouter);
 app.use("/likes", likesRouter);
+app.use("/comments", commentsRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
