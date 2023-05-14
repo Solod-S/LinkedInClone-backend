@@ -27,7 +27,7 @@ const getAllMediaFiles = async (req, res, next) => {
     });
   }
 
-  const ownMediaFiles = await MediaFile.find()
+  const allMediaFiles = await MediaFile.find()
     .sort({ createdAt: -1 })
     .skip(skip < 0 ? 0 : skip)
     .limit(perPage)
@@ -35,18 +35,29 @@ const getAllMediaFiles = async (req, res, next) => {
     .populate({
       path: "postId",
       select: "_id description likes comments mediaFiles owner type",
-      populate: { path: "likes", select: "_id type owner", populate: { path: "owner", select: "_id name avatarURL" } },
+      populate: [
+        {
+          path: "comments",
+          select: "owner description likes mediaFiles createdAt updatedAt",
+          populate: { path: "owner", select: "_id name avatarURL" },
+        },
+        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id name avatarURL" } },
+        { path: "mediaFiles", select: "url type owner", populate: { path: "owner", select: "_id name avatarURL" } },
+      ],
     })
     .populate({
       path: "commentId",
       select: "_id description likes comments mediaFiles owner type",
-      populate: { path: "likes", select: "_id type owner", populate: { path: "owner", select: "_id name avatarURL" } },
+      populate: [
+        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id name avatarURL" } },
+        { path: "mediaFiles", select: "url type owner", populate: { path: "owner", select: "_id name avatarURL" } },
+      ],
     });
 
   res.json({
     status: "success",
     data: {
-      ownMediaFiles: ownMediaFiles.map((mediaFiles) => mediaFileTransformer(mediaFiles)),
+      allMediaFiles: allMediaFiles.map((mediaFiles) => mediaFileTransformer(mediaFiles)),
       totalPages,
       currentPage: page,
       perPage,

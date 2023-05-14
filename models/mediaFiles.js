@@ -30,8 +30,18 @@ const mediaFilesSchema = Joi.object({
   commentId: Joi.string(),
 });
 
+const updateMediaFilesSchema = Joi.object({
+  type: Joi.string().valid("img", "video"),
+  location: Joi.string().valid("comments", "posts"),
+  url: Joi.string(),
+  providerPublicId: Joi.string(),
+  postId: Joi.string(),
+  commentId: Joi.string(),
+});
+
 const mediaFileSchemas = {
   mediaFilesSchema,
+  updateMediaFilesSchema,
 };
 
 module.exports = {

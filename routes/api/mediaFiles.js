@@ -7,6 +7,14 @@ const { mediaFileSchemas } = require("../../models");
 //  create a media-file
 mediaFilesRouter.post("/add", authenticate, validateBody(mediaFileSchemas.mediaFilesSchema), mediaFiles.addMediaFile);
 
+//  update an own post
+mediaFilesRouter.patch(
+  "/update/:mediaFileId",
+  authenticate,
+  validateBody(mediaFileSchemas.updateMediaFilesSchema),
+  mediaFiles.updateOwnMediaFile
+);
+
 //  get all media-files
 mediaFilesRouter.get("/", authenticate, mediaFiles.getAllMediaFiles);
 

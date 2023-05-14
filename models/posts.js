@@ -31,8 +31,14 @@ const myPostSchema = Joi.object({
   mediaFiles: Joi.string(),
 });
 
+const updateMyPostSchema = Joi.object({
+  description: Joi.string(),
+  mediaFiles: Joi.string(),
+});
+
 const postSchemas = {
   myPostSchema,
+  updateMyPostSchema,
 };
 
 module.exports = {
