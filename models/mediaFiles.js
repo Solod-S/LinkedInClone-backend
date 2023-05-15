@@ -37,7 +37,9 @@ const updateMediaFilesSchema = Joi.object({
   providerPublicId: Joi.string(),
   postId: Joi.string(),
   commentId: Joi.string(),
-});
+})
+  .or("type", "location", "url", "providerPublicId", "postId", "commentId")
+  .required();
 
 const mediaFileSchemas = {
   mediaFilesSchema,

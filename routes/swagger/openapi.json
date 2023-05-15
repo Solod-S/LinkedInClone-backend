@@ -391,6 +391,67 @@
         }
       }
     },
+    "/media-files/update/{mediaFileId}": {
+      "patch": {
+        "tags": ["Media files"],
+        "summary": "Update a media file",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "mediaFileId",
+            "required": true,
+            "description": "Media file id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Media update object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MediaFilesUpdateMediaRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully update a media file",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaFilesCreateMediaResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmptyBodyRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/media-files": {
       "get": {
         "tags": ["Media files"],
@@ -572,6 +633,67 @@
         }
       }
     },
+    "/own-posts/update/{postId}": {
+      "patch": {
+        "tags": ["Own posts"],
+        "summary": "Update a post",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true,
+            "description": "Post file id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Post update object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OwnPostsUpdatePostRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully update a media file",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaFilesCreateMediaResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmptyBodyRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/own-posts": {
       "get": {
         "tags": ["Own posts"],
@@ -674,6 +796,17 @@
             "description": "Response message",
             "format": "string",
             "example": "\"key\" is required"
+          }
+        }
+      },
+      "EmptyBodyRequestResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "\"value\" must contain at least one of [type]"
           }
         }
       },
@@ -1767,6 +1900,37 @@
           }
         }
       },
+      "MediaFilesUpdateMediaRequest": {
+        "required": [],
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Media file's type",
+            "example": "img"
+          },
+          "location": {
+            "type": "string",
+            "description": "Media file's location",
+            "example": "posts"
+          },
+          "url": {
+            "type": "string",
+            "description": "Media file's url",
+            "example": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+          },
+          "providerPublicId": {
+            "type": "string",
+            "description": "Cloudinary id",
+            "example": "mnf8tsnyxfhztfemh4dq"
+          },
+          "postId": {
+            "type": "string",
+            "description": "Post's id",
+            "example": "645bebfe4b27790a407a369e"
+          }
+        }
+      },
       "MediaFilesRemoveMediaResponse": {
         "type": "object",
         "properties": {
@@ -2021,6 +2185,22 @@
             "type": "string",
             "description": "Media files",
             "example": "6457a79b23576cf0aa13adec"
+          }
+        }
+      },
+      "OwnPostsUpdatePostRequest": {
+        "required": [],
+        "type": "object",
+        "properties": {
+          "mediaFiles": {
+            "type": "string",
+            "description": "Media file's id",
+            "example": "645f8eecfd6f00cbb75f950f"
+          },
+          "description": {
+            "type": "string",
+            "description": "Post's description",
+            "example": "Let's rock!!!"
           }
         }
       },

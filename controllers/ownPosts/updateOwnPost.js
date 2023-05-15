@@ -22,7 +22,7 @@ const updateOwnPost = async (req, res, next) => {
     throw HttpError(404, "Not found");
   }
 
-  res.json({ status: "success", data: { deletedPost: ownPostTransformer(updatedPost) } });
+  res.json({ status: "success", data: { post: ownPostTransformer(updatedPost) } });
 };
 
 module.exports = updateOwnPost;
