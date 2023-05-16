@@ -7,7 +7,15 @@ const { commentSchemas } = require("../../models");
 //  create a comment
 commentsRouter.post("/add", authenticate, validateBody(commentSchemas.commentsSchema), comments.addComment);
 
+//  update an own comment
+commentsRouter.patch(
+  "/update/:commentId",
+  authenticate,
+  validateBody(commentSchemas.updateComment),
+  comments.updateOwnComment
+);
+
 //  delete own comment
-// commentsRouter.delete("/remove/:coommentId", authenticate, comments.removeLike);
+commentsRouter.delete("/remove/:commentId", authenticate, comments.removeOwnComment);
 
 module.exports = commentsRouter;

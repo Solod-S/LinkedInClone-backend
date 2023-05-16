@@ -24,12 +24,21 @@ const Comment = model("Comment", commentSchema);
 
 const commentsSchema = Joi.object({
   description: Joi.string().required(),
+  location: Joi.string().valid("comments", "posts").required(),
   mediaFiles: Joi.string(),
   postId: Joi.string().required(),
 });
 
+const updateComment = Joi.object({
+  description: Joi.string(),
+  postId: Joi.string(),
+})
+  .or("description", "postId")
+  .required();
+
 const commentSchemas = {
   commentsSchema,
+  updateComment,
 };
 
 module.exports = {
