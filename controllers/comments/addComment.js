@@ -1,5 +1,6 @@
 const { Comment, Post } = require("../../models");
 
+const { commentTransformer } = require("../../helpers/index");
 const { HttpError } = require("../../routes/errors/HttpErrors");
 
 const addComment = async (req, res, next) => {
@@ -18,7 +19,7 @@ const addComment = async (req, res, next) => {
   });
   const updatedPost = await Post.findByIdAndUpdate(postId, { $push: { comments: comment._id } }, { new: true });
 
-  res.json({ status: "success", data: { comment, post: updatedPost } });
+  res.json({ status: "success", data: { comment: commentTransformer(comment), post: updatedPost } });
 };
 
 module.exports = addComment;

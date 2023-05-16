@@ -32,16 +32,16 @@ describe("Media-files Test Suite", () => {
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
-    expect(Array.isArray(res.body.data.ownMediaFiles)).toBe(true);
-    expect(res.body.data.ownMediaFiles.every((mediaFile) => typeof mediaFile.type === "string")).toBe(true);
-    expect(res.body.data.ownMediaFiles.every((mediaFile) => typeof mediaFile.url === "string")).toBe(true);
-    expect(res.body.data.ownMediaFiles.every((mediaFile) => typeof mediaFile.providerPublicId === "string")).toBe(true);
-    expect(res.body.data.ownMediaFiles.every((mediaFile) => typeof mediaFile.owner === "object")).toBe(true);
+    expect(Array.isArray(res.body.data.allMediaFiles)).toBe(true);
+    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.type === "string")).toBe(true);
+    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.url === "string")).toBe(true);
+    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.providerPublicId === "string")).toBe(true);
+    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.owner === "object")).toBe(true);
     expect(
-      res.body.data.ownMediaFiles.every((mediaFile) => typeof mediaFile.postId || mediaFile.commentId === "object")
+      res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.postId || mediaFile.commentId === "object")
     ).toBe(true);
-    expect(res.body.data.ownMediaFiles.every((mediaFile) => typeof mediaFile._id === "string")).toBe(true);
-    expect(res.body.data.ownMediaFiles.every((mediaFile) => typeof mediaFile.postedAtHuman === "string")).toBe(true);
+    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile._id === "string")).toBe(true);
+    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.postedAtHuman === "string")).toBe(true);
   }, 10000);
 
   test("Get all media files with valid token + pagination, 200 check", async () => {
@@ -54,16 +54,16 @@ describe("Media-files Test Suite", () => {
     expect(typeof res.body.data.totalPages).toBe("number");
     expect(typeof res.body.data.currentPage).toBe("number");
     expect(typeof res.body.data.perPage).toBe("number");
-    expect(Array.isArray(res.body.data.ownMediaFiles)).toBe(true);
-    expect(res.body.data.ownMediaFiles.every((mediaFile) => typeof mediaFile.type === "string")).toBe(true);
-    expect(res.body.data.ownMediaFiles.every((mediaFile) => typeof mediaFile.url === "string")).toBe(true);
-    expect(res.body.data.ownMediaFiles.every((mediaFile) => typeof mediaFile.providerPublicId === "string")).toBe(true);
-    expect(res.body.data.ownMediaFiles.every((mediaFile) => typeof mediaFile.owner === "object")).toBe(true);
+    expect(Array.isArray(res.body.data.allMediaFiles)).toBe(true);
+    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.type === "string")).toBe(true);
+    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.url === "string")).toBe(true);
+    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.providerPublicId === "string")).toBe(true);
+    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.owner === "object")).toBe(true);
     expect(
-      res.body.data.ownMediaFiles.every((mediaFile) => typeof mediaFile.postId || mediaFile.commentId === "object")
+      res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.postId || mediaFile.commentId === "object")
     ).toBe(true);
-    expect(res.body.data.ownMediaFiles.every((mediaFile) => typeof mediaFile._id === "string")).toBe(true);
-    expect(res.body.data.ownMediaFiles.every((mediaFile) => typeof mediaFile.postedAtHuman === "string")).toBe(true);
+    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile._id === "string")).toBe(true);
+    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.postedAtHuman === "string")).toBe(true);
   }, 10000);
 
   test("Get all media files with invalid token, 401 check", async () => {
@@ -92,7 +92,7 @@ describe("Media-files Test Suite", () => {
     expect(res.body).toHaveProperty("message", "Unauthorized");
   }, 10000);
 
-  test("Create media file with without body, 400 check", async () => {
+  test("Create media file without body, 400 check", async () => {
     const res = await request(app).post(`/media-files/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({});
 
     expect(res.status).toBe(400);
@@ -126,12 +126,74 @@ describe("Media-files Test Suite", () => {
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.mediaFile).toBe("object");
     expect(typeof res.body.data.mediaFile.type).toBe("string");
+    expect(typeof res.body.data.mediaFile.location).toBe("string");
     expect(typeof res.body.data.mediaFile.url).toBe("string");
     expect(typeof res.body.data.mediaFile.providerPublicId).toBe("string");
     expect(typeof res.body.data.mediaFile.owner).toBe("string");
     expect(typeof res.body.data.mediaFile.postId).toBe("string");
     expect(typeof res.body.data.mediaFile._id).toBe("string");
     expect(typeof res.body.data.mediaFile.postedAtHuman).toBe("string");
+  }, 10000);
+
+  test("Update media file with valid token, 200 check", async () => {
+    const res = await request(app)
+      .patch(`/media-files/update/${mediaFileId}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .send({
+        type: "video",
+        location: "posts",
+        url: "url",
+        providerPublicId: "sss",
+        postId: "645f6f55e4a08e69e891c4b5",
+      });
+
+    expect(res.status).toBe(200);
+    expect(typeof res.body.data).toBe("object");
+    expect(typeof res.body.status).toBe("string");
+    expect(typeof res.body.data).toBe("object");
+    expect(typeof res.body.data.mediaFile).toBe("object");
+    expect(typeof res.body.data.mediaFile.type).toBe("string");
+    expect(res.body.data.mediaFile.type).toBe("video");
+    expect(typeof res.body.data.mediaFile.location).toBe("string");
+    expect(res.body.data.mediaFile.location).toBe("posts");
+    expect(typeof res.body.data.mediaFile.url).toBe("string");
+    expect(res.body.data.mediaFile.url).toBe("url");
+    expect(typeof res.body.data.mediaFile.providerPublicId).toBe("string");
+    expect(res.body.data.mediaFile.providerPublicId).toBe("sss");
+    expect(typeof res.body.data.mediaFile.owner).toBe("string");
+    expect(typeof res.body.data.mediaFile.postId).toBe("string");
+    expect(res.body.data.mediaFile.postId).toBe("645f6f55e4a08e69e891c4b5");
+    expect(typeof res.body.data.mediaFile._id).toBe("string");
+    expect(typeof res.body.data.mediaFile.postedAtHuman).toBe("string");
+  }, 10000);
+
+  test("Update media file with invalid token, 401 check", async () => {
+    const res = await request(app)
+      .patch(`/media-files/update/${mediaFileId}`)
+      .set("Authorization", `Bearer ${WRONG_TOKEN}`)
+      .send({
+        type: "video",
+        location: "posts",
+        url: "url",
+        providerPublicId: "sss",
+        postId: "645f6f55e4a08e69e891c4b5",
+      });
+
+    expect(res.status).toBe(401);
+    expect(res.body).toHaveProperty("message", "Unauthorized");
+  }, 10000);
+
+  test("Update media file with valid token without body, 400 check", async () => {
+    const res = await request(app)
+      .patch(`/media-files/update/${mediaFileId}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .send({});
+
+    expect(res.status).toBe(400);
+    expect(res.body).toHaveProperty(
+      "message",
+      '"value" must contain at least one of [type, location, url, providerPublicId, postId, commentId]'
+    );
   }, 10000);
 
   test("Get media file with valid token for post, 200 check", async () => {
@@ -143,6 +205,7 @@ describe("Media-files Test Suite", () => {
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.mediaFile).toBe("object");
     expect(typeof res.body.data.mediaFile.type).toBe("string");
+    expect(typeof res.body.data.mediaFile.location).toBe("string");
     expect(typeof res.body.data.mediaFile.url).toBe("string");
     expect(typeof res.body.data.mediaFile.providerPublicId).toBe("string");
     expect(typeof res.body.data.mediaFile.owner).toBe("object");
@@ -203,6 +266,7 @@ describe("Media-files Test Suite", () => {
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.mediaFile).toBe("object");
     expect(typeof res.body.data.mediaFile.type).toBe("string");
+    expect(typeof res.body.data.mediaFile.location).toBe("string");
     expect(typeof res.body.data.mediaFile.url).toBe("string");
     expect(typeof res.body.data.mediaFile.providerPublicId).toBe("string");
     expect(typeof res.body.data.mediaFile.owner).toBe("string");
@@ -220,6 +284,7 @@ describe("Media-files Test Suite", () => {
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.mediaFile).toBe("object");
     expect(typeof res.body.data.mediaFile.type).toBe("string");
+    expect(typeof res.body.data.mediaFile.location).toBe("string");
     expect(typeof res.body.data.mediaFile.url).toBe("string");
     expect(typeof res.body.data.mediaFile.providerPublicId).toBe("string");
     expect(typeof res.body.data.mediaFile.owner).toBe("object");

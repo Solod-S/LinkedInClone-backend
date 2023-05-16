@@ -594,7 +594,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/OwnPostsNewPostRequest"
+                "$ref": "#/components/schemas/OwnPostsCreatePostRequest"
               }
             }
           }
@@ -767,6 +767,57 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comments/add": {
+      "post": {
+        "tags": ["Comments"],
+        "summary": "Create a new comment",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "requestBody": {
+          "description": "Comment object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentsCreateCommentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully created a new comment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommentsNewCommentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
                 }
               }
             }
@@ -2172,7 +2223,7 @@
           }
         }
       },
-      "OwnPostsNewPostRequest": {
+      "OwnPostsCreatePostRequest": {
         "required": ["description"],
         "type": "object",
         "properties": {
@@ -2366,6 +2417,93 @@
                     "type": "string",
                     "description": "Post's time",
                     "example": "43 minutes ago"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "CommentsCreateCommentRequest": {
+        "required": ["description", "postId"],
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Comment's text",
+            "example": "YABADABADOOOOO!"
+          },
+          "mediaFiles": {
+            "type": "string",
+            "description": "Media files",
+            "example": "6457a79b23576cf0aa13adec"
+          },
+          "postId": {
+            "type": "string",
+            "description": "Post id",
+            "example": "6460b832db50f7007597f87c"
+          }
+        }
+      },
+      "CommentsNewCommentResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "comment": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "description": "Comment's text",
+                    "example": "YABADABADOOOOO!"
+                  },
+                  "likes": {
+                    "type": "array",
+                    "description": "Array of users IDs wich liked the comment",
+                    "items": {
+                      "type": "string",
+                      "description": "User ID"
+                    }
+                  },
+                  "comments": {
+                    "type": "array",
+                    "description": "Array of comment IDs associated with the comment",
+                    "items": {
+                      "type": "string",
+                      "description": "Comment ID"
+                    }
+                  },
+                  "mediaFiles": {
+                    "type": "array",
+                    "description": "Array of media file IDs associated with the comment",
+                    "items": {
+                      "type": "string",
+                      "description": "ID of a media file",
+                      "example": "6457a79b23576cf0aa13adec"
+                    }
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "User's id",
+                    "example": "6452b1d7f6a29d84c5b089fb"
+                  },
+                  "_id": {
+                    "type": "string",
+                    "description": "Post's id",
+                    "example": "642831f346155749a2b6e944"
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Post's time",
+                    "example": "01 seconds ago"
                   }
                 }
               }

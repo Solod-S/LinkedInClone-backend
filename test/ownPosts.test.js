@@ -98,6 +98,54 @@ describe("Own-post Test Suite", () => {
     expect(typeof res.body.data.newPost.postedAtHuman).toBe("string");
   }, 10000);
 
+  test("Update post with valid token, 200 check", async () => {
+    const res = await request(app)
+      .patch(`/own-posts/update/${postId}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .send({
+        description:
+          "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.",
+      });
+
+    expect(res.status).toBe(200);
+    expect(typeof res.body.data).toBe("object");
+    expect(typeof res.body.status).toBe("string");
+    expect(typeof res.body.data).toBe("object");
+    expect(typeof res.body.data.post).toBe("object");
+    expect(typeof res.body.data.post.description).toBe("string");
+    expect(res.body.data.post.description).toBe(
+      "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up."
+    );
+    expect(typeof res.body.data.post.likes).toBe("object");
+    expect(typeof res.body.data.post.comments).toBe("object");
+    expect(typeof res.body.data.post.owner).toBe("string");
+    expect(typeof res.body.data.post._id).toBe("string");
+    expect(typeof res.body.data.post.mediaFiles).toBe("object");
+    expect(typeof res.body.data.post.postedAtHuman).toBe("string");
+  }, 10000);
+
+  test("Update post with valid token without body, 400 check", async () => {
+    const res = await request(app)
+      .patch(`/own-posts/update/${postId}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .send({});
+
+    expect(res.status).toBe(400);
+  }, 10000);
+
+  test("Update post with invalid token, 401 check", async () => {
+    const res = await request(app)
+      .patch(`/own-posts/update/${postId}`)
+      .set("Authorization", `Bearer ${WRONG_TOKEN}`)
+      .send({
+        description:
+          "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.",
+      });
+
+    expect(res.status).toBe(401);
+    expect(res.body).toHaveProperty("message", "Unauthorized");
+  }, 10000);
+
   test("Create post with invalid token, 401 check", async () => {
     const res = await request(app).post(`/own-posts/add`).set("Authorization", `Bearer ${WRONG_TOKEN}`).send({
       description:

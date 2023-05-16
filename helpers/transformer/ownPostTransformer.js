@@ -2,8 +2,6 @@ const human = require("human-time");
 
 const ownPostTransformer = (post) => {
   return {
-    image: post.image,
-    video: post.video,
     description: post.description,
     likes: post.likes,
     comments: post.comments,
