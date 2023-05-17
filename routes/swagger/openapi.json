@@ -662,11 +662,11 @@
         },
         "responses": {
           "200": {
-            "description": "Successfully update a media file",
+            "description": "Successfully update an own post",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MediaFilesCreateMediaResponse"
+                  "$ref": "#/components/schemas/OwnPostsNewPostResponse"
                 }
               }
             }
@@ -818,6 +818,117 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comments/update/{commentId}": {
+      "patch": {
+        "tags": ["Comments"],
+        "summary": "Update a comment",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "commentId",
+            "required": true,
+            "description": "Comment file id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Comments update object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentsUpdateCommentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully update a comment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommentsUpdateCommentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmptyBodyRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comments/remove/{commentId}": {
+      "delete": {
+        "tags": ["Comments"],
+        "summary": "Delete own comment",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "commentId",
+            "required": true,
+            "description": "Comment id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully removed a comment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommentsRemoveResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
                 }
               }
             }
@@ -1525,7 +1636,8 @@
                                 "description": "Array of users IDs wich liked the post",
                                 "items": {
                                   "type": "string",
-                                  "description": "Like IDs"
+                                  "description": "Like IDs",
+                                  "example": "6457a79b23576cf0aa13adet"
                                 }
                               },
                               "comments": {
@@ -1533,7 +1645,8 @@
                                 "description": "Array of comment IDs associated with the post",
                                 "items": {
                                   "type": "string",
-                                  "description": "Comment IDs"
+                                  "description": "Comment IDs",
+                                  "example": "6457a79b23576cf0aa13adet"
                                 }
                               },
                               "owner": {
@@ -2267,7 +2380,7 @@
           "data": {
             "type": "object",
             "properties": {
-              "newPost": {
+              "post": {
                 "type": "object",
                 "properties": {
                   "description": {
@@ -2280,7 +2393,8 @@
                     "description": "Array of users IDs wich liked the post",
                     "items": {
                       "type": "string",
-                      "description": "User ID"
+                      "description": "User ID",
+                      "example": "6457a79b23576cf0aa13ad1a"
                     }
                   },
                   "comments": {
@@ -2288,7 +2402,8 @@
                     "description": "Array of comment IDs associated with the post",
                     "items": {
                       "type": "string",
-                      "description": "Comment ID"
+                      "description": "Comment ID",
+                      "example": "6457a79b23576cf0aa13ad3a"
                     }
                   },
                   "mediaFiles": {
@@ -2504,6 +2619,159 @@
                     "type": "string",
                     "description": "Post's time",
                     "example": "01 seconds ago"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "CommentsUpdateCommentRequest": {
+        "required": [],
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Post's description",
+            "example": "Let's rock!!!"
+          }
+        }
+      },
+      "CommentsUpdateCommentResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "comment": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "description": "Comment's type",
+                    "example": "Let's rock!!!"
+                  },
+                  "likes": {
+                    "type": "array",
+                    "description": "Array of users IDs wich liked the comment",
+                    "items": {
+                      "type": "string",
+                      "description": "User ID",
+                      "example": "6457a79b23576cf0aa13ade2"
+                    }
+                  },
+                  "comments": {
+                    "type": "array",
+                    "description": "Array of comment IDs associated with the comment",
+                    "items": {
+                      "type": "string",
+                      "description": "Comment ID",
+                      "example": "6457a79b23576cf0aa13adet"
+                    }
+                  },
+                  "mediaFiles": {
+                    "type": "array",
+                    "description": "Array of media file IDs associated with the comment",
+                    "items": {
+                      "type": "string",
+                      "description": "ID of a media file",
+                      "example": "6457a79b23576cf0aa13adec"
+                    }
+                  },
+                  "owner": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "description": "Owner file's id",
+                        "example": "6452b1d7f6a29d84c5b089fb"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Owner name",
+                        "example": "Sergey"
+                      },
+                      "avatarURL": {
+                        "type": "string",
+                        "description": "Owner name",
+                        "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                      }
+                    }
+                  },
+                  "_id": {
+                    "type": "string",
+                    "description": "Post's id",
+                    "example": "642831f346155749a2b6e944"
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Post's time",
+                    "example": "43 minutes ago"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "CommentsRemoveResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "deletedComment": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "description": "Post's text",
+                    "example": "Let's rock!!!"
+                  },
+                  "likes": {
+                    "type": "array",
+                    "description": "Array of users IDs wich liked the post",
+                    "items": {
+                      "type": "string",
+                      "description": "User ID",
+                      "example": "6449029e52c57b5203665225"
+                    }
+                  },
+                  "mediaFiles": {
+                    "type": "array",
+                    "description": "Array of comment IDs associated with the post",
+                    "items": {
+                      "type": "string",
+                      "description": "Comment ID",
+                      "example": "2449029e32a57b5203665225"
+                    }
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "User's id",
+                    "example": "6452b1d7f6a29d84c5b089fb"
+                  },
+                  "_id": {
+                    "type": "string",
+                    "description": "Post's id",
+                    "example": "642831f346155749a2b6e944"
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Post's time",
+                    "example": "43 minutes ago"
                   }
                 }
               }
