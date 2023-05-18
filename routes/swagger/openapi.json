@@ -886,6 +886,36 @@
         }
       }
     },
+    "/comments": {
+      "get": {
+        "tags": ["Comments"],
+        "summary": "Get all own posts",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successfully fetch all comments",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommentsGetOwnCommentsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/comments/remove/{commentId}": {
       "delete": {
         "tags": ["Comments"],
@@ -1569,7 +1599,7 @@
                         "description": {
                           "type": "string",
                           "description": "Text",
-                          "example": "TEST MEDIA My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up."
+                          "example": "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up."
                         },
                         "likes": {
                           "type": "array",
@@ -1819,7 +1849,7 @@
                       "description": {
                         "type": "string",
                         "description": "Text",
-                        "example": "TEST MEDIA My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up."
+                        "example": "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up."
                       },
                       "likes": {
                         "type": "array",
@@ -2534,6 +2564,182 @@
                     "example": "43 minutes ago"
                   }
                 }
+              }
+            }
+          }
+        }
+      },
+      "CommentsGetOwnCommentsResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "ownComments": {
+                "type": "array",
+                "description": "All comments",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "string",
+                      "description": "Comment's text",
+                      "example": "YABADABADOOOOO!"
+                    },
+                    "owner": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "description": "User's id",
+                          "example": "6452b1d7f6a29d84c5b089fb"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "User name",
+                          "example": "Sergey"
+                        },
+                        "avatarURL": {
+                          "type": "string",
+                          "description": "User name",
+                          "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                        }
+                      }
+                    },
+                    "_id": {
+                      "type": "string",
+                      "description": "Comment's id",
+                      "example": "645f6f55e4a08e69e891c4b5!"
+                    },
+                    "postId": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "description": "Post id",
+                          "example": "6452b1d7f6a29d84c5b089fb"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Text",
+                          "example": "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up."
+                        },
+                        "likes": {
+                          "type": "array",
+                          "description": "Array of likes files associated with the post",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "description": "Like's id",
+                                "example": "645f9cd39077596eff3383fa"
+                              },
+                              "postId": {
+                                "type": "string",
+                                "description": "Post's id",
+                                "example": "6452b1d7f6a29d84c5b089fb"
+                              },
+                              "type": {
+                                "type": "string",
+                                "description": "Like's type",
+                                "example": "dislike"
+                              },
+                              "owner": {
+                                "type": "object",
+                                "properties": {
+                                  "_id": {
+                                    "type": "string",
+                                    "description": "User's id",
+                                    "example": "6452b1d7f6a29d84c5b089fb"
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                    "description": "User name",
+                                    "example": "Sergey"
+                                  },
+                                  "avatarURL": {
+                                    "type": "string",
+                                    "description": "User name",
+                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "mediaFiles": {
+                          "type": "array",
+                          "description": "Array of media files associated with the post",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "description": "Media file's id",
+                                "example": "6457a79b23576cf0aa13adec"
+                              },
+                              "type": {
+                                "type": "string",
+                                "description": "Media file's type",
+                                "example": "img"
+                              },
+                              "url": {
+                                "type": "string",
+                                "description": "Media file's url",
+                                "example": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                              },
+                              "providerPublicId": {
+                                "type": "string",
+                                "description": "Cloudinary id",
+                                "example": "mnf8tsnyxfhztfemh4dq"
+                              },
+                              "owner": {
+                                "type": "string",
+                                "description": "User's id",
+                                "example": "6452b1d7f6a29d84c5b089fb"
+                              },
+                              "postId": {
+                                "type": "string",
+                                "description": "Post's id",
+                                "example": "6452b1d7f6a29d84c5b089fb"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "postedAtHuman": {
+                      "type": "string",
+                      "description": "Post's time",
+                      "example": "16 hours ago"
+                    }
+                  }
+                }
+              },
+              "totalPages": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "currentPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "perPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 10
               }
             }
           }

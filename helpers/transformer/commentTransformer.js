@@ -7,6 +7,7 @@ const commentTransformer = (comment) => {
     mediaFiles: comment.mediaFiles,
     owner: comment.owner,
     _id: comment._id,
+    postId: comment.postId,
     postedAtHuman: human(comment.createdAt),
   };
 };

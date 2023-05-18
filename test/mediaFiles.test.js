@@ -25,7 +25,7 @@ describe("Media-files Test Suite", () => {
     await server.close();
   });
 
-  test("Get all media files with valid token, 200 check", async () => {
+  test("Get all own media files with valid token, 200 check", async () => {
     const res = await request(app).get(`/media-files`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
@@ -44,7 +44,7 @@ describe("Media-files Test Suite", () => {
     expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.postedAtHuman === "string")).toBe(true);
   }, 10000);
 
-  test("Get all media files with valid token + pagination, 200 check", async () => {
+  test("Get all own media files with valid token + pagination, 200 check", async () => {
     const res = await request(app).get(`/media-files?page=1&perPage=2`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
@@ -66,14 +66,14 @@ describe("Media-files Test Suite", () => {
     expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.postedAtHuman === "string")).toBe(true);
   }, 10000);
 
-  test("Get all media files with invalid token, 401 check", async () => {
+  test("Get all own media files with invalid token, 401 check", async () => {
     const res = await request(app).get(`/media-files`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
 
     expect(res.status).toBe(401);
     expect(res.body).toHaveProperty("message", "Unauthorized");
   }, 10000);
 
-  test("Get all own posts with invalid token + pagination, 401 check", async () => {
+  test("Get all own media files with invalid token + pagination, 401 check", async () => {
     const res = await request(app).get(`/media-files?page=1&perPage=2`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
 
     expect(res.status).toBe(401);
