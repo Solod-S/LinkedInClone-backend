@@ -1,6 +1,6 @@
 const human = require("human-time");
 
-const ownPostTransformer = (post) => {
+const postTransformer = (post) => {
   return {
     description: post.description,
     likes: post.likes,
@@ -12,4 +12,4 @@ const ownPostTransformer = (post) => {
   };
 };
 
-module.exports = ownPostTransformer;
+module.exports = postTransformer;

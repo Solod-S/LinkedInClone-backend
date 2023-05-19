@@ -1,7 +1,7 @@
 const { Post } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { ownPostTransformer } = require("../../helpers/index");
+const { postTransformer } = require("../../helpers/index");
 
 const updateOwnPost = async (req, res, next) => {
   const updateData = req.body; // new data from req.body
@@ -22,7 +22,7 @@ const updateOwnPost = async (req, res, next) => {
     throw HttpError(404, "Not found");
   }
 
-  res.json({ status: "success", data: { post: ownPostTransformer(updatedPost) } });
+  res.json({ status: "success", data: { post: postTransformer(updatedPost) } });
 };
 
 module.exports = updateOwnPost;

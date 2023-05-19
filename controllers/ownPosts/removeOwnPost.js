@@ -1,7 +1,7 @@
 const { Post } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { ownPostTransformer } = require("../../helpers/index");
+const { postTransformer } = require("../../helpers/index");
 
 const removeOwnPost = async (req, res, next) => {
   const { _id } = req.user;
@@ -19,7 +19,7 @@ const removeOwnPost = async (req, res, next) => {
     throw HttpError(404, "Not found");
   }
 
-  res.json({ status: "success", data: { deletedPost: ownPostTransformer(result) } });
+  res.json({ status: "success", data: { deletedPost: postTransformer(result) } });
 };
 
 module.exports = removeOwnPost;

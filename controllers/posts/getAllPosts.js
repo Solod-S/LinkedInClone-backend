@@ -2,24 +2,23 @@ const { Post } = require("../../models");
 
 const { postTransformer } = require("../../helpers/index");
 
-const getOwnPosts = async (req, res, next) => {
-  const { _id } = req.user;
+const getAllPosts = async (req, res, next) => {
   let page = parseInt(req.query.page) || 1;
   const perPage = parseInt(req.query.perPage) || 10;
   const skip = (page - 1) * perPage;
 
-  const count = await Post.countDocuments({ owner: _id });
+  const count = await Post.countDocuments();
   const totalPages = Math.ceil(count / perPage);
 
   if (page > totalPages) {
     page = totalPages;
   }
 
-  if ((await Post.find({ owner: _id })).length <= 0) {
+  if ((await Post.find({})).length <= 0) {
     return res.json({
       status: "success",
       data: {
-        ownPosts: [],
+        posts: [],
         totalPages,
         currentPage: page,
         perPage,
@@ -27,7 +26,7 @@ const getOwnPosts = async (req, res, next) => {
     });
   }
 
-  const ownPosts = await Post.find({ owner: _id })
+  const posts = await Post.find({})
     .sort({ createdAt: -1 })
     .skip(skip < 0 ? 0 : skip)
     .limit(perPage)
@@ -41,12 +40,13 @@ const getOwnPosts = async (req, res, next) => {
       select: "url type providerPublicId",
       populate: { path: "owner", select: "_id name avatarURL" },
     })
-    .populate({ path: "likes", select: "owner type", populate: { path: "owner", select: "_id name avatarURL" } });
+    .populate({ path: "likes", select: "owner type", populate: { path: "owner", select: "_id name avatarURL" } })
+    .populate({ path: "owner", select: "_id name avatarURL" });
 
   res.json({
     status: "success",
     data: {
-      ownPosts: ownPosts.map((post) => postTransformer(post)),
+      posts: posts.map((post) => postTransformer(post)),
       totalPages,
       currentPage: page,
       perPage,
@@ -54,4 +54,4 @@ const getOwnPosts = async (req, res, next) => {
   });
 };
 
-module.exports = getOwnPosts;
+module.exports = getAllPosts;

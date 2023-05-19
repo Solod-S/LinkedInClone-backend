@@ -5,7 +5,14 @@ require("dotenv").config();
 const swaggerUi = require("swagger-ui-express");
 
 const swaggerDocument = require("./routes/swagger/openapi.json");
-const { userRouter, ownPostsRouter, mediaFilesRouter, likesRouter, commentsRouter } = require("./routes/api/");
+const {
+  userRouter,
+  ownPostsRouter,
+  postsRouter,
+  mediaFilesRouter,
+  likesRouter,
+  commentsRouter,
+} = require("./routes/api/");
 
 const app = express();
 
@@ -19,6 +26,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/user", userRouter);
 app.use("/media-files", mediaFilesRouter);
 app.use("/own-posts", ownPostsRouter);
+app.use("/posts", postsRouter);
 app.use("/likes", likesRouter);
 app.use("/comments", commentsRouter);
 

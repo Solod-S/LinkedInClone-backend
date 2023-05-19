@@ -41,10 +41,6 @@
       "description": "Favorite endpoints"
     },
     {
-      "name": "Popular",
-      "description": "Popular endpoints"
-    },
-    {
       "name": "Search",
       "description": "Search endpoints"
     }

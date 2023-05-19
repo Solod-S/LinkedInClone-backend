@@ -1,18 +1,13 @@
-const { User, Post } = require("../../models");
-
+const { Post } = require("../../models");
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { postTransformer, userTransformer } = require("../../helpers/index");
+const { postTransformer } = require("../../helpers/index");
 
-const getUserById = async (req, res, next) => {
-  const { userId } = req.params;
+const getPostsByQuery = async (req, res, next) => {
+  const { keyWord } = req.params;
 
-  const user = await User.findById({ _id: userId });
-
-  if (!user) {
-    throw HttpError(404, "Not found");
-  }
-
-  const posts = await Post.find({ owner: userId })
+  const trimmedKeyWord = keyWord.trim();
+  const query = { description: { $regex: trimmedKeyWord, $options: "i" } };
+  const posts = await Post.find(query)
     .populate({
       path: "mediaFiles",
       select: "url type providerPublicId",
@@ -28,10 +23,14 @@ const getUserById = async (req, res, next) => {
       ],
     });
 
+  if (!posts) {
+    throw HttpError(404, "Not found");
+  }
+
   res.status(200).json({
-    status: "succes",
-    data: { user: userTransformer(user), posts: posts.map((post) => postTransformer(post)) },
+    status: "success",
+    data: { posts: posts.map((post) => postTransformer(post)) },
   });
 };
 
-module.exports = getUserById;
+module.exports = getPostsByQuery;
