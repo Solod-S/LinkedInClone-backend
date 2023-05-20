@@ -1,4 +1,5 @@
 const messages = {
+  102: "ss",
   400: "Bad Request",
   401: "Unauthorized",
   402: "Payment required",
