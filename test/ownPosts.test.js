@@ -42,7 +42,7 @@ describe("Own-post Test Suite", () => {
   }, 10000);
 
   test("Get all own posts with valid token + pagination, 200 check", async () => {
-    const res = await request(app).get(`/own-posts?page=2&perPage=12`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/own-posts?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
     expect(typeof res.body.data).toBe("object");
@@ -71,7 +71,7 @@ describe("Own-post Test Suite", () => {
   }, 10000);
 
   test("Get all own posts with invalid token + pagination, 401 check", async () => {
-    const res = await request(app).get(`/own-posts?page=2&perPage=12`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+    const res = await request(app).get(`/own-posts?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
 
     expect(res.status).toBe(401);
     expect(res.body).toHaveProperty("message", "Unauthorized");

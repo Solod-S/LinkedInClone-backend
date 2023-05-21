@@ -46,7 +46,8 @@ const getPostsByQuery = async (req, res, next) => {
         { path: "likes", select: "owner type", populate: { path: "owner", select: "_id name avatarURL" } },
         { path: "mediaFiles", select: "url type owner", populate: { path: "owner", select: "_id name avatarURL" } },
       ],
-    });
+    })
+    .populate({ path: "owner", select: "_id name avatarURL" });
 
   res.status(200).json({
     status: "success",

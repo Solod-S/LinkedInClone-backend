@@ -8,7 +8,7 @@ const mediaFileSchema = new Schema(
     type: { type: String, enum: ["img", "video"], default: "img" },
     location: { type: String, enum: ["comments", "posts"], default: "posts", required: true },
     url: { type: String, required: true },
-    providerPublicId: { type: String },
+    providerPublicId: { type: String, default: "null", required: true },
     // this is => cloudinaryResource.public_id,
     owner: { type: Schema.Types.ObjectId, ref: "User", required: true },
     postId: { type: Schema.Types.ObjectId, ref: "Post" },

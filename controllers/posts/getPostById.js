@@ -20,7 +20,8 @@ const getPostById = async (req, res, next) => {
         { path: "likes", select: "owner type", populate: { path: "owner", select: "_id name avatarURL" } },
         { path: "mediaFiles", select: "url type owner", populate: { path: "owner", select: "_id name avatarURL" } },
       ],
-    });
+    })
+    .populate({ path: "owner", select: "_id name avatarURL" });
 
   if (!post) {
     throw HttpError(404, "Not found");
