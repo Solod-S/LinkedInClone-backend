@@ -6,6 +6,8 @@ const resendVerifyEmail = require("./resendVerifyEmail");
 const devResendVerifyEmail = require("./devResendVerifyEmail");
 const login = require("./login");
 const getCurrent = require("./getCurrent");
+const getAllUsers = require("./getAllUsers");
+const getUsersByQuery = require("./getUsersByQuery");
 const getUserById = require("./getUserById");
 const logout = require("./logout");
 const remove = require("./remove");
@@ -19,6 +21,8 @@ module.exports = {
   login: ctrlWrapper(login),
   getCurrent: ctrlWrapper(getCurrent),
   getUserById: ctrlWrapper(getUserById),
+  getAllUsers: ctrlWrapper(getAllUsers),
+  getUsersByQuery: ctrlWrapper(getUsersByQuery),
   logout: ctrlWrapper(logout),
   remove: ctrlWrapper(remove),
 };

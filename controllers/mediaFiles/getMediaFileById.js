@@ -7,7 +7,7 @@ const getMediaFileById = async (req, res, next) => {
   const { mediaFileId } = req.params;
 
   const mediaFile = await MediaFile.findById({ _id: mediaFileId })
-    .populate({ path: "owner", select: "_id name avatarURL" })
+    .populate({ path: "owner", select: "_id surname name avatarURL" })
     .populate({
       path: "postId",
       select: "_id description likes comments mediaFiles owner type",
@@ -15,16 +15,24 @@ const getMediaFileById = async (req, res, next) => {
         {
           path: "comments",
           select: "owner description likes mediaFiles createdAt updatedAt",
-          populate: { path: "owner", select: "_id name avatarURL" },
+          populate: { path: "owner", select: "_id surname name avatarURL" },
         },
-        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id name avatarURL" } },
-        { path: "mediaFiles", select: "url type owner", populate: { path: "owner", select: "_id name avatarURL" } },
+        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+        {
+          path: "mediaFiles",
+          select: "url type owner",
+          populate: { path: "owner", select: "_id surname name avatarURL" },
+        },
       ],
     })
     .populate({
       path: "commentId",
       select: "_id description likes comments mediaFiles owner type",
-      populate: { path: "likes", select: "_id type owner", populate: { path: "owner", select: "_id name avatarURL" } },
+      populate: {
+        path: "likes",
+        select: "_id type owner",
+        populate: { path: "owner", select: "_id surname name avatarURL" },
+      },
     });
 
   if (!mediaFile) {

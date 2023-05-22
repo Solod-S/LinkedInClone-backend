@@ -42,7 +42,7 @@
     }
   ],
   "paths": {
-    "/user/register": {
+    "/users/register": {
       "post": {
         "tags": ["User"],
         "summary": "User registration",
@@ -92,7 +92,7 @@
         }
       }
     },
-    "/user/verify": {
+    "/users/verify": {
       "post": {
         "tags": ["User"],
         "summary": "Send verification link by email",
@@ -142,7 +142,7 @@
         }
       }
     },
-    "/user/login": {
+    "/users/login": {
       "post": {
         "tags": ["User"],
         "summary": "User authentication",
@@ -192,7 +192,7 @@
         }
       }
     },
-    "/user/current": {
+    "/users/current": {
       "get": {
         "tags": ["User"],
         "summary": "Get current user info",
@@ -222,7 +222,7 @@
         }
       }
     },
-    "/user/{userId}": {
+    "/users/{userId}": {
       "get": {
         "tags": ["User"],
         "summary": "Get user info by id",
@@ -272,7 +272,7 @@
         }
       }
     },
-    "/user/logout": {
+    "/users/logout": {
       "get": {
         "tags": ["User"],
         "summary": "User logout",
@@ -302,7 +302,7 @@
         }
       }
     },
-    "/user/remove": {
+    "/users/remove": {
       "delete": {
         "tags": ["User"],
         "summary": "Delete user",
@@ -1208,6 +1208,11 @@
                 "type": "string",
                 "description": "User's name",
                 "example": "Sergey Nikolayovich"
+              },
+              "surname": {
+                "type": "string",
+                "description": "User's surname",
+                "example": "Solod"
               }
             }
           }
@@ -1298,17 +1303,21 @@
                     "description": "User's id",
                     "example": "642831f346155749a2b6e944"
                   },
-                  "name": {
+                  "surname": {
                     "type": "string",
-                    "description": "User's name",
-                    "example": "Sergey Nikolayovich"
+                    "description": "User's surname",
+                    "example": "Solod"
                   },
                   "email": {
                     "type": "string",
                     "description": "User's email",
                     "format": "email"
                   },
-
+                  "name": {
+                    "type": "string",
+                    "description": "User's name",
+                    "example": "Sergey Nikolayovich"
+                  },
                   "avatarURL": {
                     "type": "string",
                     "description": "User's avatar link",
@@ -1376,6 +1385,11 @@
                     "description": "User's name",
                     "example": "Sergey Nikolayovich"
                   },
+                  "surname": {
+                    "type": "string",
+                    "description": "User's surname",
+                    "example": "Solod"
+                  },
                   "email": {
                     "type": "string",
                     "description": "User's email",
@@ -1423,6 +1437,11 @@
                     "type": "string",
                     "description": "User's name",
                     "example": "Sergey Nikolayovich"
+                  },
+                  "surname": {
+                    "type": "string",
+                    "description": "User's surname",
+                    "example": "Solod"
                   },
                   "email": {
                     "type": "string",
@@ -1476,6 +1495,11 @@
                                 "description": "Owner name",
                                 "example": "Sergey"
                               },
+                              "surname": {
+                                "type": "string",
+                                "description": "Owner surname",
+                                "example": "Solod"
+                              },
                               "avatarURL": {
                                 "type": "string",
                                 "description": "Owner avatar",
@@ -1524,6 +1548,11 @@
                                 "type": "string",
                                 "description": "Owner name",
                                 "example": "Sergey"
+                              },
+                              "surname": {
+                                "type": "string",
+                                "description": "Owner surname",
+                                "example": "Solod"
                               },
                               "avatarURL": {
                                 "type": "string",
@@ -1584,6 +1613,11 @@
                                 "description": "Owner name",
                                 "example": "Sergey"
                               },
+                              "surname": {
+                                "type": "string",
+                                "description": "Owner surname",
+                                "example": "Solod"
+                              },
                               "avatarURL": {
                                 "type": "string",
                                 "description": "Owner name",
@@ -1616,6 +1650,11 @@
                           "type": "string",
                           "description": "Owner name",
                           "example": "Sergey"
+                        },
+                        "surname": {
+                          "type": "string",
+                          "description": "Owner surname",
+                          "example": "Solod"
                         },
                         "avatarURL": {
                           "type": "string",
@@ -1665,6 +1704,11 @@
                     "type": "string",
                     "description": "User's name",
                     "example": "Sergey Nikolayovich"
+                  },
+                  "surname": {
+                    "type": "string",
+                    "description": "Owner surname",
+                    "example": "Solod"
                   },
                   "email": {
                     "type": "string",
@@ -1729,6 +1773,11 @@
                           "description": "User name",
                           "example": "Sergey"
                         },
+                        "surname": {
+                          "type": "string",
+                          "description": "Owner surname",
+                          "example": "Solod"
+                        },
                         "avatarURL": {
                           "type": "string",
                           "description": "User name",
@@ -1788,6 +1837,11 @@
                                     "description": "User name",
                                     "example": "Sergey"
                                   },
+                                  "surname": {
+                                    "type": "string",
+                                    "description": "Owner surname",
+                                    "example": "Solod"
+                                  },
                                   "avatarURL": {
                                     "type": "string",
                                     "description": "User name",
@@ -1844,6 +1898,11 @@
                                     "type": "string",
                                     "description": "Owner name",
                                     "example": "Sergey"
+                                  },
+                                  "surname": {
+                                    "type": "string",
+                                    "description": "Owner surname",
+                                    "example": "Solod"
                                   },
                                   "avatarURL": {
                                     "type": "string",
@@ -1979,6 +2038,11 @@
                         "description": "Owner name",
                         "example": "Sergey"
                       },
+                      "surname": {
+                        "type": "string",
+                        "description": "Owner surname",
+                        "example": "Solod"
+                      },
                       "avatarURL": {
                         "type": "string",
                         "description": "Owner avatar",
@@ -2038,6 +2102,11 @@
                                   "description": "User name",
                                   "example": "Sergey"
                                 },
+                                "surname": {
+                                  "type": "string",
+                                  "description": "Owner surname",
+                                  "example": "Solod"
+                                },
                                 "avatarURL": {
                                   "type": "string",
                                   "description": "User name",
@@ -2092,6 +2161,11 @@
                                   "type": "string",
                                   "description": "Owner name",
                                   "example": "Sergey"
+                                },
+                                "surname": {
+                                  "type": "string",
+                                  "description": "Owner surname",
+                                  "example": "Solod"
                                 },
                                 "avatarURL": {
                                   "type": "string",
@@ -2409,6 +2483,11 @@
                                 "type": "string",
                                 "description": "Owner name",
                                 "example": "Sergey"
+                              },
+                              "surname": {
+                                "type": "string",
+                                "description": "Owner surname",
+                                "example": "Solod"
                               },
                               "avatarURL": {
                                 "type": "string",
@@ -2774,6 +2853,11 @@
                                 "description": "Owner name",
                                 "example": "Sergey"
                               },
+                              "surname": {
+                                "type": "string",
+                                "description": "Owner surname",
+                                "example": "Solod"
+                              },
                               "avatarURL": {
                                 "type": "string",
                                 "description": "Owner avatar",
@@ -2828,6 +2912,11 @@
                                 "type": "string",
                                 "description": "Owner name",
                                 "example": "Sergey"
+                              },
+                              "surname": {
+                                "type": "string",
+                                "description": "Owner surname",
+                                "example": "Solod"
                               },
                               "avatarURL": {
                                 "type": "string",
@@ -2990,6 +3079,11 @@
                                 "description": "Owner name",
                                 "example": "Sergey"
                               },
+                              "surname": {
+                                "type": "string",
+                                "description": "Owner surname",
+                                "example": "Solod"
+                              },
                               "avatarURL": {
                                 "type": "string",
                                 "description": "Owner avatar",
@@ -3044,6 +3138,11 @@
                                 "type": "string",
                                 "description": "Owner name",
                                 "example": "Sergey"
+                              },
+                              "surname": {
+                                "type": "string",
+                                "description": "Owner surname",
+                                "example": "Solod"
                               },
                               "avatarURL": {
                                 "type": "string",
@@ -3206,6 +3305,11 @@
                                 "description": "Owner name",
                                 "example": "Sergey"
                               },
+                              "surname": {
+                                "type": "string",
+                                "description": "Owner surname",
+                                "example": "Solod"
+                              },
                               "avatarURL": {
                                 "type": "string",
                                 "description": "Owner avatar",
@@ -3260,6 +3364,11 @@
                                 "type": "string",
                                 "description": "Owner name",
                                 "example": "Sergey"
+                              },
+                              "surname": {
+                                "type": "string",
+                                "description": "Owner surname",
+                                "example": "Solod"
                               },
                               "avatarURL": {
                                 "type": "string",
@@ -3419,6 +3528,11 @@
                               "description": "Owner name",
                               "example": "Sergey"
                             },
+                            "surname": {
+                              "type": "string",
+                              "description": "Owner surname",
+                              "example": "Solod"
+                            },
                             "avatarURL": {
                               "type": "string",
                               "description": "Owner avatar",
@@ -3473,6 +3587,11 @@
                               "type": "string",
                               "description": "Owner name",
                               "example": "Sergey"
+                            },
+                            "surname": {
+                              "type": "string",
+                              "description": "Owner surname",
+                              "example": "Solod"
                             },
                             "avatarURL": {
                               "type": "string",
@@ -3600,6 +3719,11 @@
                           "description": "User name",
                           "example": "Sergey"
                         },
+                        "surname": {
+                          "type": "string",
+                          "description": "Owner surname",
+                          "example": "Solod"
+                        },
                         "avatarURL": {
                           "type": "string",
                           "description": "User name",
@@ -3658,6 +3782,11 @@
                                     "type": "string",
                                     "description": "User name",
                                     "example": "Sergey"
+                                  },
+                                  "surname": {
+                                    "type": "string",
+                                    "description": "Owner surname",
+                                    "example": "Solod"
                                   },
                                   "avatarURL": {
                                     "type": "string",
@@ -3897,6 +4026,11 @@
                         "type": "string",
                         "description": "Owner name",
                         "example": "Sergey"
+                      },
+                      "surname": {
+                        "type": "string",
+                        "description": "Owner surname",
+                        "example": "Solod"
                       },
                       "avatarURL": {
                         "type": "string",

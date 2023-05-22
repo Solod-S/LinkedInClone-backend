@@ -31,7 +31,7 @@ const getAllMediaFiles = async (req, res, next) => {
     .sort({ createdAt: -1 })
     .skip(skip < 0 ? 0 : skip)
     .limit(perPage)
-    .populate({ path: "owner", select: "_id name avatarURL" })
+    .populate({ path: "owner", select: "_id surname name avatarURL" })
     .populate({
       path: "postId",
       select: "_id description likes comments mediaFiles owner type",
@@ -39,18 +39,26 @@ const getAllMediaFiles = async (req, res, next) => {
         {
           path: "comments",
           select: "owner description likes mediaFiles createdAt updatedAt",
-          populate: { path: "owner", select: "_id name avatarURL" },
+          populate: { path: "owner", select: "_id surname name avatarURL" },
         },
-        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id name avatarURL" } },
-        { path: "mediaFiles", select: "url type owner", populate: { path: "owner", select: "_id name avatarURL" } },
+        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+        {
+          path: "mediaFiles",
+          select: "url type owner",
+          populate: { path: "owner", select: "_id surname name avatarURL" },
+        },
       ],
     })
     .populate({
       path: "commentId",
       select: "_id description likes comments mediaFiles owner type",
       populate: [
-        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id name avatarURL" } },
-        { path: "mediaFiles", select: "url type owner", populate: { path: "owner", select: "_id name avatarURL" } },
+        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+        {
+          path: "mediaFiles",
+          select: "url type owner",
+          populate: { path: "owner", select: "_id surname name avatarURL" },
+        },
       ],
     });
 

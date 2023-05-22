@@ -33,15 +33,19 @@ const getPopularPosts = async (req, res, next) => {
     .populate({
       path: "comments",
       select: "owner description likes mediaFiles createdAt updatedAt",
-      populate: { path: "owner", select: "_id name avatarURL" },
+      populate: { path: "owner", select: "_id surname name avatarURL" },
     })
     .populate({
       path: "mediaFiles",
       select: "url type providerPublicId",
-      populate: { path: "owner", select: "_id name avatarURL" },
+      populate: { path: "owner", select: "_id surname name avatarURL" },
     })
-    .populate({ path: "likes", select: "owner type", populate: { path: "owner", select: "_id name avatarURL" } })
-    .populate({ path: "owner", select: "_id name avatarURL" });
+    .populate({
+      path: "likes",
+      select: "owner type",
+      populate: { path: "owner", select: "_id surname name avatarURL" },
+    })
+    .populate({ path: "owner", select: "_id surname name avatarURL" });
 
   res.json({
     status: "success",

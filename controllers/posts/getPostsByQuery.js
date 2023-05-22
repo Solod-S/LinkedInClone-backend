@@ -1,9 +1,8 @@
 const { Post } = require("../../models");
-// const { HttpError } = require("../../routes/errors/HttpErrors");
 const { postTransformer } = require("../../helpers/index");
 
 const getPostsByQuery = async (req, res, next) => {
-  const { search } = req.query;
+  const { search = "" } = req.query;
   let page = parseInt(req.query.page) || 1;
   const perPage = parseInt(req.query.perPage) || 10;
   const trimmedKeyword = search.trim();
@@ -17,7 +16,7 @@ const getPostsByQuery = async (req, res, next) => {
     page = totalPages;
   }
 
-  if ((await Post.find()).length <= 0) {
+  if (!search || (await Post.find()).length <= 0) {
     return res.json({
       status: "success",
       data: {
@@ -36,18 +35,26 @@ const getPostsByQuery = async (req, res, next) => {
     .populate({
       path: "mediaFiles",
       select: "url type providerPublicId",
-      populate: { path: "owner", select: "_id name avatarURL" },
+      populate: { path: "owner", select: "_id surname name avatarURL" },
     })
-    .populate({ path: "likes", select: "owner type", populate: { path: "owner", select: "_id name avatarURL" } })
+    .populate({
+      path: "likes",
+      select: "owner type",
+      populate: { path: "owner", select: "_id surname name avatarURL" },
+    })
     .populate({
       path: "comments",
       populate: [
-        { path: "owner", select: "_id name avatarURL" },
-        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id name avatarURL" } },
-        { path: "mediaFiles", select: "url type owner", populate: { path: "owner", select: "_id name avatarURL" } },
+        { path: "owner", select: "_id surname name avatarURL" },
+        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+        {
+          path: "mediaFiles",
+          select: "url type owner",
+          populate: { path: "owner", select: "_id surname name avatarURL" },
+        },
       ],
     })
-    .populate({ path: "owner", select: "_id name avatarURL" });
+    .populate({ path: "owner", select: "_id surname name avatarURL" });
 
   res.status(200).json({
     status: "success",

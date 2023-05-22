@@ -32,7 +32,7 @@ const register = async (rec, res) => {
 
   res.status(201).json({
     status: "succes",
-    data: { email: newUser.email, name: newUser.name },
+    data: { email: newUser.email, name: newUser.name, surname: newUser.surname },
   });
 };
 

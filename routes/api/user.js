@@ -18,11 +18,17 @@ userRouter.get("/current", authenticate, users.getCurrent);
 // logout
 userRouter.get("/logout", authenticate, users.logout);
 
-// get user by id
-userRouter.get("/:userId", authenticate, users.getUserById);
-
 // del-user
 userRouter.delete("/remove", authenticate, users.remove);
+
+// get all users
+userRouter.get("/", authenticate, users.getAllUsers);
+
+// search user by query
+userRouter.get("/search", authenticate, users.getUsersByQuery);
+
+// get user by id
+userRouter.get("/:userId", authenticate, users.getUserById);
 
 // dev endpoints
 userRouter.post("/devregister", validateBody(userSchemas.registerSchema), users.devRegister);

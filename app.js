@@ -23,7 +23,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use("/user", userRouter);
+app.use("/users", userRouter);
 app.use("/media-files", mediaFilesRouter);
 app.use("/own-posts", ownPostsRouter);
 app.use("/posts", postsRouter);

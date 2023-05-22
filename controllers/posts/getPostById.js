@@ -10,18 +10,26 @@ const getPostById = async (req, res, next) => {
     .populate({
       path: "mediaFiles",
       select: "url type providerPublicId",
-      populate: { path: "owner", select: "_id name avatarURL" },
+      populate: { path: "owner", select: "_id surname name avatarURL" },
     })
-    .populate({ path: "likes", select: "owner type", populate: { path: "owner", select: "_id name avatarURL" } })
+    .populate({
+      path: "likes",
+      select: "owner type",
+      populate: { path: "owner", select: "_id surname name avatarURL" },
+    })
     .populate({
       path: "comments",
       populate: [
-        { path: "owner", select: "_id name avatarURL" },
-        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id name avatarURL" } },
-        { path: "mediaFiles", select: "url type owner", populate: { path: "owner", select: "_id name avatarURL" } },
+        { path: "owner", select: "_id surname name avatarURL" },
+        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+        {
+          path: "mediaFiles",
+          select: "url type owner",
+          populate: { path: "owner", select: "_id surname name avatarURL" },
+        },
       ],
     })
-    .populate({ path: "owner", select: "_id name avatarURL" });
+    .populate({ path: "owner", select: "_id surname name avatarURL" });
 
   if (!post) {
     throw HttpError(404, "Not found");
