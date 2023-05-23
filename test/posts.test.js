@@ -23,13 +23,13 @@ describe("Post Test Suite", () => {
     const res = await request(app).get(`/posts`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
     expect(Array.isArray(res.body.data.posts)).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.description === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.likes))).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
+    expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.owner === "object")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
@@ -39,7 +39,6 @@ describe("Post Test Suite", () => {
     const res = await request(app).get(`/posts?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.totalPages).toBe("number");
@@ -49,6 +48,7 @@ describe("Post Test Suite", () => {
     expect(res.body.data.posts.every((post) => typeof post.description === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.likes))).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
+    expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.owner === "object")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
@@ -75,13 +75,13 @@ describe("Post Test Suite", () => {
     const res = await request(app).get(`/posts/popular`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
     expect(Array.isArray(res.body.data.posts)).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.description === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.likes))).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
+    expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.owner === "object")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
@@ -91,7 +91,6 @@ describe("Post Test Suite", () => {
     const res = await request(app).get(`/posts/popular?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.totalPages).toBe("number");
@@ -101,6 +100,7 @@ describe("Post Test Suite", () => {
     expect(res.body.data.posts.every((post) => typeof post.description === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.likes))).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
+    expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.owner === "object")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
@@ -129,13 +129,13 @@ describe("Post Test Suite", () => {
     const res = await request(app).get(`/posts/search?search=Tequila+is`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
     expect(Array.isArray(res.body.data.posts)).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.description === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.likes))).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
+    expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.owner === "object")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
@@ -147,7 +147,6 @@ describe("Post Test Suite", () => {
       .set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.totalPages).toBe("number");
@@ -157,6 +156,7 @@ describe("Post Test Suite", () => {
     expect(res.body.data.posts.every((post) => typeof post.description === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.likes))).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
+    expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.owner === "object")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
@@ -185,7 +185,6 @@ describe("Post Test Suite", () => {
     const res = await request(app).get(`/posts/6460b832db50f7007597f87c`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.post).toBe("object");

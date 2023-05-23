@@ -80,6 +80,7 @@ const getAllUsers = async (req, res, next) => {
         _id: "$_id",
         name: { $first: "$name" },
         email: { $first: "$email" },
+        surname: { $first: "$surname" },
         createdAt: { $first: "$createdAt" },
         posts: { $push: "$posts" },
       },

@@ -14,6 +14,7 @@ const name = "Serg";
 let veifyCode = null;
 let email = null;
 let token = null;
+let userId = null;
 
 describe("User Test Suite", () => {
   let server;
@@ -190,6 +191,7 @@ describe("User Test Suite", () => {
       .set("Accept", "application/json");
 
     token = res.body.data.token;
+    userId = res.body.data.user._id;
 
     expect(res.status).toBe(200);
     expect(typeof res.body.data.token).toBe("string");
@@ -300,6 +302,7 @@ describe("User Test Suite", () => {
     const res = await request(app).get(`/users/current`).set("Authorization", `Bearer ${token}`);
 
     expect(res.status).toBe(200);
+    expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data.token).toBe("string");
     expect(res.body.data.user instanceof Object).toBe(true);
     expect(typeof res.body.data.user._id).toBe("string");
@@ -316,6 +319,124 @@ describe("User Test Suite", () => {
     expect(res.body).toEqual({
       message: "Unauthorized",
     });
+  }, 10000);
+
+  test("Get user by id with invalid token, 401 check", async () => {
+    const res = await request(app).get(`/users/${userId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+
+    expect(res.status).toBe(401);
+    expect(res.body).toEqual({
+      message: "Unauthorized",
+    });
+  }, 10000);
+
+  test("Get user by id with valid token, 200 check", async () => {
+    const res = await request(app).get(`/users/${userId}`).set("Authorization", `Bearer ${token}`);
+
+    expect(res.status).toBe(200);
+    expect(typeof res.body.status).toBe("string");
+    expect(res.body.data.user instanceof Object).toBe(true);
+    expect(typeof res.body.data.user._id).toBe("string");
+    expect(typeof res.body.data.user.email).toBe("string");
+    expect(typeof res.body.data.user.name).toBe("string");
+    expect(typeof res.body.data.user.surname).toBe("string");
+    expect(typeof res.body.data.user.avatarURL).toBe("string");
+    expect(Array.isArray(res.body.data.posts)).toBe(true);
+    expect(res.body.data.posts.every((post) => typeof post.description === "string")).toBe(true);
+    expect(res.body.data.posts.every((post) => Array.isArray(post.likes))).toBe(true);
+    expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
+    expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
+    expect(res.body.data.posts.every((post) => typeof post.owner === "object")).toBe(true);
+    expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
+    expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
+  }, 10000);
+
+  test("GET /users with invalid token should return 401 status and valid user data", async () => {
+    // Make sure that token is defined
+    expect(WRONG_TOKEN).toBeDefined();
+
+    // Make request to API endpoint with Authorization header
+    const res = await request(app).get("/users").set("Authorization", `Bearer ${WRONG_TOKEN}`);
+
+    // Check status code and response format
+    expect(res.status).toBe(401);
+    expect(res.body).toEqual({
+      message: "Unauthorized",
+    });
+  }, 10000);
+
+  test("GET /users with valid token should return 200 status and valid user data", async () => {
+    // Make sure that token is defined
+    expect(token).toBeDefined();
+
+    // Make request to API endpoint with Authorization header
+    const res = await request(app).get("/users").set("Authorization", `Bearer ${token}`);
+
+    // Check status code and response format
+    expect(res.status).toBe(200);
+    expect(typeof res.body).toBe("object");
+    expect(typeof res.body.status).toBe("string");
+    expect(typeof res.body.data).toBe("object");
+
+    // Check that the users array is present and has valid data
+    const { users } = res.body.data;
+    expect(Array.isArray(users)).toBe(true);
+
+    if (users.length > 0) {
+      users.forEach((user) => {
+        expect(typeof user._id === "string").toBe(true);
+        expect(typeof user.name).toBe("string");
+        expect(typeof user.email).toBe("string");
+        expect(typeof user.surname).toBe("string");
+
+        expect(Array.isArray(user.posts)).toBe(true);
+
+        if (user.posts.length > 0) {
+          user.posts.forEach((post) => {
+            expect(Array.isArray(post.likes)).toBe(true);
+            expect(Array.isArray(post.comments)).toBe(true);
+            expect(Array.isArray(post.mediaFiles)).toBe(true);
+          });
+        }
+      });
+    }
+  }, 10000);
+
+  test("GET /users with valid token + pagination should return 200 status and valid user data", async () => {
+    // Make sure that token is defined
+    expect(token).toBeDefined();
+
+    // Make request to API endpoint with Authorization header
+    const res = await request(app).get("/users?page=1&perPage=2").set("Authorization", `Bearer ${token}`);
+
+    // Check status code and response format
+    expect(res.status).toBe(200);
+    expect(typeof res.body).toBe("object");
+    expect(typeof res.body.status).toBe("string");
+    expect(typeof res.body.data).toBe("object");
+
+    // Check that the users array is present and has valid data
+    const { users } = res.body.data;
+    expect(Array.isArray(users)).toBe(true);
+
+    if (users.length > 0) {
+      users.forEach((user) => {
+        expect(typeof user._id === "string").toBe(true);
+        expect(typeof user.name).toBe("string");
+        expect(typeof user.email).toBe("string");
+        expect(typeof user.surname).toBe("string");
+
+        expect(Array.isArray(user.posts)).toBe(true);
+
+        if (user.posts.length > 0) {
+          user.posts.forEach((post) => {
+            expect(Array.isArray(post.likes)).toBe(true);
+            expect(Array.isArray(post.comments)).toBe(true);
+            expect(Array.isArray(post.mediaFiles)).toBe(true);
+          });
+        }
+      });
+    }
   }, 10000);
 
   test("Logout with valid token, 200 check", async () => {

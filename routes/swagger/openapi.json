@@ -17,8 +17,8 @@
   ],
   "tags": [
     {
-      "name": "User",
-      "description": "User operation endpoints"
+      "name": "Users",
+      "description": "Users operation endpoints"
     },
     {
       "name": "Media files",
@@ -44,7 +44,7 @@
   "paths": {
     "/users/register": {
       "post": {
-        "tags": ["User"],
+        "tags": ["Users"],
         "summary": "User registration",
         "parameters": [],
         "requestBody": {
@@ -53,7 +53,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserRegistrationRequest"
+                "$ref": "#/components/schemas/UsersRegistrationRequest"
               }
             }
           }
@@ -64,7 +64,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserRegistrationResponse"
+                  "$ref": "#/components/schemas/UsersRegistrationResponse"
                 }
               }
             }
@@ -84,7 +84,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserRegistrationErrorResponse"
+                  "$ref": "#/components/schemas/UsersRegistrationErrorResponse"
                 }
               }
             }
@@ -94,7 +94,7 @@
     },
     "/users/verify": {
       "post": {
-        "tags": ["User"],
+        "tags": ["Users"],
         "summary": "Send verification link by email",
         "parameters": [],
         "requestBody": {
@@ -103,7 +103,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserVerificstionRequest"
+                "$ref": "#/components/schemas/UsersVerificstionRequest"
               }
             }
           }
@@ -134,7 +134,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserVerificstionErrorResponse"
+                  "$ref": "#/components/schemas/UsersVerificstionErrorResponse"
                 }
               }
             }
@@ -144,7 +144,7 @@
     },
     "/users/login": {
       "post": {
-        "tags": ["User"],
+        "tags": ["Users"],
         "summary": "User authentication",
         "parameters": [],
         "requestBody": {
@@ -153,7 +153,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserLoginRequest"
+                "$ref": "#/components/schemas/UsersLoginRequest"
               }
             }
           }
@@ -164,7 +164,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserLoginResponse"
+                  "$ref": "#/components/schemas/UsersLoginResponse"
                 }
               }
             }
@@ -184,7 +184,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserLoginErrorResponse"
+                  "$ref": "#/components/schemas/UsersLoginErrorResponse"
                 }
               }
             }
@@ -194,7 +194,7 @@
     },
     "/users/current": {
       "get": {
-        "tags": ["User"],
+        "tags": ["Users"],
         "summary": "Get current user info",
         "security": [{ "Bearer": [] }],
         "parameters": [],
@@ -204,7 +204,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserGetCurrentResponse"
+                  "$ref": "#/components/schemas/UsersGetCurrentResponse"
                 }
               }
             }
@@ -224,7 +224,7 @@
     },
     "/users/logout": {
       "get": {
-        "tags": ["User"],
+        "tags": ["Users"],
         "summary": "User logout",
         "security": [{ "Bearer": [] }],
         "parameters": [],
@@ -234,37 +234,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserLogOutResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Token is invalid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users/remove": {
-      "delete": {
-        "tags": ["User"],
-        "summary": "Delete user",
-        "security": [{ "Bearer": [] }],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Successful user termination",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserDeleteResponse"
+                  "$ref": "#/components/schemas/UsersLogOutResponse"
                 }
               }
             }
@@ -284,7 +254,7 @@
     },
     "/users/{userId}": {
       "get": {
-        "tags": ["User"],
+        "tags": ["Users"],
         "summary": "Get user info by id",
         "security": [{ "Bearer": [] }],
         "parameters": [
@@ -304,7 +274,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserGetUserDataResponse"
+                  "$ref": "#/components/schemas/UsersGetUserDataResponse"
                 }
               }
             }
@@ -334,7 +304,7 @@
     },
     "/users": {
       "get": {
-        "tags": ["User"],
+        "tags": ["Users"],
         "summary": "Get all users",
         "security": [{ "Bearer": [] }],
         "parameters": [],
@@ -345,6 +315,77 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UsersAllUsersResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/search": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Search users by query",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "search",
+            "required": true,
+            "description": "Search query",
+            "schema": {
+              "type": "string",
+              "example": "SeRge"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully find users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsersSearchUsersResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/remove": {
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Delete user",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful user termination",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsersDeleteResponse"
                 }
               }
             }
@@ -1196,7 +1237,7 @@
           }
         }
       },
-      "UserRegistrationRequest": {
+      "UsersRegistrationRequest": {
         "type": "object",
         "required": ["name", "email", "password"],
         "properties": {
@@ -1217,7 +1258,7 @@
           }
         }
       },
-      "UserRegistrationResponse": {
+      "UsersRegistrationResponse": {
         "type": "object",
         "properties": {
           "status": {
@@ -1248,7 +1289,7 @@
           }
         }
       },
-      "UserRegistrationErrorResponse": {
+      "UsersRegistrationErrorResponse": {
         "type": "object",
         "properties": {
           "message": {
@@ -1259,7 +1300,7 @@
           }
         }
       },
-      "UserVerificstionRequest": {
+      "UsersVerificstionRequest": {
         "required": ["email"],
         "type": "object",
         "properties": {
@@ -1287,7 +1328,7 @@
           }
         }
       },
-      "UserVerificstionErrorResponse": {
+      "UsersVerificstionErrorResponse": {
         "type": "object",
         "properties": {
           "message": {
@@ -1297,7 +1338,7 @@
           }
         }
       },
-      "UserLoginRequest": {
+      "UsersLoginRequest": {
         "required": ["email", "password"],
         "type": "object",
         "properties": {
@@ -1313,7 +1354,7 @@
           }
         }
       },
-      "UserLoginResponse": {
+      "UsersLoginResponse": {
         "type": "object",
         "properties": {
           "status": {
@@ -1365,7 +1406,7 @@
           }
         }
       },
-      "UserLoginErrorResponse": {
+      "UsersLoginErrorResponse": {
         "type": "object",
         "properties": {
           "message": {
@@ -1375,7 +1416,7 @@
           }
         }
       },
-      "UserLogOutResponse": {
+      "UsersLogOutResponse": {
         "type": "object",
         "properties": {
           "status": {
@@ -1390,7 +1431,7 @@
           }
         }
       },
-      "UserGetCurrentResponse": {
+      "UsersGetCurrentResponse": {
         "type": "object",
         "properties": {
           "status": {
@@ -1443,7 +1484,7 @@
           }
         }
       },
-      "UserGetUserDataResponse": {
+      "UsersGetUserDataResponse": {
         "type": "object",
         "properties": {
           "status": {
@@ -1710,7 +1751,487 @@
           }
         }
       },
-      "UserDeleteResponse": {
+      "UsersAllUsersResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "users": {
+                "type": "array",
+                "description": "All media files",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "User's id",
+                      "example": "642831f346155749a2b6e944"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "User's name",
+                      "example": "Sergey Nikolayovich"
+                    },
+                    "surname": {
+                      "type": "string",
+                      "description": "User's surname",
+                      "example": "Solod"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "User's email",
+                      "format": "email"
+                    },
+                    "avatarURL": {
+                      "type": "string",
+                      "description": "User's avatar link",
+                      "example": "User's avatar link"
+                    },
+                    "posts": {
+                      "type": "array",
+                      "description": "All your posts",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "description": {
+                            "type": "string",
+                            "description": "Post's text",
+                            "example": "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up."
+                          },
+                          "likes": {
+                            "type": "array",
+                            "description": "Array of likes associated with the post",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string",
+                                  "description": "Like's id",
+                                  "example": "645f9cd39077596eff3383fa"
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "description": "like type",
+                                  "example": "like"
+                                },
+                                "owner": {
+                                  "type": "string",
+                                  "description": "Owner like's id",
+                                  "example": "6452b1d7f6a29d84c5b089fb"
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "description": "created At",
+                                  "example": "2023-05-13T14:21:07.523Z"
+                                },
+                                "updatedAt": {
+                                  "type": "string",
+                                  "description": "created At",
+                                  "example": "2023-05-14T14:21:07.523Z"
+                                }
+                              }
+                            }
+                          },
+                          "comments": {
+                            "type": "array",
+                            "description": "Array of comments associated with the post",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string",
+                                  "description": "Media file's id",
+                                  "example": "6457a79b23576cf0aa13adec"
+                                },
+                                "description": {
+                                  "type": "string",
+                                  "description": "Comment's text",
+                                  "example": "YES!!"
+                                },
+                                "owner": {
+                                  "type": "string",
+                                  "description": "Owner file's id",
+                                  "example": "6452b1d7f6a29d84c5b089fb"
+                                },
+                                "likes": {
+                                  "type": "array",
+                                  "description": "Array of like IDs associated with the comment",
+                                  "items": {
+                                    "type": "string",
+                                    "example": "6452b1d7f6a29d84c5bss9f1"
+                                  }
+                                },
+                                "mediaFiles": {
+                                  "type": "array",
+                                  "description": "Array of media file IDs associated with the comment",
+                                  "items": {
+                                    "type": "string",
+                                    "example": "6452b1d7f6a29d23c5bss9a3"
+                                  }
+                                },
+                                "postId": {
+                                  "type": "string",
+                                  "description": "Post's id",
+                                  "example": "64578c032ce9cc5ad13e723a"
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "description": "created At",
+                                  "example": "2023-05-13T14:21:07.523Z"
+                                },
+                                "updatedAt": {
+                                  "type": "string",
+                                  "description": "created At",
+                                  "example": "2023-05-14T14:21:07.523Z"
+                                }
+                              }
+                            }
+                          },
+                          "mediaFiles": {
+                            "type": "array",
+                            "description": "Array of media files associated with the post",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string",
+                                  "description": "Media file's id",
+                                  "example": "6457a79b23576cf0aa13adec"
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "description": "Media file's type",
+                                  "example": "img"
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "description": "Media file's url",
+                                  "example": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                },
+                                "providerPublicId": {
+                                  "type": "string",
+                                  "description": "Cloudinary id",
+                                  "example": "mnf8tsnyxfhztfemh4dq"
+                                },
+                                "owner": {
+                                  "type": "string",
+                                  "description": "Owner file's id",
+                                  "example": "6452b1d7f6a29d84c5b089fb"
+                                },
+                                "postId": {
+                                  "type": "string",
+                                  "description": "Post's id",
+                                  "example": "64578c032ce9cc5ad13e723a"
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "description": "created At",
+                                  "example": "2023-05-13T14:21:07.523Z"
+                                },
+                                "updatedAt": {
+                                  "type": "string",
+                                  "description": "created At",
+                                  "example": "2023-05-14T14:21:07.523Z"
+                                },
+                                "location": {
+                                  "type": "string",
+                                  "description": "location",
+                                  "example": "posts"
+                                }
+                              }
+                            }
+                          },
+                          "owner": {
+                            "type": "string",
+                            "description": "Owner file's id",
+                            "example": "6452b1d7f6a29d84c5b089fb"
+                          },
+                          "_id": {
+                            "type": "string",
+                            "description": "Post's id",
+                            "example": "642831f346155749a2b6e944"
+                          },
+                          "postedAtHuman": {
+                            "type": "string",
+                            "description": "Post's time",
+                            "example": "43 minutes ago"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "totalPages": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "currentPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "perPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 10
+              }
+            }
+          }
+        }
+      },
+      "UsersSearchUsersResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "users": {
+                "type": "array",
+                "description": "All media files",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "User's id",
+                      "example": "642831f346155749a2b6e944"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "User's name",
+                      "example": "Sergey Nikolayovich"
+                    },
+                    "surname": {
+                      "type": "string",
+                      "description": "User's surname",
+                      "example": "Solod"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "User's email",
+                      "format": "email"
+                    },
+                    "avatarURL": {
+                      "type": "string",
+                      "description": "User's avatar link",
+                      "example": "User's avatar link"
+                    },
+                    "posts": {
+                      "type": "array",
+                      "description": "All your posts",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "description": {
+                            "type": "string",
+                            "description": "Post's text",
+                            "example": "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up."
+                          },
+                          "likes": {
+                            "type": "array",
+                            "description": "Array of likes associated with the post",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string",
+                                  "description": "Like's id",
+                                  "example": "645f9cd39077596eff3383fa"
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "description": "like type",
+                                  "example": "like"
+                                },
+                                "owner": {
+                                  "type": "string",
+                                  "description": "Owner like's id",
+                                  "example": "6452b1d7f6a29d84c5b089fb"
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "description": "created At",
+                                  "example": "2023-05-13T14:21:07.523Z"
+                                },
+                                "updatedAt": {
+                                  "type": "string",
+                                  "description": "created At",
+                                  "example": "2023-05-14T14:21:07.523Z"
+                                }
+                              }
+                            }
+                          },
+                          "comments": {
+                            "type": "array",
+                            "description": "Array of comments associated with the post",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string",
+                                  "description": "Media file's id",
+                                  "example": "6457a79b23576cf0aa13adec"
+                                },
+                                "description": {
+                                  "type": "string",
+                                  "description": "Comment's text",
+                                  "example": "YES!!"
+                                },
+                                "owner": {
+                                  "type": "string",
+                                  "description": "Owner file's id",
+                                  "example": "6452b1d7f6a29d84c5b089fb"
+                                },
+                                "likes": {
+                                  "type": "array",
+                                  "description": "Array of like IDs associated with the comment",
+                                  "items": {
+                                    "type": "string",
+                                    "example": "6452b1d7f6a29d84c5bss9f1"
+                                  }
+                                },
+                                "mediaFiles": {
+                                  "type": "array",
+                                  "description": "Array of media file IDs associated with the comment",
+                                  "items": {
+                                    "type": "string",
+                                    "example": "6452b1d7f6a29d23c5bss9a3"
+                                  }
+                                },
+                                "postId": {
+                                  "type": "string",
+                                  "description": "Post's id",
+                                  "example": "64578c032ce9cc5ad13e723a"
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "description": "created At",
+                                  "example": "2023-05-13T14:21:07.523Z"
+                                },
+                                "updatedAt": {
+                                  "type": "string",
+                                  "description": "created At",
+                                  "example": "2023-05-14T14:21:07.523Z"
+                                }
+                              }
+                            }
+                          },
+                          "mediaFiles": {
+                            "type": "array",
+                            "description": "Array of media files associated with the post",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string",
+                                  "description": "Media file's id",
+                                  "example": "6457a79b23576cf0aa13adec"
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "description": "Media file's type",
+                                  "example": "img"
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "description": "Media file's url",
+                                  "example": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                },
+                                "providerPublicId": {
+                                  "type": "string",
+                                  "description": "Cloudinary id",
+                                  "example": "mnf8tsnyxfhztfemh4dq"
+                                },
+                                "owner": {
+                                  "type": "string",
+                                  "description": "Owner file's id",
+                                  "example": "6452b1d7f6a29d84c5b089fb"
+                                },
+                                "postId": {
+                                  "type": "string",
+                                  "description": "Post's id",
+                                  "example": "64578c032ce9cc5ad13e723a"
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "description": "created At",
+                                  "example": "2023-05-13T14:21:07.523Z"
+                                },
+                                "updatedAt": {
+                                  "type": "string",
+                                  "description": "created At",
+                                  "example": "2023-05-14T14:21:07.523Z"
+                                },
+                                "location": {
+                                  "type": "string",
+                                  "description": "location",
+                                  "example": "posts"
+                                }
+                              }
+                            }
+                          },
+                          "owner": {
+                            "type": "string",
+                            "description": "Owner file's id",
+                            "example": "6452b1d7f6a29d84c5b089fb"
+                          },
+                          "_id": {
+                            "type": "string",
+                            "description": "Post's id",
+                            "example": "642831f346155749a2b6e944"
+                          },
+                          "postedAtHuman": {
+                            "type": "string",
+                            "description": "Post's time",
+                            "example": "43 minutes ago"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "totalPages": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "currentPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "perPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 10
+              }
+            }
+          }
+        }
+      },
+      "UsersDeleteResponse": {
         "type": "object",
         "properties": {
           "status": {
@@ -1994,225 +2515,6 @@
                       "type": "string",
                       "description": "Post's time",
                       "example": "16 hours ago"
-                    }
-                  }
-                }
-              },
-              "totalPages": {
-                "type": "number",
-                "description": "Status",
-                "format": "string",
-                "example": 1
-              },
-              "currentPage": {
-                "type": "number",
-                "description": "Status",
-                "format": "string",
-                "example": 1
-              },
-              "perPage": {
-                "type": "number",
-                "description": "Status",
-                "format": "string",
-                "example": 10
-              }
-            }
-          }
-        }
-      },
-      "UsersAllUsersResponse": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "description": "Status",
-            "format": "string",
-            "example": "success"
-          },
-          "data": {
-            "type": "object",
-            "properties": {
-              "users": {
-                "type": "array",
-                "description": "All media files",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "string",
-                      "description": "User's id",
-                      "example": "642831f346155749a2b6e944"
-                    },
-                    "name": {
-                      "type": "string",
-                      "description": "User's name",
-                      "example": "Sergey Nikolayovich"
-                    },
-                    "surname": {
-                      "type": "string",
-                      "description": "User's surname",
-                      "example": "Solod"
-                    },
-                    "email": {
-                      "type": "string",
-                      "description": "User's email",
-                      "format": "email"
-                    },
-                    "avatarURL": {
-                      "type": "string",
-                      "description": "User's avatar link",
-                      "example": "User's avatar link"
-                    },
-                    "posts": {
-                      "type": "array",
-                      "description": "All your posts",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "description": {
-                            "type": "string",
-                            "description": "Post's text",
-                            "example": "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up."
-                          },
-                          "likes": {
-                            "type": "array",
-                            "description": "Array of likes associated with the post",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "_id": {
-                                  "type": "string",
-                                  "description": "Like's id",
-                                  "example": "645f9cd39077596eff3383fa"
-                                },
-                                "type": {
-                                  "type": "string",
-                                  "description": "like type",
-                                  "example": "like"
-                                },
-                                "owner": {
-                                  "type": "string",
-                                  "description": "Owner like's id",
-                                  "example": "6452b1d7f6a29d84c5b089fb"
-                                },
-                                "createdAt": {
-                                  "type": "string",
-                                  "description": "created At",
-                                  "example": "2023-05-13T14:21:07.523Z"
-                                },
-                                "updatedAt": {
-                                  "type": "string",
-                                  "description": "created At",
-                                  "example": "2023-05-14T14:21:07.523Z"
-                                }
-                              }
-                            }
-                          },
-                          "comments": {
-                            "type": "array",
-                            "description": "Array of comments associated with the post",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "_id": {
-                                  "type": "string",
-                                  "description": "Media file's id",
-                                  "example": "6457a79b23576cf0aa13adec"
-                                },
-                                "description": {
-                                  "type": "string",
-                                  "description": "Comment's text",
-                                  "example": "YES!!"
-                                },
-                                "owner": {
-                                  "type": "string",
-                                  "description": "Owner file's id",
-                                  "example": "6452b1d7f6a29d84c5b089fb"
-                                },
-                                "postId": {
-                                  "type": "string",
-                                  "description": "Post's id",
-                                  "example": "64578c032ce9cc5ad13e723a"
-                                },
-                                "createdAt": {
-                                  "type": "string",
-                                  "description": "created At",
-                                  "example": "2023-05-13T14:21:07.523Z"
-                                },
-                                "updatedAt": {
-                                  "type": "string",
-                                  "description": "created At",
-                                  "example": "2023-05-14T14:21:07.523Z"
-                                }
-                              }
-                            }
-                          },
-                          "mediaFiles": {
-                            "type": "array",
-                            "description": "Array of media files associated with the post",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "_id": {
-                                  "type": "string",
-                                  "description": "Media file's id",
-                                  "example": "6457a79b23576cf0aa13adec"
-                                },
-                                "type": {
-                                  "type": "string",
-                                  "description": "Media file's type",
-                                  "example": "img"
-                                },
-                                "url": {
-                                  "type": "string",
-                                  "description": "Media file's url",
-                                  "example": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
-                                },
-                                "providerPublicId": {
-                                  "type": "string",
-                                  "description": "Cloudinary id",
-                                  "example": "mnf8tsnyxfhztfemh4dq"
-                                },
-                                "owner": {
-                                  "type": "string",
-                                  "description": "Owner file's id",
-                                  "example": "6452b1d7f6a29d84c5b089fb"
-                                },
-                                "postId": {
-                                  "type": "string",
-                                  "description": "Post's id",
-                                  "example": "64578c032ce9cc5ad13e723a"
-                                },
-                                "createdAt": {
-                                  "type": "string",
-                                  "description": "created At",
-                                  "example": "2023-05-13T14:21:07.523Z"
-                                },
-                                "updatedAt": {
-                                  "type": "string",
-                                  "description": "created At",
-                                  "example": "2023-05-14T14:21:07.523Z"
-                                }
-                              }
-                            }
-                          },
-                          "owner": {
-                            "type": "string",
-                            "description": "Owner file's id",
-                            "example": "6452b1d7f6a29d84c5b089fb"
-                          },
-                          "_id": {
-                            "type": "string",
-                            "description": "Post's id",
-                            "example": "642831f346155749a2b6e944"
-                          },
-                          "postedAtHuman": {
-                            "type": "string",
-                            "description": "Post's time",
-                            "example": "43 minutes ago"
-                          }
-                        }
-                      }
                     }
                   }
                 }
