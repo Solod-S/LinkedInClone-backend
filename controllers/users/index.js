@@ -10,6 +10,7 @@ const getAllUsers = require("./getAllUsers");
 const getUsersByQuery = require("./getUsersByQuery");
 const getUserById = require("./getUserById");
 const logout = require("./logout");
+const passwordChange = require("./passwordChange");
 const remove = require("./remove");
 
 module.exports = {
@@ -24,5 +25,6 @@ module.exports = {
   getAllUsers: ctrlWrapper(getAllUsers),
   getUsersByQuery: ctrlWrapper(getUsersByQuery),
   logout: ctrlWrapper(logout),
+  passwordChange: ctrlWrapper(passwordChange),
   remove: ctrlWrapper(remove),
 };

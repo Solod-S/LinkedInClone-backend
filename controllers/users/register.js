@@ -8,8 +8,8 @@ const { sendEmail } = require("../../helpers");
 const { createVerifyEmail } = require("../../helpers");
 const { HttpError } = require("../../routes/errors/HttpErrors");
 
-const register = async (rec, res) => {
-  const { email, password } = rec.body;
+const register = async (req, res) => {
+  const { email, password } = req.body;
   const user = await User.findOne({ email });
 
   if (user) {
@@ -21,7 +21,7 @@ const register = async (rec, res) => {
   const avatarURL = gravatar.url(email);
 
   const newUser = await User.create({
-    ...rec.body,
+    ...req.body,
     password: hashPassword,
     verificationCode,
     avatarURL,

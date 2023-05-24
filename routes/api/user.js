@@ -15,6 +15,9 @@ userRouter.post("/login", validateBody(userSchemas.loginSchema), users.login);
 //  chek user
 userRouter.get("/current", authenticate, users.getCurrent);
 
+// change password
+userRouter.post("/password-change", validateBody(userSchemas.passwordChangeSchema), authenticate, users.passwordChange);
+
 // logout
 userRouter.get("/logout", authenticate, users.logout);
 
