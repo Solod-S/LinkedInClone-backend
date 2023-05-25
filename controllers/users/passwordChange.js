@@ -10,6 +10,8 @@ const passwordChange = async (req, res) => {
 
   const isOldPasswordValid = await bcrypt.compare(oldPassword, password);
 
+  console.log(isOldPasswordValid);
+
   if (!isOldPasswordValid) {
     throw HttpError(404, "Old password is incorrect");
   }

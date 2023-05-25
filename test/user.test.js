@@ -298,6 +298,58 @@ describe("User Test Suite", () => {
     });
   }, 10000);
 
+  test("Change password with invalid token, 401 check", async () => {
+    const res = await request(app)
+      .post(`/users/password-change`)
+      .send({
+        oldPassword: VALID_PASS,
+        newPassword: VALID_PASS,
+      })
+      .set("Authorization", `Bearer ${WRONG_TOKEN}`);
+
+    expect(res.status).toBe(401);
+    expect(res.body).toEqual({
+      message: "Unauthorized",
+    });
+  }, 10000);
+
+  test("Change password with valid body, return users object, 201 check", async () => {
+    const res = await request(app)
+      .post(`/users/password-change`)
+      .send({
+        oldPassword: VALID_PASS,
+        newPassword: VALID_PASS,
+      })
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(res.status).toBe(201);
+    expect(res.body.data.user instanceof Object).toBe(true);
+    expect(typeof res.body.data.user._id).toBe("string");
+    expect(typeof res.body.data.user.email).toBe("string");
+    expect(typeof res.body.data.user.name).toBe("string");
+    expect(typeof res.body.data.user.surname).toBe("string");
+    expect(typeof res.body.data.user.avatarURL).toBe("string");
+  }, 10000);
+
+  test("Change password with invalid body, return users object, 400 check", async () => {
+    const res = await request(app)
+      .post(`/users/password-change`)
+      .send({
+        password: VALID_PASS,
+      })
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(res.status).toBe(400);
+    expect(res.body).toHaveProperty("message", '"oldPassword" is required');
+  }, 10000);
+
+  test("Change password without body, 400 check", async () => {
+    const res = await request(app).post(`/users/password-change`).send().set("Authorization", `Bearer ${token}`);
+
+    expect(res.status).toBe(400);
+    expect(res.body).toHaveProperty("message", '"oldPassword" is required');
+  }, 10000);
+
   test("Get current with valid token, 200 check", async () => {
     const res = await request(app).get(`/users/current`).set("Authorization", `Bearer ${token}`);
 

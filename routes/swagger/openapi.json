@@ -192,6 +192,67 @@
         }
       }
     },
+    "/users/password-change": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Change password",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "requestBody": {
+          "description": "Change password object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsersChangePasswordRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Password has been successfully changed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsersChangePasswordResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Old password is incorrect",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsersChangePasswordErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/users/current": {
       "get": {
         "tags": ["Users"],
@@ -1428,6 +1489,78 @@
             "type": "string",
             "description": "Response message",
             "example": "Logout successful"
+          }
+        }
+      },
+      "UsersChangePasswordRequest": {
+        "required": ["oldPassword", "newPassword"],
+        "type": "object",
+        "properties": {
+          "oldPassword": {
+            "type": "string",
+            "description": "Old password",
+            "example": "1234qwer"
+          },
+          "newPassword": {
+            "type": "string",
+            "description": "New password",
+            "example": "1234qwerty"
+          }
+        }
+      },
+      "UsersChangePasswordResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "user": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "User's id",
+                    "example": "642831f346155749a2b6e944"
+                  },
+                  "surname": {
+                    "type": "string",
+                    "description": "User's surname",
+                    "example": "Solod"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "User's email",
+                    "format": "email"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "User's name",
+                    "example": "Sergey Nikolayovich"
+                  },
+                  "avatarURL": {
+                    "type": "string",
+                    "description": "User's avatar link",
+                    "example": "User's avatar link"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "UsersChangePasswordErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "example": "Old password is incorrect"
           }
         }
       },
