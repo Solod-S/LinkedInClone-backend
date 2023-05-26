@@ -11,6 +11,8 @@ const getUsersByQuery = require("./getUsersByQuery");
 const getUserById = require("./getUserById");
 const logout = require("./logout");
 const passwordChange = require("./passwordChange");
+const passwordResetByEmail = require("./passwordResetByEmail");
+const passwordReset = require("./passwordReset");
 const remove = require("./remove");
 
 module.exports = {
@@ -26,5 +28,7 @@ module.exports = {
   getUsersByQuery: ctrlWrapper(getUsersByQuery),
   logout: ctrlWrapper(logout),
   passwordChange: ctrlWrapper(passwordChange),
+  passwordResetByEmail: ctrlWrapper(passwordResetByEmail),
+  passwordReset: ctrlWrapper(passwordReset),
   remove: ctrlWrapper(remove),
 };

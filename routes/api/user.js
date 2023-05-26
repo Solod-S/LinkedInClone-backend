@@ -18,6 +18,12 @@ userRouter.get("/current", authenticate, users.getCurrent);
 // change password
 userRouter.post("/password-change", validateBody(userSchemas.passwordChangeSchema), authenticate, users.passwordChange);
 
+//  send password-reser link by email
+userRouter.post("/password-reset", validateBody(userSchemas.passwordResetRequestSchema), users.passwordResetByEmail);
+
+//  restore password
+userRouter.post("/password-reset/:resetToken", validateBody(userSchemas.passwordRestoreSchema), users.passwordReset);
+
 // logout
 userRouter.get("/logout", authenticate, users.logout);
 
