@@ -1,8 +1,8 @@
 const ctrlWrapper = require("../../middlewares/ctrlWrapper");
 const addLike = require("./addLike");
-const removeLike = require("./removeLike");
+const deleteLike = require("./deleteLike");
 
 module.exports = {
   addLike: ctrlWrapper(addLike),
-  removeLike: ctrlWrapper(removeLike),
+  deleteLike: ctrlWrapper(deleteLike),
 };

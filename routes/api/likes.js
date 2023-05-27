@@ -8,6 +8,6 @@ const { likeSchemas } = require("../../models");
 likesRouter.post("/add", authenticate, validateBody(likeSchemas.likesSchema), likes.addLike);
 
 //  delete own like
-likesRouter.delete("/remove/:likeId", authenticate, likes.removeLike);
+likesRouter.delete("/remove/:likeId", authenticate, likes.deleteLike);
 
 module.exports = likesRouter;

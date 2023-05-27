@@ -3,7 +3,7 @@ const { Post, Comment } = require("../../models");
 const { HttpError } = require("../../routes/errors/HttpErrors");
 const { commentTransformer } = require("../../helpers/index");
 
-const removeOwnComment = async (req, res, next) => {
+const deleteOwnComment = async (req, res, next) => {
   const { _id } = req.user;
   const { commentId } = req.params;
 
@@ -19,10 +19,10 @@ const removeOwnComment = async (req, res, next) => {
     throw HttpError(404, "Not found");
   }
 
-  await Post.updateOne({ comments: { $elemMatch: { $eq: commentId } } }, { $pull: { comments: commentId } });
-  await Comment.updateOne({ comments: { $elemMatch: { $eq: commentId } } }, { $pull: { comments: commentId } });
+  await Post.updateOne({ comments: { $elemMatch: { $eq: comment._id } } }, { $pull: { comments: comment._id } });
+  await Comment.updateOne({ comments: { $elemMatch: { $eq: comment._id } } }, { $pull: { comments: comment._id } });
 
   res.json({ status: "success", data: { deletedComment: commentTransformer(result) } });
 };
 
-module.exports = removeOwnComment;
+module.exports = deleteOwnComment;

@@ -40,7 +40,7 @@ const userSchema = Schema(
     },
     favorite: {
       type: Array,
-      default: [],
+      default: [{ type: Schema.Types.ObjectId, ref: "Posts" }],
     },
     posts: {
       type: Array,

@@ -2,7 +2,7 @@ const { Like, Post, Comment } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
 
-const removeLike = async (req, res, next) => {
+const deleteLike = async (req, res, next) => {
   const { _id } = req.user;
   const { likeId } = req.params;
 
@@ -18,9 +18,10 @@ const removeLike = async (req, res, next) => {
     throw HttpError(404, "Not found");
   }
 
-  await Post.updateOne({ likes: { $elemMatch: { $eq: likeId } } }, { $pull: { likes: likeId } });
-  await Comment.updateOne({ likes: { $elemMatch: { $eq: likeId } } }, { $pull: { likes: likeId } });
+  await Post.updateOne({ likes: { $elemMatch: { $eq: like._id } } }, { $pull: { likes: like._id } });
+  await Comment.updateOne({ likes: { $elemMatch: { $eq: like._id } } }, { $pull: { likes: like._id } });
+
   res.json({ status: "success", data: { deletedLike: result } });
 };
 
-module.exports = removeLike;
+module.exports = deleteLike;

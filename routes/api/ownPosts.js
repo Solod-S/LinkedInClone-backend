@@ -19,6 +19,6 @@ ownPostsRouter.patch(
 );
 
 //  delete own post
-ownPostsRouter.delete("/remove/:postId", authenticate, ownPosts.removeOwnPost);
+ownPostsRouter.delete("/remove/:postId", authenticate, ownPosts.deleteOwnPost);
 
 module.exports = ownPostsRouter;

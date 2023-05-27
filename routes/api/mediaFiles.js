@@ -22,6 +22,6 @@ mediaFilesRouter.get("/", authenticate, mediaFiles.getAllMediaFiles);
 mediaFilesRouter.get("/:mediaFileId", authenticate, mediaFiles.getMediaFileById);
 
 //  delete own media-file
-mediaFilesRouter.delete("/remove/:mediaFileId", authenticate, mediaFiles.removeMediaFile);
+mediaFilesRouter.delete("/remove/:mediaFileId", authenticate, mediaFiles.deleteMediaFile);
 
 module.exports = mediaFilesRouter;

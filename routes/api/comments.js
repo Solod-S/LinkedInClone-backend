@@ -19,6 +19,6 @@ commentsRouter.patch(
 );
 
 //  delete own comment
-commentsRouter.delete("/remove/:commentId", authenticate, comments.removeOwnComment);
+commentsRouter.delete("/remove/:commentId", authenticate, comments.deleteOwnComment);
 
 module.exports = commentsRouter;

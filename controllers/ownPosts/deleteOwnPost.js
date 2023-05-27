@@ -1,9 +1,9 @@
-const { Post } = require("../../models");
+const { User, Post } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
 const { postTransformer } = require("../../helpers/index");
 
-const removeOwnPost = async (req, res, next) => {
+const deleteOwnPost = async (req, res, next) => {
   const { _id } = req.user;
   const { postId } = req.params;
 
@@ -19,7 +19,9 @@ const removeOwnPost = async (req, res, next) => {
     throw HttpError(404, "Not found");
   }
 
+  await User.updateMany({ favorite: { $elemMatch: { $eq: post._id } } }, { $pull: { favorite: post._id } });
+
   res.json({ status: "success", data: { deletedPost: postTransformer(result) } });
 };
 
-module.exports = removeOwnPost;
+module.exports = deleteOwnPost;

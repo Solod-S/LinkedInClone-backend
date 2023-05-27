@@ -11,6 +11,7 @@ const {
   postsRouter,
   mediaFilesRouter,
   likesRouter,
+  favoritesRouter,
   commentsRouter,
 } = require("./routes/api/");
 
@@ -28,6 +29,7 @@ app.use("/media-files", mediaFilesRouter);
 app.use("/own-posts", ownPostsRouter);
 app.use("/posts", postsRouter);
 app.use("/likes", likesRouter);
+app.use("/favorites", favoritesRouter);
 app.use("/comments", commentsRouter);
 
 app.use((req, res) => {

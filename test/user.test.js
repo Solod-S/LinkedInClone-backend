@@ -1,10 +1,11 @@
 const request = require("supertest");
 const mongoose = require("mongoose");
+const Chance = require("chance");
+const uuid = require("uuid");
+
 const { User } = require("../models");
 
-const Chance = require("chance");
 const chance = new Chance();
-
 const app = require("../app");
 
 require("dotenv").config();
@@ -12,6 +13,7 @@ const { DB_HOST, VALID_PASS, WRONG_TOKEN, WRONG_VERIFY_CODE, INVALID_PASS } = pr
 
 const name = "Serg";
 let veifyCode = null;
+let resetToken = null;
 let email = null;
 let token = null;
 let userId = null;
@@ -348,6 +350,62 @@ describe("User Test Suite", () => {
 
     expect(res.status).toBe(400);
     expect(res.body).toHaveProperty("message", '"oldPassword" is required');
+  }, 10000);
+
+  test("Reset password with valid resetToken and invalid body , return users object, 200 check", async () => {
+    const getResetToken = async (email) => {
+      const user = await User.findOne({ email });
+      const resetToken = uuid.v4();
+
+      user.resetToken = resetToken;
+      user.resetTokenExpires = Date.now() + 3600000; // 1h
+      await user.save();
+
+      return resetToken;
+    };
+
+    resetToken = await getResetToken(email);
+
+    const res = await request(app)
+      .post(`/users/password-reset/${resetToken}`)
+      .send({
+        passssssword: VALID_PASS,
+      })
+      .set("Accept", "application/json");
+
+    expect(res.status).toBe(400);
+    expect(res.body.message).toBe('"password" is required');
+  }, 10000);
+
+  test("Reset password with valid resetToken and valid body , return users object, 200 check", async () => {
+    const res = await request(app)
+      .post(`/users/password-reset/${resetToken}`)
+      .send({
+        password: VALID_PASS,
+      })
+      .set("Accept", "application/json");
+
+    expect(res.status).toBe(200);
+    expect(res.body.status).toBe("success");
+    expect(res.body.message).toBe("Password has been successfully changed");
+    expect(res.body.data.user instanceof Object).toBe(true);
+    expect(typeof res.body.data.user._id).toBe("string");
+    expect(typeof res.body.data.user.email).toBe("string");
+    expect(typeof res.body.data.user.name).toBe("string");
+    expect(typeof res.body.data.user.surname).toBe("string");
+    expect(typeof res.body.data.user.avatarURL).toBe("string");
+  }, 10000);
+
+  test("Reset password with invalid resetToken and valid body, return users object, 404 check", async () => {
+    const res = await request(app)
+      .post(`/users/password-reset/${resetToken}`)
+      .send({
+        password: VALID_PASS,
+      })
+      .set("Accept", "application/json");
+
+    expect(res.status).toBe(404);
+    expect(res.body.message).toBe("User not found");
   }, 10000);
 
   test("Get current with valid token, 200 check", async () => {

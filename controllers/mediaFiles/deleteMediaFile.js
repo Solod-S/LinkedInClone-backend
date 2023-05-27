@@ -3,7 +3,7 @@ const { MediaFile, Post, Comment } = require("../../models");
 const { HttpError } = require("../../routes/errors/HttpErrors");
 const { mediaFileTransformer } = require("../../helpers/index");
 
-const removeMediaFile = async (req, res, next) => {
+const deleteMediaFile = async (req, res, next) => {
   const { _id } = req.user;
   const { mediaFileId } = req.params;
 
@@ -25,4 +25,4 @@ const removeMediaFile = async (req, res, next) => {
   res.json({ status: "success", data: { deletedMediaFile: mediaFileTransformer(result) } });
 };
 
-module.exports = removeMediaFile;
+module.exports = deleteMediaFile;

@@ -18,7 +18,7 @@ const addComment = async (req, res, next) => {
     owner: _id,
   });
 
-  // const updatedPost = await Post.findByIdAndUpdate(postId, { $push: { comments: comment._id } }, { new: true });
+  await Post.findByIdAndUpdate(postId, { $push: { comments: comment._id } }, { new: true });
 
   res.json({ status: "success", data: { comment: commentTransformer(comment) } });
 };

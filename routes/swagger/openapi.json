@@ -37,8 +37,8 @@
       "description": "Comments endpoints"
     },
     {
-      "name": "Favorite",
-      "description": "Favorite endpoints"
+      "name": "Favorites",
+      "description": "Favorites endpoints"
     }
   ],
   "paths": {
@@ -246,6 +246,116 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UsersChangePasswordErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/password-reset": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Send password reset link by email",
+        "parameters": [],
+        "requestBody": {
+          "description": "Email password reset body",
+          "required": "true",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsersSendPasswordResetRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Reset link have been successfully sent to your email",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserSendPasswordResetResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/password-reset/{resetToken}": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Password reset request",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "resetToken",
+            "required": true,
+            "description": "Reset token",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Email password reset body",
+          "required": "true",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsersPasswordResetRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password has been successfully changed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserPasswordResetResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
                 }
               }
             }
@@ -1250,6 +1360,57 @@
           }
         }
       }
+    },
+    "/favorites/add": {
+      "post": {
+        "tags": ["Favorites"],
+        "summary": "Add to favorites",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "requestBody": {
+          "description": "Comment object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentsCreateCommentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully created a new comment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommentsNewCommentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1561,6 +1722,93 @@
             "type": "string",
             "description": "Response message",
             "example": "Old password is incorrect"
+          }
+        }
+      },
+      "UsersSendPasswordResetRequest": {
+        "required": ["email"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          }
+        }
+      },
+      "UserSendPasswordResetResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Reset link have been sent to your email."
+          }
+        }
+      },
+      "UsersPasswordResetRequest": {
+        "required": ["password"],
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "format": "string",
+            "example": "123qwesds"
+          }
+        }
+      },
+      "UserPasswordResetResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Password has been successfully changed"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "User's id",
+                "example": "642831f346155749a2b6e944"
+              },
+              "name": {
+                "type": "string",
+                "description": "User's name",
+                "example": "Sergey Nikolayovich"
+              },
+              "surname": {
+                "type": "string",
+                "description": "User's surname",
+                "example": "Solod"
+              },
+              "email": {
+                "type": "string",
+                "description": "User's email",
+                "format": "email"
+              },
+              "avatarURL": {
+                "type": "string",
+                "description": "User's avatar link",
+                "example": "User's avatar link"
+              }
+            }
           }
         }
       },

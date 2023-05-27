@@ -3,6 +3,7 @@ const ownPosts = require("./ownPosts");
 const mediaFiles = require("./mediaFiles");
 const likes = require("./likes");
 const comments = require("./comments");
+const favorites = require("./favorites");
 const posts = require("./posts");
 
 // const favorite = require("./favorite");
@@ -15,8 +16,6 @@ module.exports = {
   mediaFiles,
   likes,
   comments,
+  favorites,
   posts,
-  // favorite,
-  // popular,
-  // search
 };
