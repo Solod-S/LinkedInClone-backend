@@ -1,9 +1,6 @@
 const request = require("supertest");
 const mongoose = require("mongoose");
 
-const Chance = require("chance");
-const chance = new Chance();
-
 const app = require("../app");
 
 require("dotenv").config();
@@ -15,7 +12,6 @@ describe("Media-files Test Suite", () => {
   let server;
 
   beforeAll(async () => {
-    email = chance.email();
     await mongoose.connect(DB_HOST);
     server = app.listen(3003, () => {});
   });
@@ -32,16 +28,16 @@ describe("Media-files Test Suite", () => {
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
-    expect(Array.isArray(res.body.data.allMediaFiles)).toBe(true);
-    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.type === "string")).toBe(true);
-    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.url === "string")).toBe(true);
-    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.providerPublicId === "string")).toBe(true);
-    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.owner === "object")).toBe(true);
+    expect(Array.isArray(res.body.data.mediaFiles)).toBe(true);
+    expect(res.body.data.mediaFiles.every((mediaFile) => typeof mediaFile.type === "string")).toBe(true);
+    expect(res.body.data.mediaFiles.every((mediaFile) => typeof mediaFile.url === "string")).toBe(true);
+    expect(res.body.data.mediaFiles.every((mediaFile) => typeof mediaFile.providerPublicId === "string")).toBe(true);
+    expect(res.body.data.mediaFiles.every((mediaFile) => typeof mediaFile.owner === "object")).toBe(true);
     expect(
-      res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.postId || mediaFile.commentId === "object")
+      res.body.data.mediaFiles.every((mediaFile) => typeof mediaFile.postId || mediaFile.commentId === "object")
     ).toBe(true);
-    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile._id === "string")).toBe(true);
-    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.postedAtHuman === "string")).toBe(true);
+    expect(res.body.data.mediaFiles.every((mediaFile) => typeof mediaFile._id === "string")).toBe(true);
+    expect(res.body.data.mediaFiles.every((mediaFile) => typeof mediaFile.postedAtHuman === "string")).toBe(true);
   }, 10000);
 
   test("Get all own media files with valid token + pagination, 200 check", async () => {
@@ -54,16 +50,16 @@ describe("Media-files Test Suite", () => {
     expect(typeof res.body.data.totalPages).toBe("number");
     expect(typeof res.body.data.currentPage).toBe("number");
     expect(typeof res.body.data.perPage).toBe("number");
-    expect(Array.isArray(res.body.data.allMediaFiles)).toBe(true);
-    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.type === "string")).toBe(true);
-    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.url === "string")).toBe(true);
-    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.providerPublicId === "string")).toBe(true);
-    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.owner === "object")).toBe(true);
+    expect(Array.isArray(res.body.data.mediaFiles)).toBe(true);
+    expect(res.body.data.mediaFiles.every((mediaFile) => typeof mediaFile.type === "string")).toBe(true);
+    expect(res.body.data.mediaFiles.every((mediaFile) => typeof mediaFile.url === "string")).toBe(true);
+    expect(res.body.data.mediaFiles.every((mediaFile) => typeof mediaFile.providerPublicId === "string")).toBe(true);
+    expect(res.body.data.mediaFiles.every((mediaFile) => typeof mediaFile.owner === "object")).toBe(true);
     expect(
-      res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.postId || mediaFile.commentId === "object")
+      res.body.data.mediaFiles.every((mediaFile) => typeof mediaFile.postId || mediaFile.commentId === "object")
     ).toBe(true);
-    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile._id === "string")).toBe(true);
-    expect(res.body.data.allMediaFiles.every((mediaFile) => typeof mediaFile.postedAtHuman === "string")).toBe(true);
+    expect(res.body.data.mediaFiles.every((mediaFile) => typeof mediaFile._id === "string")).toBe(true);
+    expect(res.body.data.mediaFiles.every((mediaFile) => typeof mediaFile.postedAtHuman === "string")).toBe(true);
   }, 10000);
 
   test("Get all own media files with invalid token, 401 check", async () => {
@@ -109,7 +105,7 @@ describe("Media-files Test Suite", () => {
     expect(res.body).toHaveProperty("message", '"type" is required');
   }, 10000);
 
-  test("Create media file with valid token for post, 200 check", async () => {
+  test("Create media file with valid token for post, 201 check", async () => {
     const res = await request(app).post(`/media-files/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({
       type: "img",
       location: "posts",
@@ -120,7 +116,7 @@ describe("Media-files Test Suite", () => {
 
     mediaFileId = res.body.data.mediaFile._id;
 
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(201);
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
@@ -249,7 +245,7 @@ describe("Media-files Test Suite", () => {
     expect(typeof res.body.data.deletedMediaFile.postedAtHuman).toBe("string");
   }, 10000);
 
-  test("Create media file with valid token for comment, 200 check", async () => {
+  test("Create media file with valid token for comment, 201 check", async () => {
     const res = await request(app).post(`/media-files/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({
       type: "img",
       location: "comments",
@@ -260,7 +256,7 @@ describe("Media-files Test Suite", () => {
 
     mediaFileId = res.body.data.mediaFile._id;
 
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(201);
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");

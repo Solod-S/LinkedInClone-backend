@@ -109,7 +109,7 @@
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful verification",
             "content": {
               "application/json": {
@@ -210,7 +210,7 @@
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Password has been successfully changed",
             "content": {
               "application/json": {
@@ -270,7 +270,7 @@
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Reset link have been successfully sent to your email",
             "content": {
               "application/json": {
@@ -592,7 +592,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Successfully create a new media file",
             "content": {
               "application/json": {
@@ -834,7 +834,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Successfully created a new post",
             "content": {
               "application/json": {
@@ -900,7 +900,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OwnPostsNewPostResponse"
+                  "$ref": "#/components/schemas/OwnPostsUpdatePostResponse"
                 }
               }
             }
@@ -1187,7 +1187,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Successfully created a new comment",
             "content": {
               "application/json": {
@@ -1361,40 +1361,131 @@
         }
       }
     },
-    "/favorites/add": {
-      "post": {
+    "/favorites/posts": {
+      "get": {
         "tags": ["Favorites"],
-        "summary": "Add to favorites",
+        "summary": "Get all favorite posts",
         "security": [{ "Bearer": [] }],
         "parameters": [],
-        "requestBody": {
-          "description": "Comment object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CommentsCreateCommentRequest"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
-            "description": "Successfully created a new comment",
+            "description": "Successfully fetch all favorite posts",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CommentsNewCommentResponse"
+                  "$ref": "#/components/schemas/FavoritesGetPostResponse"
                 }
               }
             }
           },
-          "400": {
-            "description": "Bad request (invalid request body)",
+          "401": {
+            "description": "Token is invalid",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BadRequestResponse"
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/favorites/posts/add/{postId}": {
+      "get": {
+        "tags": ["Favorites"],
+        "summary": "Add to favorites",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true,
+            "description": "Post file id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+
+        "responses": {
+          "201": {
+            "description": "Post was added to favorites",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FavoritesAddPostResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Рost was added to favorites before",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FavoritesAddPostAddedBeforeResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Post ID is invalid or not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FavoritesAddPostNotFoundResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/favorites/posts/remove/{postId}": {
+      "delete": {
+        "tags": ["Favorites"],
+        "summary": "Remove from favorites",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true,
+            "description": "Post file id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Post was removed from your favorites",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FavoritesRemovePostResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Post ID is invalid or not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FavoritesRemovePostNotFoundResponse"
                 }
               }
             }
@@ -3352,7 +3443,7 @@
           "data": {
             "type": "object",
             "properties": {
-              "ownPosts": {
+              "posts": {
                 "type": "array",
                 "description": "All your posts",
                 "items": {
@@ -3562,6 +3653,74 @@
           }
         }
       },
+      "OwnPostsUpdatePostResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "post": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "description": "Post's text",
+                    "example": "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up."
+                  },
+                  "likes": {
+                    "type": "array",
+                    "description": "Array of users IDs wich liked the post",
+                    "items": {
+                      "type": "string",
+                      "description": "User ID",
+                      "example": "6457a79b23576cf0aa13ad1a"
+                    }
+                  },
+                  "comments": {
+                    "type": "array",
+                    "description": "Array of comment IDs associated with the post",
+                    "items": {
+                      "type": "string",
+                      "description": "Comment ID",
+                      "example": "6457a79b23576cf0aa13ad3a"
+                    }
+                  },
+                  "mediaFiles": {
+                    "type": "array",
+                    "description": "Array of media file IDs associated with the post",
+                    "items": {
+                      "type": "string",
+                      "description": "ID of a media file",
+                      "example": "6457a79b23576cf0aa13adec"
+                    }
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "User's id",
+                    "example": "6452b1d7f6a29d84c5b089fb"
+                  },
+                  "_id": {
+                    "type": "string",
+                    "description": "Post's id",
+                    "example": "642831f346155749a2b6e944"
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Post's time",
+                    "example": "43 minutes ago"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "OwnPostsNewPostResponse": {
         "type": "object",
         "properties": {
@@ -3642,7 +3801,7 @@
           "data": {
             "type": "object",
             "properties": {
-              "deletedPost": {
+              "post": {
                 "type": "object",
                 "properties": {
                   "description": {
@@ -5043,6 +5202,365 @@
                 }
               }
             }
+          }
+        }
+      },
+      "FavoritesGetPostResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "posts": {
+                "type": "array",
+                "description": "Favorite posts",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "string",
+                      "description": "Post's text",
+                      "example": "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up."
+                    },
+                    "likes": {
+                      "type": "array",
+                      "description": "Array of users IDs wich liked the post",
+                      "items": {
+                        "type": "string",
+                        "description": "Like IDs"
+                      }
+                    },
+                    "comments": {
+                      "type": "array",
+                      "description": "Array of comments associated with the post",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "Comment's id",
+                            "example": "6457a79b23576cf0aa13adec"
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "Comment's text",
+                            "example": "WOOOOOWW!!!"
+                          },
+                          "likes": {
+                            "type": "array",
+                            "description": "Array of users IDs wich liked the post",
+                            "items": {
+                              "type": "string",
+                              "description": "Like IDs"
+                            }
+                          },
+                          "comments": {
+                            "type": "array",
+                            "description": "Array of comment IDs associated with the post",
+                            "items": {
+                              "type": "string",
+                              "description": "Comment IDs"
+                            }
+                          },
+                          "owner": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "description": "Owner file's id",
+                                "example": "6452b1d7f6a29d84c5b089fb"
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "Owner name",
+                                "example": "Sergey"
+                              },
+                              "surname": {
+                                "type": "string",
+                                "description": "Owner surname",
+                                "example": "Solod"
+                              },
+                              "avatarURL": {
+                                "type": "string",
+                                "description": "Owner avatar",
+                                "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                              }
+                            }
+                          },
+                          "postId": {
+                            "type": "string",
+                            "description": "Post's id",
+                            "example": "6452b1d7f6a29d84c5b089fb"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "created at",
+                            "example": "2023-05-13T11:07:01.620Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "updated at",
+                            "example": "2023-05-13T14:21:03.137Z"
+                          }
+                        }
+                      }
+                    },
+                    "mediaFiles": {
+                      "type": "array",
+                      "description": "Array of media files associated with the post",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "Media file's id",
+                            "example": "6457a79b23576cf0aa13adec"
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "Media file's type",
+                            "example": "img"
+                          },
+                          "url": {
+                            "type": "string",
+                            "description": "Media file's url",
+                            "example": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          },
+                          "providerPublicId": {
+                            "type": "string",
+                            "description": "Cloudinary id",
+                            "example": "mnf8tsnyxfhztfemh4dq"
+                          },
+                          "owner": {
+                            "type": "string",
+                            "description": "User's id",
+                            "example": "6452b1d7f6a29d84c5b089fb"
+                          },
+                          "postId": {
+                            "type": "string",
+                            "description": "Post's id",
+                            "example": "64578c032ce9cc5ad13e723a"
+                          },
+                          "postedAtHuman": {
+                            "type": "string",
+                            "description": "Post's time",
+                            "example": "43 minutes ago"
+                          }
+                        }
+                      }
+                    },
+                    "owner": {
+                      "type": "string",
+                      "description": "User's id",
+                      "example": "6452b1d7f6a29d84c5b089fb"
+                    },
+                    "_id": {
+                      "type": "string",
+                      "description": "Post's id",
+                      "example": "642831f346155749a2b6e944"
+                    },
+                    "postedAtHuman": {
+                      "type": "string",
+                      "description": "Post's time",
+                      "example": "43 minutes ago"
+                    }
+                  }
+                }
+              },
+              "totalPages": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "currentPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "perPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 10
+              }
+            }
+          }
+        }
+      },
+      "FavoritesAddPostResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "post": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "description": "Post's text",
+                    "example": "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up."
+                  },
+                  "likes": {
+                    "type": "array",
+                    "description": "Array of users IDs wich liked the post",
+                    "items": {
+                      "type": "string",
+                      "description": "User ID",
+                      "example": "6457a79b23576cf0aa13ad1a"
+                    }
+                  },
+                  "comments": {
+                    "type": "array",
+                    "description": "Array of comment IDs associated with the post",
+                    "items": {
+                      "type": "string",
+                      "description": "Comment ID",
+                      "example": "6457a79b23576cf0aa13ad3a"
+                    }
+                  },
+                  "mediaFiles": {
+                    "type": "array",
+                    "description": "Array of media file IDs associated with the post",
+                    "items": {
+                      "type": "string",
+                      "description": "ID of a media file",
+                      "example": "6457a79b23576cf0aa13adec"
+                    }
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "User's id",
+                    "example": "6452b1d7f6a29d84c5b089fb"
+                  },
+                  "_id": {
+                    "type": "string",
+                    "description": "Post's id",
+                    "example": "642831f346155749a2b6e944"
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Post's time",
+                    "example": "43 minutes ago"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "FavoritesAddPostAddedBeforeResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Sorry, the post was added to favorites before"
+          }
+        }
+      },
+      "FavoritesAddPostNotFoundResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Post ID is invalid or not found"
+          }
+        }
+      },
+      "FavoritesRemovePostResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "post": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "description": "Post's text",
+                    "example": "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up."
+                  },
+                  "likes": {
+                    "type": "array",
+                    "description": "Array of users IDs wich liked the post",
+                    "items": {
+                      "type": "string",
+                      "description": "User ID",
+                      "example": "6457a79b23576cf0aa13ad1a"
+                    }
+                  },
+                  "comments": {
+                    "type": "array",
+                    "description": "Array of comment IDs associated with the post",
+                    "items": {
+                      "type": "string",
+                      "description": "Comment ID",
+                      "example": "6457a79b23576cf0aa13ad3a"
+                    }
+                  },
+                  "mediaFiles": {
+                    "type": "array",
+                    "description": "Array of media file IDs associated with the post",
+                    "items": {
+                      "type": "string",
+                      "description": "ID of a media file",
+                      "example": "6457a79b23576cf0aa13adec"
+                    }
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "User's id",
+                    "example": "6452b1d7f6a29d84c5b089fb"
+                  },
+                  "_id": {
+                    "type": "string",
+                    "description": "Post's id",
+                    "example": "642831f346155749a2b6e944"
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Post's time",
+                    "example": "43 minutes ago"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "FavoritesRemovePostNotFoundResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Sorry, we couldnt find post id in favorites"
           }
         }
       }

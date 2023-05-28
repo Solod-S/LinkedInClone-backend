@@ -44,7 +44,7 @@ const userSchema = Schema(
     },
     posts: {
       type: Array,
-      default: [],
+      default: [{ type: Schema.Types.ObjectId, ref: "Posts" }],
     },
     token: {
       type: String,

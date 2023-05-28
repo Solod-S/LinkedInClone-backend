@@ -1,4 +1,4 @@
-const { Post, Comment } = require("../../models");
+const { Post, Comment, Like, MediaFile } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
 const { commentTransformer } = require("../../helpers/index");
@@ -21,6 +21,8 @@ const deleteOwnComment = async (req, res, next) => {
 
   await Post.updateOne({ comments: { $elemMatch: { $eq: comment._id } } }, { $pull: { comments: comment._id } });
   await Comment.updateOne({ comments: { $elemMatch: { $eq: comment._id } } }, { $pull: { comments: comment._id } });
+  await MediaFile.deleteMany({ _id: { $in: comment.mediaFiles } });
+  await Like.deleteMany({ _id: { $in: comment.likes } });
 
   res.json({ status: "success", data: { deletedComment: commentTransformer(result) } });
 };

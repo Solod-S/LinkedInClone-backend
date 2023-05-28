@@ -18,7 +18,7 @@ const passwordChange = async (req, res) => {
 
   const user = await User.findByIdAndUpdate(_id, { password: newBcryptedPassword });
 
-  res.status(201).json({
+  res.json({
     status: "success",
     message: "Password has been successfully changed",
     data: { user: userTransformer(user) },

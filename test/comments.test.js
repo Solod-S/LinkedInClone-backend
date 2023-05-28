@@ -85,7 +85,7 @@ describe("Comments Test Suite", () => {
       description:
         "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.",
       mediaFiles: "645c76832000b04e5130b8c8",
-      postId: "6460b832db50f7007597f87c",
+      postId: "6467ce7e44ff2b38b8740e63",
     });
 
     expect(res.status).toBe(401);
@@ -109,17 +109,17 @@ describe("Comments Test Suite", () => {
     expect(res.body).toHaveProperty("message", '"description" is required');
   }, 10000);
 
-  test("Create comment with valid token, 200 check", async () => {
+  test("Create comment with valid token, 201 check", async () => {
     const res = await request(app).post(`/comments/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({
       description:
         "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.",
       mediaFiles: "645c76832000b04e5130b8c8",
-      postId: "6460b832db50f7007597f87c",
+      postId: "6467ce7e44ff2b38b8740e63",
     });
 
     commentId = res.body.data.comment._id;
 
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(201);
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
@@ -149,7 +149,7 @@ describe("Comments Test Suite", () => {
     expect(res.body.data.comment.description).toBe("TEST");
     expect(typeof res.body.data.comment.owner).toBe("string");
     expect(typeof res.body.data.comment.postId).toBe("string");
-    expect(res.body.data.comment.postId).toBe("6460b832db50f7007597f87c");
+    expect(res.body.data.comment.postId).toBe("6467ce7e44ff2b38b8740e63");
     expect(typeof res.body.data.comment._id).toBe("string");
     expect(typeof res.body.data.comment.postedAtHuman).toBe("string");
   }, 10000);

@@ -19,7 +19,7 @@ const getAllMediaFiles = async (req, res, next) => {
     return res.json({
       status: "success",
       data: {
-        ownPosts: [],
+        mediaFiles: [],
         totalPages,
         currentPage: page,
         perPage,
@@ -65,7 +65,7 @@ const getAllMediaFiles = async (req, res, next) => {
   res.json({
     status: "success",
     data: {
-      allMediaFiles: allMediaFiles.map((mediaFiles) => mediaFileTransformer(mediaFiles)),
+      mediaFiles: allMediaFiles.map((mediaFiles) => mediaFileTransformer(mediaFiles)),
       totalPages,
       currentPage: page,
       perPage,

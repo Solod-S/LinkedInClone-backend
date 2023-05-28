@@ -1,6 +1,7 @@
 const { User, Post } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
+const { postTransformer } = require("../../helpers/index");
 
 const addFavorite = async (req, res) => {
   const { postId } = req.params;
@@ -10,11 +11,11 @@ const addFavorite = async (req, res) => {
   const post = await Post.findById({ _id: postId });
 
   if (user.favorite.includes(postId)) {
-    throw HttpError(404, `Sorry, post id was added to favorites before`);
+    throw HttpError(409, `Sorry, the post was added to favorites before`);
   }
 
   if (!post) {
-    throw HttpError(404, `Post id is invalid`);
+    throw HttpError(404, `Post ID is invalid or not found`);
   }
 
   user.favorite.push(post._id);
@@ -22,7 +23,7 @@ const addFavorite = async (req, res) => {
 
   res.status(201).json({
     status: "success",
-    message: `Succes, post was added to favorites`,
+    data: { post: postTransformer(post) },
   });
 };
 

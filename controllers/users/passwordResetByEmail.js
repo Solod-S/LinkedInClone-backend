@@ -28,7 +28,7 @@ const passwordResetByEmail = async (req, res) => {
   const restorePassEmail = createRestorePasswordEmail(email, resetToken);
   await sendEmail(restorePassEmail);
 
-  res.status(201).json({
+  res.json({
     status: "succes",
     message: "Reset link have been sent to your email.",
   });

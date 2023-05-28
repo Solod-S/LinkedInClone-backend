@@ -182,7 +182,7 @@ describe("Post Test Suite", () => {
   }, 10000);
 
   test("Get post by id with valid token, 200 check", async () => {
-    const res = await request(app).get(`/posts/6460b832db50f7007597f87c`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/posts/6467ce7e44ff2b38b8740e63`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
     expect(typeof res.body.status).toBe("string");
@@ -204,7 +204,7 @@ describe("Post Test Suite", () => {
   }, 10000);
 
   test("Get post by id with invalid token, 401 check", async () => {
-    const res = await request(app).get(`/posts/6460b832db50f7007597f87c`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+    const res = await request(app).get(`/posts/6467ce7e44ff2b38b8740e63`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
 
     expect(res.status).toBe(401);
     expect(res.body).toHaveProperty("message", "Unauthorized");

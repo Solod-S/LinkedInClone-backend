@@ -1,6 +1,7 @@
 const { User, Post } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
+const { postTransformer } = require("../../helpers/index");
 
 const deleteFavorite = async (req, res) => {
   const { postId } = req.params;
@@ -20,9 +21,9 @@ const deleteFavorite = async (req, res) => {
   user.favorite.pull(post._id);
   await user.save();
 
-  res.status(201).json({
+  res.json({
     status: "success",
-    message: `Succes, post was removed from your favorites`,
+    data: { post: postTransformer(post) },
   });
 };
 

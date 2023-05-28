@@ -1,4 +1,4 @@
-const { User, Post } = require("../../models");
+const { User, Post, Comment, MediaFile, Like } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
 const { postTransformer } = require("../../helpers/index");
@@ -20,8 +20,12 @@ const deleteOwnPost = async (req, res, next) => {
   }
 
   await User.updateMany({ favorite: { $elemMatch: { $eq: post._id } } }, { $pull: { favorite: post._id } });
+  await User.updateOne({ posts: { $elemMatch: { $eq: post._id } } }, { $pull: { posts: post._id } });
+  await Comment.deleteMany({ _id: { $in: post.comments } });
+  await MediaFile.deleteMany({ _id: { $in: post.mediaFiles } });
+  await Like.deleteMany({ _id: { $in: post.likes } });
 
-  res.json({ status: "success", data: { deletedPost: postTransformer(result) } });
+  res.json({ status: "success", data: { post: postTransformer(result) } });
 };
 
 module.exports = deleteOwnPost;

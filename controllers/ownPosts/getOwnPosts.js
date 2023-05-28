@@ -19,7 +19,7 @@ const getOwnPosts = async (req, res, next) => {
     return res.json({
       status: "success",
       data: {
-        ownPosts: [],
+        posts: [],
         totalPages,
         currentPage: page,
         perPage,
@@ -50,7 +50,7 @@ const getOwnPosts = async (req, res, next) => {
   res.json({
     status: "success",
     data: {
-      ownPosts: ownPosts.map((post) => postTransformer(post)),
+      posts: ownPosts.map((post) => postTransformer(post)),
       totalPages,
       currentPage: page,
       perPage,

@@ -315,7 +315,7 @@ describe("User Test Suite", () => {
     });
   }, 10000);
 
-  test("Change password with valid body, return users object, 201 check", async () => {
+  test("Change password with valid body, return users object, 200 check", async () => {
     const res = await request(app)
       .post(`/users/password-change`)
       .send({
@@ -324,7 +324,7 @@ describe("User Test Suite", () => {
       })
       .set("Authorization", `Bearer ${token}`);
 
-    expect(res.status).toBe(201);
+    expect(res.status).toBe(200);
     expect(res.body.data.user instanceof Object).toBe(true);
     expect(typeof res.body.data.user._id).toBe("string");
     expect(typeof res.body.data.user.email).toBe("string");

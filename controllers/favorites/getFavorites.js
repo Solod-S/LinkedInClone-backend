@@ -21,7 +21,7 @@ const getFavorites = async (req, res, next) => {
     return res.json({
       status: "success",
       data: {
-        ownPosts: [],
+        posts: [],
         totalPages,
         currentPage: page,
         perPage,
@@ -29,7 +29,7 @@ const getFavorites = async (req, res, next) => {
     });
   }
 
-  const ownPosts = await Post.find({ _id: { $in: user.favorite } })
+  const posts = await Post.find({ _id: { $in: user.favorite } })
     .sort({ createdAt: -1 })
     .skip(skip < 0 ? 0 : skip)
     .limit(perPage)
@@ -52,7 +52,7 @@ const getFavorites = async (req, res, next) => {
   res.json({
     status: "success",
     data: {
-      posts: ownPosts.map((post) => postTransformer(post)),
+      posts: posts.map((post) => postTransformer(post)),
       totalPages,
       currentPage: page,
       perPage,
