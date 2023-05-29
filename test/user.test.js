@@ -44,6 +44,7 @@ describe("User Test Suite", () => {
       .set("Accept", "application/json");
 
     expect(res.status).toBe(201);
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(res.body).toHaveProperty("data");
     expect(typeof res.body.data.email).toBe("string");
     expect(typeof res.body.data.name).toBe("string");
@@ -196,6 +197,8 @@ describe("User Test Suite", () => {
     userId = res.body.data.user._id;
 
     expect(res.status).toBe(200);
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
+    expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.token).toBe("string");
     expect(res.body.data.user instanceof Object).toBe(true);
     expect(typeof res.body.data.user._id).toBe("string");
@@ -325,6 +328,8 @@ describe("User Test Suite", () => {
       .set("Authorization", `Bearer ${token}`);
 
     expect(res.status).toBe(200);
+    expect(typeof res.body.data).toBe("object");
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(res.body.data.user instanceof Object).toBe(true);
     expect(typeof res.body.data.user._id).toBe("string");
     expect(typeof res.body.data.user.email).toBe("string");
@@ -386,8 +391,10 @@ describe("User Test Suite", () => {
       .set("Accept", "application/json");
 
     expect(res.status).toBe(200);
-    expect(res.body.status).toBe("success");
-    expect(res.body.message).toBe("Password has been successfully changed");
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
+    expect(typeof res.body.message).toBe("string") &&
+      expect(res.body.message).toBe("Password has been successfully changed");
+    expect(typeof res.body.data).toBe("object");
     expect(res.body.data.user instanceof Object).toBe(true);
     expect(typeof res.body.data.user._id).toBe("string");
     expect(typeof res.body.data.user.email).toBe("string");
@@ -412,7 +419,8 @@ describe("User Test Suite", () => {
     const res = await request(app).get(`/users/current`).set("Authorization", `Bearer ${token}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string");
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
+    expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.token).toBe("string");
     expect(res.body.data.user instanceof Object).toBe(true);
     expect(typeof res.body.data.user._id).toBe("string");
@@ -444,7 +452,8 @@ describe("User Test Suite", () => {
     const res = await request(app).get(`/users/${userId}`).set("Authorization", `Bearer ${token}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string");
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
+    expect(typeof res.body.data).toBe("object");
     expect(res.body.data.user instanceof Object).toBe(true);
     expect(typeof res.body.data.user._id).toBe("string");
     expect(typeof res.body.data.user.email).toBe("string");
@@ -485,7 +494,7 @@ describe("User Test Suite", () => {
     // Check status code and response format
     expect(res.status).toBe(200);
     expect(typeof res.body).toBe("object");
-    expect(typeof res.body.status).toBe("string");
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
 
     // Check that the users array is present and has valid data
@@ -522,7 +531,7 @@ describe("User Test Suite", () => {
     // Check status code and response format
     expect(res.status).toBe(200);
     expect(typeof res.body).toBe("object");
-    expect(typeof res.body.status).toBe("string");
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
 
     // Check that the users array is present and has valid data
@@ -603,8 +612,7 @@ describe("User Test Suite", () => {
 
     const res = await request(app).delete(`/users/remove`).set("Authorization", `Bearer ${token}`);
     expect(res.status).toBe(200);
-    expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.status).toBe("string");
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.user).toBe("object");
     expect(typeof res.body.data.user._id).toBe("string");

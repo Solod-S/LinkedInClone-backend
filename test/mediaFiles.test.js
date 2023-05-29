@@ -25,8 +25,8 @@ describe("Media-files Test Suite", () => {
     const res = await request(app).get(`/media-files`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
     expect(Array.isArray(res.body.data.mediaFiles)).toBe(true);
     expect(res.body.data.mediaFiles.every((mediaFile) => typeof mediaFile.type === "string")).toBe(true);
@@ -44,8 +44,8 @@ describe("Media-files Test Suite", () => {
     const res = await request(app).get(`/media-files?page=1&perPage=2`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.totalPages).toBe("number");
     expect(typeof res.body.data.currentPage).toBe("number");
@@ -117,8 +117,8 @@ describe("Media-files Test Suite", () => {
     mediaFileId = res.body.data.mediaFile._id;
 
     expect(res.status).toBe(201);
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.mediaFile).toBe("object");
     expect(typeof res.body.data.mediaFile.type).toBe("string");
@@ -144,21 +144,19 @@ describe("Media-files Test Suite", () => {
       });
 
     expect(res.status).toBe(200);
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.mediaFile).toBe("object");
-    expect(typeof res.body.data.mediaFile.type).toBe("string");
-    expect(res.body.data.mediaFile.type).toBe("video");
-    expect(typeof res.body.data.mediaFile.location).toBe("string");
-    expect(res.body.data.mediaFile.location).toBe("posts");
-    expect(typeof res.body.data.mediaFile.url).toBe("string");
-    expect(res.body.data.mediaFile.url).toBe("url");
-    expect(typeof res.body.data.mediaFile.providerPublicId).toBe("string");
-    expect(res.body.data.mediaFile.providerPublicId).toBe("sss");
+    expect(typeof res.body.data.mediaFile.type).toBe("string") && expect(res.body.data.mediaFile.type).toBe("video");
+    expect(typeof res.body.data.mediaFile.location).toBe("string") &&
+      expect(res.body.data.mediaFile.location).toBe("posts");
+    expect(typeof res.body.data.mediaFile.url).toBe("string") && expect(res.body.data.mediaFile.url).toBe("url");
+    expect(typeof res.body.data.mediaFile.providerPublicId).toBe("string") &&
+      expect(res.body.data.mediaFile.providerPublicId).toBe("sss");
     expect(typeof res.body.data.mediaFile.owner).toBe("string");
-    expect(typeof res.body.data.mediaFile.postId).toBe("string");
-    expect(res.body.data.mediaFile.postId).toBe("645f6f55e4a08e69e891c4b5");
+    expect(typeof res.body.data.mediaFile.postId).toBe("string") &&
+      expect(res.body.data.mediaFile.postId).toBe("645f6f55e4a08e69e891c4b5");
     expect(typeof res.body.data.mediaFile._id).toBe("string");
     expect(typeof res.body.data.mediaFile.postedAtHuman).toBe("string");
   }, 10000);
@@ -196,8 +194,8 @@ describe("Media-files Test Suite", () => {
     const res = await request(app).get(`/media-files/${mediaFileId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.mediaFile).toBe("object");
     expect(typeof res.body.data.mediaFile.type).toBe("string");
@@ -232,8 +230,8 @@ describe("Media-files Test Suite", () => {
       .set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.deletedMediaFile).toBe("object");
     expect(typeof res.body.data.deletedMediaFile.type).toBe("string");
@@ -257,8 +255,8 @@ describe("Media-files Test Suite", () => {
     mediaFileId = res.body.data.mediaFile._id;
 
     expect(res.status).toBe(201);
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.mediaFile).toBe("object");
     expect(typeof res.body.data.mediaFile.type).toBe("string");
@@ -275,8 +273,8 @@ describe("Media-files Test Suite", () => {
     const res = await request(app).get(`/media-files/${mediaFileId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.mediaFile).toBe("object");
     expect(typeof res.body.data.mediaFile.type).toBe("string");
@@ -311,8 +309,8 @@ describe("Media-files Test Suite", () => {
       .set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.deletedMediaFile).toBe("object");
     expect(typeof res.body.data.deletedMediaFile.type).toBe("string");

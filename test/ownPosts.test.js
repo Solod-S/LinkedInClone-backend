@@ -25,8 +25,7 @@ describe("Own-post Test Suite", () => {
     const res = await request(app).get(`/own-posts`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.status).toBe("string");
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
     expect(Array.isArray(res.body.data.posts)).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.description === "string")).toBe(true);
@@ -41,8 +40,7 @@ describe("Own-post Test Suite", () => {
     const res = await request(app).get(`/own-posts?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.status).toBe("string");
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.totalPages).toBe("number");
     expect(typeof res.body.data.currentPage).toBe("number");
@@ -82,8 +80,7 @@ describe("Own-post Test Suite", () => {
     postId = res.body.data.post._id;
 
     expect(res.status).toBe(201);
-    expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.status).toBe("string");
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.post).toBe("object");
     expect(typeof res.body.data.post.description).toBe("string");
@@ -104,14 +101,14 @@ describe("Own-post Test Suite", () => {
       });
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.status).toBe("string");
+
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.post).toBe("object");
-    expect(typeof res.body.data.post.description).toBe("string");
-    expect(res.body.data.post.description).toBe(
-      "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up."
-    );
+    expect(typeof res.body.data.post.description).toBe("string") &&
+      expect(res.body.data.post.description).toBe(
+        "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up."
+      );
     expect(typeof res.body.data.post.likes).toBe("object");
     expect(typeof res.body.data.post.comments).toBe("object");
     expect(typeof res.body.data.post.owner).toBe("string");
@@ -180,8 +177,8 @@ describe("Own-post Test Suite", () => {
     const res = await request(app).delete(`/own-posts/remove/${postId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.status).toBe("string");
+
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.post).toBe("object");
     expect(typeof res.body.data.post.description).toBe("string");

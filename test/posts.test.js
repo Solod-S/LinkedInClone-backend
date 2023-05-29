@@ -75,7 +75,7 @@ describe("Post Test Suite", () => {
     const res = await request(app).get(`/posts/popular`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string");
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
     expect(Array.isArray(res.body.data.posts)).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.description === "string")).toBe(true);
@@ -91,7 +91,7 @@ describe("Post Test Suite", () => {
     const res = await request(app).get(`/posts/popular?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string");
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.totalPages).toBe("number");
     expect(typeof res.body.data.currentPage).toBe("number");
@@ -129,7 +129,7 @@ describe("Post Test Suite", () => {
     const res = await request(app).get(`/posts/search?search=Tequila+is`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string");
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
     expect(Array.isArray(res.body.data.posts)).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.description === "string")).toBe(true);
@@ -147,7 +147,7 @@ describe("Post Test Suite", () => {
       .set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string");
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.totalPages).toBe("number");
     expect(typeof res.body.data.currentPage).toBe("number");
@@ -185,7 +185,7 @@ describe("Post Test Suite", () => {
     const res = await request(app).get(`/posts/6467ce7e44ff2b38b8740e63`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string");
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.post).toBe("object");
     expect(typeof res.body.data.post.description).toBe("string");

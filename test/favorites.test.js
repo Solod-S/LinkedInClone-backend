@@ -27,8 +27,7 @@ describe("Favorites Test Suite", () => {
     const res = await request(app).get(`/favorites/posts`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.status).toBe("string");
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
     expect(Array.isArray(res.body.data.posts)).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.description === "string")).toBe(true);
@@ -45,8 +44,8 @@ describe("Favorites Test Suite", () => {
       .set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.totalPages).toBe("number");
     expect(typeof res.body.data.currentPage).toBe("number");
@@ -79,7 +78,7 @@ describe("Favorites Test Suite", () => {
     expect(res.body).toHaveProperty("message", "Unauthorized");
   }, 10000);
 
-  test("Add post to favorites with valid token, 201 check", async () => {
+  test("Add post to favorites with valid token and valid post id, 201 check", async () => {
     try {
       const firstPost = await Post.findOne().sort({ createdAt: 1 });
       postId = firstPost._id;
@@ -90,8 +89,8 @@ describe("Favorites Test Suite", () => {
     const res = await request(app).get(`/favorites/posts/add/${postId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(201);
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
     expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.status).toBe("string");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.post).toBe("object");
     expect(typeof res.body.data.post.description).toBe("string");
@@ -102,53 +101,55 @@ describe("Favorites Test Suite", () => {
     expect(typeof res.body.data.post.postedAtHuman).toBe("string");
   }, 10000);
 
-  // test("Add post to favorites with invalid token, 401 check", async () => {
-  //   const res = await request(app).post(`/own-posts/add`).set("Authorization", `Bearer ${WRONG_TOKEN}`).send({
-  //     description:
-  //       "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.",
-  //   });
+  test("Add post to favorites with invalid token and valid post id, 401 check", async () => {
+    const res = await request(app).get(`/favorites/posts/add/${postId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
 
-  //   expect(res.status).toBe(401);
-  //   expect(res.body).toHaveProperty("message", "Unauthorized");
-  // }, 10000);
+    expect(res.status).toBe(401);
+    expect(res.body).toHaveProperty("message", "Unauthorized");
+  }, 10000);
 
-  // test("Add post to favorites with without body, 400 check", async () => {
-  //   const res = await request(app).post(`/own-posts/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({});
+  test("Add post to favorites with valid token and invalid post id, 404 check", async () => {
+    const res = await request(app)
+      .post(`/favorites/posts/add/123456789123456789123456`)
+      .set("Authorization", `Bearer ${TEST_TOKEN}`);
 
-  //   expect(res.status).toBe(400);
-  //   expect(res.body).toHaveProperty("message", '"description" is required');
-  // }, 10000);
+    expect(res.status).toBe(404);
+    expect(typeof res.body.message).toBe("string") && expect(res.body.message).toBe("Post ID is invalid or not found");
+  }, 10000);
 
-  // test("Add post to favorites with invalid body, 400 check", async () => {
-  //   const res = await request(app)
-  //     .post(`/own-posts/add`)
-  //     .set("Authorization", `Bearer ${TEST_TOKEN}`)
-  //     .send({ 11: "ss" });
+  test("Remove post from favorite with invalid token and valid post id, 401 check", async () => {
+    const res = await request(app)
+      .delete(`/favorites/posts/remove/${postId}`)
+      .set("Authorization", `Bearer ${WRONG_TOKEN}`);
 
-  //   expect(res.status).toBe(400);
-  //   expect(res.body).toHaveProperty("message", '"description" is required');
-  // }, 10000);
+    expect(res.status).toBe(401);
+    expect(res.body).toHaveProperty("message", "Unauthorized");
+  }, 10000);
 
-  // test("Remove post with invalid token, 401 check", async () => {
-  //   const res = await request(app).delete(`/own-posts/remove/${postId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+  test("Remove post from favorite with valid token and invalid post id, 404 check", async () => {
+    const res = await request(app)
+      .delete(`/favorites/posts/remove/123456789123456789123456`)
+      .set("Authorization", `Bearer ${TEST_TOKEN}`);
 
-  //   expect(res.status).toBe(401);
-  //   expect(res.body).toHaveProperty("message", "Unauthorized");
-  // }, 10000);
+    expect(res.status).toBe(404);
+    expect(typeof res.body.message).toBe("string") && expect(res.body.message).toBe("Post ID is invalid or not found");
+  }, 10000);
 
-  // test("Remove post with valid token, 200 check", async () => {
-  //   const res = await request(app).delete(`/own-posts/remove/${postId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+  test("Remove post with valid token and valid post id, 200 check", async () => {
+    const res = await request(app)
+      .delete(`/favorites/posts/remove/${postId}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN}`);
 
-  //   expect(res.status).toBe(200);
-  //   expect(typeof res.body.data).toBe("object");
-  //   expect(typeof res.body.status).toBe("string");
-  //   expect(typeof res.body.data).toBe("object");
-  //   expect(typeof res.body.data.post).toBe("object");
-  //   expect(typeof res.body.data.post.description).toBe("string");
-  //   expect(typeof res.body.data.post.likes).toBe("object");
-  //   expect(typeof res.body.data.post.comments).toBe("object");
-  //   expect(typeof res.body.data.post.owner).toBe("string");
-  //   expect(typeof res.body.data.post._id).toBe("string");
-  //   expect(typeof res.body.data.post.postedAtHuman).toBe("string");
-  // }, 10000);
+    expect(res.status).toBe(200);
+    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
+    expect(typeof res.body.data).toBe("object");
+    expect(typeof res.body.data).toBe("object");
+    expect(typeof res.body.data.post).toBe("object");
+    expect(typeof res.body.data.post.description).toBe("string");
+    expect(typeof res.body.data.post.likes).toBe("object");
+    expect(typeof res.body.data.post.comments).toBe("object");
+    expect(typeof res.body.data.post.owner).toBe("string");
+    expect(typeof res.body.data.post._id).toBe("string");
+    expect(typeof res.body.data.post.postedAtHuman).toBe("string");
+  }, 10000);
 });
