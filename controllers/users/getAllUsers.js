@@ -18,6 +18,7 @@ const getAllUsers = async (req, res, next) => {
       status: "success",
       data: {
         users: [],
+        message: "No user were found",
         totalPages,
         currentPage: page,
         perPage,
@@ -95,6 +96,7 @@ const getAllUsers = async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
+    message: "We successfully found users",
     data: {
       users: transformedUsers,
       totalPages,

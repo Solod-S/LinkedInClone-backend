@@ -17,6 +17,7 @@ const devResendVerifyEmail = async (req, res) => {
 
   res.status(201).json({
     status: "success",
+    message: "Sending email verification was successful",
   });
 };
 

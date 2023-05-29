@@ -1580,6 +1580,12 @@
             "format": "string",
             "example": "success"
           },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "User registered successfully"
+          },
           "data": {
             "type": "object",
             "properties": {
@@ -1637,7 +1643,7 @@
             "type": "string",
             "description": "Response message",
             "format": "string",
-            "example": "Verification successful"
+            "example": "Sending email verification was successful"
           }
         }
       },
@@ -1675,6 +1681,12 @@
             "description": "Status",
             "format": "string",
             "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successful login"
           },
           "data": {
             "type": "object",
@@ -1768,6 +1780,12 @@
             "description": "Status",
             "format": "string",
             "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Password has been successfully changed"
           },
           "data": {
             "type": "object",
@@ -1911,6 +1929,12 @@
             "description": "Status",
             "format": "string",
             "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successfully collected the current data"
           },
           "data": {
             "type": "object",
@@ -2231,6 +2255,12 @@
             "description": "Status",
             "format": "string",
             "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "We successfully found users"
           },
           "data": {
             "type": "object",
@@ -2711,6 +2741,12 @@
             "description": "Status",
             "format": "string",
             "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successfully collected the current data"
           },
           "data": {
             "type": "object",

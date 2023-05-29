@@ -7,7 +7,11 @@ const remove = async (req, res) => {
 
   const deletedUser = await User.findOneAndDelete({ _id });
 
-  res.status(200).json({ status: "success", data: { user: userTransformer(deletedUser) } });
+  res.status(200).json({
+    status: "success",
+    message: "The user was successfully deleted",
+    data: { user: userTransformer(deletedUser) },
+  });
 };
 
 module.exports = remove;
