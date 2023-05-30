@@ -29,7 +29,8 @@ describe("Comments Test Suite", () => {
     const res = await request(app).get(`/comments`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
+    expect(typeof res.body.status).toBe("string");
+    expect(res.body.status).toEqual("success");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data).toBe("object");
     expect(Array.isArray(res.body.data.ownComments)).toBe(true);
@@ -48,7 +49,8 @@ describe("Comments Test Suite", () => {
     const res = await request(app).get(`/comments?page=1&perPage=2`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
+    expect(typeof res.body.status).toBe("string");
+    expect(res.body.status).toEqual("success");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.totalPages).toBe("number");
@@ -120,7 +122,8 @@ describe("Comments Test Suite", () => {
     commentId = res.body.data.comment._id;
 
     expect(res.status).toBe(201);
-    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
+    expect(typeof res.body.status).toBe("string");
+    expect(res.body.status).toEqual("success");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.comment).toBe("object");
@@ -139,7 +142,8 @@ describe("Comments Test Suite", () => {
       .send({ description: "TEST" });
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
+    expect(typeof res.body.status).toBe("string");
+    expect(res.body.status).toEqual("success");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.comment).toBe("object");
@@ -186,7 +190,8 @@ describe("Comments Test Suite", () => {
     const res = await request(app).delete(`/comments/remove/${commentId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
+    expect(typeof res.body.status).toBe("string");
+    expect(res.body.status).toEqual("success");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.deletedComment).toBe("object");

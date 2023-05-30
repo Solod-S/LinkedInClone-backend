@@ -27,7 +27,7 @@ const devRegister = async (rec, res) => {
   });
 
   res.status(201).json({
-    status: "succes",
+    status: "success",
     message: "User registered successfully",
     data: { email: newUser.email, name: newUser.name },
   });

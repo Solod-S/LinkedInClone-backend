@@ -1747,7 +1747,7 @@
           "status": {
             "type": "string",
             "description": "Status",
-            "example": "succes"
+            "example": "success"
           },
           "message": {
             "type": "string",
@@ -1988,6 +1988,12 @@
             "description": "Status",
             "format": "string",
             "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "We successfully found user"
           },
           "data": {
             "type": "object",
@@ -2502,6 +2508,12 @@
             "format": "string",
             "example": "success"
           },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "We successfully found such user(s)"
+          },
           "data": {
             "type": "object",
             "properties": {
@@ -2746,7 +2758,7 @@
             "type": "string",
             "description": "Response message",
             "format": "string",
-            "example": "Successfully collected the current data"
+            "example": "The user was successfully deleted"
           },
           "data": {
             "type": "object",

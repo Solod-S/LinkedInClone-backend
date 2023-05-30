@@ -38,7 +38,7 @@ const login = async (req, res) => {
   const currentUser = await User.findOne({ token });
 
   res.status(200).json({
-    status: "succes",
+    status: "success",
     message: "Successful login",
     data: { user: userTransformer(currentUser), token },
   });

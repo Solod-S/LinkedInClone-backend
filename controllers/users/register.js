@@ -31,7 +31,7 @@ const register = async (req, res) => {
   await sendEmail(verifyEmail);
 
   res.status(201).json({
-    status: "succes",
+    status: "success",
     message: "User registered successfully",
     data: { email: newUser.email, name: newUser.name, surname: newUser.surname },
   });

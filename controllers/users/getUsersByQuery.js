@@ -19,6 +19,7 @@ const getUsersByQuery = async (req, res, next) => {
   if (!search || (await User.find(userQuery)).length <= 0) {
     return res.json({
       status: "success",
+      message: "No users were found",
       data: {
         users: [],
         totalPages,
@@ -98,6 +99,7 @@ const getUsersByQuery = async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
+    message: "We successfully found such user(s)",
     data: {
       users: transformedUsers,
       totalPages,

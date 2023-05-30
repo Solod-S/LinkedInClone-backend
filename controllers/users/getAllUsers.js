@@ -18,7 +18,7 @@ const getAllUsers = async (req, res, next) => {
       status: "success",
       data: {
         users: [],
-        message: "No user were found",
+        message: "No users were found",
         totalPages,
         currentPage: page,
         perPage,

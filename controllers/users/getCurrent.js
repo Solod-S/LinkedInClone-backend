@@ -4,7 +4,7 @@ const getCurrent = async (req, res) => {
   const user = req.user;
 
   res.status(200).json({
-    status: "succes",
+    status: "success",
     message: "Successfully collected the current data",
     data: { user: userTransformer(user), token: user.token },
   });

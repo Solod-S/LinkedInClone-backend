@@ -37,15 +37,17 @@ describe("User Test Suite", () => {
       .post("/users/devregister")
       .send({
         email,
-        name,
+        name: "Sergio",
         password: VALID_PASS,
         surname: "Solod",
       })
       .set("Accept", "application/json");
 
     expect(res.status).toBe(201);
-    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
-    expect(typeof res.body.message).toBe("string") && expect(res.body.message).toBe("User registered successfully");
+    expect(typeof res.body.status).toBe("string");
+    expect(res.body.status).toEqual("success");
+    expect(typeof res.body.message).toBe("string");
+    expect(res.body.message).toEqual("User registered successfully");
     expect(res.body).toHaveProperty("data");
     expect(typeof res.body.data.email).toBe("string");
     expect(typeof res.body.data.name).toBe("string");
@@ -198,8 +200,10 @@ describe("User Test Suite", () => {
     token = res.body.data.token;
     userId = res.body.data.user._id;
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
-    expect(typeof res.body.message).toBe("string") && expect(res.body.message).toBe("Successful login");
+    expect(typeof res.body.status).toBe("string");
+    expect(res.body.status).toEqual("success");
+    expect(typeof res.body.message).toBe("string");
+    expect(res.body.message).toEqual("Successful login");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.token).toBe("string");
     expect(res.body.data.user instanceof Object).toBe(true);
@@ -331,9 +335,10 @@ describe("User Test Suite", () => {
 
     expect(res.status).toBe(200);
     expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
-    expect(typeof res.body.message).toBe("string") &&
-      expect(res.body.message).toBe("Password has been successfully changed");
+    expect(typeof res.body.status).toBe("string");
+    expect(res.body.status).toEqual("success");
+    expect(typeof res.body.message).toBe("string");
+    expect(res.body.message).toEqual("Password has been successfully changed");
     expect(res.body.data.user instanceof Object).toBe(true);
     expect(typeof res.body.data.user._id).toBe("string");
     expect(typeof res.body.data.user.email).toBe("string");
@@ -361,7 +366,7 @@ describe("User Test Suite", () => {
     expect(res.body).toHaveProperty("message", '"oldPassword" is required');
   }, 10000);
 
-  test("Reset password with valid resetToken and invalid body , return users object, 200 check", async () => {
+  test("POST /reset password with valid resetToken and invalid body, should return 400 status ", async () => {
     const getResetToken = async (email) => {
       const user = await User.findOne({ email });
       const resetToken = uuid.v4();
@@ -383,10 +388,10 @@ describe("User Test Suite", () => {
       .set("Accept", "application/json");
 
     expect(res.status).toBe(400);
-    expect(res.body.message).toBe('"password" is required');
+    expect(res.body.message).toEqual('"password" is required');
   }, 10000);
 
-  test("Reset password with valid resetToken and valid body , return users object, 200 check", async () => {
+  test("POST /reset password with valid resetToken, should return 200 status and valid user data", async () => {
     const res = await request(app)
       .post(`/users/password-reset/${resetToken}`)
       .send({
@@ -395,9 +400,10 @@ describe("User Test Suite", () => {
       .set("Accept", "application/json");
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
-    expect(typeof res.body.message).toBe("string") &&
-      expect(res.body.message).toBe("Password has been successfully changed");
+    expect(typeof res.body.status).toBe("string");
+    expect(res.body.status).toEqual("success");
+    expect(typeof res.body.message).toBe("string");
+    expect(res.body.message).toEqual("Password has been successfully changed");
     expect(typeof res.body.data).toBe("object");
     expect(res.body.data.user instanceof Object).toBe(true);
     expect(typeof res.body.data.user._id).toBe("string");
@@ -407,7 +413,7 @@ describe("User Test Suite", () => {
     expect(typeof res.body.data.user.avatarURL).toBe("string");
   }, 10000);
 
-  test("Reset password with invalid resetToken and valid body, return users object, 404 check", async () => {
+  test("POST /reset password with invalid resetToken, should return 404 status ", async () => {
     const res = await request(app)
       .post(`/users/password-reset/${resetToken}`)
       .send({
@@ -416,16 +422,17 @@ describe("User Test Suite", () => {
       .set("Accept", "application/json");
 
     expect(res.status).toBe(404);
-    expect(res.body.message).toBe("User not found");
+    expect(res.body.message).toEqual("User not found");
   }, 10000);
 
-  test("Get current with valid token, 200 check", async () => {
+  test("GET /current user data with valid token, should return 200 status and valid user data", async () => {
     const res = await request(app).get(`/users/current`).set("Authorization", `Bearer ${token}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
-    expect(typeof res.body.message).toBe("string") &&
-      expect(res.body.message).toBe("Successfully collected the current data");
+    expect(typeof res.body.status).toBe("string");
+    expect(res.body.status).toEqual("success");
+    expect(typeof res.body.message).toBe("string");
+    expect(res.body.message).toEqual("Successfully collected the current data");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.token).toBe("string");
     expect(res.body.data.user instanceof Object).toBe(true);
@@ -436,7 +443,7 @@ describe("User Test Suite", () => {
     expect(typeof res.body.data.user.avatarURL).toBe("string");
   }, 10000);
 
-  test("Get current with invalid token, 401 check", async () => {
+  test("GET /current user data with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/users/current`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
 
     expect(res.status).toBe(401);
@@ -445,7 +452,48 @@ describe("User Test Suite", () => {
     });
   }, 10000);
 
-  test("Get user by id with invalid token, 401 check", async () => {
+  test("GET /users(s) by search query with valid token, should return 200 status and valid user(s) data", async () => {
+    const res = await request(app).get(`/users/search?search=Sergio`).set("Authorization", `Bearer ${token}`);
+
+    expect(res.status).toBe(200);
+    expect(typeof res.body.status).toBe("string");
+    expect(res.body.status).toEqual("success");
+    expect(typeof res.body.message).toBe("string");
+    expect(res.body.message).toEqual("We successfully found such user(s)");
+
+    // Check that the users array is present and has valid data
+    const { users } = res.body.data;
+    expect(Array.isArray(users)).toBe(true);
+
+    if (users.length > 0) {
+      users.forEach((user) => {
+        expect(typeof user._id === "string").toBe(true);
+        expect(typeof user.name).toBe("string");
+        expect(typeof user.email).toBe("string");
+
+        expect(Array.isArray(user.posts)).toBe(true);
+
+        if (user.posts.length > 0) {
+          user.posts.forEach((post) => {
+            expect(Array.isArray(post.likes)).toBe(true);
+            expect(Array.isArray(post.comments)).toBe(true);
+            expect(Array.isArray(post.mediaFiles)).toBe(true);
+          });
+        }
+      });
+    }
+  }, 10000);
+
+  test("GET /users(s) by search query with invalid token, should return 401 status", async () => {
+    const res = await request(app).get(`/users/search?search=Sergio`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+
+    expect(res.status).toBe(401);
+    expect(res.body).toEqual({
+      message: "Unauthorized",
+    });
+  }, 10000);
+
+  test("GET /user by id with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/users/${userId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
 
     expect(res.status).toBe(401);
@@ -454,11 +502,14 @@ describe("User Test Suite", () => {
     });
   }, 10000);
 
-  test("Get user by id with valid token, 200 check", async () => {
+  test("GET /user by id with valid token, should return 200 status and valid user data", async () => {
     const res = await request(app).get(`/users/${userId}`).set("Authorization", `Bearer ${token}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
+    expect(typeof res.body.status).toBe("string");
+    expect(res.body.status).toEqual("success");
+    expect(typeof res.body.message).toBe("string");
+    expect(res.body.message).toEqual("We successfully found user");
     expect(typeof res.body.data).toBe("object");
     expect(res.body.data.user instanceof Object).toBe(true);
     expect(typeof res.body.data.user._id).toBe("string");
@@ -476,7 +527,7 @@ describe("User Test Suite", () => {
     expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
   }, 10000);
 
-  test("GET /users with invalid token should return 401 status and valid user data", async () => {
+  test("GET /users with invalid token, should return 401 status", async () => {
     // Make sure that token is defined
     expect(WRONG_TOKEN).toBeDefined();
 
@@ -490,7 +541,7 @@ describe("User Test Suite", () => {
     });
   }, 10000);
 
-  test("GET /users with valid token should return 200 status and valid user data", async () => {
+  test("GET /users with valid token, should return 200 status and valid users data", async () => {
     // Make sure that token is defined
     expect(token).toBeDefined();
 
@@ -500,8 +551,11 @@ describe("User Test Suite", () => {
     // Check status code and response format
     expect(res.status).toBe(200);
     expect(typeof res.body).toBe("object");
-    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
-    expect(typeof res.body.message).toBe("string") && expect(res.body.message).toBe("We successfully found users");
+    expect(typeof res.body.status).toBe("string");
+    expect(res.body.status).toEqual("success");
+    expect(typeof res.body.message).toBe("string");
+    expect(res.body.message).toEqual("We successfully found users");
+    expect(typeof res.body.message).toBe("string");
     expect(typeof res.body.data).toBe("object");
 
     // Check that the users array is present and has valid data
@@ -528,7 +582,7 @@ describe("User Test Suite", () => {
     }
   }, 10000);
 
-  test("GET /users with valid token + pagination should return 200 status and valid user data", async () => {
+  test("GET /users with valid token + pagination, should return 200 status and valid user data", async () => {
     // Make sure that token is defined
     expect(token).toBeDefined();
 
@@ -538,8 +592,10 @@ describe("User Test Suite", () => {
     // Check status code and response format
     expect(res.status).toBe(200);
     expect(typeof res.body).toBe("object");
-    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
-    expect(typeof res.body.message).toBe("string") && expect(res.body.message).toBe("We successfully found users");
+    expect(typeof res.body.status).toBe("string");
+    expect(res.body.status).toEqual("success");
+    expect(typeof res.body.message).toBe("string");
+    expect(res.body.message).toEqual("We successfully found users");
     expect(typeof res.body.data).toBe("object");
 
     // Check that the users array is present and has valid data
@@ -570,7 +626,7 @@ describe("User Test Suite", () => {
     const res = await request(app).get(`/users/logout`).set("Authorization", `Bearer ${token}`);
     expect(res.status).toBe(200);
     expect(res.body).toEqual({
-      status: "succes",
+      status: "success",
       message: "Logout successful",
     });
   }, 10000);
@@ -620,9 +676,10 @@ describe("User Test Suite", () => {
 
     const res = await request(app).delete(`/users/remove`).set("Authorization", `Bearer ${token}`);
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
-    expect(typeof res.body.message).toBe("string") &&
-      expect(res.body.message).toBe("The user was successfully deleted");
+    expect(typeof res.body.status).toBe("string");
+    expect(res.body.status).toEqual("success");
+    expect(typeof res.body.message).toBe("string");
+    expect(res.body.message).toEqual("The user was successfully deleted");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.user).toBe("object");
     expect(typeof res.body.data.user._id).toBe("string");

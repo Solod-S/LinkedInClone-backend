@@ -27,7 +27,8 @@ describe("Favorites Test Suite", () => {
     const res = await request(app).get(`/favorites/posts`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
+    expect(typeof res.body.status).toBe("string");
+    expect(res.body.status).toEqual("success");
     expect(typeof res.body.data).toBe("object");
     expect(Array.isArray(res.body.data.posts)).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.description === "string")).toBe(true);
@@ -44,7 +45,8 @@ describe("Favorites Test Suite", () => {
       .set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
+    expect(typeof res.body.status).toBe("string");
+    expect(res.body.status).toEqual("success");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.totalPages).toBe("number");
@@ -89,7 +91,8 @@ describe("Favorites Test Suite", () => {
     const res = await request(app).get(`/favorites/posts/add/${postId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(201);
-    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
+    expect(typeof res.body.status).toBe("string");
+    expect(res.body.status).toEqual("success");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.post).toBe("object");
@@ -141,7 +144,8 @@ describe("Favorites Test Suite", () => {
       .set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string") && expect(res.body.message).toBe("success");
+    expect(typeof res.body.status).toBe("string");
+    expect(res.body.status).toEqual("success");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.post).toBe("object");

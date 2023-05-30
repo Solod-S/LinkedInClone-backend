@@ -36,7 +36,7 @@ const getPostById = async (req, res, next) => {
   }
 
   res.status(200).json({
-    status: "succes",
+    status: "success",
     data: { post: postTransformer(post) },
   });
 };

@@ -29,7 +29,7 @@ const passwordResetByEmail = async (req, res) => {
   await sendEmail(restorePassEmail);
 
   res.json({
-    status: "succes",
+    status: "success",
     message: "Reset link have been sent to your email.",
   });
 };
