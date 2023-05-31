@@ -38,7 +38,7 @@ const getUserById = async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    message: "We successfully found user",
+    message: "We successfully found the user",
     data: { user: userTransformer(user), posts: posts.map((post) => postTransformer(post)) },
   });
 };

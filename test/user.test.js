@@ -32,7 +32,7 @@ describe("User Test Suite", () => {
     await server.close();
   });
 
-  test("Register with valid body, 201 check", async () => {
+  test("POST /register with valid body, should return 201 status and valid user data", async () => {
     const res = await request(app)
       .post("/users/devregister")
       .send({
@@ -53,7 +53,7 @@ describe("User Test Suite", () => {
     expect(typeof res.body.data.name).toBe("string");
   });
 
-  test("Register with the same email, 409 check", async () => {
+  test("POST /register with the same email, should return 409 status", async () => {
     const res = await request(app)
       .post("/users/devregister")
       .send({
@@ -68,7 +68,7 @@ describe("User Test Suite", () => {
     expect(res.body).toHaveProperty("message", "This email already in use");
   });
 
-  test("Register without email, 400 check", async () => {
+  test("POST /register without email, should return 400 status", async () => {
     const res = await request(app)
       .post("/users/devregister")
       .send({
@@ -82,7 +82,7 @@ describe("User Test Suite", () => {
     expect(res.body).toHaveProperty("message", '"email" is required');
   });
 
-  test("Register without name, 400 check", async () => {
+  test("POST /register without name, should return 400 status", async () => {
     const res = await request(app)
       .post("/users/devregister")
       .send({
@@ -96,7 +96,7 @@ describe("User Test Suite", () => {
     expect(res.body).toHaveProperty("message", '"name" is required');
   });
 
-  test("Register without password, 400 check", async () => {
+  test("POST /register without password, should return 400 status", async () => {
     const res = await request(app)
       .post("/users/devregister")
       .send({
@@ -110,7 +110,7 @@ describe("User Test Suite", () => {
     expect(res.body).toHaveProperty("message", '"password" is required');
   });
 
-  test("Register without surname, 400 check", async () => {
+  test("POST /register without surname, should return 400 status", async () => {
     const res = await request(app)
       .post("/users/devregister")
       .send({
@@ -124,7 +124,7 @@ describe("User Test Suite", () => {
     expect(res.body).toHaveProperty("message", '"surname" is required');
   });
 
-  test("Send verify email without body, 400 check", async () => {
+  test("GET /send verify email without body, should return 400 status", async () => {
     const res = await request(app).post(`/users/devverify`).set("Accept", "application/json");
 
     expect(res.status).toBe(400);
@@ -133,7 +133,7 @@ describe("User Test Suite", () => {
     });
   }, 10000);
 
-  test("Send verify email with valid email, 201 check", async () => {
+  test("GET /send verify email with valid email, should return 201 status", async () => {
     const res = await request(app)
       .post(`/users/devverify`)
       .send({
@@ -148,7 +148,7 @@ describe("User Test Suite", () => {
     });
   }, 10000);
 
-  test("Verify email with valid varification code, 200 check", async () => {
+  test("GET /verify email with valid varification code, should return 200 status", async () => {
     const getVerificationCode = async (email) => {
       const { verificationCode } = await User.findOne({ email });
       return verificationCode;
@@ -165,7 +165,7 @@ describe("User Test Suite", () => {
     });
   }, 10000);
 
-  test("Send verify email with valid email to verified user, 401 check", async () => {
+  test("GET /send verify email with valid email to verified user, should return 401 status", async () => {
     const res = await request(app)
       .post(`/users/devverify`)
       .send({
@@ -179,7 +179,7 @@ describe("User Test Suite", () => {
     });
   }, 10000);
 
-  test("Verify email with invalid varification code, 404 check", async () => {
+  test("GET /verify email with invalid varification code, should return 404 status", async () => {
     const res = await request(app).get(`/users/verify/${WRONG_VERIFY_CODE}`).set("Accept", "application/json");
 
     expect(res.status).toBe(404);
@@ -188,7 +188,7 @@ describe("User Test Suite", () => {
     });
   }, 10000);
 
-  test("Login with valid body, return token and users object, 200 check", async () => {
+  test("POST /login with valid body, should return 200 status, token and valid user data", async () => {
     const res = await request(app)
       .post(`/users/login`)
       .send({
@@ -214,7 +214,7 @@ describe("User Test Suite", () => {
     expect(typeof res.body.data.user.avatarURL).toBe("string");
   }, 10000);
 
-  test("Login with invalid body, 400 check", async () => {
+  test("POST /login with invalid body, should return 400 status", async () => {
     const res = await request(app)
       .post(`/users/login`)
       .send({
@@ -227,7 +227,7 @@ describe("User Test Suite", () => {
     expect(res.status).toBe(400);
   }, 10000);
 
-  test("Login without body, 400 check", async () => {
+  test("POST /login without body, should return 400 status", async () => {
     const res = await request(app).post(`/users/login`).set("Accept", "application/json");
 
     expect(res.status).toBe(400);
@@ -236,7 +236,7 @@ describe("User Test Suite", () => {
     });
   }, 10000);
 
-  test("Login without password, 400 check", async () => {
+  test("POST /login without password, should return 400 status", async () => {
     const res = await request(app)
       .post(`/users/login`)
       .send({
@@ -250,7 +250,7 @@ describe("User Test Suite", () => {
     });
   }, 10000);
 
-  test("Login without email, 400 check", async () => {
+  test("POST /login without email, should return 400 status", async () => {
     const res = await request(app)
       .post(`/users/login`)
       .send({
@@ -264,7 +264,7 @@ describe("User Test Suite", () => {
     });
   }, 10000);
 
-  test("Login with wrong email, 404 check", async () => {
+  test("POST /login with wrong email, should return 404 status", async () => {
     const res = await request(app)
       .post(`/users/login`)
       .send({
@@ -279,7 +279,7 @@ describe("User Test Suite", () => {
     });
   }, 10000);
 
-  test("Login with incorrect password, 404 check", async () => {
+  test("POST /login with incorrect password, should return 404 status", async () => {
     const res = await request(app)
       .post(`/users/login`)
       .send({
@@ -294,7 +294,7 @@ describe("User Test Suite", () => {
     });
   }, 10000);
 
-  test("Login with invalid password, 400 check", async () => {
+  test("POST /login with invalid password, should return 400 status", async () => {
     const res = await request(app)
       .post(`/users/login`)
       .send({
@@ -309,7 +309,7 @@ describe("User Test Suite", () => {
     });
   }, 10000);
 
-  test("Change password with invalid token, 401 check", async () => {
+  test("POST /change password with invalid token, should return 401 status", async () => {
     const res = await request(app)
       .post(`/users/password-change`)
       .send({
@@ -324,7 +324,7 @@ describe("User Test Suite", () => {
     });
   }, 10000);
 
-  test("Change password with valid body, return users object, 200 check", async () => {
+  test("POST /change password with valid body, should return 200 status and valid user data", async () => {
     const res = await request(app)
       .post(`/users/password-change`)
       .send({
@@ -347,7 +347,7 @@ describe("User Test Suite", () => {
     expect(typeof res.body.data.user.avatarURL).toBe("string");
   }, 10000);
 
-  test("Change password with invalid body, return users object, 400 check", async () => {
+  test("POST /change password with invalid body, should return 400 status", async () => {
     const res = await request(app)
       .post(`/users/password-change`)
       .send({
@@ -359,7 +359,7 @@ describe("User Test Suite", () => {
     expect(res.body).toHaveProperty("message", '"oldPassword" is required');
   }, 10000);
 
-  test("Change password without body, 400 check", async () => {
+  test("POST /change password without body, should return 400 status", async () => {
     const res = await request(app).post(`/users/password-change`).send().set("Authorization", `Bearer ${token}`);
 
     expect(res.status).toBe(400);
@@ -509,7 +509,7 @@ describe("User Test Suite", () => {
     expect(typeof res.body.status).toBe("string");
     expect(res.body.status).toEqual("success");
     expect(typeof res.body.message).toBe("string");
-    expect(res.body.message).toEqual("We successfully found user");
+    expect(res.body.message).toEqual("We successfully found the user");
     expect(typeof res.body.data).toBe("object");
     expect(res.body.data.user instanceof Object).toBe(true);
     expect(typeof res.body.data.user._id).toBe("string");
@@ -622,7 +622,7 @@ describe("User Test Suite", () => {
     }
   }, 10000);
 
-  test("Logout with valid token, 200 check", async () => {
+  test("GET /logout with valid token, should return 200 status", async () => {
     const res = await request(app).get(`/users/logout`).set("Authorization", `Bearer ${token}`);
     expect(res.status).toBe(200);
     expect(res.body).toEqual({
@@ -631,7 +631,7 @@ describe("User Test Suite", () => {
     });
   }, 10000);
 
-  test("Logout with invalid token, 401 check", async () => {
+  test("GET /logout with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/users/logout`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
 
     expect(res.status).toBe(401);
@@ -640,7 +640,7 @@ describe("User Test Suite", () => {
     });
   }, 10000);
 
-  test("Logout without token, 401 check", async () => {
+  test("GET /logout without token, should return 401 status", async () => {
     const res = await request(app).get(`/users/logout`);
 
     expect(res.status).toBe(401);
@@ -649,21 +649,21 @@ describe("User Test Suite", () => {
     });
   }, 10000);
 
-  test("Del user with invalid token, 401 check", async () => {
+  test("DELETE /delete user with invalid token, should return 401 status", async () => {
     const res = await request(app).delete(`/users/remove`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
 
     expect(res.status).toBe(401);
     expect(typeof res.body.message).toBe("string");
   }, 10000);
 
-  test("Del user without token, 401 check", async () => {
+  test("DELETE /delete user without token, should return 401 status", async () => {
     const res = await request(app).delete(`/users/remove`);
 
     expect(res.status).toBe(401);
     expect(typeof res.body.message).toBe("string");
   }, 10000);
 
-  test("Del user with valid token, 200 check", async () => {
+  test("DELETE /delete user with valid token, should return 200 status and valid user data", async () => {
     const data = await request(app)
       .post(`/users/login`)
       .send({

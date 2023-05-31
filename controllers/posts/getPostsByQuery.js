@@ -19,6 +19,7 @@ const getPostsByQuery = async (req, res, next) => {
   if (!search || (await Post.find()).length <= 0) {
     return res.json({
       status: "success",
+      message: "Successfully found such posts",
       data: {
         posts: [],
         totalPages,
@@ -58,6 +59,7 @@ const getPostsByQuery = async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
+    message: "Successfully found such posts",
     data: { posts: posts.map((post) => postTransformer(post)), totalPages, currentPage: page, perPage },
   });
 };

@@ -17,6 +17,7 @@ const getAllPosts = async (req, res, next) => {
   if ((await Post.find({})).length <= 0) {
     return res.json({
       status: "success",
+      message: "Successfully get all posts",
       data: {
         posts: [],
         totalPages,
@@ -49,6 +50,7 @@ const getAllPosts = async (req, res, next) => {
 
   res.json({
     status: "success",
+    message: "Successfully get all posts",
     data: {
       posts: posts.map((post) => postTransformer(post)),
       totalPages,

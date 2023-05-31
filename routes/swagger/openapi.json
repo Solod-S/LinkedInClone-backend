@@ -1141,7 +1141,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PostsGetPostResponse"
+                  "$ref": "#/components/schemas/PostsGetPostByIdResponse"
                 }
               }
             }
@@ -1993,7 +1993,7 @@
             "type": "string",
             "description": "Response message",
             "format": "string",
-            "example": "We successfully found user"
+            "example": "We successfully found the user"
           },
           "data": {
             "type": "object",
@@ -3949,6 +3949,12 @@
             "format": "string",
             "example": "success"
           },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successfully get all posts"
+          },
           "data": {
             "type": "object",
             "properties": {
@@ -4174,6 +4180,12 @@
             "description": "Status",
             "format": "string",
             "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successfully get all popular posts"
           },
           "data": {
             "type": "object",
@@ -4401,6 +4413,12 @@
             "format": "string",
             "example": "success"
           },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successfully found such posts"
+          },
           "data": {
             "type": "object",
             "properties": {
@@ -4618,7 +4636,7 @@
           }
         }
       },
-      "PostsGetPostResponse": {
+      "PostsGetPostByIdResponse": {
         "type": "object",
         "properties": {
           "status": {
@@ -4626,6 +4644,12 @@
             "description": "Status",
             "format": "string",
             "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "We successfully found the post"
           },
           "data": {
             "type": "object",
