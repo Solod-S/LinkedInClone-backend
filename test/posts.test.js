@@ -26,7 +26,7 @@ describe("Post Test Suite", () => {
     expect(typeof res.body.status).toBe("string");
     expect(res.body.status).toEqual("success");
     expect(typeof res.body.message).toBe("string");
-    expect(res.body.message).toEqual("Successfully get all posts");
+    expect(res.body.message).toEqual("Successfully get posts");
     expect(typeof res.body.data).toBe("object");
     expect(Array.isArray(res.body.data.posts)).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.description === "string")).toBe(true);
@@ -45,7 +45,7 @@ describe("Post Test Suite", () => {
     expect(typeof res.body.status).toBe("string");
     expect(res.body.status).toEqual("success");
     expect(typeof res.body.message).toBe("string");
-    expect(res.body.message).toEqual("Successfully get all posts");
+    expect(res.body.message).toEqual("Successfully get posts");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.totalPages).toBe("number");
     expect(typeof res.body.data.currentPage).toBe("number");
@@ -84,7 +84,7 @@ describe("Post Test Suite", () => {
     expect(typeof res.body.status).toBe("string");
     expect(res.body.status).toEqual("success");
     expect(typeof res.body.message).toBe("string");
-    expect(res.body.message).toEqual("Successfully get all popular posts");
+    expect(res.body.message).toEqual("Successfully get popular posts");
     expect(typeof res.body.data).toBe("object");
     expect(Array.isArray(res.body.data.posts)).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.description === "string")).toBe(true);
@@ -103,7 +103,7 @@ describe("Post Test Suite", () => {
     expect(typeof res.body.status).toBe("string");
     expect(res.body.status).toEqual("success");
     expect(typeof res.body.message).toBe("string");
-    expect(res.body.message).toEqual("Successfully get all popular posts");
+    expect(res.body.message).toEqual("Successfully get popular posts");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.totalPages).toBe("number");
     expect(typeof res.body.data.currentPage).toBe("number");

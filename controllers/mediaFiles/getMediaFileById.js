@@ -41,6 +41,7 @@ const getMediaFileById = async (req, res, next) => {
 
   res.json({
     status: "success",
+    message: "Successfully get the media file",
     data: {
       mediaFile: mediaFileTransformer(mediaFile),
     },

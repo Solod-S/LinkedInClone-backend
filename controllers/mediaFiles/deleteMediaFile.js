@@ -22,7 +22,11 @@ const deleteMediaFile = async (req, res, next) => {
   await Post.updateOne({ mediaFiles: { $elemMatch: { $eq: mediaFileId } } }, { $pull: { mediaFiles: mediaFileId } });
   await Comment.updateOne({ mediaFiles: { $elemMatch: { $eq: mediaFileId } } }, { $pull: { mediaFiles: mediaFileId } });
 
-  res.json({ status: "success", data: { deletedMediaFile: mediaFileTransformer(result) } });
+  res.json({
+    status: "success",
+    message: "Successfully deleted media file",
+    data: { mediaFile: mediaFileTransformer(result) },
+  });
 };
 
 module.exports = deleteMediaFile;

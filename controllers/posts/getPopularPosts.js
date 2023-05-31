@@ -17,7 +17,7 @@ const getPopularPosts = async (req, res, next) => {
   if ((await Post.find({})).length <= 0) {
     return res.json({
       status: "success",
-      message: "Successfully get all popular posts",
+      message: "Successfully get popular posts",
       data: {
         posts: [],
         totalPages,
@@ -50,7 +50,7 @@ const getPopularPosts = async (req, res, next) => {
 
   res.json({
     status: "success",
-    message: "Successfully get all popular posts",
+    message: "Successfully get popular posts",
     data: {
       posts: posts.map((post) => postTransformer(post)),
       totalPages,

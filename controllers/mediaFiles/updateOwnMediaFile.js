@@ -22,7 +22,11 @@ const updateOwnMediaFile = async (req, res, next) => {
     throw HttpError(404, "Not found");
   }
 
-  res.json({ status: "success", data: { mediaFile: mediaFileTransformer(updatedMediaFile) } });
+  res.json({
+    status: "success",
+    message: "Successfully updated media file",
+    data: { mediaFile: mediaFileTransformer(updatedMediaFile) },
+  });
 };
 
 module.exports = updateOwnMediaFile;
