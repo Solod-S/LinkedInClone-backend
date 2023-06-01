@@ -21,7 +21,7 @@ const deleteLike = async (req, res, next) => {
   await Post.updateOne({ likes: { $elemMatch: { $eq: like._id } } }, { $pull: { likes: like._id } });
   await Comment.updateOne({ likes: { $elemMatch: { $eq: like._id } } }, { $pull: { likes: like._id } });
 
-  res.json({ status: "success", data: { deletedLike: result } });
+  res.json({ status: "success", message: "Like successfully deleted", data: { deletedLike: result } });
 };
 
 module.exports = deleteLike;

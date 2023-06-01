@@ -25,7 +25,7 @@ const deleteOwnPost = async (req, res, next) => {
   await MediaFile.deleteMany({ _id: { $in: post.mediaFiles } });
   await Like.deleteMany({ _id: { $in: post.likes } });
 
-  res.json({ status: "success", data: { post: postTransformer(result) } });
+  res.json({ status: "success", message: "Post successfully deleted", data: { post: postTransformer(result) } });
 };
 
 module.exports = deleteOwnPost;

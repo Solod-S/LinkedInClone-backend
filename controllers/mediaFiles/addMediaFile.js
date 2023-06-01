@@ -10,7 +10,7 @@ const addMediaFile = async (req, res, next) => {
 
   res.status(201).json({
     status: "success",
-    message: "Successfully created media file",
+    message: "Media file successfully created",
     data: { mediaFile: mediaFileTransformer(newMediaFile) },
   });
 };

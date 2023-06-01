@@ -15,7 +15,11 @@ const addOwnPost = async (req, res, next) => {
   user.posts.push(newPost._id);
   await user.save();
 
-  res.status(201).json({ status: "success", data: { post: postTransformer(newPost) } });
+  res.status(201).json({
+    status: "success",
+    message: "Post successfully created",
+    data: { post: postTransformer(newPost) },
+  });
 };
 
 module.exports = addOwnPost;

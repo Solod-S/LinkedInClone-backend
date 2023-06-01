@@ -24,7 +24,7 @@ const deleteMediaFile = async (req, res, next) => {
 
   res.json({
     status: "success",
-    message: "Successfully deleted media file",
+    message: "Media file successfully deleted",
     data: { mediaFile: mediaFileTransformer(result) },
   });
 };

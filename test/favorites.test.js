@@ -23,12 +23,14 @@ describe("Favorites Test Suite", () => {
     await server.close();
   });
 
-  test("Get all favorite posts with valid token, 200 check", async () => {
+  test("GET /favorite posts with valid token, should return 200 status and valid posts data", async () => {
     const res = await request(app).get(`/favorites/posts`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
     expect(typeof res.body.status).toBe("string");
     expect(res.body.status).toEqual("success");
+    expect(typeof res.body.message).toBe("string");
+    expect(res.body.message).toEqual("Successfully get favorites");
     expect(typeof res.body.data).toBe("object");
     expect(Array.isArray(res.body.data.posts)).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.description === "string")).toBe(true);
@@ -39,7 +41,7 @@ describe("Favorites Test Suite", () => {
     expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
   }, 10000);
 
-  test("Get all favorite posts with valid token + pagination, 200 check", async () => {
+  test("GET /favorite posts with valid token + pagination, should return 200 status and valid posts data", async () => {
     const res = await request(app)
       .get(`/favorites/posts?page=1&perPage=10`)
       .set("Authorization", `Bearer ${TEST_TOKEN}`);
@@ -64,14 +66,14 @@ describe("Favorites Test Suite", () => {
     expect(res.body.data.posts.every((post) => Array.isArray(post.likes))).toBe(true);
   }, 10000);
 
-  test("Get all favorite posts with invalid token, 401 check", async () => {
+  test("GET /favorite posts with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/favorites/posts`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
 
     expect(res.status).toBe(401);
     expect(res.body).toHaveProperty("message", "Unauthorized");
   }, 10000);
 
-  test("Get all favorite posts with invalid token + pagination, 401 check", async () => {
+  test("GET /favorite posts with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app)
       .get(`/favorites/posts?page=1&perPage=10`)
       .set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -80,7 +82,7 @@ describe("Favorites Test Suite", () => {
     expect(res.body).toHaveProperty("message", "Unauthorized");
   }, 10000);
 
-  test("Add post to favorites with valid token and valid post id, 201 check", async () => {
+  test("POST /post to favorites with valid token and valid post id, should return 201 status", async () => {
     try {
       const firstPost = await Post.findOne().sort({ createdAt: 1 });
       postId = firstPost._id;
@@ -93,6 +95,8 @@ describe("Favorites Test Suite", () => {
     expect(res.status).toBe(201);
     expect(typeof res.body.status).toBe("string");
     expect(res.body.status).toEqual("success");
+    expect(typeof res.body.message).toBe("string");
+    expect(res.body.message).toEqual("Data successfully added to your favorites");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.post).toBe("object");
@@ -104,14 +108,14 @@ describe("Favorites Test Suite", () => {
     expect(typeof res.body.data.post.postedAtHuman).toBe("string");
   }, 10000);
 
-  test("Add post to favorites with invalid token and valid post id, 401 check", async () => {
+  test("POST /post to favorites with invalid token and valid post id, should return 401 status", async () => {
     const res = await request(app).get(`/favorites/posts/add/${postId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
 
     expect(res.status).toBe(401);
     expect(res.body).toHaveProperty("message", "Unauthorized");
   }, 10000);
 
-  test("Add post to favorites with valid token and invalid post id, 404 check", async () => {
+  test("POST /post to favorites with valid token and invalid post id, should return 404 status", async () => {
     const res = await request(app)
       .post(`/favorites/posts/add/123456789123456789123456`)
       .set("Authorization", `Bearer ${TEST_TOKEN}`);
@@ -120,7 +124,7 @@ describe("Favorites Test Suite", () => {
     expect(typeof res.body.message).toBe("string") && expect(res.body.message).toBe("Post ID is invalid or not found");
   }, 10000);
 
-  test("Remove post from favorite with invalid token and valid post id, 401 check", async () => {
+  test("DELETE /post from favorite with invalid token and valid post id, should return 401 status", async () => {
     const res = await request(app)
       .delete(`/favorites/posts/remove/${postId}`)
       .set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -129,7 +133,7 @@ describe("Favorites Test Suite", () => {
     expect(res.body).toHaveProperty("message", "Unauthorized");
   }, 10000);
 
-  test("Remove post from favorite with valid token and invalid post id, 404 check", async () => {
+  test("DELETE /post from favorite with valid token and invalid post id, should return 404 status", async () => {
     const res = await request(app)
       .delete(`/favorites/posts/remove/123456789123456789123456`)
       .set("Authorization", `Bearer ${TEST_TOKEN}`);
@@ -138,7 +142,7 @@ describe("Favorites Test Suite", () => {
     expect(typeof res.body.message).toBe("string") && expect(res.body.message).toBe("Post ID is invalid or not found");
   }, 10000);
 
-  test("Remove post with valid token and valid post id, 200 check", async () => {
+  test("DELETE /post with valid token and valid post id, should return 200 status", async () => {
     const res = await request(app)
       .delete(`/favorites/posts/remove/${postId}`)
       .set("Authorization", `Bearer ${TEST_TOKEN}`);
@@ -146,6 +150,8 @@ describe("Favorites Test Suite", () => {
     expect(res.status).toBe(200);
     expect(typeof res.body.status).toBe("string");
     expect(res.body.status).toEqual("success");
+    expect(typeof res.body.message).toBe("string");
+    expect(res.body.message).toEqual("Data successfully removed from your favorites");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.post).toBe("object");

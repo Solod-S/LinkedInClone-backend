@@ -19,7 +19,7 @@ describe("Post Test Suite", () => {
     await server.close();
   });
 
-  test("GET /all posts with valid token, should return 200 status and valid users posts data", async () => {
+  test("GET /all posts with valid token, should return 200 status and valid posts data", async () => {
     const res = await request(app).get(`/posts`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
@@ -38,7 +38,7 @@ describe("Post Test Suite", () => {
     expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
   }, 10000);
 
-  test("GET /all posts with valid token + pagination, should return 200 status and valid users posts data", async () => {
+  test("GET /all posts with valid token + pagination, should return 200 status and valid posts data", async () => {
     const res = await request(app).get(`/posts?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
@@ -77,7 +77,7 @@ describe("Post Test Suite", () => {
     expect(res.body).toHaveProperty("message", "Unauthorized");
   }, 10000);
 
-  test("GET /all popular posts with valid token, should return 200 status and valid users posts data", async () => {
+  test("GET /all popular posts with valid token, should return 200 status and valid posts data", async () => {
     const res = await request(app).get(`/posts/popular`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
@@ -96,7 +96,7 @@ describe("Post Test Suite", () => {
     expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
   }, 10000);
 
-  test("GET /all popular posts with valid token + pagination, should return 200 status and valid users posts data", async () => {
+  test("GET /all popular posts with valid token + pagination, should return 200 status and valid posts data", async () => {
     const res = await request(app).get(`/posts/popular?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
@@ -137,7 +137,7 @@ describe("Post Test Suite", () => {
     expect(res.body).toHaveProperty("message", "Unauthorized");
   }, 10000);
 
-  test("GET /posts by search query with valid token, should return 200 status and valid users posts data", async () => {
+  test("GET /posts by search query with valid token, should return 200 status and valid posts data", async () => {
     const res = await request(app).get(`/posts/search?search=Tequila+is`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);
@@ -199,7 +199,7 @@ describe("Post Test Suite", () => {
     expect(res.body).toHaveProperty("message", "Unauthorized");
   }, 10000);
 
-  test("GET /post by id with valid token, should return 200 status and valid user post data", async () => {
+  test("GET /post by id with valid token, should return 200 status and valid post data", async () => {
     const res = await request(app).get(`/posts/6467ce7e44ff2b38b8740e63`).set("Authorization", `Bearer ${TEST_TOKEN}`);
 
     expect(res.status).toBe(200);

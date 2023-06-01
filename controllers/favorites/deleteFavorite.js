@@ -23,6 +23,8 @@ const deleteFavorite = async (req, res) => {
 
   res.json({
     status: "success",
+    message: "Data successfully removed from your favorites",
+
     data: { post: postTransformer(post) },
   });
 };

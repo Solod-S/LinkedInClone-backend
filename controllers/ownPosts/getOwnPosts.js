@@ -18,6 +18,7 @@ const getOwnPosts = async (req, res, next) => {
   if ((await Post.find({ owner: _id })).length <= 0) {
     return res.json({
       status: "success",
+      message: "Successfully get posts",
       data: {
         posts: [],
         totalPages,
@@ -49,6 +50,7 @@ const getOwnPosts = async (req, res, next) => {
 
   res.json({
     status: "success",
+    message: "Successfully get posts",
     data: {
       posts: ownPosts.map((post) => postTransformer(post)),
       totalPages,

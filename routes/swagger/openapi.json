@@ -1424,7 +1424,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FavoritesAddPostAddedBeforeResponse"
+                  "$ref": "#/components/schemas/FavoritesAddPostWasAddedBeforeResponse"
                 }
               }
             }
@@ -1584,7 +1584,7 @@
             "type": "string",
             "description": "Response message",
             "format": "string",
-            "example": "User registered successfully"
+            "example": "User successfully registered"
           },
           "data": {
             "type": "object",
@@ -3366,7 +3366,7 @@
             "type": "string",
             "description": "Response message",
             "format": "string",
-            "example": "Successfully created media file"
+            "example": "Media file successfully created"
           },
           "data": {
             "type": "object",
@@ -3511,7 +3511,7 @@
             "type": "string",
             "description": "Response message",
             "format": "string",
-            "example": "Successfully deleted media file"
+            "example": "Media file successfully deleted"
           },
 
           "data": {
@@ -3569,6 +3569,12 @@
             "description": "Status",
             "format": "string",
             "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successfully get posts"
           },
           "data": {
             "type": "object",
@@ -3792,6 +3798,12 @@
             "format": "string",
             "example": "success"
           },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successfully updated a post"
+          },
           "data": {
             "type": "object",
             "properties": {
@@ -3859,6 +3871,12 @@
             "description": "Status",
             "format": "string",
             "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Post successfully created"
           },
           "data": {
             "type": "object",
@@ -5368,6 +5386,12 @@
             "format": "string",
             "example": "success"
           },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successfully get favorites"
+          },
           "data": {
             "type": "object",
             "properties": {
@@ -5558,6 +5582,12 @@
             "format": "string",
             "example": "success"
           },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Data successfully added to your favorites"
+          },
           "data": {
             "type": "object",
             "properties": {
@@ -5617,7 +5647,7 @@
           }
         }
       },
-      "FavoritesAddPostAddedBeforeResponse": {
+      "FavoritesAddPostWasAddedBeforeResponse": {
         "type": "object",
         "properties": {
           "message": {
@@ -5647,6 +5677,12 @@
             "description": "Status",
             "format": "string",
             "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Data successfully removed from your favorites"
           },
           "data": {
             "type": "object",

@@ -47,7 +47,7 @@ describe("User Test Suite", () => {
     expect(typeof res.body.status).toBe("string");
     expect(res.body.status).toEqual("success");
     expect(typeof res.body.message).toBe("string");
-    expect(res.body.message).toEqual("User registered successfully");
+    expect(res.body.message).toEqual("User successfully registered");
     expect(res.body).toHaveProperty("data");
     expect(typeof res.body.data.email).toBe("string");
     expect(typeof res.body.data.name).toBe("string");

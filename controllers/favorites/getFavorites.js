@@ -20,6 +20,7 @@ const getFavorites = async (req, res, next) => {
   if (user.favorite.length <= 0) {
     return res.json({
       status: "success",
+      message: "Successfully get favorites",
       data: {
         posts: [],
         totalPages,
@@ -51,6 +52,7 @@ const getFavorites = async (req, res, next) => {
 
   res.json({
     status: "success",
+    message: "Successfully get favorites",
     data: {
       posts: posts.map((post) => postTransformer(post)),
       totalPages,

@@ -23,6 +23,7 @@ const addFavorite = async (req, res) => {
 
   res.status(201).json({
     status: "success",
+    message: "Data successfully added to your favorites",
     data: { post: postTransformer(post) },
   });
 };
