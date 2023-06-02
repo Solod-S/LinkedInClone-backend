@@ -156,7 +156,7 @@ describe("Media-files Test Suite", () => {
     expect(typeof res.body.status).toBe("string");
     expect(res.body.status).toEqual("success");
     expect(typeof res.body.message).toBe("string");
-    expect(res.body.message).toEqual("Successfully updated media file");
+    expect(res.body.message).toEqual("Media file successfully updated");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data).toBe("object");
     expect(typeof res.body.data.mediaFile).toBe("object");

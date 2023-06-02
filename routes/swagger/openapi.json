@@ -3454,7 +3454,7 @@
             "type": "string",
             "description": "Response message",
             "format": "string",
-            "example": "Successfully updated media file"
+            "example": "Media file successfully updated"
           },
           "data": {
             "type": "object",
@@ -4955,6 +4955,12 @@
             "format": "string",
             "example": "success"
           },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successfully get comments"
+          },
           "data": {
             "type": "object",
             "properties": {
@@ -5162,6 +5168,12 @@
             "format": "string",
             "example": "success"
           },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Comment successfully created"
+          },
           "data": {
             "type": "object",
             "properties": {
@@ -5238,6 +5250,12 @@
             "description": "Status",
             "format": "string",
             "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Comment successfully updated"
           },
           "data": {
             "type": "object",
@@ -5326,6 +5344,12 @@
             "description": "Status",
             "format": "string",
             "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Comment successfully deleted"
           },
           "data": {
             "type": "object",

@@ -24,7 +24,7 @@ const updateOwnMediaFile = async (req, res, next) => {
 
   res.json({
     status: "success",
-    message: "Successfully updated media file",
+    message: "Media file successfully updated",
     data: { mediaFile: mediaFileTransformer(updatedMediaFile) },
   });
 };

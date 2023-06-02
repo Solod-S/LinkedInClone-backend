@@ -22,7 +22,11 @@ const updateOwnComment = async (req, res, next) => {
     throw HttpError(404, "Not found");
   }
 
-  res.json({ status: "success", data: { comment: commentTransformer(updatedComment) } });
+  res.json({
+    status: "success",
+    message: "Comment successfully updated",
+    data: { comment: commentTransformer(updatedComment) },
+  });
 };
 
 module.exports = updateOwnComment;

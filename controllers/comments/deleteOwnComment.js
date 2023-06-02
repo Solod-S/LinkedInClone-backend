@@ -24,7 +24,11 @@ const deleteOwnComment = async (req, res, next) => {
   await MediaFile.deleteMany({ _id: { $in: comment.mediaFiles } });
   await Like.deleteMany({ _id: { $in: comment.likes } });
 
-  res.json({ status: "success", data: { deletedComment: commentTransformer(result) } });
+  res.json({
+    status: "success",
+    message: "Comment successfully deleted",
+    data: { deletedComment: commentTransformer(result) },
+  });
 };
 
 module.exports = deleteOwnComment;
