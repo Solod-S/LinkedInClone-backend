@@ -1,9 +1,6 @@
 const request = require("supertest");
 const mongoose = require("mongoose");
 
-const Chance = require("chance");
-const chance = new Chance();
-
 const app = require("../app");
 
 require("dotenv").config();
@@ -15,7 +12,6 @@ describe("Comments Test Suite", () => {
   let server;
 
   beforeAll(async () => {
-    email = chance.email();
     await mongoose.connect(DB_HOST);
     server = app.listen(3004, () => {});
   });

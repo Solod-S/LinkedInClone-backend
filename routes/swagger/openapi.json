@@ -37,6 +37,10 @@
       "description": "Comments endpoints"
     },
     {
+      "name": "Likes",
+      "description": "Likes endpoints"
+    },
+    {
       "name": "Favorites",
       "description": "Favorites endpoints"
     }
@@ -1354,6 +1358,57 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/likes/add": {
+      "post": {
+        "tags": ["Likes"],
+        "summary": "Create a like",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "requestBody": {
+          "description": "Like object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentsCreateCommentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created a new comment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommentsNewCommentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
                 }
               }
             }
@@ -5398,6 +5453,27 @@
                 }
               }
             }
+          }
+        }
+      },
+      "LikesCreateLikeRequest": {
+        "required": ["type", "postId", "location"],
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Comment's text",
+            "example": "YABADABADOOOOO!"
+          },
+          "mediaFiles": {
+            "type": "string",
+            "description": "Media files",
+            "example": "6457a79b23576cf0aa13adec"
+          },
+          "postId": {
+            "type": "string",
+            "description": "Post id",
+            "example": "6460b832db50f7007597f87c"
           }
         }
       },

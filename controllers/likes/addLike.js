@@ -1,6 +1,7 @@
 const { Like, Post, Comment } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
+const { likeTransformer } = require("../../helpers/index");
 
 const addLike = async (req, res, next) => {
   const { _id } = req.user;
@@ -24,7 +25,9 @@ const addLike = async (req, res, next) => {
 
     updatedLike.type = type;
 
-    res.json({ status: "success", data: { like: updatedLike } });
+    res
+      .status(201)
+      .json({ status: "success", message: "Like successfully created", data: { like: likeTransformer(updatedLike) } });
   } else {
     const like = await Like.create({
       ...req.body,
@@ -32,7 +35,9 @@ const addLike = async (req, res, next) => {
     });
     await Model.findByIdAndUpdate({ _id: id }, { $push: { likes: like._id } }, { new: true });
 
-    res.json({ status: "success", message: "Like successfully created", data: { like } });
+    res
+      .status(201)
+      .json({ status: "success", message: "Like successfully created", data: { like: likeTransformer(like) } });
   }
 };
 

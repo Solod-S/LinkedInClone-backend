@@ -4,7 +4,7 @@ const { likes } = require("../../controllers");
 const { validateBody, authenticate } = require("../../middlewares");
 const { likeSchemas } = require("../../models");
 
-//  create a like
+//  create/change own like
 likesRouter.post("/add", authenticate, validateBody(likeSchemas.likesSchema), likes.addLike);
 
 //  delete own like

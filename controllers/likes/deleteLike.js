@@ -1,6 +1,7 @@
 const { Like, Post, Comment } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
+const { likeTransformer } = require("../../helpers/index");
 
 const deleteLike = async (req, res, next) => {
   const { _id } = req.user;
@@ -21,7 +22,7 @@ const deleteLike = async (req, res, next) => {
   await Post.updateOne({ likes: { $elemMatch: { $eq: like._id } } }, { $pull: { likes: like._id } });
   await Comment.updateOne({ likes: { $elemMatch: { $eq: like._id } } }, { $pull: { likes: like._id } });
 
-  res.json({ status: "success", message: "Like successfully deleted", data: { deletedLike: result } });
+  res.json({ status: "success", message: "Like successfully deleted", data: { like: likeTransformer(result) } });
 };
 
 module.exports = deleteLike;
