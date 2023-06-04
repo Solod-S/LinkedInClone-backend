@@ -23,7 +23,7 @@ const likesSchema = Joi.object({
   location: Joi.string().valid("comments", "posts").required(),
   postId: Joi.string(),
   commentId: Joi.string(),
-});
+}).oxor("postId", "commentId");
 
 const likeSchemas = {
   likesSchema,

@@ -1377,18 +1377,18 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CommentsCreateCommentRequest"
+                "$ref": "#/components/schemas/LikesCreateLikeRequest"
               }
             }
           }
         },
         "responses": {
           "201": {
-            "description": "Successfully created a new comment",
+            "description": "Successfully created a like",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CommentsNewCommentResponse"
+                  "$ref": "#/components/schemas/LikesCreateLikeRequestResponse"
                 }
               }
             }
@@ -1399,6 +1399,57 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/likes/remove/{likeId}": {
+      "delete": {
+        "tags": ["Likes"],
+        "summary": "Remove like",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "likeId",
+            "required": true,
+            "description": "Like file id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Like was removed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LikesRemoveLikeRequestResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Like ID is invalid or not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LikesRemoveLikeNotFoundResponse"
                 }
               }
             }
@@ -5457,23 +5508,162 @@
         }
       },
       "LikesCreateLikeRequest": {
-        "required": ["type", "postId", "location"],
         "type": "object",
         "properties": {
-          "description": {
+          "type": {
             "type": "string",
-            "description": "Comment's text",
-            "example": "YABADABADOOOOO!"
+            "description": "Like's type",
+            "example": "like"
           },
-          "mediaFiles": {
+          "location": {
             "type": "string",
-            "description": "Media files",
-            "example": "6457a79b23576cf0aa13adec"
+            "description": "Like's location",
+            "example": "posts"
           },
           "postId": {
             "type": "string",
             "description": "Post id",
-            "example": "6460b832db50f7007597f87c"
+            "example": "6467ce7e44ff2b38b8740e63"
+          }
+        },
+        "required": ["type", "location"],
+        "oneOf": [
+          {
+            "required": ["postId"],
+            "not": {
+              "required": ["commentId"]
+            }
+          },
+          {
+            "required": ["commentId"],
+            "not": {
+              "required": ["postId"]
+            }
+          }
+        ]
+      },
+      "LikesCreateLikeRequestResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Like successfully created"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "like": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "description": "Like's type",
+                    "example": "like"
+                  },
+                  "location": {
+                    "type": "string",
+                    "description": "Location",
+                    "example": "posts!"
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "User's id",
+                    "example": "6452b1d7f6a29d84c5b089fb"
+                  },
+                  "_id": {
+                    "type": "string",
+                    "description": "Like's id",
+                    "example": "642831f346155749a2b6e944"
+                  },
+                  "postId": {
+                    "type": "string",
+                    "description": "Post's id",
+                    "example": "6467ce7e44ff2b38b8740e63"
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Post's time",
+                    "example": "01 seconds ago"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "LikesRemoveLikeRequestResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Like successfully deleted"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "like": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "description": "Like's type",
+                    "example": "like"
+                  },
+                  "location": {
+                    "type": "string",
+                    "description": "Location",
+                    "example": "posts!"
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "User's id",
+                    "example": "6452b1d7f6a29d84c5b089fb"
+                  },
+                  "_id": {
+                    "type": "string",
+                    "description": "Like's id",
+                    "example": "642831f346155749a2b6e944"
+                  },
+                  "postId": {
+                    "type": "string",
+                    "description": "Post's id",
+                    "example": "6467ce7e44ff2b38b8740e63"
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Post's time",
+                    "example": "01 seconds ago"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "LikesRemoveLikeNotFoundResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Not found"
           }
         }
       },
