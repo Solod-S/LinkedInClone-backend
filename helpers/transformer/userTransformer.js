@@ -17,6 +17,7 @@ const userTransformer = (user) => {
     about: user.about,
     experience: user.experience,
     education: user.education,
+    skills: user.skills,
     languages: user.languages,
     headLine: user.headLine,
     frame: user.frame,

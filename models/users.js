@@ -36,14 +36,8 @@ const experienceSchema = Schema({
     type: Date,
     default: "",
   },
-  skills: {
-    type: Array,
-    default: [{ type: Schema.Types.ObjectId, ref: "Posts" }],
-  },
-  mediaFiles: {
-    type: Array,
-    default: [{ type: Schema.Types.ObjectId, ref: "MediaFile" }],
-  },
+  skills: [{ type: Schema.Types.ObjectId, ref: "Posts" }],
+  mediaFiles: [{ type: Schema.Types.ObjectId, ref: "MediaFile" }],
 });
 
 const educationSchema = Schema({
@@ -79,14 +73,9 @@ const educationSchema = Schema({
     type: String,
     default: "",
   },
-  skills: {
-    type: Array,
-    default: [{ type: Schema.Types.ObjectId, ref: "Posts" }],
-  },
-  mediaFiles: {
-    type: Array,
-    default: [{ type: Schema.Types.ObjectId, ref: "MediaFile" }],
-  },
+  skills: [{ type: Schema.Types.ObjectId, ref: "Posts" }],
+
+  mediaFiles: [{ type: Schema.Types.ObjectId, ref: "MediaFile" }],
 });
 const languageSchema = Schema({
   language: {
@@ -156,18 +145,9 @@ const userSchema = Schema(
       type: Boolean,
       default: false,
     },
-    subscription: {
-      type: Boolean,
-      default: false,
-    },
-    favorite: {
-      type: Array,
-      default: [{ type: Schema.Types.ObjectId, ref: "Posts" }],
-    },
-    posts: {
-      type: Array,
-      default: [{ type: Schema.Types.ObjectId, ref: "Posts" }],
-    },
+    subscription: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    favorite: [{ type: Schema.Types.ObjectId, ref: "Posts" }],
+    posts: [{ type: Schema.Types.ObjectId, ref: "Posts" }],
     token: {
       type: String,
       default: "",
