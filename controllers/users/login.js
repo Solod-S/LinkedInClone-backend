@@ -73,7 +73,7 @@ const login = async (req, res) => {
     .populate({
       path: "subscription",
       select:
-        "name surname site phone headLine about languages education frame experience email password avatarURL subscription posts",
+        "name surname site phone headLine about languages education frame experience email avatarURL subscription posts",
       populate: [
         {
           path: "posts",
@@ -112,7 +112,7 @@ const login = async (req, res) => {
         {
           path: "subscription",
           select:
-            "name surname site phone headLine about languages education frame experience email password avatarURL subscription posts",
+            "name surname site phone headLine about languages education frame experience email avatarURL subscription posts",
         },
       ],
     });

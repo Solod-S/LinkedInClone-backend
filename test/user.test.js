@@ -212,6 +212,21 @@ describe("User Test Suite", () => {
     expect(typeof res.body.data.user.name).toBe("string");
     expect(typeof res.body.data.user.surname).toBe("string");
     expect(typeof res.body.data.user.avatarURL).toBe("string");
+    expect(Array.isArray(res.body.data.user.favorite)).toBe(true);
+    expect(Array.isArray(res.body.data.user.posts)).toBe(true);
+    expect(Array.isArray(res.body.data.user.subscription)).toBe(true);
+    expect(typeof res.body.data.user.phone).toBe("string");
+    expect(typeof res.body.data.user.site).toBe("string");
+    expect(typeof res.body.data.user.other_1).toBe("string");
+    expect(typeof res.body.data.user.other_2).toBe("string");
+    expect(typeof res.body.data.user.other_3).toBe("string");
+    expect(typeof res.body.data.user.about).toBe("string");
+    expect(Array.isArray(res.body.data.user.experience)).toBe(true);
+    expect(Array.isArray(res.body.data.user.education)).toBe(true);
+    expect(Array.isArray(res.body.data.user.languages)).toBe(true);
+    expect(typeof res.body.data.user.frame).toBe("string");
+    expect(res.body.data.user.languages instanceof Object).toBe(true);
+    expect(typeof res.body.data.user.headLine).toBe("string");
   }, 10000);
 
   test("POST /login with invalid body, should return 400 status", async () => {
@@ -517,6 +532,21 @@ describe("User Test Suite", () => {
     expect(typeof res.body.data.user.name).toBe("string");
     expect(typeof res.body.data.user.surname).toBe("string");
     expect(typeof res.body.data.user.avatarURL).toBe("string");
+    expect(Array.isArray(res.body.data.user.favorite)).toBe(true);
+    expect(Array.isArray(res.body.data.user.posts)).toBe(true);
+    expect(Array.isArray(res.body.data.user.subscription)).toBe(true);
+    expect(typeof res.body.data.user.phone).toBe("string");
+    expect(typeof res.body.data.user.site).toBe("string");
+    expect(typeof res.body.data.user.other_1).toBe("string");
+    expect(typeof res.body.data.user.other_2).toBe("string");
+    expect(typeof res.body.data.user.other_3).toBe("string");
+    expect(typeof res.body.data.user.about).toBe("string");
+    expect(Array.isArray(res.body.data.user.experience)).toBe(true);
+    expect(Array.isArray(res.body.data.user.education)).toBe(true);
+    expect(Array.isArray(res.body.data.user.languages)).toBe(true);
+    expect(typeof res.body.data.user.frame).toBe("string");
+    expect(res.body.data.user.languages instanceof Object).toBe(true);
+    expect(typeof res.body.data.user.headLine).toBe("string");
     expect(Array.isArray(res.body.data.posts)).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.description === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.likes))).toBe(true);
