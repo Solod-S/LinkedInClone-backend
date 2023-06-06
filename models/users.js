@@ -146,8 +146,8 @@ const userSchema = Schema(
       default: false,
     },
     subscription: [{ type: Schema.Types.ObjectId, ref: "User" }],
-    favorite: [{ type: Schema.Types.ObjectId, ref: "Posts" }],
-    posts: [{ type: Schema.Types.ObjectId, ref: "Posts" }],
+    favorite: [{ type: Schema.Types.ObjectId, ref: "Post" }],
+    posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
     token: {
       type: String,
       default: "",

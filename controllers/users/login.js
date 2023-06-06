@@ -35,7 +35,87 @@ const login = async (req, res) => {
   const token = jwt.sign(payload, SECRET_KEY);
   await User.findByIdAndUpdate(user._id, { token });
 
-  const currentUser = await User.findOne({ token });
+  const currentUser = await User.findOne({ token })
+    .populate({
+      path: "posts",
+      select: "description createdAt updatedAt",
+      populate: [
+        {
+          path: "comments",
+          select: "owner description likes mediaFiles createdAt updatedAt",
+          populate: { path: "owner", select: "_id surname name avatarURL" },
+        },
+        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+        {
+          path: "mediaFiles",
+          select: "url type owner",
+          populate: { path: "owner", select: "_id surname name avatarURL" },
+        },
+      ],
+    })
+    .populate({
+      path: "favorite",
+      select: "description createdAt updatedAt",
+      populate: [
+        {
+          path: "comments",
+          select: "owner description likes mediaFiles createdAt updatedAt",
+          populate: { path: "owner", select: "_id surname name avatarURL" },
+        },
+        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+        {
+          path: "mediaFiles",
+          select: "url type owner",
+          populate: { path: "owner", select: "_id surname name avatarURL" },
+        },
+      ],
+    })
+    .populate({
+      path: "subscription",
+      select:
+        "name surname site phone headLine about languages education frame experience email password avatarURL subscription posts",
+      populate: [
+        {
+          path: "posts",
+          select: "description createdAt updatedAt",
+          populate: [
+            {
+              path: "comments",
+              select: "owner description likes mediaFiles createdAt updatedAt",
+              populate: { path: "owner", select: "_id surname name avatarURL" },
+            },
+            { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+            {
+              path: "mediaFiles",
+              select: "url type owner",
+              populate: { path: "owner", select: "_id surname name avatarURL" },
+            },
+          ],
+        },
+        {
+          path: "favorite",
+          select: "description createdAt updatedAt",
+          populate: [
+            {
+              path: "comments",
+              select: "owner description likes mediaFiles createdAt updatedAt",
+              populate: { path: "owner", select: "_id surname name avatarURL" },
+            },
+            { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+            {
+              path: "mediaFiles",
+              select: "url type owner",
+              populate: { path: "owner", select: "_id surname name avatarURL" },
+            },
+          ],
+        },
+        {
+          path: "subscription",
+          select:
+            "name surname site phone headLine about languages education frame experience email password avatarURL subscription posts",
+        },
+      ],
+    });
 
   res.status(200).json({
     status: "success",
