@@ -360,6 +360,21 @@ describe("User Test Suite", () => {
     expect(typeof res.body.data.user.name).toBe("string");
     expect(typeof res.body.data.user.surname).toBe("string");
     expect(typeof res.body.data.user.avatarURL).toBe("string");
+    expect(Array.isArray(res.body.data.user.favorite)).toBe(true);
+    expect(Array.isArray(res.body.data.user.posts)).toBe(true);
+    expect(Array.isArray(res.body.data.user.subscription)).toBe(true);
+    expect(typeof res.body.data.user.phone).toBe("string");
+    expect(typeof res.body.data.user.site).toBe("string");
+    expect(typeof res.body.data.user.other_1).toBe("string");
+    expect(typeof res.body.data.user.other_2).toBe("string");
+    expect(typeof res.body.data.user.other_3).toBe("string");
+    expect(typeof res.body.data.user.about).toBe("string");
+    expect(Array.isArray(res.body.data.user.experience)).toBe(true);
+    expect(Array.isArray(res.body.data.user.education)).toBe(true);
+    expect(Array.isArray(res.body.data.user.languages)).toBe(true);
+    expect(typeof res.body.data.user.frame).toBe("string");
+    expect(res.body.data.user.languages instanceof Object).toBe(true);
+    expect(typeof res.body.data.user.headLine).toBe("string");
   }, 10000);
 
   test("POST /change password with invalid body, should return 400 status", async () => {
@@ -426,6 +441,21 @@ describe("User Test Suite", () => {
     expect(typeof res.body.data.user.name).toBe("string");
     expect(typeof res.body.data.user.surname).toBe("string");
     expect(typeof res.body.data.user.avatarURL).toBe("string");
+    expect(Array.isArray(res.body.data.user.favorite)).toBe(true);
+    expect(Array.isArray(res.body.data.user.posts)).toBe(true);
+    expect(Array.isArray(res.body.data.user.subscription)).toBe(true);
+    expect(typeof res.body.data.user.phone).toBe("string");
+    expect(typeof res.body.data.user.site).toBe("string");
+    expect(typeof res.body.data.user.other_1).toBe("string");
+    expect(typeof res.body.data.user.other_2).toBe("string");
+    expect(typeof res.body.data.user.other_3).toBe("string");
+    expect(typeof res.body.data.user.about).toBe("string");
+    expect(Array.isArray(res.body.data.user.experience)).toBe(true);
+    expect(Array.isArray(res.body.data.user.education)).toBe(true);
+    expect(Array.isArray(res.body.data.user.languages)).toBe(true);
+    expect(typeof res.body.data.user.frame).toBe("string");
+    expect(res.body.data.user.languages instanceof Object).toBe(true);
+    expect(typeof res.body.data.user.headLine).toBe("string");
   }, 10000);
 
   test("POST /reset password with invalid resetToken, should return 404 status ", async () => {
@@ -456,6 +486,21 @@ describe("User Test Suite", () => {
     expect(typeof res.body.data.user.name).toBe("string");
     expect(typeof res.body.data.user.surname).toBe("string");
     expect(typeof res.body.data.user.avatarURL).toBe("string");
+    expect(Array.isArray(res.body.data.user.favorite)).toBe(true);
+    expect(Array.isArray(res.body.data.user.posts)).toBe(true);
+    expect(Array.isArray(res.body.data.user.subscription)).toBe(true);
+    expect(typeof res.body.data.user.phone).toBe("string");
+    expect(typeof res.body.data.user.site).toBe("string");
+    expect(typeof res.body.data.user.other_1).toBe("string");
+    expect(typeof res.body.data.user.other_2).toBe("string");
+    expect(typeof res.body.data.user.other_3).toBe("string");
+    expect(typeof res.body.data.user.about).toBe("string");
+    expect(Array.isArray(res.body.data.user.experience)).toBe(true);
+    expect(Array.isArray(res.body.data.user.education)).toBe(true);
+    expect(Array.isArray(res.body.data.user.languages)).toBe(true);
+    expect(typeof res.body.data.user.frame).toBe("string");
+    expect(res.body.data.user.languages instanceof Object).toBe(true);
+    expect(typeof res.body.data.user.headLine).toBe("string");
   }, 10000);
 
   test("GET /current user data with invalid token, should return 401 status", async () => {
