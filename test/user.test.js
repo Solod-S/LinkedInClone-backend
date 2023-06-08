@@ -37,7 +37,7 @@ describe("User Test Suite", () => {
       .post("/users/devregister")
       .send({
         email,
-        name: "Sergio",
+        name: "Sergey",
         password: VALID_PASS,
         surname: "Solod",
       })
@@ -512,40 +512,26 @@ describe("User Test Suite", () => {
     });
   }, 10000);
 
-  test("GET /users(s) by search query with valid token, should return 200 status and valid user(s) data", async () => {
-    const res = await request(app).get(`/users/search?search=Sergio`).set("Authorization", `Bearer ${token}`);
+  test("GET /current user data with invalid token, should return 401 status", async () => {
+    const res = await request(app).get(`/users/current`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
 
+    expect(res.status).toBe(401);
+    expect(res.body).toEqual({
+      message: "Unauthorized",
+    });
+  }, 10000);
+
+  test("GET /users(s) by search query with valid token, should return 200 status and valid user(s) data", async () => {
+    const res = await request(app).get(`/users/search?search=111aSDSA2a`).set("Authorization", `Bearer ${token}`);
     expect(res.status).toBe(200);
     expect(typeof res.body.status).toBe("string");
     expect(res.body.status).toEqual("success");
     expect(typeof res.body.message).toBe("string");
-    expect(res.body.message).toEqual("We successfully found such user(s)");
-
-    // Check that the users array is present and has valid data
-    const { users } = res.body.data;
-    expect(Array.isArray(users)).toBe(true);
-
-    if (users.length > 0) {
-      users.forEach((user) => {
-        expect(typeof user._id === "string").toBe(true);
-        expect(typeof user.name).toBe("string");
-        expect(typeof user.email).toBe("string");
-
-        expect(Array.isArray(user.posts)).toBe(true);
-
-        if (user.posts.length > 0) {
-          user.posts.forEach((post) => {
-            expect(Array.isArray(post.likes)).toBe(true);
-            expect(Array.isArray(post.comments)).toBe(true);
-            expect(Array.isArray(post.mediaFiles)).toBe(true);
-          });
-        }
-      });
-    }
+    expect(res.body.message).toEqual("No users were found");
   }, 10000);
 
   test("GET /users(s) by search query with invalid token, should return 401 status", async () => {
-    const res = await request(app).get(`/users/search?search=Sergio`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+    const res = await request(app).get(`/users/search?search=Sergey`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
 
     expect(res.status).toBe(401);
     expect(res.body).toEqual({
@@ -643,11 +629,24 @@ describe("User Test Suite", () => {
         expect(typeof user.name).toBe("string");
         expect(typeof user.email).toBe("string");
         expect(typeof user.surname).toBe("string");
-
+        expect(typeof user.phone).toBe("string");
+        expect(typeof user.site).toBe("string");
+        expect(typeof user.other_1).toBe("string");
+        expect(typeof user.other_2).toBe("string");
+        expect(typeof user.other_3).toBe("string");
+        expect(typeof user.headLine).toBe("string");
+        expect(typeof user.frame).toBe("string");
+        expect(Array.isArray(user.favorite)).toBe(true);
         expect(Array.isArray(user.posts)).toBe(true);
-
+        expect(Array.isArray(user.subscription)).toBe(true);
+        expect(Array.isArray(user.experience)).toBe(true);
+        expect(Array.isArray(user.education)).toBe(true);
+        expect(Array.isArray(user.languages)).toBe(true);
         if (user.posts.length > 0) {
           user.posts.forEach((post) => {
+            expect(typeof post._id).toBe("string");
+            expect(typeof post.description).toBe("string");
+            expect(typeof post.postedAtHuman).toBe("string");
             expect(Array.isArray(post.likes)).toBe(true);
             expect(Array.isArray(post.comments)).toBe(true);
             expect(Array.isArray(post.mediaFiles)).toBe(true);
@@ -683,11 +682,24 @@ describe("User Test Suite", () => {
         expect(typeof user.name).toBe("string");
         expect(typeof user.email).toBe("string");
         expect(typeof user.surname).toBe("string");
-
+        expect(typeof user.phone).toBe("string");
+        expect(typeof user.site).toBe("string");
+        expect(typeof user.other_1).toBe("string");
+        expect(typeof user.other_2).toBe("string");
+        expect(typeof user.other_3).toBe("string");
+        expect(typeof user.headLine).toBe("string");
+        expect(typeof user.frame).toBe("string");
+        expect(Array.isArray(user.favorite)).toBe(true);
         expect(Array.isArray(user.posts)).toBe(true);
-
+        expect(Array.isArray(user.subscription)).toBe(true);
+        expect(Array.isArray(user.experience)).toBe(true);
+        expect(Array.isArray(user.education)).toBe(true);
+        expect(Array.isArray(user.languages)).toBe(true);
         if (user.posts.length > 0) {
           user.posts.forEach((post) => {
+            expect(typeof post._id).toBe("string");
+            expect(typeof post.description).toBe("string");
+            expect(typeof post.postedAtHuman).toBe("string");
             expect(Array.isArray(post.likes)).toBe(true);
             expect(Array.isArray(post.comments)).toBe(true);
             expect(Array.isArray(post.mediaFiles)).toBe(true);

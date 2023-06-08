@@ -10,7 +10,13 @@ const getUsersByQuery = async (req, res, next) => {
 
   const count = await User.countDocuments();
   const totalPages = Math.ceil(count / perPage);
-  const userQuery = { name: { $regex: trimmedKeyword, $options: "i" } };
+  const userQuery = {
+    $or: [
+      { name: { $regex: trimmedKeyword, $options: "i" } },
+      { surname: { $regex: trimmedKeyword, $options: "i" } },
+      // { email: { $regex: trimmedKeyword, $options: "i" } },
+    ],
+  };
 
   if (page > totalPages) {
     page = totalPages;
@@ -29,67 +35,152 @@ const getUsersByQuery = async (req, res, next) => {
     });
   }
 
-  const users = await User.aggregate([
-    { $match: userQuery },
-    {
-      $lookup: {
-        from: "posts",
-        localField: "_id",
-        foreignField: "owner",
-        as: "posts",
-      },
-    },
-    {
-      $unwind: {
-        path: "$posts",
-        preserveNullAndEmptyArrays: true,
-      },
-    },
-    {
-      $sort: {
-        "posts.createdAt": -1,
-      },
-    },
-    {
-      $skip: skip < 0 ? 0 : skip,
-    },
-    {
-      $limit: perPage,
-    },
-    {
-      $lookup: {
-        from: "likes",
-        localField: "posts.likes",
-        foreignField: "_id",
-        as: "posts.likes",
-      },
-    },
-    {
-      $lookup: {
-        from: "comments",
-        localField: "posts.comments",
-        foreignField: "_id",
-        as: "posts.comments",
-      },
-    },
-    {
-      $lookup: {
-        from: "mediafiles",
-        localField: "posts.mediaFiles",
-        foreignField: "_id",
-        as: "posts.mediaFiles",
-      },
-    },
-    {
-      $group: {
-        _id: "$_id",
-        name: { $first: "$name" },
-        email: { $first: "$email" },
-        createdAt: { $first: "$createdAt" },
-        posts: { $push: "$posts" },
-      },
-    },
-  ]);
+  // const users = await User.aggregate([
+  //   { $match: userQuery },
+  //   {
+  //     $lookup: {
+  //       from: "posts",
+  //       localField: "_id",
+  //       foreignField: "owner",
+  //       as: "posts",
+  //     },
+  //   },
+  //   {
+  //     $unwind: {
+  //       path: "$posts",
+  //       preserveNullAndEmptyArrays: true,
+  //     },
+  //   },
+  //   {
+  //     $sort: {
+  //       "posts.createdAt": -1,
+  //     },
+  //   },
+  //   {
+  //     $skip: skip < 0 ? 0 : skip,
+  //   },
+  //   {
+  //     $limit: perPage,
+  //   },
+  //   {
+  //     $lookup: {
+  //       from: "likes",
+  //       localField: "posts.likes",
+  //       foreignField: "_id",
+  //       as: "posts.likes",
+  //     },
+  //   },
+  //   {
+  //     $lookup: {
+  //       from: "comments",
+  //       localField: "posts.comments",
+  //       foreignField: "_id",
+  //       as: "posts.comments",
+  //     },
+  //   },
+  //   {
+  //     $lookup: {
+  //       from: "mediafiles",
+  //       localField: "posts.mediaFiles",
+  //       foreignField: "_id",
+  //       as: "posts.mediaFiles",
+  //     },
+  //   },
+  //   {
+  //     $group: {
+  //       _id: "$_id",
+  //       name: { $first: "$name" },
+  //       email: { $first: "$email" },
+  //       createdAt: { $first: "$createdAt" },
+  //       posts: { $push: "$posts" },
+  //     },
+  //   },
+  // ]);
+
+  const users = await User.find({ $match: userQuery })
+    .sort({ createdAt: -1 })
+    .skip(skip < 0 ? 0 : skip)
+    .limit(perPage)
+    .populate({
+      path: "posts",
+      select: "description createdAt updatedAt",
+      populate: [
+        {
+          path: "comments",
+          select: "owner description likes mediaFiles createdAt updatedAt",
+          populate: { path: "owner", select: "_id surname name avatarURL" },
+        },
+        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+        {
+          path: "mediaFiles",
+          select: "url type owner",
+          populate: { path: "owner", select: "_id surname name avatarURL" },
+        },
+      ],
+    })
+    .populate({
+      path: "favorite",
+      select: "description createdAt updatedAt",
+      populate: [
+        {
+          path: "comments",
+          select: "owner description likes mediaFiles createdAt updatedAt",
+          populate: { path: "owner", select: "_id surname name avatarURL" },
+        },
+        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+        {
+          path: "mediaFiles",
+          select: "url type owner",
+          populate: { path: "owner", select: "_id surname name avatarURL" },
+        },
+      ],
+    })
+    .populate({
+      path: "subscription",
+      select:
+        "name surname site phone headLine about languages education frame experience email avatarURL subscription posts",
+      populate: [
+        {
+          path: "posts",
+          select: "description createdAt updatedAt",
+          populate: [
+            {
+              path: "comments",
+              select: "owner description likes mediaFiles createdAt updatedAt",
+              populate: { path: "owner", select: "_id surname name avatarURL" },
+            },
+            { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+            {
+              path: "mediaFiles",
+              select: "url type owner",
+              populate: { path: "owner", select: "_id surname name avatarURL" },
+            },
+          ],
+        },
+        {
+          path: "favorite",
+          select: "description createdAt updatedAt",
+          populate: [
+            {
+              path: "comments",
+              select: "owner description likes mediaFiles createdAt updatedAt",
+              populate: { path: "owner", select: "_id surname name avatarURL" },
+            },
+            { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+            {
+              path: "mediaFiles",
+              select: "url type owner",
+              populate: { path: "owner", select: "_id surname name avatarURL" },
+            },
+          ],
+        },
+        {
+          path: "subscription",
+          select:
+            "name surname site phone headLine about languages education frame experience email avatarURL subscription posts",
+        },
+      ],
+    });
 
   const transformedUsers = users.map((user) => {
     const transformedUser = userTransformer(user);
