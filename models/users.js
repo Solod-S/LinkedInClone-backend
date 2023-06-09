@@ -121,15 +121,15 @@ const userSchema = Schema(
       type: String,
       default: "",
     },
-    other_1: {
+    other1: {
       type: String,
       default: "",
     },
-    other_2: {
+    other2: {
       type: String,
       default: "",
     },
-    other_3: {
+    other3: {
       type: String,
       default: "",
     },

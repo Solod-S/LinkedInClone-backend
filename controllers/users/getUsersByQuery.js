@@ -35,68 +35,6 @@ const getUsersByQuery = async (req, res, next) => {
     });
   }
 
-  // const users = await User.aggregate([
-  //   { $match: userQuery },
-  //   {
-  //     $lookup: {
-  //       from: "posts",
-  //       localField: "_id",
-  //       foreignField: "owner",
-  //       as: "posts",
-  //     },
-  //   },
-  //   {
-  //     $unwind: {
-  //       path: "$posts",
-  //       preserveNullAndEmptyArrays: true,
-  //     },
-  //   },
-  //   {
-  //     $sort: {
-  //       "posts.createdAt": -1,
-  //     },
-  //   },
-  //   {
-  //     $skip: skip < 0 ? 0 : skip,
-  //   },
-  //   {
-  //     $limit: perPage,
-  //   },
-  //   {
-  //     $lookup: {
-  //       from: "likes",
-  //       localField: "posts.likes",
-  //       foreignField: "_id",
-  //       as: "posts.likes",
-  //     },
-  //   },
-  //   {
-  //     $lookup: {
-  //       from: "comments",
-  //       localField: "posts.comments",
-  //       foreignField: "_id",
-  //       as: "posts.comments",
-  //     },
-  //   },
-  //   {
-  //     $lookup: {
-  //       from: "mediafiles",
-  //       localField: "posts.mediaFiles",
-  //       foreignField: "_id",
-  //       as: "posts.mediaFiles",
-  //     },
-  //   },
-  //   {
-  //     $group: {
-  //       _id: "$_id",
-  //       name: { $first: "$name" },
-  //       email: { $first: "$email" },
-  //       createdAt: { $first: "$createdAt" },
-  //       posts: { $push: "$posts" },
-  //     },
-  //   },
-  // ]);
-
   const users = await User.find({ $match: userQuery })
     .sort({ createdAt: -1 })
     .skip(skip < 0 ? 0 : skip)
@@ -201,6 +139,68 @@ const getUsersByQuery = async (req, res, next) => {
 };
 
 module.exports = getUsersByQuery;
+
+// const users = await User.aggregate([
+//   { $match: userQuery },
+//   {
+//     $lookup: {
+//       from: "posts",
+//       localField: "_id",
+//       foreignField: "owner",
+//       as: "posts",
+//     },
+//   },
+//   {
+//     $unwind: {
+//       path: "$posts",
+//       preserveNullAndEmptyArrays: true,
+//     },
+//   },
+//   {
+//     $sort: {
+//       "posts.createdAt": -1,
+//     },
+//   },
+//   {
+//     $skip: skip < 0 ? 0 : skip,
+//   },
+//   {
+//     $limit: perPage,
+//   },
+//   {
+//     $lookup: {
+//       from: "likes",
+//       localField: "posts.likes",
+//       foreignField: "_id",
+//       as: "posts.likes",
+//     },
+//   },
+//   {
+//     $lookup: {
+//       from: "comments",
+//       localField: "posts.comments",
+//       foreignField: "_id",
+//       as: "posts.comments",
+//     },
+//   },
+//   {
+//     $lookup: {
+//       from: "mediafiles",
+//       localField: "posts.mediaFiles",
+//       foreignField: "_id",
+//       as: "posts.mediaFiles",
+//     },
+//   },
+//   {
+//     $group: {
+//       _id: "$_id",
+//       name: { $first: "$name" },
+//       email: { $first: "$email" },
+//       createdAt: { $first: "$createdAt" },
+//       posts: { $push: "$posts" },
+//     },
+//   },
+// ]);
 
 // $match: Этот этап фильтрует пользователей на основе userQuery, которое содержит ключевое слово для поиска. В результате остаются только пользователи, у которых поле name соответствует заданному ключевому слову (регистронезависимый поиск).
 
