@@ -26,7 +26,6 @@ const userTransformer = ({
     surname,
     email,
     avatarURL,
-    //
     favorite,
     posts,
     subscription,

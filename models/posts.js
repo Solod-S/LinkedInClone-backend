@@ -33,8 +33,9 @@ const myPostSchema = Joi.object({
 
 const updateMyPostSchema = Joi.object({
   description: Joi.string(),
+  mediaFiles: Joi.string(),
 })
-  .or("description")
+  .or("description", "mediaFiles")
   .required();
 
 const postSchemas = {

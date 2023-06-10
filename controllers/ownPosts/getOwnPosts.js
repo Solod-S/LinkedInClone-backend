@@ -78,6 +78,11 @@ const getOwnPosts = async (req, res, next) => {
         select:
           "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
       },
+    })
+    .populate({
+      path: "owner",
+      select:
+        "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
     });
 
   res.json({

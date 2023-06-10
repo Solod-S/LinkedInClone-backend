@@ -1,16 +1,29 @@
 const human = require("human-time");
 
-const mediaFileTransformer = (mediaFile) => {
+const mediaFileTransformer = ({
+  type,
+  url,
+  providerPublicId,
+  owner,
+  location,
+  postId,
+  commentId,
+  _id,
+  createdAt,
+  updatedAt,
+}) => {
   return {
-    type: mediaFile.type,
-    url: mediaFile.url,
-    providerPublicId: mediaFile.providerPublicId,
-    owner: mediaFile.owner,
-    location: mediaFile.location,
-    postId: mediaFile.postId,
-    commentId: mediaFile.commentId,
-    _id: mediaFile._id,
-    postedAtHuman: human(mediaFile.createdAt),
+    _id,
+    postId,
+    commentId,
+    type,
+    location,
+    url,
+    providerPublicId,
+    postedAtHuman: human(createdAt),
+    createdAt,
+    updatedAt,
+    owner,
   };
 };
 

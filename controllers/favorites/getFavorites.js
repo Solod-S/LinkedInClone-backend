@@ -37,17 +37,54 @@ const getFavorites = async (req, res, next) => {
     .populate({
       path: "comments",
       select: "owner description likes mediaFiles createdAt updatedAt",
-      populate: { path: "owner", select: "_id surname name avatarURL" },
+      populate: [
+        {
+          path: "owner",
+          select:
+            "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+        },
+        {
+          path: "mediaFiles",
+          select: "url type providerPublicId location commentId owner createdAt updatedAt",
+          populate: {
+            path: "owner",
+            select:
+              "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+          },
+        },
+        {
+          path: "likes",
+          select: "owner type createdAt updatedAt",
+          populate: {
+            path: "owner",
+            select:
+              "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+          },
+        },
+      ],
     })
     .populate({
       path: "mediaFiles",
-      select: "url type providerPublicId",
-      populate: { path: "owner", select: "_id surname name avatarURL" },
+      select: "url type providerPublicId createdAt updatedAt",
+      populate: {
+        path: "owner",
+        select:
+          "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+      },
     })
     .populate({
       path: "likes",
-      select: "owner type",
-      populate: { path: "owner", select: "_id surname name avatarURL" },
+      select: "owner type createdAt updatedAt",
+      populate: {
+        path: "owner",
+        select:
+          "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+      },
+    })
+    .populate({
+      path: "owner",
+      select:
+        "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
     });
 
   res.json({

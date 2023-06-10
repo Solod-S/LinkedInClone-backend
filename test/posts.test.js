@@ -34,6 +34,31 @@ describe("Post Test Suite", () => {
     expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.owner === "object")).toBe(true);
+    expect(
+      res.body.data.posts.every(
+        (post) =>
+          typeof post.owner === "object" &&
+          typeof post.owner._id === "string" &&
+          typeof post.owner.name === "string" &&
+          typeof post.owner.email === "string" &&
+          typeof post.owner.avatarURL === "string" &&
+          Array.isArray(post.owner.subscription) &&
+          Array.isArray(post.owner.favorite) &&
+          Array.isArray(post.owner.posts) &&
+          typeof post.owner.surname === "string" &&
+          typeof post.owner.about === "string" &&
+          Array.isArray(post.owner.education) &&
+          Array.isArray(post.owner.experience) &&
+          typeof post.owner.frame === "string" &&
+          typeof post.owner.headLine === "string" &&
+          Array.isArray(post.owner.languages) &&
+          typeof post.owner.phone === "string" &&
+          typeof post.owner.site === "string" &&
+          typeof post.owner.other1 === "string" &&
+          typeof post.owner.other2 === "string" &&
+          typeof post.owner.other3 === "string"
+      )
+    ).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
   }, 10000);
@@ -56,6 +81,31 @@ describe("Post Test Suite", () => {
     expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.owner === "object")).toBe(true);
+    expect(
+      res.body.data.posts.every(
+        (post) =>
+          typeof post.owner === "object" &&
+          typeof post.owner._id === "string" &&
+          typeof post.owner.name === "string" &&
+          typeof post.owner.email === "string" &&
+          typeof post.owner.avatarURL === "string" &&
+          Array.isArray(post.owner.subscription) &&
+          Array.isArray(post.owner.favorite) &&
+          Array.isArray(post.owner.posts) &&
+          typeof post.owner.surname === "string" &&
+          typeof post.owner.about === "string" &&
+          Array.isArray(post.owner.education) &&
+          Array.isArray(post.owner.experience) &&
+          typeof post.owner.frame === "string" &&
+          typeof post.owner.headLine === "string" &&
+          Array.isArray(post.owner.languages) &&
+          typeof post.owner.phone === "string" &&
+          typeof post.owner.site === "string" &&
+          typeof post.owner.other1 === "string" &&
+          typeof post.owner.other2 === "string" &&
+          typeof post.owner.other3 === "string"
+      )
+    ).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
@@ -92,6 +142,31 @@ describe("Post Test Suite", () => {
     expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.owner === "object")).toBe(true);
+    expect(
+      res.body.data.posts.every(
+        (post) =>
+          typeof post.owner === "object" &&
+          typeof post.owner._id === "string" &&
+          typeof post.owner.name === "string" &&
+          typeof post.owner.email === "string" &&
+          typeof post.owner.avatarURL === "string" &&
+          Array.isArray(post.owner.subscription) &&
+          Array.isArray(post.owner.favorite) &&
+          Array.isArray(post.owner.posts) &&
+          typeof post.owner.surname === "string" &&
+          typeof post.owner.about === "string" &&
+          Array.isArray(post.owner.education) &&
+          Array.isArray(post.owner.experience) &&
+          typeof post.owner.frame === "string" &&
+          typeof post.owner.headLine === "string" &&
+          Array.isArray(post.owner.languages) &&
+          typeof post.owner.phone === "string" &&
+          typeof post.owner.site === "string" &&
+          typeof post.owner.other1 === "string" &&
+          typeof post.owner.other2 === "string" &&
+          typeof post.owner.other3 === "string"
+      )
+    ).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
   }, 10000);
@@ -114,6 +189,31 @@ describe("Post Test Suite", () => {
     expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.owner === "object")).toBe(true);
+    expect(
+      res.body.data.posts.every(
+        (post) =>
+          typeof post.owner === "object" &&
+          typeof post.owner._id === "string" &&
+          typeof post.owner.name === "string" &&
+          typeof post.owner.email === "string" &&
+          typeof post.owner.avatarURL === "string" &&
+          Array.isArray(post.owner.subscription) &&
+          Array.isArray(post.owner.favorite) &&
+          Array.isArray(post.owner.posts) &&
+          typeof post.owner.surname === "string" &&
+          typeof post.owner.about === "string" &&
+          Array.isArray(post.owner.education) &&
+          Array.isArray(post.owner.experience) &&
+          typeof post.owner.frame === "string" &&
+          typeof post.owner.headLine === "string" &&
+          Array.isArray(post.owner.languages) &&
+          typeof post.owner.phone === "string" &&
+          typeof post.owner.site === "string" &&
+          typeof post.owner.other1 === "string" &&
+          typeof post.owner.other2 === "string" &&
+          typeof post.owner.other3 === "string"
+      )
+    ).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
@@ -152,6 +252,31 @@ describe("Post Test Suite", () => {
     expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.owner === "object")).toBe(true);
+    expect(
+      res.body.data.posts.every(
+        (post) =>
+          typeof post.owner === "object" &&
+          typeof post.owner._id === "string" &&
+          typeof post.owner.name === "string" &&
+          typeof post.owner.email === "string" &&
+          typeof post.owner.avatarURL === "string" &&
+          Array.isArray(post.owner.subscription) &&
+          Array.isArray(post.owner.favorite) &&
+          Array.isArray(post.owner.posts) &&
+          typeof post.owner.surname === "string" &&
+          typeof post.owner.about === "string" &&
+          Array.isArray(post.owner.education) &&
+          Array.isArray(post.owner.experience) &&
+          typeof post.owner.frame === "string" &&
+          typeof post.owner.headLine === "string" &&
+          Array.isArray(post.owner.languages) &&
+          typeof post.owner.phone === "string" &&
+          typeof post.owner.site === "string" &&
+          typeof post.owner.other1 === "string" &&
+          typeof post.owner.other2 === "string" &&
+          typeof post.owner.other3 === "string"
+      )
+    ).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
   }, 10000);
@@ -176,6 +301,31 @@ describe("Post Test Suite", () => {
     expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.owner === "object")).toBe(true);
+    expect(
+      res.body.data.posts.every(
+        (post) =>
+          typeof post.owner === "object" &&
+          typeof post.owner._id === "string" &&
+          typeof post.owner.name === "string" &&
+          typeof post.owner.email === "string" &&
+          typeof post.owner.avatarURL === "string" &&
+          Array.isArray(post.owner.subscription) &&
+          Array.isArray(post.owner.favorite) &&
+          Array.isArray(post.owner.posts) &&
+          typeof post.owner.surname === "string" &&
+          typeof post.owner.about === "string" &&
+          Array.isArray(post.owner.education) &&
+          Array.isArray(post.owner.experience) &&
+          typeof post.owner.frame === "string" &&
+          typeof post.owner.headLine === "string" &&
+          Array.isArray(post.owner.languages) &&
+          typeof post.owner.phone === "string" &&
+          typeof post.owner.site === "string" &&
+          typeof post.owner.other1 === "string" &&
+          typeof post.owner.other2 === "string" &&
+          typeof post.owner.other3 === "string"
+      )
+    ).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);

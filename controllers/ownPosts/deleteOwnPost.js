@@ -13,7 +13,59 @@ const deleteOwnPost = async (req, res, next) => {
     throw HttpError(404, "Not found");
   }
 
-  const result = await Post.findByIdAndDelete({ _id: postId });
+  const result = await Post.findByIdAndDelete({ _id: postId })
+    .populate({
+      path: "comments",
+      select: "owner description likes mediaFiles createdAt updatedAt",
+      populate: [
+        {
+          path: "owner",
+          select:
+            "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+        },
+        {
+          path: "mediaFiles",
+          select: "url type providerPublicId location commentId owner createdAt updatedAt",
+          populate: {
+            path: "owner",
+            select:
+              "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+          },
+        },
+        {
+          path: "likes",
+          select: "owner type createdAt updatedAt",
+          populate: {
+            path: "owner",
+            select:
+              "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+          },
+        },
+      ],
+    })
+    .populate({
+      path: "mediaFiles",
+      select: "url type providerPublicId createdAt updatedAt",
+      populate: {
+        path: "owner",
+        select:
+          "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+      },
+    })
+    .populate({
+      path: "likes",
+      select: "owner type createdAt updatedAt",
+      populate: {
+        path: "owner",
+        select:
+          "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+      },
+    })
+    .populate({
+      path: "owner",
+      select:
+        "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+    });
 
   if (!result) {
     throw HttpError(404, "Not found");

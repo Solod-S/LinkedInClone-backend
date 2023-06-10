@@ -1,14 +1,16 @@
 const human = require("human-time");
 
-const likeTransformer = (like) => {
+const likeTransformer = ({ _id, type, location, owner, postId, commentId, createdAt, updatedAt }) => {
   return {
-    _id: like._id,
-    type: like.type,
-    location: like.location,
-    owner: like.owner,
-    postId: like.postId,
-    commentId: like.commentId,
-    postedAtHuman: human(like.createdAt),
+    _id,
+    postId,
+    commentId,
+    type,
+    location,
+    postedAtHuman: human(createdAt),
+    createdAt,
+    updatedAt,
+    owner,
   };
 };
 

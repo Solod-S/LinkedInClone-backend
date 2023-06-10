@@ -1,14 +1,16 @@
 const human = require("human-time");
 
-const commentTransformer = (comment) => {
+const commentTransformer = ({ description, likes, mediaFiles, owner, _id, postId, createdAt, updatedAt }) => {
   return {
-    description: comment.description,
-    likes: comment.likes,
-    mediaFiles: comment.mediaFiles,
-    owner: comment.owner,
-    _id: comment._id,
-    postId: comment.postId,
-    postedAtHuman: human(comment.createdAt),
+    _id,
+    postId,
+    description,
+    likes,
+    mediaFiles,
+    postedAtHuman: human(createdAt),
+    createdAt,
+    updatedAt,
+    owner,
   };
 };
 
