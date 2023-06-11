@@ -19,7 +19,7 @@ const getUserById = async (req, res, next) => {
         { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
         {
           path: "mediaFiles",
-          select: "url type owner",
+          select: "url type owner location createdAt updatedAt",
           populate: { path: "owner", select: "_id surname name avatarURL" },
         },
       ],
@@ -36,7 +36,7 @@ const getUserById = async (req, res, next) => {
         { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
         {
           path: "mediaFiles",
-          select: "url type owner",
+          select: "url type owner location createdAt updatedAt",
           populate: { path: "owner", select: "_id surname name avatarURL" },
         },
       ],
@@ -58,7 +58,7 @@ const getUserById = async (req, res, next) => {
             { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
             {
               path: "mediaFiles",
-              select: "url type owner",
+              select: "url type owner location createdAt updatedAt",
               populate: { path: "owner", select: "_id surname name avatarURL" },
             },
           ],
@@ -75,7 +75,7 @@ const getUserById = async (req, res, next) => {
             { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
             {
               path: "mediaFiles",
-              select: "url type owner",
+              select: "url type owner location createdAt updatedAt",
               populate: { path: "owner", select: "_id surname name avatarURL" },
             },
           ],
@@ -95,7 +95,7 @@ const getUserById = async (req, res, next) => {
   const posts = await Post.find({ owner: userId })
     .populate({
       path: "mediaFiles",
-      select: "url type providerPublicId",
+      select: "url type providerPublicId location createdAt updatedAt",
       populate: { path: "owner", select: "_id surname name avatarURL" },
     })
     .populate({
@@ -110,7 +110,7 @@ const getUserById = async (req, res, next) => {
         { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
         {
           path: "mediaFiles",
-          select: "url type owner",
+          select: "url type owner location createdAt updatedAt",
           populate: { path: "owner", select: "_id surname name avatarURL" },
         },
       ],

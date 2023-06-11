@@ -28,7 +28,7 @@ const authenticate = async (req, res, next) => {
           { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
           {
             path: "mediaFiles",
-            select: "url type owner",
+            select: "url type owner location createdAt updatedAt",
             populate: { path: "owner", select: "_id surname name avatarURL" },
           },
         ],
@@ -45,7 +45,7 @@ const authenticate = async (req, res, next) => {
           { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
           {
             path: "mediaFiles",
-            select: "url type owner",
+            select: "url type owner location createdAt updatedAt",
             populate: { path: "owner", select: "_id surname name avatarURL" },
           },
         ],
@@ -71,7 +71,7 @@ const authenticate = async (req, res, next) => {
               },
               {
                 path: "mediaFiles",
-                select: "url type owner",
+                select: "url type owner location createdAt updatedAt",
                 populate: { path: "owner", select: "_id surname name avatarURL" },
               },
             ],
@@ -92,7 +92,7 @@ const authenticate = async (req, res, next) => {
               },
               {
                 path: "mediaFiles",
-                select: "url type owner",
+                select: "url type owner location createdAt updatedAt",
                 populate: { path: "owner", select: "_id surname name avatarURL" },
               },
             ],

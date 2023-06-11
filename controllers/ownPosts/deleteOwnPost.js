@@ -45,7 +45,7 @@ const deleteOwnPost = async (req, res, next) => {
     })
     .populate({
       path: "mediaFiles",
-      select: "url type providerPublicId createdAt updatedAt",
+      select: "url type providerPublicId location createdAt updatedAt",
       populate: {
         path: "owner",
         select:

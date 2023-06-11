@@ -40,7 +40,7 @@ const addFavorite = async (req, res) => {
     })
     .populate({
       path: "mediaFiles",
-      select: "url type providerPublicId createdAt updatedAt",
+      select: "url type providerPublicId location createdAt updatedAt",
       populate: {
         path: "owner",
         select:

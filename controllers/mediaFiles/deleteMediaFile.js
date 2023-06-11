@@ -19,9 +19,11 @@ const deleteMediaFile = async (req, res, next) => {
     throw HttpError(404, "Not found");
   }
 
-  await Post.updateOne({ mediaFiles: { $elemMatch: { $eq: mediaFileId } } }, { $pull: { mediaFiles: mediaFileId } });
-  await Comment.updateOne({ mediaFiles: { $elemMatch: { $eq: mediaFileId } } }, { $pull: { mediaFiles: mediaFileId } });
 
+  const model = result.location === "posts"? Post : Comment
+
+  await model.updateOne({ mediaFiles: { $elemMatch: { $eq: mediaFileId } } }, { $pull: { mediaFiles: mediaFileId } });
+ 
   res.json({
     status: "success",
     message: "Media file successfully deleted",

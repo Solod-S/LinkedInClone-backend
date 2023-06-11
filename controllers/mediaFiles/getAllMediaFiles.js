@@ -32,33 +32,59 @@ const getAllMediaFiles = async (req, res, next) => {
     .sort({ createdAt: -1 })
     .skip(skip < 0 ? 0 : skip)
     .limit(perPage)
-    .populate({ path: "owner", select: "_id surname name avatarURL" })
+    .populate({ path: "owner", select: "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site" })
     .populate({
       path: "postId",
       select: "_id description likes comments mediaFiles owner type",
       populate: [
         {
+          path: "owner",
+          select:
+            "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+        },
+        {
           path: "comments",
           select: "owner description likes mediaFiles createdAt updatedAt",
-          populate: { path: "owner", select: "_id surname name avatarURL" },
+          populate: [{ path: "owner", select: "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site" }, {
+            path: "mediaFiles",
+            select: "url type providerPublicId location commentId owner createdAt updatedAt",
+            populate: {
+              path: "owner",
+              select:
+                "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+            },
+          },
+          {
+            path: "likes",
+            select: "owner type createdAt updatedAt",
+            populate: {
+              path: "owner",
+              select:
+                "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+            },
+          },],
         },
-        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+        { path: "likes", select: "owner type createdAt updatedAt", populate: { path: "owner", select: "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site" } },
         {
           path: "mediaFiles",
-          select: "url type owner",
-          populate: { path: "owner", select: "_id surname name avatarURL" },
+          select: "url type owner location createdAt updatedAt",
+          populate: { path: "owner", select: "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site" },
         },
       ],
     })
     .populate({
       path: "commentId",
       select: "_id description likes comments mediaFiles owner type",
-      populate: [
-        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+      populate: [ {
+        path: "owner",
+        select:
+          "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+      },
+        { path: "likes", select: "owner type createdAt updatedAt", populate: { path: "owner", select: "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site" } },
         {
           path: "mediaFiles",
-          select: "url type owner",
-          populate: { path: "owner", select: "_id surname name avatarURL" },
+          select: "url type owner location createdAt updatedAt",
+          populate: { path: "owner", select: "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site" },
         },
       ],
     });

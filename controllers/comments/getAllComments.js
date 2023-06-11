@@ -38,7 +38,7 @@ const getAllComments = async (req, res, next) => {
     })
     .populate({
       path: "mediaFiles",
-      select: "url type providerPublicId",
+      select: "url type providerPublicId location",
       populate: { path: "owner", select: "_id surname name avatarURL" },
     })
     .populate({

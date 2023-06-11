@@ -33,6 +33,7 @@ const addLike = async (req, res, next) => {
       ...req.body,
       owner: _id,
     });
+    
     await Model.findByIdAndUpdate({ _id: id }, { $push: { likes: like._id } }, { new: true });
 
     res

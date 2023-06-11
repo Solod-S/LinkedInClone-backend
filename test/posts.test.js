@@ -29,10 +29,8 @@ describe("Post Test Suite", () => {
     expect(res.body.message).toEqual("Successfully get posts");
     expect(typeof res.body.data).toBe("object");
     expect(Array.isArray(res.body.data.posts)).toBe(true);
+    expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.description === "string")).toBe(true);
-    expect(res.body.data.posts.every((post) => Array.isArray(post.likes))).toBe(true);
-    expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
-    expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.owner === "object")).toBe(true);
     expect(
       res.body.data.posts.every(
@@ -59,8 +57,56 @@ describe("Post Test Suite", () => {
           typeof post.owner.other3 === "string"
       )
     ).toBe(true);
-    expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
+    expect(res.body.data.posts.every((post) => typeof post.createdAt === "string")).toBe(true);
+    expect(res.body.data.posts.every((post) => typeof post.updatedAt === "string")).toBe(true);
+    expect(res.body.data.posts.every((post) => Array.isArray(post.likes))).toBe(true);
+    expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
+    expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
+  
+
+    // Checking objects in mediaFiles/comments/likes/owner
+    const likesContainsObjects = res.body.data.posts.some((post) =>
+      post.likes.some(
+        (like) =>
+          typeof like === "object" &&
+          typeof like._id === "string" &&
+          typeof like.type === "string" &&
+          typeof like.createdAt === "string" &&
+          typeof like.updatedAt === "string" &&
+          typeof like.owner === "object"
+      )
+    );
+    const commentsContainsObjects = res.body.data.posts.some((post) =>
+      post.comments.some(
+        (comment) =>
+          typeof comment === "object" &&
+          typeof comment._id === "string" &&
+          typeof comment.description === "string" &&
+          typeof comment.likes === "object" &&
+          typeof comment.mediaFiles === "object" &&
+          typeof comment.createdAt === "string" &&
+          typeof comment.updatedAt === "string" &&
+          typeof comment.owner === "object"
+      )
+    );
+    const mediaFilesContainsObjects = res.body.data.posts.some((post) =>
+      post.mediaFiles.some(
+        (media) =>
+          typeof media === "object" &&
+          typeof media._id === "string" &&
+          typeof media.type === "string" &&
+          typeof media.url === "string" &&
+          typeof media.providerPublicId === "string" &&
+          typeof media.createdAt === "string" &&
+          typeof media.updatedAt === "string" &&
+          typeof media.owner === "object"
+      )
+    );
+
+   expect(likesContainsObjects).toBe(true);
+   expect(commentsContainsObjects).toBe(true);
+   expect(mediaFilesContainsObjects).toBe(true);
   }, 10000);
 
   test("GET /all posts with valid token + pagination, should return 200 status and valid posts data", async () => {
@@ -76,10 +122,8 @@ describe("Post Test Suite", () => {
     expect(typeof res.body.data.currentPage).toBe("number");
     expect(typeof res.body.data.perPage).toBe("number");
     expect(Array.isArray(res.body.data.posts)).toBe(true);
+    expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.description === "string")).toBe(true);
-    expect(res.body.data.posts.every((post) => Array.isArray(post.likes))).toBe(true);
-    expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
-    expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.owner === "object")).toBe(true);
     expect(
       res.body.data.posts.every(
@@ -106,11 +150,56 @@ describe("Post Test Suite", () => {
           typeof post.owner.other3 === "string"
       )
     ).toBe(true);
-    expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
+    expect(res.body.data.posts.every((post) => typeof post.createdAt === "string")).toBe(true);
+    expect(res.body.data.posts.every((post) => typeof post.updatedAt === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.likes))).toBe(true);
+    
+
+   // Checking objects in mediaFiles/comments/likes/owner
+   const likesContainsObjects = res.body.data.posts.some((post) =>
+   post.likes.some(
+     (like) =>
+       typeof like === "object" &&
+       typeof like._id === "string" &&
+       typeof like.type === "string" &&
+       typeof like.createdAt === "string" &&
+       typeof like.updatedAt === "string" &&
+       typeof like.owner === "object"
+   )
+   );
+   const commentsContainsObjects = res.body.data.posts.some((post) =>
+      post.comments.some(
+        (comment) =>
+          typeof comment === "object" &&
+          typeof comment._id === "string" &&
+          typeof comment.description === "string" &&
+          typeof comment.likes === "object" &&
+          typeof comment.mediaFiles === "object" &&
+          typeof comment.createdAt === "string" &&
+          typeof comment.updatedAt === "string" &&
+          typeof comment.owner === "object"
+      )
+   );
+   const mediaFilesContainsObjects = res.body.data.posts.some((post) =>
+      post.mediaFiles.some(
+        (media) =>
+          typeof media === "object" &&
+          typeof media._id === "string" &&
+          typeof media.type === "string" &&
+          typeof media.url === "string" &&
+          typeof media.providerPublicId === "string" &&
+          typeof media.createdAt === "string" &&
+          typeof media.updatedAt === "string" &&
+          typeof media.owner === "object"
+      )
+   );
+
+ expect(likesContainsObjects).toBe(true);
+ expect(commentsContainsObjects).toBe(true);
+ expect(mediaFilesContainsObjects).toBe(true);
   }, 10000);
 
   test("GET /all posts with invalid token, should return 401 status", async () => {
@@ -137,6 +226,7 @@ describe("Post Test Suite", () => {
     expect(res.body.message).toEqual("Successfully get popular posts");
     expect(typeof res.body.data).toBe("object");
     expect(Array.isArray(res.body.data.posts)).toBe(true);
+    expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.description === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.likes))).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
@@ -167,8 +257,9 @@ describe("Post Test Suite", () => {
           typeof post.owner.other3 === "string"
       )
     ).toBe(true);
-    expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
+    expect(res.body.data.posts.every((post) => typeof post.createdAt === "string")).toBe(true);
+    expect(res.body.data.posts.every((post) => typeof post.updatedAt === "string")).toBe(true);
   }, 10000);
 
   test("GET /all popular posts with valid token + pagination, should return 200 status and valid posts data", async () => {
@@ -184,6 +275,7 @@ describe("Post Test Suite", () => {
     expect(typeof res.body.data.currentPage).toBe("number");
     expect(typeof res.body.data.perPage).toBe("number");
     expect(Array.isArray(res.body.data.posts)).toBe(true);
+    expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.description === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.likes))).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
@@ -214,11 +306,55 @@ describe("Post Test Suite", () => {
           typeof post.owner.other3 === "string"
       )
     ).toBe(true);
-    expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
+    expect(res.body.data.posts.every((post) => typeof post.createdAt === "string")).toBe(true);
+    expect(res.body.data.posts.every((post) => typeof post.updatedAt === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.likes))).toBe(true);
+
+    // Checking objects in mediaFiles/comments/likes/owner
+    const likesContainsObjects = res.body.data.posts.some((post) =>
+    post.likes.some(
+      (like) =>
+        typeof like === "object" &&
+        typeof like._id === "string" &&
+        typeof like.type === "string" &&
+        typeof like.createdAt === "string" &&
+        typeof like.updatedAt === "string" &&
+        typeof like.owner === "object"
+    )
+    );
+    const commentsContainsObjects = res.body.data.posts.some((post) =>
+        post.comments.some(
+          (comment) =>
+            typeof comment === "object" &&
+            typeof comment._id === "string" &&
+            typeof comment.description === "string" &&
+            typeof comment.likes === "object" &&
+            typeof comment.mediaFiles === "object" &&
+            typeof comment.createdAt === "string" &&
+            typeof comment.updatedAt === "string" &&
+            typeof comment.owner === "object"
+        )
+    );
+    const mediaFilesContainsObjects = res.body.data.posts.some((post) =>
+        post.mediaFiles.some(
+          (media) =>
+            typeof media === "object" &&
+            typeof media._id === "string" &&
+            typeof media.type === "string" &&
+            typeof media.url === "string" &&
+            typeof media.providerPublicId === "string" &&
+            typeof media.createdAt === "string" &&
+            typeof media.updatedAt === "string" &&
+            typeof media.owner === "object"
+        )
+    );
+
+      expect(likesContainsObjects).toBe(true);
+      expect(commentsContainsObjects).toBe(true);
+      expect(mediaFilesContainsObjects).toBe(true);
   }, 10000);
 
   test("GET /all popular posts with invalid token, should return 401 status", async () => {
@@ -247,10 +383,8 @@ describe("Post Test Suite", () => {
     expect(res.body.message).toEqual("Successfully found such posts");
     expect(typeof res.body.data).toBe("object");
     expect(Array.isArray(res.body.data.posts)).toBe(true);
+    expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.description === "string")).toBe(true);
-    expect(res.body.data.posts.every((post) => Array.isArray(post.likes))).toBe(true);
-    expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
-    expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.owner === "object")).toBe(true);
     expect(
       res.body.data.posts.every(
@@ -277,8 +411,12 @@ describe("Post Test Suite", () => {
           typeof post.owner.other3 === "string"
       )
     ).toBe(true);
-    expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
+    expect(res.body.data.posts.every((post) => typeof post.createdAt === "string")).toBe(true);
+    expect(res.body.data.posts.every((post) => typeof post.updatedAt === "string")).toBe(true);
+    expect(res.body.data.posts.every((post) => Array.isArray(post.likes))).toBe(true);
+    expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
+    expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
   }, 10000);
 
   test("GET /posts by search query with valid token + pagination, should return 200 status", async () => {
@@ -296,6 +434,7 @@ describe("Post Test Suite", () => {
     expect(typeof res.body.data.currentPage).toBe("number");
     expect(typeof res.body.data.perPage).toBe("number");
     expect(Array.isArray(res.body.data.posts)).toBe(true);
+    expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.description === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.likes))).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
@@ -326,8 +465,9 @@ describe("Post Test Suite", () => {
           typeof post.owner.other3 === "string"
       )
     ).toBe(true);
-    expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
+    expect(res.body.data.posts.every((post) => typeof post.createdAt === "string")).toBe(true);
+    expect(res.body.data.posts.every((post) => typeof post.updatedAt === "string")).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
     expect(res.body.data.posts.every((post) => Array.isArray(post.likes))).toBe(true);
@@ -362,9 +502,30 @@ describe("Post Test Suite", () => {
     expect(typeof res.body.data.post.description).toBe("string");
     expect(typeof res.body.data.post.likes).toBe("object");
     expect(typeof res.body.data.post.comments).toBe("object");
-    expect(typeof res.body.data.post.owner).toBe("object");
     expect(typeof res.body.data.post._id).toBe("string");
     expect(typeof res.body.data.post.postedAtHuman).toBe("string");
+    expect(typeof res.body.data.post.createdAt).toBe("string");
+    expect(typeof res.body.data.post.updatedAt).toBe("string");
+    expect(typeof res.body.data.post.owner).toBe("object");
+    expect(typeof res.body.data.post.owner._id).toBe("string");
+    expect(typeof res.body.data.post.owner.name).toBe("string");
+    expect(typeof res.body.data.post.owner.email).toBe("string");
+    expect(typeof res.body.data.post.owner.avatarURL).toBe("string");
+    expect(Array.isArray(res.body.data.post.owner.subscription)).toBe(true);
+    expect(Array.isArray(res.body.data.post.owner.favorite)).toBe(true);
+    expect(Array.isArray(res.body.data.post.owner.posts)).toBe(true);
+    expect(typeof res.body.data.post.owner.surname).toBe("string");
+    expect(typeof res.body.data.post.owner.about).toBe("string");
+    expect(Array.isArray(res.body.data.post.owner.education)).toBe(true);
+    expect(Array.isArray(res.body.data.post.owner.experience)).toBe(true);
+    expect(typeof res.body.data.post.owner.frame).toBe("string");
+    expect(typeof res.body.data.post.owner.headLine).toBe("string");
+    expect(Array.isArray(res.body.data.post.owner.languages)).toBe(true);
+    expect(typeof res.body.data.post.owner.phone).toBe("string");
+    expect(typeof res.body.data.post.owner.site).toBe("string");
+    expect(typeof res.body.data.post.owner.other1).toBe("string");
+    expect(typeof res.body.data.post.owner.other2).toBe("string");
+    expect(typeof res.body.data.post.owner.other3).toBe("string");
   }, 10000);
 
   test("GET /post by invalid id with valid token, should return 404 status", async () => {
