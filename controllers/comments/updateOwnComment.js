@@ -16,6 +16,16 @@ const updateOwnComment = async (req, res, next) => {
 
   const updatedComment = await Comment.findByIdAndUpdate(commentId, updateData, {
     new: true, // return updated comment
+  }).populate({
+    path: "mediaFiles",
+    select: "url type providerPublicId location createdAt updatedAt"
+  }).populate({
+    path: "likes",
+    select: "owner type createdAt updatedAt",
+  }).populate({
+    path: "owner",
+    select:
+      "_id surname name avatarURL",
   });
 
   if (!updatedComment) {

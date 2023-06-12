@@ -13,7 +13,17 @@ const deleteOwnComment = async (req, res, next) => {
     throw HttpError(404, "Not found");
   }
 
-  const result = await Comment.findByIdAndDelete({ _id: commentId });
+  const result = await Comment.findByIdAndDelete({ _id: commentId }).populate({
+    path: "mediaFiles",
+    select: "url type providerPublicId location createdAt updatedAt"
+  }).populate({
+    path: "likes",
+    select: "owner type createdAt updatedAt",
+  }).populate({
+    path: "owner",
+    select:
+      "_id surname name avatarURL",
+  });
 
   if (!result) {
     throw HttpError(404, "Not found");

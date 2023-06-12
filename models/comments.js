@@ -30,9 +30,10 @@ const commentsSchema = Joi.object({
 
 const updateComment = Joi.object({
   description: Joi.string(),
+  mediaFiles: Joi.string(),
   postId: Joi.string(),
 })
-  .or("description", "postId")
+  .or("description", "postId", "mediaFiles")
   .required();
 
 const commentSchemas = {

@@ -33,18 +33,15 @@ const getAllComments = async (req, res, next) => {
     .skip(skip < 0 ? 0 : skip)
     .limit(perPage)
     .populate({
-      path: "owner",
-      select: "name surname email avatarURL favorite",
-    })
-    .populate({
       path: "mediaFiles",
-      select: "url type providerPublicId location",
-      populate: { path: "owner", select: "_id surname name avatarURL" },
-    })
-    .populate({
+      select: "url type providerPublicId location createdAt updatedAt"
+    }).populate({
       path: "likes",
-      select: "owner type",
-      populate: { path: "owner", select: "_id surname name avatarURL" },
+      select: "owner type createdAt updatedAt",
+    }).populate({
+      path: "owner",
+      select:
+        "_id surname name avatarURL",
     });
 
   res.json({

@@ -20,7 +20,6 @@ console.log(haveMediaFile, req.body.mediaFiles)
     owner: _id,
   });
 
-  console.log(mediaFiles)
 
   await Post.findByIdAndUpdate(postId, { $push: { comments: comment._id } }, { new: true });
 
