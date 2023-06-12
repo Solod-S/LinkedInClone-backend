@@ -1,6 +1,7 @@
 const request = require("supertest");
 const mongoose = require("mongoose");
-const { Post, Comment } = require("../models");
+
+const { Post, Comment, Like } = require("../models");
 
 const app = require("../app");
 
@@ -29,9 +30,10 @@ describe("Likes Test Suite", () => {
       .post(`/likes/add`)
       .set("Authorization", `Bearer ${WRONG_TOKEN}`)
       .send({ type: "like", postId: "645bebfe4b27790a407a369e", location: "posts" });
+    const {status, body} = res
 
-    expect(res.status).toBe(401);
-    expect(res.body).toHaveProperty("message", "Unauthorized");
+    expect(status).toBe(401);
+    expect(body).toHaveProperty("message", "Unauthorized");
   }, 10000);
 
   test("POST /post's like with invalid id, should return 404 status", async () => {
@@ -39,23 +41,26 @@ describe("Likes Test Suite", () => {
       .post(`/likes/add`)
       .set("Authorization", `Bearer ${TEST_TOKEN}`)
       .send({ type: "like", postId: "111111111111111111111111", location: "posts" });
+    const {status, body} = res
 
-    expect(res.status).toBe(404);
-    expect(res.body).toHaveProperty("message", "Not found");
+    expect(status).toBe(404);
+    expect(body).toHaveProperty("message", "Not found");
   }, 10000);
 
   test("POST /post's like without body, should return 400 status", async () => {
     const res = await request(app).post(`/likes/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({});
+    const {status, body} = res
 
-    expect(res.status).toBe(400);
-    expect(res.body).toHaveProperty("message", '"type" is required');
+    expect(status).toBe(400);
+    expect(body).toHaveProperty("message", '"type" is required');
   }, 10000);
 
   test("POST /post's like with invalid body, should return 400 status", async () => {
     const res = await request(app).post(`/likes/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({ 11: "ss" });
+  const {status, body} = res
 
-    expect(res.status).toBe(400);
-    expect(res.body).toHaveProperty("message", '"type" is required');
+    expect(status).toBe(400);
+    expect(body).toHaveProperty("message", '"type" is required');
   }, 10000);
 
   test("POST /post's like with valid token, should return 201 status and valid like data", async () => {
@@ -70,56 +75,66 @@ describe("Likes Test Suite", () => {
       .post(`/likes/add`)
       .set("Authorization", `Bearer ${TEST_TOKEN}`)
       .send({ type: "like", postId, location: "posts" });
+    const {status, message, data} = res.body
+    const {like} = data
 
-    likeId = res.body.data.like._id;
+    likeId = like._id;
 
     expect(res.status).toBe(201);
-    expect(typeof res.body.status).toBe("string");
-    expect(res.body.status).toEqual("success");
-    expect(typeof res.body.message).toBe("string");
-    expect(res.body.message).toEqual("Like successfully created");
-    expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.data.like).toBe("object");
-    expect(typeof res.body.data.like.owner).toBe("string");
-    expect(typeof res.body.data.like.location).toBe("string");
-    expect(typeof res.body.data.like.type).toBe("string");
-    expect(typeof res.body.data.like.postId).toBe("string");
-    expect(typeof res.body.data.like._id).toBe("string");
-    expect(typeof res.body.data.like.postedAtHuman).toBe("string");
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("Like successfully created");
+    expect(typeof data).toBe("object");
+    expect(typeof like).toBe("object");
+    expect(typeof like.owner).toBe("string");
+    expect(typeof like.location).toBe("string");
+    expect(typeof like.type).toBe("string");
+    expect(typeof like.postId).toBe("string");
+    expect(typeof like._id).toBe("string");
+    expect(typeof like.postedAtHuman).toBe("string");
+    expect(typeof like.createdAt).toBe("string");
+    expect(typeof like.updatedAt).toBe("string");
   }, 10000);
 
   test("DELETE /post's like with invalid token, should return 401 status", async () => {
     const res = await request(app).delete(`/likes/remove/${likeId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+    const {status, body} = res
 
-    expect(res.status).toBe(401);
-    expect(res.body).toHaveProperty("message", "Unauthorized");
+    expect(status).toBe(401);
+    expect(body).toHaveProperty("message", "Unauthorized");
   }, 10000);
 
   test("DELETE /post's like with invalid id, should return 404 status", async () => {
     const res = await request(app)
       .delete(`/likes/remove/111111111111111111111111`)
       .set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const {status, body} = res
 
-    expect(res.status).toBe(404);
-    expect(res.body).toHaveProperty("message", "Not found");
+    expect(status).toBe(404);
+    expect(body).toHaveProperty("message", "Not found");
   }, 10000);
 
   test("DELETE /post's like with valid token, should return 200 status and valid like data", async () => {
     const res = await request(app).delete(`/likes/remove/${likeId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const {status, message, data} = res.body
+    const {like} = data
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string");
-    expect(res.body.status).toEqual("success");
-    expect(typeof res.body.message).toBe("string");
-    expect(res.body.message).toEqual("Like successfully deleted");
-    expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.data.like).toBe("object");
-    expect(typeof res.body.data.like.owner).toBe("string");
-    expect(typeof res.body.data.like.location).toBe("string");
-    expect(typeof res.body.data.like.type).toBe("string");
-    expect(typeof res.body.data.like.postId).toBe("string");
-    expect(typeof res.body.data.like._id).toBe("string");
-    expect(typeof res.body.data.like.postedAtHuman).toBe("string");
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("Like successfully deleted");
+    expect(typeof data).toBe("object");
+    expect(typeof like).toBe("object");
+    expect(typeof like.owner).toBe("string");
+    expect(typeof like.location).toBe("string");
+    expect(typeof like.type).toBe("string");
+    expect(typeof like.postId).toBe("string");
+    expect(typeof like._id).toBe("string");
+    expect(typeof like.postedAtHuman).toBe("string");
+    expect(typeof like.createdAt).toBe("string");
+    expect(typeof like.updatedAt).toBe("string");
   }, 10000);
 
   test("POST /comment's like with invalid token, should return 401 status", async () => {
@@ -127,9 +142,10 @@ describe("Likes Test Suite", () => {
       .post(`/likes/add`)
       .set("Authorization", `Bearer ${WRONG_TOKEN}`)
       .send({ type: "like", postId: "645bebfe4b27790a407a369e", location: "comments" });
+    const {status, body} = res
 
-    expect(res.status).toBe(401);
-    expect(res.body).toHaveProperty("message", "Unauthorized");
+    expect(status).toBe(401);
+    expect(body).toHaveProperty("message", "Unauthorized");
   }, 10000);
 
   test("POST /comment's like with invalid id, should return 404 status", async () => {
@@ -137,23 +153,26 @@ describe("Likes Test Suite", () => {
       .post(`/likes/add`)
       .set("Authorization", `Bearer ${TEST_TOKEN}`)
       .send({ type: "like", commentId: "111111111111111111111111", location: "comments" });
+    const {status, body} = res
 
-    expect(res.status).toBe(404);
-    expect(res.body).toHaveProperty("message", "Not found");
+    expect(status).toBe(404);
+    expect(body).toHaveProperty("message", "Not found");
   }, 10000);
 
   test("POST /comment's like without body, should return 400 status", async () => {
     const res = await request(app).post(`/likes/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({});
+    const {status, body} = res
 
-    expect(res.status).toBe(400);
-    expect(res.body).toHaveProperty("message", '"type" is required');
+    expect(status).toBe(400);
+    expect(body).toHaveProperty("message", '"type" is required');
   }, 10000);
 
   test("POST /comment's like with invalid body, should return 400 status", async () => {
     const res = await request(app).post(`/likes/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({ 11: "ss" });
+    const {status, body} = res
 
-    expect(res.status).toBe(400);
-    expect(res.body).toHaveProperty("message", '"type" is required');
+    expect(status).toBe(400);
+    expect(body).toHaveProperty("message", '"type" is required');
   }, 10000);
 
   test("POST /comment's like with valid token, should return 201 status and valid like data", async () => {
@@ -168,55 +187,69 @@ describe("Likes Test Suite", () => {
       .post(`/likes/add`)
       .set("Authorization", `Bearer ${TEST_TOKEN}`)
       .send({ type: "like", commentId, location: "comments" });
+    const {status, message, data} = res.body
+    const {like} = data
 
-    likeId = res.body.data.like._id;
+    likeId = like._id;
 
     expect(res.status).toBe(201);
-    expect(typeof res.body.status).toBe("string");
-    expect(res.body.status).toEqual("success");
-    expect(typeof res.body.message).toBe("string");
-    expect(res.body.message).toEqual("Like successfully created");
-    expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.data.like).toBe("object");
-    expect(typeof res.body.data.like.owner).toBe("string");
-    expect(typeof res.body.data.like.location).toBe("string");
-    expect(typeof res.body.data.like.type).toBe("string");
-    expect(typeof res.body.data.like.commentId).toBe("string");
-    expect(typeof res.body.data.like._id).toBe("string");
-    expect(typeof res.body.data.like.postedAtHuman).toBe("string");
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("Like successfully created");
+    expect(typeof data).toBe("object");
+    expect(typeof like).toBe("object");
+    expect(typeof like.owner).toBe("string");
+    expect(typeof like.location).toBe("string");
+    expect(typeof like.type).toBe("string");
+    expect(typeof like.commentId).toBe("string");
+    expect(typeof like._id).toBe("string");
+    expect(typeof like.postedAtHuman).toBe("string");
+    expect(typeof like.createdAt).toBe("string");
+    expect(typeof like.updatedAt).toBe("string");
   }, 10000);
 
   test("DELETE /comment's like with invalid token, should return 401 status", async () => {
     const res = await request(app).delete(`/likes/remove/${likeId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+    const {status, body} = res
 
-    expect(res.status).toBe(401);
-    expect(res.body).toHaveProperty("message", "Unauthorized");
+    expect(status).toBe(401);
+    expect(body).toHaveProperty("message", "Unauthorized");
   }, 10000);
 
   test("DELETE /comment's like with invalid id, should return 404 status", async () => {
     const res = await request(app)
       .delete(`/likes/remove/111111111111111111111111`)
       .set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const {status, body} = res
 
-    expect(res.status).toBe(404);
-    expect(res.body).toHaveProperty("message", "Not found");
+    expect(status).toBe(404);
+    expect(body).toHaveProperty("message", "Not found");
   }, 10000);
 
   test("DELETE /comment's like with valid token, should return 200 status and valid like data", async () => {
     const res = await request(app).delete(`/likes/remove/${likeId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const {status, message, data} = res.body
+    const {like} = data
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string");
-    expect(res.body.status).toEqual("success");
-    expect(typeof res.body.message).toBe("string");
-    expect(res.body.message).toEqual("Like successfully deleted");
-    expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.data.like).toBe("object");
-    expect(typeof res.body.data.like.owner).toBe("string");
-    expect(typeof res.body.data.like.location).toBe("string");
-    expect(typeof res.body.data.like.type).toBe("string");
-    expect(typeof res.body.data.like.commentId).toBe("string");
-    expect(typeof res.body.data.like._id).toBe("string");
-    expect(typeof res.body.data.like.postedAtHuman).toBe("string");
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("Like successfully deleted");
+    expect(typeof data).toBe("object");
+    expect(typeof like).toBe("object");
+    expect(typeof like.owner).toBe("string");
+    expect(typeof like.location).toBe("string");
+    expect(typeof like.type).toBe("string");
+    expect(typeof like.commentId).toBe("string");
+    expect(typeof like._id).toBe("string");
+    expect(typeof like.postedAtHuman).toBe("string");
+    expect(typeof like.createdAt).toBe("string");
+    expect(typeof like.updatedAt).toBe("string");
+
+    const deletedLike = await Like.findById({ _id: likeId })
+    expect(deletedLike).toBe(null);
+
   }, 10000);
 });

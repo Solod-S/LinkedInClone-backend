@@ -20946,16 +20946,6 @@
               "comment": {
                 "type": "object",
                 "properties": {
-                  "_id": {
-                    "type": "string",
-                    "description": "Comment's id",
-                    "example": "648606fcd9426a4971be9870"
-                  },
-                  "postId": {
-                    "type": "string",
-                    "description": "Post's id",
-                    "example": "647b919d84a5d3fb7f55c580"
-                  },
                   "description": {
                     "type": "string",
                     "description": "Comment's text",
@@ -20963,119 +20953,43 @@
                   },
                   "likes": {
                     "type": "array",
-                    "description": "Array of user IDs which liked the comment",
+                    "description": "Array of users IDs wich liked the comment",
                     "items": {
                       "type": "string",
                       "description": "User ID"
-                    },
-                    "default": []
+                    }
                   },
                   "comments": {
                     "type": "array",
-                    "description": "Array of user IDs which liked the comment",
+                    "description": "Array of comment IDs associated with the comment",
                     "items": {
                       "type": "string",
-                      "description": "User ID"
-                    },
-                    "default": []
+                      "description": "Comment ID"
+                    }
                   },
                   "mediaFiles": {
                     "type": "array",
-                    "description": "Array of media files associated with the post",
+                    "description": "Array of media file IDs associated with the comment",
                     "items": {
-                      "type": "object",
-                      "properties": {
-                        "_id": {
-                          "type": "string",
-                          "description": "Media file's id",
-                          "example": "6457a79b23576cf0aa13adec"
-                        },
-                        "type": {
-                          "type": "string",
-                          "description": "Media file's type",
-                          "example": "img"
-                        },
-                        "location": {
-                          "type": "string",
-                          "description": "Media file's location",
-                          "example": "comments"
-                        },
-                        "url": {
-                          "type": "string",
-                          "description": "Media file's url",
-                          "example": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
-                        },
-                        "providerPublicId": {
-                          "type": "string",
-                          "description": "Cloudinary id",
-                          "example": "mnf8tsnyxfhztfemh4dq"
-                        },
-                        "owner": {
-                          "type": "string",
-                          "description": "User's id",
-                          "example": "6452b1d7f6a29d84c5b089fb"
-                        },
-                        "commentId": {
-                          "type": "string",
-                          "description": "Comment's id",
-                          "example": "648606fcd9426a4971be9870"
-                        },
-                        "postedAtHuman": {
-                          "type": "string",
-                          "description": "Post's time",
-                          "example": "43 minutes ago"
-                        },                 "createdAt": {
-                          "type": "string",
-                          "description": "Post's time",
-                          "example": "2023-06-11T17:40:12.923Z"
-                        },
-                        "updatedAt": {
-                          "type": "string",
-                          "description": "Post's time",
-                          "example": "2023-06-11T17:40:12.923Z"
-                        }
-                      }
+                      "type": "string",
+                      "description": "ID of a media file",
+                      "example": "6457a79b23576cf0aa13adec"
                     }
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "User's id",
+                    "example": "6452b1d7f6a29d84c5b089fb"
+                  },
+                  "_id": {
+                    "type": "string",
+                    "description": "Post's id",
+                    "example": "642831f346155749a2b6e944"
                   },
                   "postedAtHuman": {
                     "type": "string",
                     "description": "Post's time",
                     "example": "01 seconds ago"
-                  },
-                  "createdAt": {
-                    "type": "string",
-                    "description": "Post's time",
-                    "example": "2023-06-11T17:40:12.923Z"
-                  },
-                  "updatedAt": {
-                    "type": "string",
-                    "description": "Post's time",
-                    "example": "2023-06-11T17:40:12.923Z"
-                  },
-                  "owner": {
-                    "type": "object",
-                    "properties": {
-                      "_id": {
-                        "type": "string",
-                        "description": "Owner file's id",
-                        "example": "6452b1d7f6a29d84c5b089fb"
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "Owner name",
-                        "example": "Sergey"
-                      },
-                      "surname": {
-                        "type": "string",
-                        "description": "Owner surname",
-                        "example": "Solod"
-                      },
-                      "avatarURL": {
-                        "type": "string",
-                        "description": "Owner avatar",
-                        "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
-                      }
-                    }
                   }
                 }
               }

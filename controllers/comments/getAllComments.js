@@ -20,7 +20,7 @@ const getAllComments = async (req, res, next) => {
       status: "success",
       message: "Successfully get media comments",
       data: {
-        ownComments: [],
+        comments: [],
         totalPages,
         currentPage: page,
         perPage,
@@ -28,7 +28,7 @@ const getAllComments = async (req, res, next) => {
     });
   }
 
-  const ownComments = await Comment.find({ owner: _id })
+  const comments = await Comment.find({ owner: _id })
     .sort({ createdAt: -1 })
     .skip(skip < 0 ? 0 : skip)
     .limit(perPage)
@@ -51,7 +51,7 @@ const getAllComments = async (req, res, next) => {
     status: "success",
     message: "Successfully get comments",
     data: {
-      ownComments: ownComments.map((post) => commentTransformer(post)),
+      comments: comments.map((post) => commentTransformer(post)),
       totalPages,
       currentPage: page,
       perPage,

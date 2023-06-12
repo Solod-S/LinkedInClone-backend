@@ -27,7 +27,7 @@ const deleteOwnComment = async (req, res, next) => {
   res.json({
     status: "success",
     message: "Comment successfully deleted",
-    data: { deletedComment: commentTransformer(result) },
+    data: { comment: commentTransformer(result) },
   });
 };
 

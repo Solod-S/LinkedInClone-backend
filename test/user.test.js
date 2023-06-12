@@ -42,15 +42,16 @@ describe("User Test Suite", () => {
         surname: "Solod",
       })
       .set("Accept", "application/json");
+    const {status, message, data} = res.body
 
     expect(res.status).toBe(201);
-    expect(typeof res.body.status).toBe("string");
-    expect(res.body.status).toEqual("success");
-    expect(typeof res.body.message).toBe("string");
-    expect(res.body.message).toEqual("User successfully registered");
-    expect(res.body).toHaveProperty("data");
-    expect(typeof res.body.data.email).toBe("string");
-    expect(typeof res.body.data.name).toBe("string");
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("User successfully registered");
+    expect(typeof data).toBe("object");
+    expect(typeof data.email).toBe("string");
+    expect(typeof data.name).toBe("string");
   });
 
   test("POST /register with the same email, should return 409 status", async () => {
@@ -196,37 +197,40 @@ describe("User Test Suite", () => {
         password: VALID_PASS,
       })
       .set("Accept", "application/json");
+    const {status, message, data} = res.body
+    const {user} = data
 
-    token = res.body.data.token;
-    userId = res.body.data.user._id;
+    token = data.token;
+    userId = user._id;
+
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string");
-    expect(res.body.status).toEqual("success");
-    expect(typeof res.body.message).toBe("string");
-    expect(res.body.message).toEqual("Successful login");
-    expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.data.token).toBe("string");
-    expect(res.body.data.user instanceof Object).toBe(true);
-    expect(typeof res.body.data.user._id).toBe("string");
-    expect(typeof res.body.data.user.email).toBe("string");
-    expect(typeof res.body.data.user.name).toBe("string");
-    expect(typeof res.body.data.user.surname).toBe("string");
-    expect(typeof res.body.data.user.avatarURL).toBe("string");
-    expect(Array.isArray(res.body.data.user.favorite)).toBe(true);
-    expect(Array.isArray(res.body.data.user.posts)).toBe(true);
-    expect(Array.isArray(res.body.data.user.subscription)).toBe(true);
-    expect(typeof res.body.data.user.phone).toBe("string");
-    expect(typeof res.body.data.user.site).toBe("string");
-    expect(typeof res.body.data.user.other1).toBe("string");
-    expect(typeof res.body.data.user.other2).toBe("string");
-    expect(typeof res.body.data.user.other3).toBe("string");
-    expect(typeof res.body.data.user.about).toBe("string");
-    expect(Array.isArray(res.body.data.user.experience)).toBe(true);
-    expect(Array.isArray(res.body.data.user.education)).toBe(true);
-    expect(Array.isArray(res.body.data.user.languages)).toBe(true);
-    expect(typeof res.body.data.user.frame).toBe("string");
-    expect(res.body.data.user.languages instanceof Object).toBe(true);
-    expect(typeof res.body.data.user.headLine).toBe("string");
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("Successful login");
+    expect(typeof data).toBe("object");
+    expect(typeof token).toBe("string");
+    expect(user instanceof Object).toBe(true);
+    expect(typeof user._id).toBe("string");
+    expect(typeof user.email).toBe("string");
+    expect(typeof user.name).toBe("string");
+    expect(typeof user.surname).toBe("string");
+    expect(typeof user.avatarURL).toBe("string");
+    expect(Array.isArray(user.favorite)).toBe(true);
+    expect(Array.isArray(user.posts)).toBe(true);
+    expect(Array.isArray(user.subscription)).toBe(true);
+    expect(typeof user.phone).toBe("string");
+    expect(typeof user.site).toBe("string");
+    expect(typeof user.other1).toBe("string");
+    expect(typeof user.other2).toBe("string");
+    expect(typeof user.other3).toBe("string");
+    expect(typeof user.about).toBe("string");
+    expect(Array.isArray(user.experience)).toBe(true);
+    expect(Array.isArray(user.education)).toBe(true);
+    expect(Array.isArray(user.languages)).toBe(true);
+    expect(typeof user.frame).toBe("string");
+    expect(user.languages instanceof Object).toBe(true);
+    expect(typeof user.headLine).toBe("string");
   }, 10000);
 
   test("POST /login with invalid body, should return 400 status", async () => {
@@ -347,34 +351,36 @@ describe("User Test Suite", () => {
         newPassword: VALID_PASS,
       })
       .set("Authorization", `Bearer ${token}`);
+    const {status, message, data} = res.body
+    const {user} = data
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.status).toBe("string");
-    expect(res.body.status).toEqual("success");
-    expect(typeof res.body.message).toBe("string");
-    expect(res.body.message).toEqual("Password has been successfully changed");
-    expect(res.body.data.user instanceof Object).toBe(true);
-    expect(typeof res.body.data.user._id).toBe("string");
-    expect(typeof res.body.data.user.email).toBe("string");
-    expect(typeof res.body.data.user.name).toBe("string");
-    expect(typeof res.body.data.user.surname).toBe("string");
-    expect(typeof res.body.data.user.avatarURL).toBe("string");
-    expect(Array.isArray(res.body.data.user.favorite)).toBe(true);
-    expect(Array.isArray(res.body.data.user.posts)).toBe(true);
-    expect(Array.isArray(res.body.data.user.subscription)).toBe(true);
-    expect(typeof res.body.data.user.phone).toBe("string");
-    expect(typeof res.body.data.user.site).toBe("string");
-    expect(typeof res.body.data.user.other1).toBe("string");
-    expect(typeof res.body.data.user.other2).toBe("string");
-    expect(typeof res.body.data.user.other3).toBe("string");
-    expect(typeof res.body.data.user.about).toBe("string");
-    expect(Array.isArray(res.body.data.user.experience)).toBe(true);
-    expect(Array.isArray(res.body.data.user.education)).toBe(true);
-    expect(Array.isArray(res.body.data.user.languages)).toBe(true);
-    expect(typeof res.body.data.user.frame).toBe("string");
-    expect(res.body.data.user.languages instanceof Object).toBe(true);
-    expect(typeof res.body.data.user.headLine).toBe("string");
+    expect(typeof data).toBe("object");
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("Password has been successfully changed");
+    expect(user instanceof Object).toBe(true);
+    expect(typeof user._id).toBe("string");
+    expect(typeof user.email).toBe("string");
+    expect(typeof user.name).toBe("string");
+    expect(typeof user.surname).toBe("string");
+    expect(typeof user.avatarURL).toBe("string");
+    expect(Array.isArray(user.favorite)).toBe(true);
+    expect(Array.isArray(user.posts)).toBe(true);
+    expect(Array.isArray(user.subscription)).toBe(true);
+    expect(typeof user.phone).toBe("string");
+    expect(typeof user.site).toBe("string");
+    expect(typeof user.other1).toBe("string");
+    expect(typeof user.other2).toBe("string");
+    expect(typeof user.other3).toBe("string");
+    expect(typeof user.about).toBe("string");
+    expect(Array.isArray(user.experience)).toBe(true);
+    expect(Array.isArray(user.education)).toBe(true);
+    expect(Array.isArray(user.languages)).toBe(true);
+    expect(typeof user.frame).toBe("string");
+    expect(user.languages instanceof Object).toBe(true);
+    expect(typeof user.headLine).toBe("string");
   }, 10000);
 
   test("POST /change password with invalid body, should return 400 status", async () => {
@@ -416,9 +422,11 @@ describe("User Test Suite", () => {
         passssssword: VALID_PASS,
       })
       .set("Accept", "application/json");
+      const {status} = res
+      const {message} = res.body
 
-    expect(res.status).toBe(400);
-    expect(res.body.message).toEqual('"password" is required');
+    expect(status).toBe(400);
+    expect(message).toEqual('"password" is required');
   }, 10000);
 
   test("POST /reset password with valid resetToken, should return 200 status and valid user data", async () => {
@@ -428,34 +436,36 @@ describe("User Test Suite", () => {
         password: VALID_PASS,
       })
       .set("Accept", "application/json");
+    const {status, message, data} = res.body
+    const {user} = data
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string");
-    expect(res.body.status).toEqual("success");
-    expect(typeof res.body.message).toBe("string");
-    expect(res.body.message).toEqual("Password has been successfully changed");
-    expect(typeof res.body.data).toBe("object");
-    expect(res.body.data.user instanceof Object).toBe(true);
-    expect(typeof res.body.data.user._id).toBe("string");
-    expect(typeof res.body.data.user.email).toBe("string");
-    expect(typeof res.body.data.user.name).toBe("string");
-    expect(typeof res.body.data.user.surname).toBe("string");
-    expect(typeof res.body.data.user.avatarURL).toBe("string");
-    expect(Array.isArray(res.body.data.user.favorite)).toBe(true);
-    expect(Array.isArray(res.body.data.user.posts)).toBe(true);
-    expect(Array.isArray(res.body.data.user.subscription)).toBe(true);
-    expect(typeof res.body.data.user.phone).toBe("string");
-    expect(typeof res.body.data.user.site).toBe("string");
-    expect(typeof res.body.data.user.other1).toBe("string");
-    expect(typeof res.body.data.user.other2).toBe("string");
-    expect(typeof res.body.data.user.other3).toBe("string");
-    expect(typeof res.body.data.user.about).toBe("string");
-    expect(Array.isArray(res.body.data.user.experience)).toBe(true);
-    expect(Array.isArray(res.body.data.user.education)).toBe(true);
-    expect(Array.isArray(res.body.data.user.languages)).toBe(true);
-    expect(typeof res.body.data.user.frame).toBe("string");
-    expect(res.body.data.user.languages instanceof Object).toBe(true);
-    expect(typeof res.body.data.user.headLine).toBe("string");
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("Password has been successfully changed");
+    expect(typeof data).toBe("object");
+    expect(user instanceof Object).toBe(true);
+    expect(typeof user._id).toBe("string");
+    expect(typeof user.email).toBe("string");
+    expect(typeof user.name).toBe("string");
+    expect(typeof user.surname).toBe("string");
+    expect(typeof user.avatarURL).toBe("string");
+    expect(Array.isArray(user.favorite)).toBe(true);
+    expect(Array.isArray(user.posts)).toBe(true);
+    expect(Array.isArray(user.subscription)).toBe(true);
+    expect(typeof user.phone).toBe("string");
+    expect(typeof user.site).toBe("string");
+    expect(typeof user.other1).toBe("string");
+    expect(typeof user.other2).toBe("string");
+    expect(typeof user.other3).toBe("string");
+    expect(typeof user.about).toBe("string");
+    expect(Array.isArray(user.experience)).toBe(true);
+    expect(Array.isArray(user.education)).toBe(true);
+    expect(Array.isArray(user.languages)).toBe(true);
+    expect(typeof user.frame).toBe("string");
+    expect(user.languages instanceof Object).toBe(true);
+    expect(typeof user.headLine).toBe("string");
   }, 10000);
 
   test("POST /reset password with invalid resetToken, should return 404 status ", async () => {
@@ -465,42 +475,46 @@ describe("User Test Suite", () => {
         password: VALID_PASS,
       })
       .set("Accept", "application/json");
+    const {status} = res
+    const {message} = res.body  
 
-    expect(res.status).toBe(404);
-    expect(res.body.message).toEqual("User not found");
+    expect(status).toBe(404);
+    expect(message).toEqual("User not found");
   }, 10000);
 
   test("GET /current user data with valid token, should return 200 status and valid user data", async () => {
     const res = await request(app).get(`/users/current`).set("Authorization", `Bearer ${token}`);
+    const {status, message, data} = res.body
+    const {user} = data
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string");
-    expect(res.body.status).toEqual("success");
-    expect(typeof res.body.message).toBe("string");
-    expect(res.body.message).toEqual("Successfully collected the current data");
-    expect(typeof res.body.data).toBe("object");
-    expect(typeof res.body.data.token).toBe("string");
-    expect(res.body.data.user instanceof Object).toBe(true);
-    expect(typeof res.body.data.user._id).toBe("string");
-    expect(typeof res.body.data.user.email).toBe("string");
-    expect(typeof res.body.data.user.name).toBe("string");
-    expect(typeof res.body.data.user.surname).toBe("string");
-    expect(typeof res.body.data.user.avatarURL).toBe("string");
-    expect(Array.isArray(res.body.data.user.favorite)).toBe(true);
-    expect(Array.isArray(res.body.data.user.posts)).toBe(true);
-    expect(Array.isArray(res.body.data.user.subscription)).toBe(true);
-    expect(typeof res.body.data.user.phone).toBe("string");
-    expect(typeof res.body.data.user.site).toBe("string");
-    expect(typeof res.body.data.user.other1).toBe("string");
-    expect(typeof res.body.data.user.other2).toBe("string");
-    expect(typeof res.body.data.user.other3).toBe("string");
-    expect(typeof res.body.data.user.about).toBe("string");
-    expect(Array.isArray(res.body.data.user.experience)).toBe(true);
-    expect(Array.isArray(res.body.data.user.education)).toBe(true);
-    expect(Array.isArray(res.body.data.user.languages)).toBe(true);
-    expect(typeof res.body.data.user.frame).toBe("string");
-    expect(res.body.data.user.languages instanceof Object).toBe(true);
-    expect(typeof res.body.data.user.headLine).toBe("string");
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("Successfully collected the current data");
+    expect(typeof data).toBe("object");
+    expect(typeof token).toBe("string");
+    expect(user instanceof Object).toBe(true);
+    expect(typeof user._id).toBe("string");
+    expect(typeof user.email).toBe("string");
+    expect(typeof user.name).toBe("string");
+    expect(typeof user.surname).toBe("string");
+    expect(typeof user.avatarURL).toBe("string");
+    expect(Array.isArray(user.favorite)).toBe(true);
+    expect(Array.isArray(user.posts)).toBe(true);
+    expect(Array.isArray(user.subscription)).toBe(true);
+    expect(typeof user.phone).toBe("string");
+    expect(typeof user.site).toBe("string");
+    expect(typeof user.other1).toBe("string");
+    expect(typeof user.other2).toBe("string");
+    expect(typeof user.other3).toBe("string");
+    expect(typeof user.about).toBe("string");
+    expect(Array.isArray(user.experience)).toBe(true);
+    expect(Array.isArray(user.education)).toBe(true);
+    expect(Array.isArray(user.languages)).toBe(true);
+    expect(typeof user.frame).toBe("string");
+    expect(user.languages instanceof Object).toBe(true);
+    expect(typeof user.headLine).toBe("string");
   }, 10000);
 
   test("GET /current user data with invalid token, should return 401 status", async () => {
@@ -523,11 +537,13 @@ describe("User Test Suite", () => {
 
   test("GET /users(s) by search query with valid token, should return 200 status and valid user(s) data", async () => {
     const res = await request(app).get(`/users/search?search=111aSDSA2a`).set("Authorization", `Bearer ${token}`);
+    const {status, message} = res.body
+    
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string");
-    expect(res.body.status).toEqual("success");
-    expect(typeof res.body.message).toBe("string");
-    expect(res.body.message).toEqual("No users were found");
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("No users were found");
   }, 10000);
 
   test("GET /users(s) by search query with invalid token, should return 401 status", async () => {
@@ -550,67 +566,69 @@ describe("User Test Suite", () => {
 
   test("GET /user by id with valid token, should return 200 status and valid user data", async () => {
     const res = await request(app).get(`/users/${userId}`).set("Authorization", `Bearer ${token}`);
+    const {status, message, data} = res.body
+    const {user, posts} = data
 
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string");
-    expect(res.body.status).toEqual("success");
-    expect(typeof res.body.message).toBe("string");
-    expect(res.body.message).toEqual("We successfully found the user");
-    expect(typeof res.body.data).toBe("object");
-    expect(res.body.data.user instanceof Object).toBe(true);
-    expect(typeof res.body.data.user._id).toBe("string");
-    expect(typeof res.body.data.user.email).toBe("string");
-    expect(typeof res.body.data.user.name).toBe("string");
-    expect(typeof res.body.data.user.surname).toBe("string");
-    expect(typeof res.body.data.user.avatarURL).toBe("string");
-    expect(Array.isArray(res.body.data.user.favorite)).toBe(true);
-    expect(Array.isArray(res.body.data.user.posts)).toBe(true);
-    expect(Array.isArray(res.body.data.user.subscription)).toBe(true);
-    expect(typeof res.body.data.user.phone).toBe("string");
-    expect(typeof res.body.data.user.site).toBe("string");
-    expect(typeof res.body.data.user.other1).toBe("string");
-    expect(typeof res.body.data.user.other2).toBe("string");
-    expect(typeof res.body.data.user.other3).toBe("string");
-    expect(typeof res.body.data.user.about).toBe("string");
-    expect(Array.isArray(res.body.data.user.experience)).toBe(true);
-    expect(Array.isArray(res.body.data.user.education)).toBe(true);
-    expect(Array.isArray(res.body.data.user.languages)).toBe(true);
-    expect(typeof res.body.data.user.frame).toBe("string");
-    expect(res.body.data.user.languages instanceof Object).toBe(true);
-    expect(typeof res.body.data.user.headLine).toBe("string");
-    expect(Array.isArray(res.body.data.posts)).toBe(true);
-    expect(res.body.data.posts.every((post) => typeof post.description === "string")).toBe(true);
-    expect(res.body.data.posts.every((post) => Array.isArray(post.likes))).toBe(true);
-    expect(res.body.data.posts.every((post) => Array.isArray(post.comments))).toBe(true);
-    expect(res.body.data.posts.every((post) => Array.isArray(post.mediaFiles))).toBe(true);
-    expect(res.body.data.posts.every((post) => typeof post.owner === "object")).toBe(true);
-    expect(
-      res.body.data.posts.every(
-        (post) =>
-          typeof post.owner === "object" &&
-          typeof post.owner._id === "string" &&
-          typeof post.owner.name === "string" &&
-          typeof post.owner.email === "string" &&
-          typeof post.owner.avatarURL === "string" &&
-          Array.isArray(post.owner.subscription) &&
-          Array.isArray(post.owner.favorite) &&
-          Array.isArray(post.owner.posts) &&
-          typeof post.owner.surname === "string" &&
-          typeof post.owner.about === "string" &&
-          Array.isArray(post.owner.education) &&
-          Array.isArray(post.owner.experience) &&
-          typeof post.owner.frame === "string" &&
-          typeof post.owner.headLine === "string" &&
-          Array.isArray(post.owner.languages) &&
-          typeof post.owner.phone === "string" &&
-          typeof post.owner.site === "string" &&
-          typeof post.owner.other1 === "string" &&
-          typeof post.owner.other2 === "string" &&
-          typeof post.owner.other3 === "string"
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("We successfully found the user");
+    expect(typeof data).toBe("object");
+    expect(user instanceof Object).toBe(true);
+    expect(typeof user._id).toBe("string");
+    expect(typeof user.email).toBe("string");
+    expect(typeof user.name).toBe("string");
+    expect(typeof user.surname).toBe("string");
+    expect(typeof user.avatarURL).toBe("string");
+    expect(Array.isArray(user.favorite)).toBe(true);
+    expect(Array.isArray(user.posts)).toBe(true);
+    expect(Array.isArray(user.subscription)).toBe(true);
+    expect(typeof user.phone).toBe("string");
+    expect(typeof user.site).toBe("string");
+    expect(typeof user.other1).toBe("string");
+    expect(typeof user.other2).toBe("string");
+    expect(typeof user.other3).toBe("string");
+    expect(typeof user.about).toBe("string");
+    expect(Array.isArray(user.experience)).toBe(true);
+    expect(Array.isArray(user.education)).toBe(true);
+    expect(Array.isArray(user.languages)).toBe(true);
+    expect(typeof user.frame).toBe("string");
+    expect(user.languages instanceof Object).toBe(true);
+    expect(typeof user.headLine).toBe("string");
+    expect(Array.isArray(posts)).toBe(true);
+    expect(posts.every(({description}) => typeof description === "string")).toBe(true);
+   expect(posts.every(({likes}) => Array.isArray(likes))).toBe(true);
+    expect(posts.every(({comments}) => Array.isArray(comments))).toBe(true);
+    expect(posts.every(({mediaFiles}) => Array.isArray(mediaFiles))).toBe(true);
+    expect(posts.every(({mediaFiles}) => Array.isArray(mediaFiles))).toBe(true);
+   expect(
+      posts.every(
+        ({owner}) =>
+          typeof owner === "object" &&
+          typeof owner._id === "string" &&
+          typeof owner.name === "string" &&
+          typeof owner.email === "string" &&
+          typeof owner.avatarURL === "string" &&
+          Array.isArray(owner.subscription) &&
+          Array.isArray(owner.favorite) &&
+          Array.isArray(owner.posts) &&
+          typeof owner.surname === "string" &&
+          typeof owner.about === "string" &&
+          Array.isArray(owner.education) &&
+          Array.isArray(owner.experience) &&
+          typeof owner.frame === "string" &&
+          typeof owner.headLine === "string" &&
+          Array.isArray(owner.languages) &&
+          typeof owner.phone === "string" &&
+          typeof owner.site === "string" &&
+          typeof owner.other1 === "string" &&
+          typeof owner.other2 === "string" &&
+          typeof owner.other3 === "string"
       )
     ).toBe(true);
-    expect(res.body.data.posts.every((post) => typeof post._id === "string")).toBe(true);
-    expect(res.body.data.posts.every((post) => typeof post.postedAtHuman === "string")).toBe(true);
+    expect(posts.every(({_id }) => typeof _id === "string")).toBe(true);
+       expect(posts.every(({postedAtHuman}) => typeof postedAtHuman === "string")).toBe(true);
   }, 10000);
 
   test("GET /users with invalid token, should return 401 status", async () => {
@@ -633,19 +651,18 @@ describe("User Test Suite", () => {
 
     // Make request to API endpoint with Authorization header
     const res = await request(app).get("/users").set("Authorization", `Bearer ${token}`);
+    const {status, message, data} = res.body
+    const {users} = data
 
     // Check status code and response format
     expect(res.status).toBe(200);
     expect(typeof res.body).toBe("object");
-    expect(typeof res.body.status).toBe("string");
-    expect(res.body.status).toEqual("success");
-    expect(typeof res.body.message).toBe("string");
-    expect(res.body.message).toEqual("We successfully found users");
-    expect(typeof res.body.message).toBe("string");
-    expect(typeof res.body.data).toBe("object");
-
-    // Check that the users array is present and has valid data
-    const { users } = res.body.data;
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("We successfully found users");
+    expect(typeof message).toBe("string");
+    expect(typeof data).toBe("object");
     expect(Array.isArray(users)).toBe(true);
 
     if (users.length > 0) {
@@ -687,18 +704,17 @@ describe("User Test Suite", () => {
 
     // Make request to API endpoint with Authorization header
     const res = await request(app).get("/users?page=1&perPage=2").set("Authorization", `Bearer ${token}`);
+    const {status, message, data} = res.body
+    const {users} = data
 
     // Check status code and response format
     expect(res.status).toBe(200);
     expect(typeof res.body).toBe("object");
-    expect(typeof res.body.status).toBe("string");
-    expect(res.body.status).toEqual("success");
-    expect(typeof res.body.message).toBe("string");
-    expect(res.body.message).toEqual("We successfully found users");
-    expect(typeof res.body.data).toBe("object");
-
-    // Check that the users array is present and has valid data
-    const { users } = res.body.data;
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("We successfully found users");
+    expect(typeof data).toBe("object");
     expect(Array.isArray(users)).toBe(true);
 
     if (users.length > 0) {
@@ -736,6 +752,7 @@ describe("User Test Suite", () => {
 
   test("GET /logout with valid token, should return 200 status", async () => {
     const res = await request(app).get(`/users/logout`).set("Authorization", `Bearer ${token}`);
+
     expect(res.status).toBe(200);
     expect(res.body).toEqual({
       status: "success",
@@ -763,56 +780,67 @@ describe("User Test Suite", () => {
 
   test("DELETE /delete user with invalid token, should return 401 status", async () => {
     const res = await request(app).delete(`/users/remove`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+    const {status, body} = res
 
-    expect(res.status).toBe(401);
-    expect(typeof res.body.message).toBe("string");
+    expect(status).toBe(401);
+    expect(typeof body.message).toBe("string");
   }, 10000);
 
   test("DELETE /delete user without token, should return 401 status", async () => {
     const res = await request(app).delete(`/users/remove`);
+    const {status, body} = res
 
-    expect(res.status).toBe(401);
-    expect(typeof res.body.message).toBe("string");
+    expect(status).toBe(401);
+    expect(typeof body.message).toBe("string");
   }, 10000);
 
   test("DELETE /delete user with valid token, should return 200 status and valid user data", async () => {
-    const data = await request(app)
+    const userData = await request(app)
       .post(`/users/login`)
       .send({
         email,
         password: VALID_PASS,
       })
       .set("Accept", "application/json");
+    const {body} = userData
 
-    token = data.body.data.token;
+    token = body.data.token;
+   
 
     const res = await request(app).delete(`/users/remove`).set("Authorization", `Bearer ${token}`);
+    const {status, message, data} = res.body
+    const {user} = data
+
     expect(res.status).toBe(200);
-    expect(typeof res.body.status).toBe("string");
-    expect(res.body.status).toEqual("success");
-    expect(typeof res.body.message).toBe("string");
-    expect(res.body.message).toEqual("The user was successfully deleted");
-    expect(typeof res.body.data).toBe("object");
-    expect(res.body.data.user instanceof Object).toBe(true);
-    expect(typeof res.body.data.user._id).toBe("string");
-    expect(typeof res.body.data.user.email).toBe("string");
-    expect(typeof res.body.data.user.name).toBe("string");
-    expect(typeof res.body.data.user.surname).toBe("string");
-    expect(typeof res.body.data.user.avatarURL).toBe("string");
-    expect(Array.isArray(res.body.data.user.favorite)).toBe(true);
-    expect(Array.isArray(res.body.data.user.posts)).toBe(true);
-    expect(Array.isArray(res.body.data.user.subscription)).toBe(true);
-    expect(typeof res.body.data.user.phone).toBe("string");
-    expect(typeof res.body.data.user.site).toBe("string");
-    expect(typeof res.body.data.user.other1).toBe("string");
-    expect(typeof res.body.data.user.other2).toBe("string");
-    expect(typeof res.body.data.user.other3).toBe("string");
-    expect(typeof res.body.data.user.about).toBe("string");
-    expect(Array.isArray(res.body.data.user.experience)).toBe(true);
-    expect(Array.isArray(res.body.data.user.education)).toBe(true);
-    expect(Array.isArray(res.body.data.user.languages)).toBe(true);
-    expect(typeof res.body.data.user.frame).toBe("string");
-    expect(res.body.data.user.languages instanceof Object).toBe(true);
-    expect(typeof res.body.data.user.headLine).toBe("string");
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("The user was successfully deleted");
+    expect(typeof data).toBe("object");
+    expect(user instanceof Object).toBe(true);
+    expect(typeof user._id).toBe("string");
+    expect(typeof user.email).toBe("string");
+    expect(typeof user.name).toBe("string");
+    expect(typeof user.surname).toBe("string");
+    expect(typeof user.avatarURL).toBe("string");
+    expect(Array.isArray(user.favorite)).toBe(true);
+    expect(Array.isArray(user.posts)).toBe(true);
+    expect(Array.isArray(user.subscription)).toBe(true);
+    expect(typeof user.phone).toBe("string");
+    expect(typeof user.site).toBe("string");
+    expect(typeof user.other1).toBe("string");
+    expect(typeof user.other2).toBe("string");
+    expect(typeof user.other3).toBe("string");
+    expect(typeof user.about).toBe("string");
+    expect(Array.isArray(user.experience)).toBe(true);
+    expect(Array.isArray(user.education)).toBe(true);
+    expect(Array.isArray(user.languages)).toBe(true);
+    expect(typeof user.frame).toBe("string");
+    expect(user.languages instanceof Object).toBe(true);
+    expect(typeof user.headLine).toBe("string");
+
+    const deletedUser = await User.findById({ _id: userId })
+    expect(deletedUser).toBe(null);
+
   }, 10000);
 });
