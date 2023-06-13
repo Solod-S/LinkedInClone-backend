@@ -5,6 +5,8 @@ const likesRouter = require("./likes");
 const favoritesRouter = require("./favorites");
 const commentsRouter = require("./comments");
 const postsRouter = require("./posts");
+const skillsRouter = require("./skills");
+
 
 module.exports = {
   ownPostsRouter,
@@ -14,4 +16,5 @@ module.exports = {
   favoritesRouter,
   commentsRouter,
   postsRouter,
+  skillsRouter
 };

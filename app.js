@@ -13,6 +13,7 @@ const {
   likesRouter,
   favoritesRouter,
   commentsRouter,
+  skillsRouter
 } = require("./routes/api/");
 
 const app = express();
@@ -25,12 +26,13 @@ app.use(express.json());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/users", userRouter);
-app.use("/media-files", mediaFilesRouter);
 app.use("/own-posts", ownPostsRouter);
 app.use("/posts", postsRouter);
+app.use("/media-files", mediaFilesRouter);
 app.use("/likes", likesRouter);
 app.use("/favorites", favoritesRouter);
 app.use("/comments", commentsRouter);
+app.use("/skills", skillsRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });

@@ -5,10 +5,8 @@ const likes = require("./likes");
 const comments = require("./comments");
 const favorites = require("./favorites");
 const posts = require("./posts");
+const skills = require("./skills");
 
-// const favorite = require("./favorite");
-// const popular = require('./popular');
-// const search = require('./search');
 
 module.exports = {
   users,
@@ -18,4 +16,5 @@ module.exports = {
   comments,
   favorites,
   posts,
+  skills
 };

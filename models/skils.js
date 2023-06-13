@@ -10,6 +10,7 @@ const skillSchema = new Schema(
       required: true,
       default: "",
     },
+    users: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
   { versionKey: false, timestamps: true }
 );
@@ -18,12 +19,13 @@ skillSchema.post("save", mongooseErrorHandler);
 
 const Skill = model("Skill", skillSchema);
 
-const skillsSchema = Joi.object({
+const createSkillSchema = Joi.object({
   skill: Joi.string().required(),
 });
 
+
 const skillsSchemas = {
-  skillsSchema,
+  createSkillSchema,
 };
 
 module.exports = {
