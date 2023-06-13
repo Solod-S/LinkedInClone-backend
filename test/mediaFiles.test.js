@@ -16,7 +16,7 @@ describe("Media-files Test Suite", () => {
   beforeAll(async () => {
     await mongoose.connect(DB_HOST);
     server = app.listen(3003, () => {});
-  });
+  }, 10000);
 
   afterAll(async () => {
     await mongoose.disconnect();

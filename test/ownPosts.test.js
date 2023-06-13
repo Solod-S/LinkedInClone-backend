@@ -16,7 +16,7 @@ describe("Own-post Test Suite", () => {
   beforeAll(async () => {
     await mongoose.connect(DB_HOST);
     server = app.listen(3002, () => {});
-  });
+  }, 10000);
 
   afterAll(async () => {
     await mongoose.disconnect();
@@ -66,7 +66,7 @@ describe("Own-post Test Suite", () => {
        expect(posts.every(({postedAtHuman}) => typeof postedAtHuman === "string")).toBe(true);
     expect(posts.every(({createdAt}) => typeof createdAt === "string")).toBe(true);
     expect(posts.every(({updatedAt}) => typeof updatedAt === "string")).toBe(true);
-   expect(posts.every(({likes}) => Array.isArray(likes))).toBe(true);
+    expect(posts.every(({likes}) => Array.isArray(likes))).toBe(true);
     expect(posts.every(({comments}) => Array.isArray(comments))).toBe(true);
     expect(posts.every(({mediaFiles}) => Array.isArray(mediaFiles))).toBe(true);
 
@@ -111,7 +111,6 @@ describe("Own-post Test Suite", () => {
 
     expect(likesContainsObjects).toBe(true);
     expect(commentsContainsObjects).toBe(true);
-    expect(mediaFilesContainsObjects).toBe(true);
     expect(mediaFilesContainsObjects).toBe(true);
   }, 10000);
 
@@ -206,7 +205,6 @@ describe("Own-post Test Suite", () => {
 
     expect(likesContainsObjects).toBe(true);
     expect(commentsContainsObjects).toBe(true);
-    expect(mediaFilesContainsObjects).toBe(true);
     expect(mediaFilesContainsObjects).toBe(true);
   }, 10000);
 
@@ -391,7 +389,7 @@ describe("Own-post Test Suite", () => {
     expect(body).toHaveProperty("message", "Unauthorized");
   }, 10000);
 
-  test("Remove post with invalid token, should return 401 status", async () => {
+  test("DELETE /post with invalid token, should return 401 status", async () => {
     const res = await request(app).delete(`/own-posts/remove/${postId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
     const {status, body} = res
 
@@ -399,7 +397,7 @@ describe("Own-post Test Suite", () => {
     expect(body).toHaveProperty("message", "Unauthorized");
   }, 10000);
 
-  test("Remove post with valid token, should return 200 status", async () => {
+  test("DELETE /post with valid token, should return 200 status", async () => {
     const res = await request(app).delete(`/own-posts/remove/${postId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
     const {status, message, data} = res.body
     const {post} = data

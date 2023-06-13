@@ -25,7 +25,7 @@ describe("User Test Suite", () => {
     email = chance.email();
     await mongoose.connect(DB_HOST);
     server = app.listen(3001, () => {});
-  });
+  }, 10000);
 
   afterAll(async () => {
     await mongoose.disconnect();

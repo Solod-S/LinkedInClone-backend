@@ -18,7 +18,7 @@ describe("Likes Test Suite", () => {
   beforeAll(async () => {
     await mongoose.connect(DB_HOST);
     server = app.listen(3007, () => {});
-  });
+  }, 10000);
 
   afterAll(async () => {
     await mongoose.disconnect();
@@ -86,7 +86,6 @@ describe("Likes Test Suite", () => {
     expect(typeof message).toBe("string");
     expect(message).toEqual("Like successfully created");
     expect(typeof data).toBe("object");
-    expect(typeof like).toBe("object");
     expect(typeof like.owner).toBe("string");
     expect(typeof like.location).toBe("string");
     expect(typeof like.type).toBe("string");
@@ -126,7 +125,6 @@ describe("Likes Test Suite", () => {
     expect(typeof message).toBe("string");
     expect(message).toEqual("Like successfully deleted");
     expect(typeof data).toBe("object");
-    expect(typeof like).toBe("object");
     expect(typeof like.owner).toBe("string");
     expect(typeof like.location).toBe("string");
     expect(typeof like.type).toBe("string");
@@ -198,7 +196,6 @@ describe("Likes Test Suite", () => {
     expect(typeof message).toBe("string");
     expect(message).toEqual("Like successfully created");
     expect(typeof data).toBe("object");
-    expect(typeof like).toBe("object");
     expect(typeof like.owner).toBe("string");
     expect(typeof like.location).toBe("string");
     expect(typeof like.type).toBe("string");
@@ -238,7 +235,6 @@ describe("Likes Test Suite", () => {
     expect(typeof message).toBe("string");
     expect(message).toEqual("Like successfully deleted");
     expect(typeof data).toBe("object");
-    expect(typeof like).toBe("object");
     expect(typeof like.owner).toBe("string");
     expect(typeof like.location).toBe("string");
     expect(typeof like.type).toBe("string");

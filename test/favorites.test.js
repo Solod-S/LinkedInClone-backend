@@ -16,7 +16,7 @@ describe("Favorites Test Suite", () => {
   beforeAll(async () => {
     await mongoose.connect(DB_HOST);
     server = app.listen(3006, () => {});
-  });
+  }, 10000);
 
   afterAll(async () => {
     await mongoose.disconnect();

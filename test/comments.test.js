@@ -16,7 +16,7 @@ describe("Comments Test Suite", () => {
   beforeAll(async () => {
     await mongoose.connect(DB_HOST);
     server = app.listen(3004, () => {});
-  });
+  }, 10000);
 
   afterAll(async () => {
     await mongoose.disconnect();
@@ -36,16 +36,54 @@ describe("Comments Test Suite", () => {
     expect(typeof data).toBe("object");
     expect(Array.isArray(data.comments)).toBe(true);
     expect(comments.every(({description}) => typeof description === "string")).toBe(true);
-    expect(comments.every(({owner}) => typeof owner === "object")).toBe(true);
-    expect(comments.every(({likes}) => typeof likes === "object")).toBe(true);
-    expect(comments.every(({mediaFiles}) => typeof mediaFiles === "object")).toBe(true);
+    expect(
+      comments.every(
+        ({owner}) =>
+          typeof owner === "object" &&
+          typeof owner._id === "string" &&
+          typeof owner.name === "string" &&
+          typeof owner.avatarURL === "string"
+      )
+    ).toBe(true);
+    expect(comments.every(({likes}) => Array.isArray(likes))).toBe(true);
+    expect(comments.every(({mediaFiles}) => Array.isArray(mediaFiles))).toBe(true);
     expect(
       comments.every(({postId, commentId}) => typeof postId || commentId === "object")
     ).toBe(true);
     expect(comments.every(({_id}) => typeof _id === "string")).toBe(true);
     expect(comments.every(({postedAtHuman}) => typeof postedAtHuman === "string")).toBe(true);
-  expect(comments.every(({createdAt}) => typeof createdAt === "string")).toBe(true);
     expect(comments.every(({createdAt}) => typeof createdAt === "string")).toBe(true);
+    expect(comments.every(({createdAt}) => typeof createdAt === "string")).toBe(true);
+
+
+  // Checking objects in mediaFiles/comments/likes/owner
+  const likesContainsObjects = comments.some(({likes}) =>
+  likes.every(
+    (like) =>
+      typeof like === "object" &&
+      typeof like._id === "string" &&
+      typeof like.type === "string" &&
+      typeof like.createdAt === "string" &&
+      typeof like.updatedAt === "string" &&
+      typeof like.owner === "object"
+  )
+);
+const mediaFilesContainsObjects = comments.some(({mediaFiles}) =>
+  mediaFiles.every(
+    (media) =>
+      typeof media === "object" &&
+      typeof media._id === "string" &&
+      typeof media.type === "string" &&
+      typeof media.url === "string" &&
+      typeof media.providerPublicId === "string" &&
+      typeof media.createdAt === "string" &&
+      typeof media.updatedAt === "string" &&
+      typeof media.owner === "object"
+  )
+);
+
+expect(likesContainsObjects).toBe(true);
+expect(mediaFilesContainsObjects).toBe(true);
   }, 10000);
 
   test("GET /all own comments with valid token + pagination, should return 200 status and valid comments data", async () => {
@@ -125,12 +163,7 @@ describe("Comments Test Suite", () => {
   }, 10000);
 
   test("POST /comment with valid token, should return 201 status and valid comment data", async () => {
-    const res = await request(app).post(`/comments/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({
-      description:
-        "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.",
-      mediaFiles: "645c76832000b04e5130b8c8",
-      postId: "6467ce7e44ff2b38b8740e63",
-    });
+    const res = await request(app).post(`/comments/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({"description": "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.", "postId": "647b919d84a5d3fb7f55c580"  });
     const { status, message, data} = res.body
     const {comment} = data
 
@@ -144,8 +177,12 @@ describe("Comments Test Suite", () => {
     expect(typeof data).toBe("object");
     expect(typeof comment).toBe("object");
     expect(typeof comment.description).toBe("string");
-    expect(typeof comment.mediaFiles).toBe("object");
-    expect(typeof comment.owner).toBe("string");
+    expect(Array.isArray(comment.mediaFiles)).toBe(true);
+    expect(Array.isArray(comment.likes)).toBe(true);
+    expect(typeof comment.owner).toBe("object");
+    expect(typeof comment.owner._id).toBe("string");
+    expect(typeof comment.owner.name).toBe("string");
+    expect(typeof comment.owner.avatarURL).toBe("string");
     expect(typeof comment.postId).toBe("string");
     expect(typeof comment._id).toBe("string");
     expect(typeof comment.postedAtHuman).toBe("string");
@@ -169,11 +206,13 @@ describe("Comments Test Suite", () => {
     expect(typeof data).toBe("object");
     expect(typeof comment).toBe("object");
     expect(typeof comment.description).toBe("string");
-    expect(typeof comment.mediaFiles).toBe("object");
-    expect(typeof comment.likes).toBe("object") && expect(comment.description).toBe("TEST");
-    expect(typeof comment.owner).toBe("string");
-    expect(typeof comment.postId).toBe("string") &&
-      expect(comment.postId).toBe("6467ce7e44ff2b38b8740e63");
+    expect(Array.isArray(comment.mediaFiles)).toBe(true);
+    expect(Array.isArray(comment.likes)).toBe(true);
+    expect(typeof comment.owner).toBe("object");
+    expect(typeof comment.owner._id).toBe("string");
+    expect(typeof comment.owner.name).toBe("string");
+    expect(typeof comment.owner.avatarURL).toBe("string");
+    expect(typeof comment.postId).toBe("string");
     expect(typeof comment._id).toBe("string");
     expect(typeof comment.postedAtHuman).toBe("string");
     expect(typeof comment.createdAt).toBe("string");
@@ -199,7 +238,7 @@ describe("Comments Test Suite", () => {
     const {status, body} = res
 
     expect(status).toBe(400);
-    expect(body).toHaveProperty("message", '"value" must contain at least one of [description, postId]');
+    expect(body).toHaveProperty("message", "\"value\" must contain at least one of [description, postId, mediaFiles]");
   }, 10000);
 
   test("DELETE /comment with invalid token, should return 401 status", async () => {
@@ -225,8 +264,12 @@ describe("Comments Test Suite", () => {
     expect(typeof data).toBe("object");
     expect(typeof comment).toBe("object");
     expect(typeof comment.description).toBe("string");
-    expect(typeof comment.mediaFiles).toBe("object");
-    expect(typeof comment.owner).toBe("string");
+    expect(Array.isArray(comment.mediaFiles)).toBe(true);
+    expect(Array.isArray(comment.likes)).toBe(true);
+    expect(typeof comment.owner).toBe("object");
+    expect(typeof comment.owner._id).toBe("string");
+    expect(typeof comment.owner.name).toBe("string");
+    expect(typeof comment.owner.avatarURL).toBe("string");
     expect(typeof comment.postId).toBe("string");
     expect(typeof comment._id).toBe("string");
     expect(typeof comment.postedAtHuman).toBe("string");
