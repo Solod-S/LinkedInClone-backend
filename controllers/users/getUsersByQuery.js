@@ -8,8 +8,7 @@ const getUsersByQuery = async (req, res, next) => {
   const trimmedKeyword = search.trim();
   const skip = (page - 1) * perPage;
 
-  const count = await User.countDocuments();
-  const totalPages = Math.ceil(count / perPage);
+  
   const userQuery = {
     $or: [
       { name: { $regex: trimmedKeyword, $options: "i" } },
@@ -17,6 +16,9 @@ const getUsersByQuery = async (req, res, next) => {
       // { email: { $regex: trimmedKeyword, $options: "i" } },
     ],
   };
+
+  const count = await User.countDocuments(userQuery);
+  const totalPages = Math.ceil(count / perPage);
 
   if (page > totalPages) {
     page = totalPages;

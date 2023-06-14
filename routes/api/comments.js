@@ -4,7 +4,7 @@ const { comments } = require("../../controllers");
 const { validateBody, authenticate } = require("../../middlewares");
 const { commentSchemas } = require("../../models");
 
-//  get own posts
+//  get own comment
 commentsRouter.get("/", authenticate, comments.getAllComments);
 
 //  create a comment

@@ -7,10 +7,10 @@ const getPostsByQuery = async (req, res, next) => {
   const perPage = parseInt(req.query.perPage) || 10;
   const trimmedKeyword = search.trim();
   const skip = (page - 1) * perPage;
-
-  const count = await Post.countDocuments();
-  const totalPages = Math.ceil(count / perPage);
+  
   const query = { description: { $regex: trimmedKeyword, $options: "i" } };
+  const count = await Post.countDocuments(query)
+  const totalPages = Math.ceil(count / perPage);
 
   if (page > totalPages) {
     page = totalPages;
