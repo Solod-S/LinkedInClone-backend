@@ -36,7 +36,7 @@ const experienceSchema = Schema({
     type: Date,
     default: "",
   },
-  skills: [{ type: Schema.Types.ObjectId, ref: "Posts" }],
+  skills: [{ type: Schema.Types.ObjectId, ref: "Skill" }],
   mediaFiles: [{ type: Schema.Types.ObjectId, ref: "MediaFile" }],
 });
 
@@ -73,7 +73,6 @@ const educationSchema = Schema({
     type: String,
     default: "",
   },
-  skills: [{ type: Schema.Types.ObjectId, ref: "Posts" }],
 
   mediaFiles: [{ type: Schema.Types.ObjectId, ref: "MediaFile" }],
 });

@@ -16,4 +16,13 @@ skillsRouter.delete("/remove/:skillId", authenticate, skills.deleteSkill);
 // //  search posts by query
 skillsRouter.get("/search", authenticate, skills.getSkillByQuery);
 
+// //  get post by id
+skillsRouter.get("/:skillId", authenticate, skills.getSkillById);
+
+// //  add user to skill
+skillsRouter.get("/users/add/:skillId", authenticate, skills.userAdd);
+
+// //  remove user from skill
+skillsRouter.get("/users/remove/:skillId", authenticate, skills.userRemove);
+
 module.exports = skillsRouter;
