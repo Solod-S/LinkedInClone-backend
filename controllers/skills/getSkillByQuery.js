@@ -1,5 +1,7 @@
 const { Skill } = require("../../models");
 
+const { skillTransformer } = require("../../helpers/index");
+
 const getSkillByQuery = async (req, res, next) => {
   const { search = "" } = req.query;
   let page = parseInt(req.query.page) || 1;
@@ -7,12 +9,10 @@ const getSkillByQuery = async (req, res, next) => {
   const trimmedKeyword = search.trim();
   const skip = (page - 1) * perPage;
 
-  
-  
   const query = { skill: { $regex: trimmedKeyword, $options: "i" } };
-  const count = await Skill.countDocuments(query)
+  const count = await Skill.countDocuments(query);
   const totalPages = Math.ceil(count / perPage);
-  
+
   if (page > totalPages) {
     page = totalPages;
   }
@@ -33,13 +33,13 @@ const getSkillByQuery = async (req, res, next) => {
   const skills = await Skill.find(query)
     .sort({ createdAt: -1 })
     .skip(skip < 0 ? 0 : skip)
-    .limit(perPage).select('-users');
-
+    .limit(perPage)
+    .select("-users");
 
   res.status(200).json({
     status: "success",
     message: "Successfully found such skills",
-    data: { skills, totalPages, currentPage: page, perPage },
+    data: { skills: skills.map((skill) => skillTransformer(skill)), totalPages, currentPage: page, perPage },
   });
 };
 

@@ -1,5 +1,7 @@
 const { Skill } = require("../../models");
+
 const { HttpError } = require("../../routes/errors/HttpErrors");
+const { skillTransformer } = require("../../helpers/index");
 
 const getSkillById = async (req, res, next) => {
   const { skillId } = req.params;
@@ -23,24 +25,19 @@ const getSkillById = async (req, res, next) => {
   if (!skill) {
     return next(HttpError(404, "Not found"));
   }
- const skillCounter = await Skill.findById({ _id: skillId })
+  const skillCounter = await Skill.findById({ _id: skillId });
   const totalUsers = skillCounter.users.length;
 
   const totalPages = Math.ceil(totalUsers / pageSize);
   const currentPage = pageNumber;
 
-  console.log(totalUsers, pageSize)
+  console.log(totalUsers, pageSize);
 
   res.status(200).json({
     status: "success",
     message: "We successfully found the skill",
     data: {
-      skill: {
-        _id: skill._id,
-        skill: skill.skill,
-        createdAt: skill.createdAt,
-        updatedAt: skill.updatedAt,
-      },
+      skill: skillTransformer(skill),
       users: skill.users,
       totalPages,
       currentPage,

@@ -1,6 +1,7 @@
 const { Skill } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
+const { skillTransformer } = require("../../helpers/index");
 
 const userAdd = async (req, res, next) => {
   const { _id } = req.user;
@@ -23,12 +24,7 @@ const userAdd = async (req, res, next) => {
     status: "success",
     message: "User was successfully added to this skill",
     data: {
-      skill: {
-        _id: skill._id,
-        skill: skill.skill,
-        createdAt: skill.createdAt,
-        updatedAt: skill.updatedAt,
-      },
+      skill: skillTransformer(skill),
     },
   });
 };

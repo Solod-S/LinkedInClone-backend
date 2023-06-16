@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Social Network Bekend API documentation",
-    "description": "The service is hosted on a free server, so it takes some time for it to wake up. Please be patient and thank you for your attention.",
+    "description": "The service is hosted on a free server, so it takes some time for it to wake up. Please be patient.",
     "version": "v1.0"
   },
   "consumes": ["application/json", "multipart/form-data"],
@@ -449,7 +449,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully get a user data",
+            "description": "Successfully get the user data",
             "content": {
               "application/json": {
                 "schema": {
@@ -582,6 +582,67 @@
         }
       }
     },
+    "/skills/create": {
+      "post": {
+        "tags": ["Skills"],
+        "summary": "Create a new skill",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "requestBody": {
+          "description": "Skill's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SkillsCreateSkillRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The skill was created before",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SkillsCreateBeforeResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Successfully create a new skill",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SkillsCreateResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/skills": {
       "get": {
         "tags": ["Skills"],
@@ -612,40 +673,29 @@
         }
       }
     },
-    "/skills/add": {
-      "post": {
+    "/skills/{skillId}": {
+      "get": {
         "tags": ["Skills"],
-        "summary": "Create a new skill",
+        "summary": "Get skill by id",
         "security": [{ "Bearer": [] }],
-        "parameters": [],
-        "requestBody": {
-          "description": "Skill's object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MediaFilesCreateMediaRequest"
-              }
+        "parameters": [
+          {
+            "in": "path",
+            "name": "skillId",
+            "required": true,
+            "description": "Skill id",
+            "schema": {
+              "type": "string"
             }
           }
-        },
+        ],
         "responses": {
-          "201": {
-            "description": "Successfully create a new skill",
+          "200": {
+            "description": "Successfully get the skill",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MediaFilesCreateMediaResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BadRequestResponse"
+                  "$ref": "#/components/schemas/SkillsSkillByIdResponse"
                 }
               }
             }
@@ -656,6 +706,176 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/skills/users/add/{skillId}": {
+      "get": {
+        "tags": ["Skills"],
+        "summary": "Add user to skill by id",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "skillId",
+            "required": true,
+            "description": "skill id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully add user to skill",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SkillsUserAddResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "User was added to this skill before",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SkillsUserWasAddedBeforeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/skills/users/remove/{skillId}": {
+      "get": {
+        "tags": ["Skills"],
+        "summary": "Remove user from skill by id",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "skillId",
+            "required": true,
+            "description": "skill id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully remove user from skill",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SkillsUserRemoveResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/skills/remove/{skillId}": {
+      "delete": {
+        "tags": ["Skills"],
+        "summary": "Delete skill by id",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "skillId",
+            "required": true,
+            "description": "Skill id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully removed the skill",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SkillsRemoveResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
                 }
               }
             }
@@ -823,7 +1043,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully get a media file",
+            "description": "Successfully get the media file",
             "content": {
               "application/json": {
                 "schema": {
@@ -873,7 +1093,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully removed a media file",
+            "description": "Successfully removed the media file",
             "content": {
               "application/json": {
                 "schema": {
@@ -924,7 +1144,7 @@
         },
         "responses": {
           "201": {
-            "description": "Successfully created a new post",
+            "description": "Successfully Created a new post",
             "content": {
               "application/json": {
                 "schema": {
@@ -1065,7 +1285,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully removed a post",
+            "description": "Successfully removed the post",
             "content": {
               "application/json": {
                 "schema": {
@@ -1226,7 +1446,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully get a post data",
+            "description": "Successfully get the post data",
             "content": {
               "application/json": {
                 "schema": {
@@ -1277,7 +1497,7 @@
         },
         "responses": {
           "201": {
-            "description": "Successfully created a new comment",
+            "description": "Successfully Created a new comment",
             "content": {
               "application/json": {
                 "schema": {
@@ -1418,7 +1638,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully removed a comment",
+            "description": "Successfully removed the comment",
             "content": {
               "application/json": {
                 "schema": {
@@ -1469,7 +1689,7 @@
         },
         "responses": {
           "201": {
-            "description": "Successfully created a like",
+            "description": "Successfully Created a like",
             "content": {
               "application/json": {
                 "schema": {
@@ -2034,7 +2254,7 @@
                               },
                               "createdAt": {
                                 "type": "string",
-                                "description": "created at",
+                                "description": "Created at",
                                 "example": "2023-05-13T11:07:01.620Z"
                               },
                               "updatedAt": {
@@ -2393,12 +2613,12 @@
                                     },
                                     "createdAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-13T14:21:07.523Z"
                                     },
                                     "updatedAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-14T14:21:07.523Z"
                                     }
                                   }
@@ -2448,12 +2668,12 @@
                                     },
                                     "createdAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-13T14:21:07.523Z"
                                     },
                                     "updatedAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-14T14:21:07.523Z"
                                     }
                                   }
@@ -2497,12 +2717,12 @@
                                     },
                                     "createdAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-13T14:21:07.523Z"
                                     },
                                     "updatedAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-14T14:21:07.523Z"
                                     },
                                     "location": {
@@ -2650,7 +2870,7 @@
                                     },
                                     "createdAt": {
                                       "type": "string",
-                                      "description": "created at",
+                                      "description": "Created at",
                                       "example": "2023-05-13T11:07:01.620Z"
                                     },
                                     "updatedAt": {
@@ -3123,7 +3343,7 @@
                               },
                               "createdAt": {
                                 "type": "string",
-                                "description": "created at",
+                                "description": "Created at",
                                 "example": "2023-05-13T11:07:01.620Z"
                               },
                               "updatedAt": {
@@ -3482,12 +3702,12 @@
                                     },
                                     "createdAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-13T14:21:07.523Z"
                                     },
                                     "updatedAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-14T14:21:07.523Z"
                                     }
                                   }
@@ -3537,12 +3757,12 @@
                                     },
                                     "createdAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-13T14:21:07.523Z"
                                     },
                                     "updatedAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-14T14:21:07.523Z"
                                     }
                                   }
@@ -3586,12 +3806,12 @@
                                     },
                                     "createdAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-13T14:21:07.523Z"
                                     },
                                     "updatedAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-14T14:21:07.523Z"
                                     },
                                     "location": {
@@ -3739,7 +3959,7 @@
                                     },
                                     "createdAt": {
                                       "type": "string",
-                                      "description": "created at",
+                                      "description": "Created at",
                                       "example": "2023-05-13T11:07:01.620Z"
                                     },
                                     "updatedAt": {
@@ -4212,7 +4432,7 @@
                           },
                           "createdAt": {
                             "type": "string",
-                            "description": "created at",
+                            "description": "Created at",
                             "example": "2023-05-13T11:07:01.620Z"
                           },
                           "updatedAt": {
@@ -4571,12 +4791,12 @@
                                 },
                                 "createdAt": {
                                   "type": "string",
-                                  "description": "created At",
+                                  "description": "Created at",
                                   "example": "2023-05-13T14:21:07.523Z"
                                 },
                                 "updatedAt": {
                                   "type": "string",
-                                  "description": "created At",
+                                  "description": "Created at",
                                   "example": "2023-05-14T14:21:07.523Z"
                                 }
                               }
@@ -4626,12 +4846,12 @@
                                 },
                                 "createdAt": {
                                   "type": "string",
-                                  "description": "created At",
+                                  "description": "Created at",
                                   "example": "2023-05-13T14:21:07.523Z"
                                 },
                                 "updatedAt": {
                                   "type": "string",
-                                  "description": "created At",
+                                  "description": "Created at",
                                   "example": "2023-05-14T14:21:07.523Z"
                                 }
                               }
@@ -4675,12 +4895,12 @@
                                 },
                                 "createdAt": {
                                   "type": "string",
-                                  "description": "created At",
+                                  "description": "Created at",
                                   "example": "2023-05-13T14:21:07.523Z"
                                 },
                                 "updatedAt": {
                                   "type": "string",
-                                  "description": "created At",
+                                  "description": "Created at",
                                   "example": "2023-05-14T14:21:07.523Z"
                                 },
                                 "location": {
@@ -4828,7 +5048,7 @@
                                 },
                                 "createdAt": {
                                   "type": "string",
-                                  "description": "created at",
+                                  "description": "Created at",
                                   "example": "2023-05-13T11:07:01.620Z"
                                 },
                                 "updatedAt": {
@@ -5252,7 +5472,7 @@
                               },
                               "createdAt": {
                                 "type": "string",
-                                "description": "created at",
+                                "description": "Created at",
                                 "example": "2023-05-13T11:07:01.620Z"
                               },
                               "updatedAt": {
@@ -5611,12 +5831,12 @@
                                     },
                                     "createdAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-13T14:21:07.523Z"
                                     },
                                     "updatedAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-14T14:21:07.523Z"
                                     }
                                   }
@@ -5666,12 +5886,12 @@
                                     },
                                     "createdAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-13T14:21:07.523Z"
                                     },
                                     "updatedAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-14T14:21:07.523Z"
                                     }
                                   }
@@ -5715,12 +5935,12 @@
                                     },
                                     "createdAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-13T14:21:07.523Z"
                                     },
                                     "updatedAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-14T14:21:07.523Z"
                                     },
                                     "location": {
@@ -5868,7 +6088,7 @@
                                     },
                                     "createdAt": {
                                       "type": "string",
-                                      "description": "created at",
+                                      "description": "Created at",
                                       "example": "2023-05-13T11:07:01.620Z"
                                     },
                                     "updatedAt": {
@@ -6300,7 +6520,7 @@
                               },
                               "createdAt": {
                                 "type": "string",
-                                "description": "created at",
+                                "description": "Created at",
                                 "example": "2023-05-13T11:07:01.620Z"
                               },
                               "updatedAt": {
@@ -6659,12 +6879,12 @@
                                     },
                                     "createdAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-13T14:21:07.523Z"
                                     },
                                     "updatedAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-14T14:21:07.523Z"
                                     }
                                   }
@@ -6714,12 +6934,12 @@
                                     },
                                     "createdAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-13T14:21:07.523Z"
                                     },
                                     "updatedAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-14T14:21:07.523Z"
                                     }
                                   }
@@ -6763,12 +6983,12 @@
                                     },
                                     "createdAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-13T14:21:07.523Z"
                                     },
                                     "updatedAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-14T14:21:07.523Z"
                                     },
                                     "location": {
@@ -6916,7 +7136,7 @@
                                     },
                                     "createdAt": {
                                       "type": "string",
-                                      "description": "created at",
+                                      "description": "Created at",
                                       "example": "2023-05-13T11:07:01.620Z"
                                     },
                                     "updatedAt": {
@@ -7481,12 +7701,12 @@
                                 },
                                 "createdAt": {
                                   "type": "string",
-                                  "description": "created At",
+                                  "description": "Created at",
                                   "example": "2023-05-13T14:21:07.523Z"
                                 },
                                 "updatedAt": {
                                   "type": "string",
-                                  "description": "created At",
+                                  "description": "Created at",
                                   "example": "2023-05-14T14:21:07.523Z"
                                 }
                               }
@@ -7536,12 +7756,12 @@
                                 },
                                 "createdAt": {
                                   "type": "string",
-                                  "description": "created At",
+                                  "description": "Created at",
                                   "example": "2023-05-13T14:21:07.523Z"
                                 },
                                 "updatedAt": {
                                   "type": "string",
-                                  "description": "created At",
+                                  "description": "Created at",
                                   "example": "2023-05-14T14:21:07.523Z"
                                 }
                               }
@@ -7585,12 +7805,12 @@
                                 },
                                 "createdAt": {
                                   "type": "string",
-                                  "description": "created At",
+                                  "description": "Created at",
                                   "example": "2023-05-13T14:21:07.523Z"
                                 },
                                 "updatedAt": {
                                   "type": "string",
-                                  "description": "created At",
+                                  "description": "Created at",
                                   "example": "2023-05-14T14:21:07.523Z"
                                 },
                                 "location": {
@@ -7727,12 +7947,12 @@
                                 },
                                 "createdAt": {
                                   "type": "string",
-                                  "description": "created At",
+                                  "description": "Created at",
                                   "example": "2023-05-13T14:21:07.523Z"
                                 },
                                 "updatedAt": {
                                   "type": "string",
-                                  "description": "created At",
+                                  "description": "Created at",
                                   "example": "2023-05-14T14:21:07.523Z"
                                 }
                               }
@@ -7782,12 +8002,12 @@
                                 },
                                 "createdAt": {
                                   "type": "string",
-                                  "description": "created At",
+                                  "description": "Created at",
                                   "example": "2023-05-13T14:21:07.523Z"
                                 },
                                 "updatedAt": {
                                   "type": "string",
-                                  "description": "created At",
+                                  "description": "Created at",
                                   "example": "2023-05-14T14:21:07.523Z"
                                 }
                               }
@@ -7831,12 +8051,12 @@
                                 },
                                 "createdAt": {
                                   "type": "string",
-                                  "description": "created At",
+                                  "description": "Created at",
                                   "example": "2023-05-13T14:21:07.523Z"
                                 },
                                 "updatedAt": {
                                   "type": "string",
-                                  "description": "created At",
+                                  "description": "Created at",
                                   "example": "2023-05-14T14:21:07.523Z"
                                 },
                                 "location": {
@@ -8055,7 +8275,7 @@
                               },
                               "createdAt": {
                                 "type": "string",
-                                "description": "created at",
+                                "description": "Created at",
                                 "example": "2023-05-13T11:07:01.620Z"
                               },
                               "updatedAt": {
@@ -8414,12 +8634,12 @@
                                     },
                                     "createdAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-13T14:21:07.523Z"
                                     },
                                     "updatedAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-14T14:21:07.523Z"
                                     }
                                   }
@@ -8469,12 +8689,12 @@
                                     },
                                     "createdAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-13T14:21:07.523Z"
                                     },
                                     "updatedAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-14T14:21:07.523Z"
                                     }
                                   }
@@ -8518,12 +8738,12 @@
                                     },
                                     "createdAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-13T14:21:07.523Z"
                                     },
                                     "updatedAt": {
                                       "type": "string",
-                                      "description": "created At",
+                                      "description": "Created at",
                                       "example": "2023-05-14T14:21:07.523Z"
                                     },
                                     "location": {
@@ -8671,7 +8891,7 @@
                                     },
                                     "createdAt": {
                                       "type": "string",
-                                      "description": "created at",
+                                      "description": "Created at",
                                       "example": "2023-05-13T11:07:01.620Z"
                                     },
                                     "updatedAt": {
@@ -8938,6 +9158,121 @@
           }
         }
       },
+      "SkillsCreateSkillRequest": {
+        "required": ["skill"],
+        "type": "object",
+        "properties": {
+          "skill": {
+            "type": "string",
+            "description": "Skill's name",
+            "example": "React"
+          }
+        }
+      },
+      "SkillsCreateBeforeResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "The skill \"React\" was created before"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "skill": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Skill's id",
+                    "example": "342831f346155749a2b6e914"
+                  },
+                  "skill": {
+                    "type": "string",
+                    "description": "Skill's name",
+                    "example": "React"
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "55 seconds ago"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-05-13T14:21:07.523Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-05-14T14:21:07.523Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "SkillsCreateResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Skill successfully created"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "skill": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Skill's id",
+                    "example": "342831f346155749a2b6e914"
+                  },
+                  "skill": {
+                    "type": "string",
+                    "description": "Skill's name",
+                    "example": "React"
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "0 seconds ago"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-05-13T14:21:07.523Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-05-14T14:21:07.523Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "SkillsAllSkillsResponse": {
         "type": "object",
         "properties": {
@@ -8972,14 +9307,19 @@
                       "description": "Skill's name",
                       "example": "React"
                     },
+                    "postedAtHuman": {
+                      "type": "string",
+                      "description": "Created at",
+                      "example": "5 minutes ago"
+                    },
                     "createdAt": {
                       "type": "string",
-                      "description": "created At",
+                      "description": "Created at",
                       "example": "2023-05-13T14:21:07.523Z"
                     },
                     "updatedAt": {
                       "type": "string",
-                      "description": "created At",
+                      "description": "Created at",
                       "example": "2023-05-14T14:21:07.523Z"
                     }
                   }
@@ -9002,6 +9342,454 @@
                 "description": "Status",
                 "format": "string",
                 "example": 10
+              }
+            }
+          }
+        }
+      },
+      "SkillsSkillByIdResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "We successfully found the skill"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "skill": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Skill's id",
+                    "example": "342831f346155749a2b6e914"
+                  },
+                  "skill": {
+                    "type": "string",
+                    "description": "Skill's name",
+                    "example": "React"
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "23 hours ago"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-05-13T14:21:07.523Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-05-14T14:21:07.523Z"
+                  }
+                }
+              },
+              "users": {
+                "type": "array",
+                "description": "Users with this skill",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "User's id",
+                      "example": "642831f346155749a2b6e944"
+                    },
+                    "surname": {
+                      "type": "string",
+                      "description": "User's surname",
+                      "example": "Solod"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "User's email",
+                      "format": "email"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "User's name",
+                      "example": "Sergey Nikolayovich"
+                    },
+                    "avatarURL": {
+                      "type": "string",
+                      "description": "User's avatar link",
+                      "example": "User's avatar link"
+                    },
+                    "favorite": {
+                      "type": "array",
+                      "description": "Array of favorite posts IDs",
+                      "items": {
+                        "type": "string",
+                        "description": "Favorite IDs"
+                      }
+                    },
+                    "posts": {
+                      "type": "array",
+                      "description": "Array of posts IDs",
+                      "items": {
+                        "type": "string",
+                        "description": "Post IDs"
+                      }
+                    },
+                    "subscription": {
+                      "type": "array",
+                      "description": "Array of subscriptions IDs",
+                      "items": {
+                        "type": "string",
+                        "description": "Subscription IDs"
+                      }
+                    },
+                    "phone": {
+                      "type": "string",
+                      "description": "User's phone number",
+                      "example": "+380997789899"
+                    },
+                    "site": {
+                      "type": "string",
+                      "description": "User's site",
+                      "example": "www.mysite.com"
+                    },
+                    "other1": {
+                      "type": "string",
+                      "description": "User's site",
+                      "example": ""
+                    },
+                    "other2": {
+                      "type": "string",
+                      "description": "User's site",
+                      "example": ""
+                    },
+                    "other3": {
+                      "type": "string",
+                      "description": "User's site",
+                      "example": ""
+                    },
+                    "about": {
+                      "type": "string",
+                      "description": "User's about",
+                      "example": ""
+                    },
+                    "experience": {
+                      "type": "array",
+                      "description": "User's work experience",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "companyName": {
+                            "type": "string",
+                            "description": "Company name",
+                            "example": "Best Company"
+                          },
+                          "employmentType": {
+                            "type": "string",
+                            "description": "Employment type",
+                            "example": "Full-time"
+                          },
+                          "position": {
+                            "type": "string",
+                            "description": "position",
+                            "example": "Front-end"
+                          },
+                          "location": {
+                            "type": "string",
+                            "description": "location",
+                            "example": "Ukreine, Kiev"
+                          },
+                          "locationType": {
+                            "type": "string",
+                            "description": "location type",
+                            "example": "Remote"
+                          },
+                          "startDate": {
+                            "type": "string",
+                            "description": "start date",
+                            "example": "Remote"
+                          },
+                          "endDate": {
+                            "type": "string",
+                            "description": "end date",
+                            "example": "Remote"
+                          }
+                        }
+                      }
+                    },
+                    "languages": {
+                      "type": "array",
+                      "description": "User's languages",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "language": {
+                            "type": "string",
+                            "description": "User's language",
+                            "example": "English"
+                          },
+                          "level": {
+                            "type": "string",
+                            "description": "User's language level",
+                            "example": "Full professional proficiency"
+                          }
+                        }
+                      }
+                    },
+                    "education": {
+                      "type": "array",
+                      "description": "User's education",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "school": {
+                            "type": "string",
+                            "description": "School",
+                            "example": "NPU Dragomanova"
+                          },
+                          "degree": {
+                            "type": "string",
+                            "description": "Degree",
+                            "example": "Master's Degree"
+                          },
+                          "fieldOfStudy": {
+                            "type": "string",
+                            "description": "Field of study",
+                            "example": "Foreign philology"
+                          },
+                          "startDate": {
+                            "type": "string",
+                            "description": "Start date",
+                            "example": "Remote"
+                          },
+                          "endDate": {
+                            "type": "string",
+                            "description": "End date",
+                            "example": "Remote"
+                          },
+                          "grade": {
+                            "type": "string",
+                            "description": "Grade",
+                            "example": ""
+                          },
+                          "activitiesAndSocieties": {
+                            "type": "string",
+                            "description": "Activities and societies",
+                            "example": ""
+                          },
+                          "Description": {
+                            "type": "string",
+                            "description": "Description",
+                            "example": ""
+                          }
+                        }
+                      }
+                    },
+                    "skills": {
+                      "type": "array",
+                      "description": "User's skills",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "Skill's id",
+                            "example": "647db72e97b80aee72b3f414"
+                          },
+                          "skill": {
+                            "type": "string",
+                            "description": "User's skill",
+                            "example": "React"
+                          }
+                        }
+                      }
+                    },
+                    "headLine": {
+                      "type": "string",
+                      "description": "User's head line",
+                      "example": "Front End Developer"
+                    },
+                    "frame": {
+                      "type": "string",
+                      "description": "User's avatar styling",
+                      "example": "Original"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "SkillsUserAddResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "User was successfully added to this skill"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "skill": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Skill's id",
+                    "example": "342831f346155749a2b6e914"
+                  },
+                  "skill": {
+                    "type": "string",
+                    "description": "Skill's name",
+                    "example": "React"
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "56 seconds ago"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-05-13T14:21:07.523Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-05-14T14:21:07.523Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "SkillsUserWasAddedBeforeResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Sorry, the user was added to this skill before"
+          }
+        }
+      },
+      "SkillsUserRemoveResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "User was successfully removed from this skill"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "skill": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Skill's id",
+                    "example": "342831f346155749a2b6e914"
+                  },
+                  "skill": {
+                    "type": "string",
+                    "description": "Skill's name",
+                    "example": "React"
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "1 day ago"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-05-13T14:21:07.523Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-05-14T14:21:07.523Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "SkillsRemoveResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Skill successfully deleted"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "skill": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Skill's id",
+                    "example": "342831f346155749a2b6e914"
+                  },
+                  "skill": {
+                    "type": "string",
+                    "description": "Skill's name",
+                    "example": "React"
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "17 seconds ago"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-05-13T14:21:07.523Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-05-14T14:21:07.523Z"
+                  }
+                }
               }
             }
           }
@@ -9295,7 +10083,7 @@
                                 },
                                 "createdAt": {
                                   "type": "string",
-                                  "description": "created at",
+                                  "description": "Created at",
                                   "example": "2023-05-13T11:07:01.620Z"
                                 },
                                 "updatedAt": {
@@ -9569,7 +10357,7 @@
                                 },
                                 "createdAt": {
                                   "type": "string",
-                                  "description": "created at",
+                                  "description": "Created at",
                                   "example": "2023-05-13T11:07:01.620Z"
                                 },
                                 "updatedAt": {
@@ -9587,7 +10375,7 @@
                           },
                           "createdAt": {
                             "type": "string",
-                            "description": "created at",
+                            "description": "Created at",
                             "example": "2023-05-13T11:07:01.620Z"
                           },
                           "updatedAt": {
@@ -10115,7 +10903,7 @@
                           },
                           "createdAt": {
                             "type": "string",
-                            "description": "created at",
+                            "description": "Created at",
                             "example": "2023-05-13T11:07:01.620Z"
                           },
                           "updatedAt": {
@@ -10713,7 +11501,7 @@
                               },
                               "createdAt": {
                                 "type": "string",
-                                "description": "created at",
+                                "description": "Created at",
                                 "example": "2023-05-13T11:07:01.620Z"
                               },
                               "updatedAt": {
@@ -10987,7 +11775,7 @@
                               },
                               "createdAt": {
                                 "type": "string",
-                                "description": "created at",
+                                "description": "Created at",
                                 "example": "2023-05-13T11:07:01.620Z"
                               },
                               "updatedAt": {
@@ -11005,7 +11793,7 @@
                         },
                         "createdAt": {
                           "type": "string",
-                          "description": "created at",
+                          "description": "Created at",
                           "example": "2023-05-13T11:07:01.620Z"
                         },
                         "updatedAt": {
@@ -11533,7 +12321,7 @@
                         },
                         "createdAt": {
                           "type": "string",
-                          "description": "created at",
+                          "description": "Created at",
                           "example": "2023-05-13T11:07:01.620Z"
                         },
                         "updatedAt": {
@@ -12102,7 +12890,7 @@
                         },
                         "createdAt": {
                           "type": "string",
-                          "description": "created at",
+                          "description": "Created at",
                           "example": "2023-05-13T11:07:01.620Z"
                         },
                         "updatedAt": {
@@ -12649,7 +13437,7 @@
                               },
                               "createdAt": {
                                 "type": "string",
-                                "description": "created at",
+                                "description": "Created at",
                                 "example": "2023-05-13T11:07:01.620Z"
                               },
                               "updatedAt": {
@@ -12923,7 +13711,7 @@
                               },
                               "createdAt": {
                                 "type": "string",
-                                "description": "created at",
+                                "description": "Created at",
                                 "example": "2023-05-13T11:07:01.620Z"
                               },
                               "updatedAt": {
@@ -12941,7 +13729,7 @@
                         },
                         "createdAt": {
                           "type": "string",
-                          "description": "created at",
+                          "description": "Created at",
                           "example": "2023-05-13T11:07:01.620Z"
                         },
                         "updatedAt": {
@@ -13469,7 +14257,7 @@
                         },
                         "createdAt": {
                           "type": "string",
-                          "description": "created at",
+                          "description": "Created at",
                           "example": "2023-05-13T11:07:01.620Z"
                         },
                         "updatedAt": {
@@ -14019,7 +14807,7 @@
                                 },
                                 "createdAt": {
                                   "type": "string",
-                                  "description": "created at",
+                                  "description": "Created at",
                                   "example": "2023-05-13T11:07:01.620Z"
                                 },
                                 "updatedAt": {
@@ -14293,7 +15081,7 @@
                                 },
                                 "createdAt": {
                                   "type": "string",
-                                  "description": "created at",
+                                  "description": "Created at",
                                   "example": "2023-05-13T11:07:01.620Z"
                                 },
                                 "updatedAt": {
@@ -14311,7 +15099,7 @@
                           },
                           "createdAt": {
                             "type": "string",
-                            "description": "created at",
+                            "description": "Created at",
                             "example": "2023-05-13T11:07:01.620Z"
                           },
                           "updatedAt": {
@@ -14839,7 +15627,7 @@
                           },
                           "createdAt": {
                             "type": "string",
-                            "description": "created at",
+                            "description": "Created at",
                             "example": "2023-05-13T11:07:01.620Z"
                           },
                           "updatedAt": {
@@ -15408,7 +16196,7 @@
                                 },
                                 "createdAt": {
                                   "type": "string",
-                                  "description": "created at",
+                                  "description": "Created at",
                                   "example": "2023-05-13T11:07:01.620Z"
                                 },
                                 "updatedAt": {
@@ -15682,7 +16470,7 @@
                                 },
                                 "createdAt": {
                                   "type": "string",
-                                  "description": "created at",
+                                  "description": "Created at",
                                   "example": "2023-05-13T11:07:01.620Z"
                                 },
                                 "updatedAt": {
@@ -15700,7 +16488,7 @@
                           },
                           "createdAt": {
                             "type": "string",
-                            "description": "created at",
+                            "description": "Created at",
                             "example": "2023-05-13T11:07:01.620Z"
                           },
                           "updatedAt": {
@@ -16228,7 +17016,7 @@
                           },
                           "createdAt": {
                             "type": "string",
-                            "description": "created at",
+                            "description": "Created at",
                             "example": "2023-05-13T11:07:01.620Z"
                           },
                           "updatedAt": {
@@ -16797,7 +17585,7 @@
                                 },
                                 "createdAt": {
                                   "type": "string",
-                                  "description": "created at",
+                                  "description": "Created at",
                                   "example": "2023-05-13T11:07:01.620Z"
                                 },
                                 "updatedAt": {
@@ -17071,7 +17859,7 @@
                                 },
                                 "createdAt": {
                                   "type": "string",
-                                  "description": "created at",
+                                  "description": "Created at",
                                   "example": "2023-05-13T11:07:01.620Z"
                                 },
                                 "updatedAt": {
@@ -17089,7 +17877,7 @@
                           },
                           "createdAt": {
                             "type": "string",
-                            "description": "created at",
+                            "description": "Created at",
                             "example": "2023-05-13T11:07:01.620Z"
                           },
                           "updatedAt": {
@@ -17617,7 +18405,7 @@
                           },
                           "createdAt": {
                             "type": "string",
-                            "description": "created at",
+                            "description": "Created at",
                             "example": "2023-05-13T11:07:01.620Z"
                           },
                           "updatedAt": {
@@ -18183,7 +18971,7 @@
                               },
                               "createdAt": {
                                 "type": "string",
-                                "description": "created at",
+                                "description": "Created at",
                                 "example": "2023-05-13T11:07:01.620Z"
                               },
                               "updatedAt": {
@@ -18457,7 +19245,7 @@
                               },
                               "createdAt": {
                                 "type": "string",
-                                "description": "created at",
+                                "description": "Created at",
                                 "example": "2023-05-13T11:07:01.620Z"
                               },
                               "updatedAt": {
@@ -18475,7 +19263,7 @@
                         },
                         "createdAt": {
                           "type": "string",
-                          "description": "created at",
+                          "description": "Created at",
                           "example": "2023-05-13T11:07:01.620Z"
                         },
                         "updatedAt": {
@@ -19003,7 +19791,7 @@
                         },
                         "createdAt": {
                           "type": "string",
-                          "description": "created at",
+                          "description": "Created at",
                           "example": "2023-05-13T11:07:01.620Z"
                         },
                         "updatedAt": {
@@ -19883,7 +20671,7 @@
                   },
                   "createdAt": {
                     "type": "string",
-                    "description": "created at",
+                    "description": "Created at",
                     "example": "2023-05-13T11:07:01.620Z"
                   },
                   "updatedAt": {
@@ -19991,7 +20779,7 @@
                   },
                   "createdAt": {
                     "type": "string",
-                    "description": "created at",
+                    "description": "Created at",
                     "example": "2023-05-13T11:07:01.620Z"
                   },
                   "updatedAt": {
@@ -21250,7 +22038,7 @@
                                 },
                                 "createdAt": {
                                   "type": "string",
-                                  "description": "created at",
+                                  "description": "Created at",
                                   "example": "2023-05-13T11:07:01.620Z"
                                 },
                                 "updatedAt": {
@@ -21524,7 +22312,7 @@
                                 },
                                 "createdAt": {
                                   "type": "string",
-                                  "description": "created at",
+                                  "description": "Created at",
                                   "example": "2023-05-13T11:07:01.620Z"
                                 },
                                 "updatedAt": {
@@ -21542,7 +22330,7 @@
                           },
                           "createdAt": {
                             "type": "string",
-                            "description": "created at",
+                            "description": "Created at",
                             "example": "2023-05-13T11:07:01.620Z"
                           },
                           "updatedAt": {
@@ -22070,7 +22858,7 @@
                           },
                           "createdAt": {
                             "type": "string",
-                            "description": "created at",
+                            "description": "Created at",
                             "example": "2023-05-13T11:07:01.620Z"
                           },
                           "updatedAt": {
@@ -22636,7 +23424,7 @@
                               },
                               "createdAt": {
                                 "type": "string",
-                                "description": "created at",
+                                "description": "Created at",
                                 "example": "2023-05-13T11:07:01.620Z"
                               },
                               "updatedAt": {
@@ -22910,7 +23698,7 @@
                               },
                               "createdAt": {
                                 "type": "string",
-                                "description": "created at",
+                                "description": "Created at",
                                 "example": "2023-05-13T11:07:01.620Z"
                               },
                               "updatedAt": {
@@ -22928,7 +23716,7 @@
                         },
                         "createdAt": {
                           "type": "string",
-                          "description": "created at",
+                          "description": "Created at",
                           "example": "2023-05-13T11:07:01.620Z"
                         },
                         "updatedAt": {
@@ -23456,7 +24244,7 @@
                         },
                         "createdAt": {
                           "type": "string",
-                          "description": "created at",
+                          "description": "Created at",
                           "example": "2023-05-13T11:07:01.620Z"
                         },
                         "updatedAt": {
@@ -24025,7 +24813,7 @@
                               },
                               "createdAt": {
                                 "type": "string",
-                                "description": "created at",
+                                "description": "Created at",
                                 "example": "2023-05-13T11:07:01.620Z"
                               },
                               "updatedAt": {
@@ -24299,7 +25087,7 @@
                               },
                               "createdAt": {
                                 "type": "string",
-                                "description": "created at",
+                                "description": "Created at",
                                 "example": "2023-05-13T11:07:01.620Z"
                               },
                               "updatedAt": {
@@ -24317,7 +25105,7 @@
                         },
                         "createdAt": {
                           "type": "string",
-                          "description": "created at",
+                          "description": "Created at",
                           "example": "2023-05-13T11:07:01.620Z"
                         },
                         "updatedAt": {
@@ -24845,7 +25633,7 @@
                         },
                         "createdAt": {
                           "type": "string",
-                          "description": "created at",
+                          "description": "Created at",
                           "example": "2023-05-13T11:07:01.620Z"
                         },
                         "updatedAt": {

@@ -1,5 +1,7 @@
 const { Skill } = require("../../models");
 
+const { skillTransformer } = require("../../helpers/index");
+
 const createSkill = async (req, res, next) => {
   const { _id } = req.user;
   const { skill } = req.body;
@@ -14,13 +16,11 @@ const createSkill = async (req, res, next) => {
       existingSkill.users.push(_id);
       await existingSkill.save();
     }
-    return res
-      .status(200)
-      .json({
-        status: "success",
-        message: `The skill "${existingSkill.skill}" was created before`,
-        data: { existingSkill },
-      });
+    return res.status(200).json({
+      status: "success",
+      message: `The skill "${existingSkill.skill}" was created before`,
+      data: { skill: skillTransformer(existingSkill) },
+    });
   }
 
   const newSkill = await Skill.create({
@@ -28,7 +28,9 @@ const createSkill = async (req, res, next) => {
     users: [_id],
   });
 
-  res.status(201).json({ status: "success", message: "Skill successfully created", data: { skill: newSkill } });
+  res
+    .status(201)
+    .json({ status: "success", message: "Skill successfully created", data: { skill: skillTransformer(newSkill) } });
 };
 
 module.exports = createSkill;

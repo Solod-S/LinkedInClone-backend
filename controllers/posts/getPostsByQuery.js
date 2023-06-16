@@ -1,4 +1,5 @@
 const { Post } = require("../../models");
+
 const { postTransformer } = require("../../helpers/index");
 
 const getPostsByQuery = async (req, res, next) => {
@@ -7,9 +8,9 @@ const getPostsByQuery = async (req, res, next) => {
   const perPage = parseInt(req.query.perPage) || 10;
   const trimmedKeyword = search.trim();
   const skip = (page - 1) * perPage;
-  
+
   const query = { description: { $regex: trimmedKeyword, $options: "i" } };
-  const count = await Post.countDocuments(query)
+  const count = await Post.countDocuments(query);
   const totalPages = Math.ceil(count / perPage);
 
   if (page > totalPages) {
