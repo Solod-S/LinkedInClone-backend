@@ -3,70 +3,99 @@ const Joi = require("joi");
 
 const mongooseErrorHandler = require("../helpers/utils/handleMongooseError");
 
-const experienceSchema = Schema({
-  owner: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
+const experienceSchema = Schema(
+  {
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    companyName: {
+      type: String,
+      required: true,
+    },
+    employmentType: {
+      type: String,
+      enum: ["Full-time", "Part-time", "Self-employed", "Freelance", "Contract", "Internship", "Apprenticeship"],
+      default: "Full-time",
+    },
+    position: {
+      type: String,
+      default: "",
+      required: true,
+    },
+    location: {
+      type: String,
+      default: "",
+    },
+    locationType: {
+      type: String,
+      enum: ["On-site", "Hybrid", "Remote"],
+      default: "On-site",
+    },
+    startDate: {
+      type: Date,
+      default: "",
+    },
+    endDate: {
+      type: Date,
+      default: "",
+    },
+    skills: [{ type: Schema.Types.ObjectId, ref: "Skill" }],
+    mediaFiles: [{ type: Schema.Types.ObjectId, ref: "MediaFile" }],
   },
-  companyName: {
-    type: String,
-    required: true,
-  },
-  employmentType: {
-    type: String,
-    enum: ["Full-time", "Part-time", "Self-employed", "Freelance", "Contract", "Internship", "Apprenticeship"],
-    default: "Full-time",
-  },
-  position: {
-    type: String,
-    default: "",
-  },
-  location: {
-    type: String,
-    default: "",
-  },
-  locationType: {
-    type: String,
-    enum: ["On-site", "Hybrid", "Remote"],
-    default: "On-site",
-  },
-  startDate: {
-    type: Date,
-    default: "",
-  },
-  endDate: {
-    type: Date,
-    default: "",
-  },
-  skills: [{ type: Schema.Types.ObjectId, ref: "Skill" }],
-  mediaFiles: [{ type: Schema.Types.ObjectId, ref: "MediaFile" }],
-});
+  { versionKey: false, timestamps: true }
+);
 
 experienceSchema.post("save", mongooseErrorHandler);
 
 const Experience = model("Experience", experienceSchema);
 
-const commentsSchema = Joi.object({
-  description: Joi.string().required(),
-  mediaFiles: Joi.string(),
-  postId: Joi.string().required(),
+const createExperience = Joi.object({
+  owner: Joi.string(),
+  companyName: Joi.string().required(),
+  employmentType: Joi.string()
+    .valid("Full-time", "Part-time", "Self-employed", "Freelance", "Contract", "Internship", "Apprenticeship")
+    .required(),
+  position: Joi.string().required(),
+  location: Joi.string(),
+  locationType: Joi.string().valid("On-site", "Hybrid", "Remote"),
+  startDate: Joi.string(),
+  endDate: Joi.string(),
+  skills: Joi.array(),
+  mediaFiles: Joi.array(),
 });
 
-const updateComment = Joi.object({
-  description: Joi.string(),
-  mediaFiles: Joi.string(),
-  postId: Joi.string(),
+const updateExperience = Joi.object({
+  companyName: Joi.string(),
+  employmentType: Joi.string(),
+  position: Joi.string(),
+  location: Joi.string(),
+  locationType: Joi.string(),
+  startDate: Joi.string(),
+  endDate: Joi.string(),
+  skills: Joi.array(),
+  mediaFiles: Joi.array(),
 })
-  .or("description", "postId", "mediaFiles")
+  .or(
+    "companyName",
+    "employmentType",
+    "position",
+    "location",
+    "locationType",
+    "startDate",
+    "endDate",
+    "skills",
+    "mediaFiles"
+  )
   .required();
 
-const commentSchemas = {
-  commentsSchema,
-  updateComment,
+const experienceSchemas = {
+  createExperience,
+  updateExperience,
 };
 
 module.exports = {
   Experience,
-  commentSchemas,
+  experienceSchemas,
 };

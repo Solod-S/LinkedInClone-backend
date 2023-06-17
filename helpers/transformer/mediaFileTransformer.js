@@ -11,20 +11,18 @@ const mediaFileTransformer = ({
   _id,
   createdAt,
   updatedAt,
-}) => {
-  return {
-    _id,
-    postId,
-    commentId,
-    type,
-    location,
-    url,
-    providerPublicId,
-    postedAtHuman: human(createdAt),
-    createdAt,
-    updatedAt,
-    owner,
-  };
-};
+}) => ({
+  _id,
+  postId,
+  commentId,
+  type,
+  location,
+  url,
+  providerPublicId,
+  postedAtHuman: human(createdAt),
+  createdAt,
+  updatedAt,
+  owner,
+});
 
 module.exports = mediaFileTransformer;

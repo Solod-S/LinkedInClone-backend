@@ -13,7 +13,8 @@ const {
   likesRouter,
   favoritesRouter,
   commentsRouter,
-  skillsRouter
+  skillsRouter,
+  experienceRouter,
 } = require("./routes/api/");
 
 const app = express();
@@ -33,6 +34,7 @@ app.use("/likes", likesRouter);
 app.use("/favorites", favoritesRouter);
 app.use("/comments", commentsRouter);
 app.use("/skills", skillsRouter);
+app.use("/experiences", experienceRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });

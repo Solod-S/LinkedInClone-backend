@@ -5,41 +5,6 @@ const mongooseErrorHandler = require("../helpers/utils/handleMongooseError");
 
 const emailRegexp = /^\w+([-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
-const experienceSchema = Schema({
-  companyName: {
-    type: String,
-    required: true,
-  },
-  employmentType: {
-    type: String,
-    enum: ["Full-time", "Part-time", "Self-employed", "Freelance", "Contract", "Internship", "Apprenticeship"],
-    default: "Full-time",
-  },
-  position: {
-    type: String,
-    default: "",
-  },
-  location: {
-    type: String,
-    default: "",
-  },
-  locationType: {
-    type: String,
-    enum: ["On-site", "Hybrid", "Remote"],
-    default: "On-site",
-  },
-  startDate: {
-    type: Date,
-    default: "",
-  },
-  endDate: {
-    type: Date,
-    default: "",
-  },
-  skills: [{ type: Schema.Types.ObjectId, ref: "Skill" }],
-  mediaFiles: [{ type: Schema.Types.ObjectId, ref: "MediaFile" }],
-});
-
 const educationSchema = Schema({
   school: {
     type: String,
@@ -94,7 +59,6 @@ const languageSchema = Schema({
     default: "Elementary proficiency",
   },
 });
-
 const userSchema = Schema(
   {
     name: {
@@ -163,10 +127,7 @@ const userSchema = Schema(
       type: String,
       default: "",
     },
-    experience: {
-      type: [experienceSchema],
-      default: [],
-    },
+    experience: [{ type: Schema.Types.ObjectId, ref: "Experience" }],
     education: {
       type: [educationSchema],
       default: [],

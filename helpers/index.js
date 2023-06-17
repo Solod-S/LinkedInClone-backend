@@ -8,6 +8,7 @@ const mediaFileTransformer = require("./transformer/mediaFileTransformer");
 const commentTransformer = require("./transformer/commentTransformer");
 const likeTransformer = require("./transformer/likeTransformer");
 const skillTransformer = require("./transformer/skillTransformer");
+const experienceTransformer = require("./transformer/experienceTransformer");
 
 module.exports = {
   handleMongooseError,
@@ -20,4 +21,5 @@ module.exports = {
   commentTransformer,
   likeTransformer,
   skillTransformer,
+  experienceTransformer,
 };
