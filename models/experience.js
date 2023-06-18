@@ -51,7 +51,7 @@ experienceSchema.post("save", mongooseErrorHandler);
 
 const Experience = model("Experience", experienceSchema);
 
-const createExperience = Joi.object({
+const createExperienceSchema = Joi.object({
   owner: Joi.string(),
   companyName: Joi.string().required(),
   employmentType: Joi.string()
@@ -66,7 +66,7 @@ const createExperience = Joi.object({
   mediaFiles: Joi.array(),
 });
 
-const updateExperience = Joi.object({
+const updateExperienceSchema = Joi.object({
   companyName: Joi.string(),
   employmentType: Joi.string(),
   position: Joi.string(),
@@ -91,8 +91,8 @@ const updateExperience = Joi.object({
   .required();
 
 const experienceSchemas = {
-  createExperience,
-  updateExperience,
+  createExperienceSchema,
+  updateExperienceSchema,
 };
 
 module.exports = {

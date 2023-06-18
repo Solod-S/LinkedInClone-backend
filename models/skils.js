@@ -23,9 +23,13 @@ const createSkillSchema = Joi.object({
   skill: Joi.string().required(),
 });
 
+const updateSkillSchema = Joi.object({
+  skill: Joi.string().required(),
+});
 
 const skillsSchemas = {
   createSkillSchema,
+  updateSkillSchema,
 };
 
 module.exports = {

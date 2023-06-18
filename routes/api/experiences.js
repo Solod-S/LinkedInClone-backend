@@ -4,30 +4,26 @@ const { experiences } = require("../../controllers");
 const { validateBody, authenticate } = require("../../middlewares");
 const { experienceSchemas } = require("../../models");
 
-//  get all skills
-// experienceRouter.get("/", authenticate, skills.getAllSkills);
+//  get own experiences
+experienceRouter.get("/", authenticate, experiences.getOwnExperiences);
 
 // create new experience
 experienceRouter.post(
   "/add",
   authenticate,
-  validateBody(experienceSchemas.createExperience),
+  validateBody(experienceSchemas.createExperienceSchema),
   experiences.addExperience
 );
 
-// // //  remove experience
+//  remove experience
 experienceRouter.delete("/remove/:expId", authenticate, experiences.deleteExperience);
 
-// search posts by query
-// experienceRouter.get("/search", authenticate, skills.getSkillByQuery);
-
-// // //  get post by id
-// experienceRouter.get("/:skillId", authenticate, skills.getSkillById);
-
-// // //  add user to skill
-// experienceRouter.get("/users/add/:skillId", authenticate, skills.userAdd);
-
-// //  delete skill
-// experienceRouter.delete("/remove/:skillId", authenticate, skills.deleteSkill);
+//  update experience
+experienceRouter.patch(
+  "/update/:expId",
+  authenticate,
+  validateBody(experienceSchemas.updateExperienceSchema),
+  experiences.updateExperienceSchema
+);
 
 module.exports = experienceRouter;

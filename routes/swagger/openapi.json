@@ -21,6 +21,10 @@
       "description": "Users operation endpoints"
     },
     {
+      "name": "Experiences",
+      "description": "Experiences operation endpoints"
+    },
+    {
       "name": "Skills",
       "description": "Skills operation endpoints"
     },
@@ -627,6 +631,198 @@
         }
       }
     },
+    "/experiences/add": {
+      "post": {
+        "tags": ["Experiences"],
+        "summary": "Add new experience",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "requestBody": {
+          "description": "Experience's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExperiencesCreateExperienceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully create a new experience",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExperiencesCreateExperienceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/experiences/update/{expId}": {
+      "patch": {
+        "tags": ["Experiences"],
+        "summary": "Update the experience",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "expId",
+            "required": true,
+            "description": "Experience id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Experience's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExperiencesUpdateExperienceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully update the experience",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExperiencesUpdateExperienceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/experiences": {
+      "get": {
+        "tags": ["Experiences"],
+        "summary": "Get all own experiences",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successfully fetch all own experiences",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExperiencesGetExperiencesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/experiences/remove/{expId}": {
+      "delete": {
+        "tags": ["Experiences"],
+        "summary": "Delete experience by id",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "expId",
+            "required": true,
+            "description": "experience's id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully removed the experience",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExperiencesDeleteExperienceResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/skills/create": {
       "post": {
         "tags": ["Skills"],
@@ -681,6 +877,77 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/skills/update/{skillId}": {
+      "patch": {
+        "tags": ["Skills"],
+        "summary": "Update the skill",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "skillId",
+            "required": true,
+            "description": "Skill id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Skill's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SkillsUpdateSkillRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully update the skill",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SkillsUpdateSkillResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Admin rights required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessDeniedResponse"
                 }
               }
             }
@@ -754,6 +1021,28 @@
             "description": "Skill id",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "description": "Page number",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "required": false,
+            "description": "Number of items per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 10
             }
           }
         ],
@@ -997,6 +1286,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Admin rights required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessDeniedResponse"
                 }
               }
             }
@@ -2198,6 +2497,17 @@
   },
   "components": {
     "schemas": {
+      "AccessDeniedResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Access denied. Admin rights required"
+          }
+        }
+      },
       "UnauthorizedResponse": {
         "type": "object",
         "properties": {
@@ -9439,6 +9749,699 @@
           }
         }
       },
+      "ExperiencesCreateExperienceRequest": {
+        "required": ["companyName", "employmentType", "position"],
+        "type": "object",
+        "properties": {
+          "companyName": {
+            "type": "string",
+            "description": "Company's name",
+            "example": "Best Company"
+          },
+          "employmentType": {
+            "type": "string",
+            "description": "Employment type",
+            "enum": [
+              "Full-time",
+              "Part-time",
+              "Self-employed",
+              "Freelance",
+              "Contract",
+              "Internship",
+              "Apprenticeship"
+            ],
+            "example": "Full-time"
+          },
+          "position": {
+            "type": "string",
+            "description": "Employment type",
+            "example": "Front End"
+          },
+          "location": {
+            "type": "string",
+            "description": "Location",
+            "example": "Ukraine, Kiev"
+          },
+          "locationType": {
+            "type": "string",
+            "description": "Location type",
+            "enum": ["On-site", "Hybrid", "Remote"],
+            "example": "Hybrid"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "Start date",
+            "example": "2022-06-17T08:35:03.692+00:00"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "End date",
+            "example": "2023-06-17T08:35:03.692+00:00"
+          }
+        }
+      },
+      "ExperiencesCreateExperienceResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Experience successfully created"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "experience": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Experience's id",
+                    "example": "342831f346155749a2b6e914"
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "Owner's id",
+                    "example": "645fbdd9564a390fac4e7015"
+                  },
+                  "companyName": {
+                    "type": "string",
+                    "description": "Company name",
+                    "example": "Good Company"
+                  },
+                  "employmentType": {
+                    "type": "string",
+                    "description": "Employment type",
+                    "example": "Full-time"
+                  },
+                  "position": {
+                    "type": "string",
+                    "description": "Position",
+                    "example": "Front End"
+                  },
+                  "location": {
+                    "type": "string",
+                    "description": "Location",
+                    "example": "Ukraine, Kiev"
+                  },
+                  "locationType": {
+                    "type": "string",
+                    "description": "Location type",
+                    "example": "Hybrid"
+                  },
+                  "startDate": {
+                    "type": "string",
+                    "description": "Start date",
+                    "example": "2022-06-17T08:35:03.692+00:00"
+                  },
+                  "endDate": {
+                    "type": "string",
+                    "description": "End date",
+                    "example": "2023-06-17T08:35:03.692+00:00"
+                  },
+                  "mediaFiles": {
+                    "type": "array",
+                    "description": "MediaFiles",
+                    "example": []
+                  },
+                  "skills": {
+                    "type": "array",
+                    "description": "Skills",
+                    "example": []
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Posted at human",
+                    "example": "0 seconds ago"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-05-13T14:21:07.523Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "Updated at",
+                    "example": "2023-05-14T14:21:07.523Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ExperiencesUpdateExperienceRequest": {
+        "type": "object",
+        "properties": {
+          "companyName": {
+            "type": "string",
+            "description": "Company name",
+            "example": "Good Company"
+          },
+          "employmentType": {
+            "type": "string",
+            "description": "Employment type",
+            "example": "Full-time"
+          },
+          "position": {
+            "type": "string",
+            "description": "Position",
+            "example": "Front End"
+          },
+          "location": {
+            "type": "string",
+            "description": "Location",
+            "example": "Ukraine, Kiev"
+          },
+          "locationType": {
+            "type": "string",
+            "description": "Location type",
+            "example": "Hybrid"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "Start date",
+            "example": "2022-06-17T08:35:03.692+00:00"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "End date",
+            "example": "2023-06-17T08:35:03.692+00:00"
+          },
+          "mediaFiles": {
+            "type": "array",
+            "description": "MediaFiles",
+            "example": []
+          },
+          "skills": {
+            "type": "array",
+            "description": "Skills",
+            "example": []
+          }
+        },
+        "anyOf": [
+          { "required": ["companyName"] },
+          { "required": ["employmentType"] },
+          { "required": ["position"] },
+          { "required": ["location"] },
+          { "required": ["locationType"] },
+          { "required": ["startDate"] },
+          { "required": ["endDate"] },
+          { "required": ["mediaFiles"] },
+          { "required": ["skills"] }
+        ]
+      },
+      "ExperiencesUpdateExperienceResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successfully updated an experience"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "experience": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Experience's id",
+                    "example": "342831f346155749a2b6e914"
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "Owner's id",
+                    "example": "645fbdd9564a390fac4e7015"
+                  },
+                  "companyName": {
+                    "type": "string",
+                    "description": "Company name",
+                    "example": "Good Company"
+                  },
+                  "employmentType": {
+                    "type": "string",
+                    "description": "Employment type",
+                    "example": "Full-time"
+                  },
+                  "position": {
+                    "type": "string",
+                    "description": "Position",
+                    "example": "Front End"
+                  },
+                  "location": {
+                    "type": "string",
+                    "description": "Location",
+                    "example": "Ukraine, Kiev"
+                  },
+                  "locationType": {
+                    "type": "string",
+                    "description": "Location type",
+                    "example": "Hybrid"
+                  },
+                  "startDate": {
+                    "type": "string",
+                    "description": "Start date",
+                    "example": "2022-06-17T08:35:03.692+00:00"
+                  },
+                  "endDate": {
+                    "type": "string",
+                    "description": "End date",
+                    "example": "2023-06-17T08:35:03.692+00:00"
+                  },
+                  "mediaFiles": {
+                    "type": "array",
+                    "description": "Array of media files associated with the post",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "description": "Media file's id",
+                          "example": "6457a79b23576cf0aa13adec"
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "Media file's type",
+                          "example": "img"
+                        },
+                        "url": {
+                          "type": "string",
+                          "description": "Media file's url",
+                          "example": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                        },
+                        "providerPublicId": {
+                          "type": "string",
+                          "description": "Cloudinary id",
+                          "example": "mnf8tsnyxfhztfemh4dq"
+                        },
+                        "owner": {
+                          "type": "string",
+                          "description": "User's id",
+                          "example": "6452b1d7f6a29d84c5b089fb"
+                        },
+                        "postId": {
+                          "type": "string",
+                          "description": "Post's id",
+                          "example": "64578c032ce9cc5ad13e723a"
+                        },
+                        "postedAtHuman": {
+                          "type": "string",
+                          "description": "Post's time",
+                          "example": "43 minutes ago"
+                        }
+                      }
+                    }
+                  },
+                  "skills": {
+                    "type": "array",
+                    "description": "Array of skills",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "description": "Skill's id",
+                          "example": "6457a79b23576cf0aa13adec"
+                        },
+                        "Skill": {
+                          "type": "string",
+                          "description": "Skill's name",
+                          "example": "React"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "description": "Created at",
+                          "example": "2023-05-13T14:21:07.523Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "description": "Updated at",
+                          "example": "2023-05-14T14:21:07.523Z"
+                        }
+                      }
+                    }
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Posted at human",
+                    "example": "33 seconds ago"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-05-13T14:21:07.523Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "Updated at",
+                    "example": "2023-05-14T14:21:07.523Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ExperiencesGetExperiencesResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successfully get experiences"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "experiences": {
+                "type": "array",
+                "description": "All experiences",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "Experience's id",
+                      "example": "342831f346155749a2b6e914"
+                    },
+                    "owner": {
+                      "type": "string",
+                      "description": "Owner's id",
+                      "example": "645fbdd9564a390fac4e7015"
+                    },
+                    "companyName": {
+                      "type": "string",
+                      "description": "Company name",
+                      "example": "Good Company"
+                    },
+                    "employmentType": {
+                      "type": "string",
+                      "description": "Employment type",
+                      "example": "Full-time"
+                    },
+                    "position": {
+                      "type": "string",
+                      "description": "Position",
+                      "example": "Front End"
+                    },
+                    "location": {
+                      "type": "string",
+                      "description": "Location",
+                      "example": "Ukraine, Kiev"
+                    },
+                    "locationType": {
+                      "type": "string",
+                      "description": "Location type",
+                      "example": "Hybrid"
+                    },
+                    "startDate": {
+                      "type": "string",
+                      "description": "Start date",
+                      "example": "2022-06-17T08:35:03.692+00:00"
+                    },
+                    "endDate": {
+                      "type": "string",
+                      "description": "End date",
+                      "example": "2023-06-17T08:35:03.692+00:00"
+                    },
+                    "mediaFiles": {
+                      "type": "array",
+                      "description": "Array of media files associated with the post",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "Media file's id",
+                            "example": "6457a79b23576cf0aa13adec"
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "Media file's type",
+                            "example": "img"
+                          },
+                          "url": {
+                            "type": "string",
+                            "description": "Media file's url",
+                            "example": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          },
+                          "providerPublicId": {
+                            "type": "string",
+                            "description": "Cloudinary id",
+                            "example": "mnf8tsnyxfhztfemh4dq"
+                          },
+                          "owner": {
+                            "type": "string",
+                            "description": "User's id",
+                            "example": "6452b1d7f6a29d84c5b089fb"
+                          },
+                          "postId": {
+                            "type": "string",
+                            "description": "Post's id",
+                            "example": "64578c032ce9cc5ad13e723a"
+                          },
+                          "postedAtHuman": {
+                            "type": "string",
+                            "description": "Post's time",
+                            "example": "43 minutes ago"
+                          }
+                        }
+                      }
+                    },
+                    "skills": {
+                      "type": "array",
+                      "description": "Array of skills",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "Skill's id",
+                            "example": "6457a79b23576cf0aa13adec"
+                          },
+                          "Skill": {
+                            "type": "string",
+                            "description": "Skill's name",
+                            "example": "React"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "Created at",
+                            "example": "2023-05-13T14:21:07.523Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "Updated at",
+                            "example": "2023-05-14T14:21:07.523Z"
+                          }
+                        }
+                      }
+                    },
+                    "postedAtHuman": {
+                      "type": "string",
+                      "description": "Posted at human",
+                      "example": "33 seconds ago"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "Created at",
+                      "example": "2023-05-13T14:21:07.523Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "Updated at",
+                      "example": "2023-05-14T14:21:07.523Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ExperiencesDeleteExperienceResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Experience successfully deleted"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "experience": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Experience's id",
+                    "example": "342831f346155749a2b6e914"
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "Owner's id",
+                    "example": "645fbdd9564a390fac4e7015"
+                  },
+                  "companyName": {
+                    "type": "string",
+                    "description": "Company name",
+                    "example": "Good Company"
+                  },
+                  "employmentType": {
+                    "type": "string",
+                    "description": "Employment type",
+                    "example": "Full-time"
+                  },
+                  "position": {
+                    "type": "string",
+                    "description": "Position",
+                    "example": "Front End"
+                  },
+                  "location": {
+                    "type": "string",
+                    "description": "Location",
+                    "example": "Ukraine, Kiev"
+                  },
+                  "locationType": {
+                    "type": "string",
+                    "description": "Location type",
+                    "example": "Hybrid"
+                  },
+                  "startDate": {
+                    "type": "string",
+                    "description": "Start date",
+                    "example": "2022-06-17T08:35:03.692+00:00"
+                  },
+                  "endDate": {
+                    "type": "string",
+                    "description": "End date",
+                    "example": "2023-06-17T08:35:03.692+00:00"
+                  },
+                  "mediaFiles": {
+                    "type": "array",
+                    "description": "Array of media files associated with the post",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "description": "Media file's id",
+                          "example": "6457a79b23576cf0aa13adec"
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "Media file's type",
+                          "example": "img"
+                        },
+                        "url": {
+                          "type": "string",
+                          "description": "Media file's url",
+                          "example": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                        },
+                        "providerPublicId": {
+                          "type": "string",
+                          "description": "Cloudinary id",
+                          "example": "mnf8tsnyxfhztfemh4dq"
+                        },
+                        "owner": {
+                          "type": "string",
+                          "description": "User's id",
+                          "example": "6452b1d7f6a29d84c5b089fb"
+                        },
+                        "postId": {
+                          "type": "string",
+                          "description": "Post's id",
+                          "example": "64578c032ce9cc5ad13e723a"
+                        },
+                        "postedAtHuman": {
+                          "type": "string",
+                          "description": "Post's time",
+                          "example": "43 minutes ago"
+                        }
+                      }
+                    }
+                  },
+                  "skills": {
+                    "type": "array",
+                    "description": "Array of skills",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "description": "Skill's id",
+                          "example": "6457a79b23576cf0aa13adec"
+                        },
+                        "Skill": {
+                          "type": "string",
+                          "description": "Skill's name",
+                          "example": "React"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "description": "Created at",
+                          "example": "2023-05-13T14:21:07.523Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "description": "Updated at",
+                          "example": "2023-05-14T14:21:07.523Z"
+                        }
+                      }
+                    }
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Posted at human",
+                    "example": "0 seconds ago"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-05-13T14:21:07.523Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "Updated at",
+                    "example": "2023-05-14T14:21:07.523Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "SkillsCreateSkillRequest": {
         "required": ["skill"],
         "type": "object",
@@ -9537,6 +10540,69 @@
                     "type": "string",
                     "description": "Created at",
                     "example": "0 seconds ago"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-05-13T14:21:07.523Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-05-14T14:21:07.523Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "SkillsUpdateSkillRequest": {
+        "required": ["skill"],
+        "type": "object",
+        "properties": {
+          "skill": {
+            "type": "string",
+            "description": "Skill's name",
+            "example": "React"
+          }
+        }
+      },
+      "SkillsUpdateSkillResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successfully updated skill"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "skill": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Skill's id",
+                    "example": "342831f346155749a2b6e914"
+                  },
+                  "skill": {
+                    "type": "string",
+                    "description": "Skill's name",
+                    "example": "React"
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "56 seconds ago"
                   },
                   "createdAt": {
                     "type": "string",

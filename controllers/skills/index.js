@@ -6,6 +6,8 @@ const getSkillByQuery = require("./getSkillByQuery");
 const getSkillById = require("./getSkillById");
 const userAdd = require("./userAdd");
 const userRemove = require("./userRemove");
+const updateSkill = require("./updateSkill");
+
 
 module.exports = {
   createSkill: ctrlWrapper(createSkill),
@@ -15,4 +17,5 @@ module.exports = {
   getSkillById: ctrlWrapper(getSkillById),
   userAdd: ctrlWrapper(userAdd),
   userRemove: ctrlWrapper(userRemove),
+  updateSkill: ctrlWrapper(updateSkill),
 };

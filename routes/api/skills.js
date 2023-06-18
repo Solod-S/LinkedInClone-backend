@@ -1,7 +1,7 @@
 const skillsRouter = require("express").Router();
 
 const { skills } = require("../../controllers");
-const { validateBody, authenticate } = require("../../middlewares");
+const { validateBody, authenticate, isAdminMiddleware } = require("../../middlewares");
 const { skillsSchemas } = require("../../models");
 
 //  get all skills
@@ -23,6 +23,14 @@ skillsRouter.get("/users/add/:skillId", authenticate, skills.userAdd);
 skillsRouter.get("/users/remove/:skillId", authenticate, skills.userRemove);
 
 //  delete skill
-skillsRouter.delete("/remove/:skillId", authenticate, skills.deleteSkill);
+skillsRouter.delete("/remove/:skillId", isAdminMiddleware, skills.deleteSkill);
+
+//  update experience
+skillsRouter.patch(
+  "/update/:skillId",
+  isAdminMiddleware,
+  validateBody(skillsSchemas.updateSkillSchema),
+  skills.updateSkill
+);
 
 module.exports = skillsRouter;

@@ -1,9 +1,10 @@
-const { User, Experience } = require("../../models");
+const { Experience } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
 const { experienceTransformer } = require("../../helpers/index");
 
-const deleteExperience = async (req, res, next) => {
+const updateExperienceSchema = async (req, res, next) => {
+  const updateData = req.body; // new data from req.body
   const { _id } = req.user;
   const { expId } = req.params;
 
@@ -13,7 +14,9 @@ const deleteExperience = async (req, res, next) => {
     throw HttpError(404, "Not found");
   }
 
-  const result = await Experience.findByIdAndDelete({ _id: expId })
+  const updatedExperience = await Experience.findByIdAndUpdate(expId, updateData, {
+    new: true, // return updated experience
+  })
     .populate({
       path: "mediaFiles",
       select: "url type providerPublicId location createdAt updatedAt owner",
@@ -23,20 +26,15 @@ const deleteExperience = async (req, res, next) => {
       select: "skill createdAt updatedAt",
     });
 
-  if (!result) {
+  if (!updatedExperience) {
     throw HttpError(404, "Not found");
   }
 
-  await User.updateOne(
-    { experience: { $elemMatch: { $eq: experience._id } } },
-    { $pull: { experience: experience._id } }
-  );
-
   res.json({
     status: "success",
-    message: "Experience successfully deleted",
-    data: { experience: experienceTransformer(result) },
+    message: "Successfully updated an experience",
+    data: { experience: experienceTransformer(updatedExperience) },
   });
 };
 
-module.exports = deleteExperience;
+module.exports = updateExperienceSchema;
