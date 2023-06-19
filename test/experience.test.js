@@ -88,65 +88,127 @@ describe("Experience Test Suite", () => {
     expect(typeof experience.updatedAt).toBe("string");
   }, 10000);
 
-  // test("GET /skills with valid token, should return 200 status and valid skill data", async () => {
-  //   const res = await request(app).get(`/skills`).set("Authorization", `Bearer ${TEST_TOKEN}`);
-  //   const { status, message, data } = res.body;
-  //   const { skills, totalPages, currentPage, perPage } = data;
+  test("GET /experiences with valid token, should return 200 status and valid experiences data", async () => {
+    const res = await request(app).get(`/experiences`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const { status, message, data } = res.body;
+    const { experiences, totalPages, currentPage, perPage } = data;
 
-  //   expect(res.status).toBe(200);
-  //   expect(typeof status).toBe("string");
-  //   expect(status).toEqual("success");
-  //   expect(typeof message).toBe("string");
-  //   expect(message).toEqual("Successfully get skills");
-  //   expect(typeof data).toBe("object");
-  //   expect(Array.isArray(skills)).toBe(true);
-  //   expect(skills.every(({ _id }) => typeof _id === "string")).toBe(true);
-  //   expect(skills.every(({ skill }) => typeof skill === "string")).toBe(true);
-  //   expect(skills.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
-  //   expect(skills.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
-  //   expect(skills.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
-  //   expect(typeof totalPages).toBe("number");
-  //   expect(typeof currentPage).toBe("number");
-  //   expect(typeof perPage).toBe("number");
-  // }, 10000);
+    expect(res.status).toBe(200);
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("Successfully get experiences");
+    expect(typeof data).toBe("object");
+    expect(Array.isArray(experiences)).toBe(true);
+    expect(experiences.every(({ _id }) => typeof _id === "string")).toBe(true);
+    expect(experiences.every(({ owner }) => typeof owner === "string")).toBe(true);
+    expect(experiences.every(({ companyName }) => typeof companyName === "string")).toBe(true);
+    expect(experiences.every(({ employmentType }) => typeof employmentType === "string")).toBe(true);
+    expect(experiences.every(({ position }) => typeof position === "string")).toBe(true);
+    expect(experiences.every(({ location }) => typeof location === "string")).toBe(true);
+    expect(experiences.every(({ locationType }) => typeof locationType === "string")).toBe(true);
+    expect(experiences.every(({ skills }) => Array.isArray(skills))).toBe(true);
+    expect(
+      experiences.every(
+        ({ skills }) =>
+          typeof skills === "object" &&
+          typeof skills._id === "string" &&
+          typeof skills.skill === "string" &&
+          typeof skills.createdAt === "string" &&
+          typeof skills.updatedAt === "string"
+      )
+    );
+    expect(experiences.every(({ mediaFiles }) => Array.isArray(mediaFiles))).toBe(true);
+    expect(
+      experiences.every(
+        ({ mediaFiles }) =>
+          typeof mediaFiles === "object" &&
+          typeof mediaFiles._id === "string" &&
+          typeof mediaFiles.type === "string" &&
+          typeof mediaFiles.location === "string" &&
+          typeof mediaFiles.url === "string" &&
+          typeof mediaFiles.providerPublicId === "string" &&
+          typeof mediaFiles.owner === "string" &&
+          typeof mediaFiles.createdAt === "string" &&
+          typeof mediaFiles.updatedAt === "string"
+      )
+    );
+    expect(experiences.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
+    expect(experiences.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
+    expect(experiences.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
+    expect(typeof totalPages).toBe("number");
+    expect(typeof currentPage).toBe("number");
+    expect(typeof perPage).toBe("number");
+  }, 10000);
 
-  // test("GET /skills with valid token + pagination, should return 200 status and valid skills data", async () => {
-  //   const res = await request(app).get(`/skills?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN}`);
-  //   const { status, message, data } = res.body;
-  //   const { skills, totalPages, currentPage, perPage } = data;
+  test("GET /experiences with valid token + pagination, should return 200 status and valid experiences data", async () => {
+    const res = await request(app).get(`/experiences?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const { status, message, data } = res.body;
+    const { experiences, totalPages, currentPage, perPage } = data;
 
-  //   expect(res.status).toBe(200);
-  //   expect(typeof status).toBe("string");
-  //   expect(status).toEqual("success");
-  //   expect(typeof message).toBe("string");
-  //   expect(message).toEqual("Successfully get skills");
-  //   expect(typeof data).toBe("object");
-  //   expect(Array.isArray(skills)).toBe(true);
-  //   expect(skills.every(({ _id }) => typeof _id === "string")).toBe(true);
-  //   expect(skills.every(({ skill }) => typeof skill === "string")).toBe(true);
-  //   expect(skills.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
-  //   expect(skills.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
-  //   expect(skills.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
-  //   expect(typeof totalPages).toBe("number");
-  //   expect(typeof currentPage).toBe("number");
-  //   expect(typeof perPage).toBe("number");
-  // }, 10000);
+    expect(res.status).toBe(200);
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("Successfully get experiences");
+    expect(typeof data).toBe("object");
+    expect(Array.isArray(experiences)).toBe(true);
+    expect(experiences.every(({ _id }) => typeof _id === "string")).toBe(true);
+    expect(experiences.every(({ owner }) => typeof owner === "string")).toBe(true);
+    expect(experiences.every(({ companyName }) => typeof companyName === "string")).toBe(true);
+    expect(experiences.every(({ employmentType }) => typeof employmentType === "string")).toBe(true);
+    expect(experiences.every(({ position }) => typeof position === "string")).toBe(true);
+    expect(experiences.every(({ location }) => typeof location === "string")).toBe(true);
+    expect(experiences.every(({ locationType }) => typeof locationType === "string")).toBe(true);
+    expect(experiences.every(({ skills }) => Array.isArray(skills))).toBe(true);
+    expect(
+      experiences.every(
+        ({ skills }) =>
+          typeof skills === "object" &&
+          typeof skills._id === "string" &&
+          typeof skills.skill === "string" &&
+          typeof skills.createdAt === "string" &&
+          typeof skills.updatedAt === "string"
+      )
+    );
+    expect(experiences.every(({ mediaFiles }) => Array.isArray(mediaFiles))).toBe(true);
+    expect(
+      experiences.every(
+        ({ mediaFiles }) =>
+          typeof mediaFiles === "object" &&
+          typeof mediaFiles._id === "string" &&
+          typeof mediaFiles.type === "string" &&
+          typeof mediaFiles.location === "string" &&
+          typeof mediaFiles.url === "string" &&
+          typeof mediaFiles.providerPublicId === "string" &&
+          typeof mediaFiles.owner === "string" &&
+          typeof mediaFiles.createdAt === "string" &&
+          typeof mediaFiles.updatedAt === "string"
+      )
+    );
+    expect(experiences.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
+    expect(experiences.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
+    expect(experiences.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
+    expect(typeof totalPages).toBe("number");
+    expect(typeof currentPage).toBe("number");
+    expect(typeof perPage).toBe("number");
+  }, 10000);
 
-  // test("GET /skills with invalid token, should return 401 status", async () => {
-  //   const res = await request(app).get(`/skills`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
-  //   const { status, body } = res;
+  test("GET /experiences with invalid token, should return 401 status", async () => {
+    const res = await request(app).get(`/experiences`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+    const { status, body } = res;
 
-  //   expect(status).toBe(401);
-  //   expect(body).toHaveProperty("message", "Unauthorized");
-  // }, 10000);
+    expect(status).toBe(401);
+    expect(body).toHaveProperty("message", "Unauthorized");
+  }, 10000);
 
-  // test("GET /skills with invalid token + pagination, should return 401 status", async () => {
-  //   const res = await request(app).get(`/skills?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
-  //   const { status, body } = res;
+  test("GET /experiences with invalid token + pagination, should return 401 status", async () => {
+    const res = await request(app).get(`/experiences?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+    const { status, body } = res;
 
-  //   expect(status).toBe(401);
-  //   expect(body).toHaveProperty("message", "Unauthorized");
-  // }, 10000);
+    expect(status).toBe(401);
+    expect(body).toHaveProperty("message", "Unauthorized");
+  }, 10000);
 
   // test("GET /skill by id with valid token, should return 200 status and valid skill data", async () => {
   //   const res = await request(app).get(`/skills/${expId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
