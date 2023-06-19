@@ -86,6 +86,88 @@ describe("Experience Test Suite", () => {
     expect(typeof experience.postedAtHuman).toBe("string");
     expect(typeof experience.createdAt).toBe("string");
     expect(typeof experience.updatedAt).toBe("string");
+    expect(typeof experience.startDate).toBe("string");
+    expect(typeof experience.endDate).toBe("string");
+  }, 10000);
+
+  test("PATCH /experience file with valid token, should return 200 status and valid experience data", async () => {
+    const res = await request(app)
+      .patch(`/experiences/update/${expId}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .send({
+        companyName: "Very Good Company",
+        employmentType: "Part-time",
+        position: "React developer",
+        location: "Ukraine, Lviv",
+        locationType: "Remote",
+        startDate: "2022-07-17T08:35:03.692+00:00",
+        endDate: "2023-04-17T08:35:03.692+00:00",
+      });
+    const { status, message, data } = res.body;
+    const { experience } = data;
+
+    expId = experience._id;
+
+    expect(res.status).toBe(200);
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("Successfully updated an experience");
+    expect(typeof data).toBe("object");
+    expect(typeof experience._id).toBe("string");
+    expect(typeof experience.owner).toBe("string");
+    expect(typeof experience.companyName).toBe("string");
+    expect(experience.companyName).toEqual("Very Good Company");
+    expect(typeof experience.employmentType).toBe("string");
+    expect(experience.employmentType).toEqual("Part-time");
+    expect(typeof experience.position).toBe("string");
+    expect(experience.position).toEqual("React developer");
+    expect(typeof experience.location).toBe("string");
+    expect(experience.location).toEqual("Ukraine, Lviv");
+    expect(typeof experience.locationType).toBe("string");
+    expect(experience.locationType).toEqual("Remote");
+    expect(Array.isArray(experience.skills)).toBe(true);
+    expect(Array.isArray(experience.mediaFiles)).toBe(true);
+    expect(typeof experience.postedAtHuman).toBe("string");
+    expect(typeof experience.createdAt).toBe("string");
+    expect(typeof experience.updatedAt).toBe("string");
+    expect(typeof experience.startDate).toBe("string");
+    expect(experience.startDate).toEqual("2022-07-17T08:35:03.692Z");
+    expect(typeof experience.endDate).toBe("string");
+    expect(experience.endDate).toEqual("2023-04-17T08:35:03.692Z");
+  }, 10000);
+
+  test("PATCH /experience file with invalid token, should return 401 status", async () => {
+    const res = await request(app)
+      .patch(`/experiences/update/${expId}`)
+      .set("Authorization", `Bearer ${WRONG_TOKEN}`)
+      .send({
+        companyName: "Very Good Company",
+        employmentType: "Part-time",
+        position: "React developer",
+        location: "Ukraine, Lviv",
+        locationType: "Remote",
+        startDate: "2022-07-17T08:35:03.692+00:00",
+        endDate: "2023-04-17T08:35:03.692+00:00",
+      });
+    const { status, body } = res;
+
+    expect(status).toBe(401);
+    expect(body).toHaveProperty("message", "Unauthorized");
+  }, 10000);
+
+  test("PATCH /media file with valid token without body, should return 400 status", async () => {
+    const res = await request(app)
+      .patch(`/experiences/update/${expId}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .send({});
+    const { status, body } = res;
+
+    expect(status).toBe(400);
+    expect(body).toHaveProperty(
+      "message",
+      '"value" must contain at least one of [companyName, employmentType, position, location, locationType, startDate, endDate, skills, mediaFiles]'
+    );
   }, 10000);
 
   test("GET /experiences with valid token, should return 200 status and valid experiences data", async () => {
@@ -133,6 +215,8 @@ describe("Experience Test Suite", () => {
           typeof mediaFiles.updatedAt === "string"
       )
     );
+    expect(experiences.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
+    expect(experiences.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
     expect(experiences.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
     expect(experiences.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
     expect(experiences.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
@@ -209,66 +293,6 @@ describe("Experience Test Suite", () => {
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
   }, 10000);
-
-  // test("GET /skill by id with valid token, should return 200 status and valid skill data", async () => {
-  //   const res = await request(app).get(`/skills/${expId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
-  //   const { status, message, data } = res.body;
-  //   const { skill, users } = data;
-
-  //   expect(res.status).toBe(200);
-  //   expect(typeof status).toBe("string");
-  //   expect(status).toEqual("success");
-  //   expect(typeof message).toBe("string");
-  //   expect(message).toEqual("We successfully found the skill");
-  //   expect(typeof data).toBe("object");
-  //   expect(typeof skill._id).toBe("string");
-  //   expect(typeof skill.skill).toBe("string");
-  //   expect(typeof skill.postedAtHuman).toBe("string");
-  //   expect(typeof skill.createdAt).toBe("string");
-  //   expect(typeof skill.updatedAt).toBe("string");
-  //   expect(Array.isArray(users)).toBe(true);
-  //   expect(
-  //     users.every(
-  //       (user) =>
-  //         typeof user === "object" &&
-  //         typeof user._id === "string" &&
-  //         typeof user.name === "string" &&
-  //         typeof user.email === "string" &&
-  //         typeof user.avatarURL === "string" &&
-  //         Array.isArray(user.subscription) &&
-  //         Array.isArray(user.favorite) &&
-  //         Array.isArray(user.posts) &&
-  //         typeof user.surname === "string" &&
-  //         typeof user.about === "string" &&
-  //         Array.isArray(user.education) &&
-  //         Array.isArray(user.experience) &&
-  //         typeof user.frame === "string" &&
-  //         typeof user.headLine === "string" &&
-  //         Array.isArray(user.languages) &&
-  //         typeof user.phone === "string" &&
-  //         typeof user.site === "string" &&
-  //         typeof user.other1 === "string" &&
-  //         typeof user.other2 === "string" &&
-  //         typeof user.other3 === "string"
-  //     )
-  //   ).toBe(true);
-  // }, 10000);
-
-  // test("GET /skill by invalid id with valid token, should return 404 status", async () => {
-  //   const res = await request(app).get(`/skills/111111111111111111111111`).set("Authorization", `Bearer ${TEST_TOKEN}`);
-  //   const { status, body } = res;
-
-  //   expect(status).toBe(404);
-  //   expect(body).toHaveProperty("message", "Not found");
-  // }, 10000);
-
-  // test("GET /skill by id with invalid token, should return 401 status", async () => {
-  //   const res = await request(app).get(`/skills/${expId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
-  //   const { status, body } = res;
-
-  //   expect(status).toBe(401);
-  //   expect(body).toHaveProperty("message", "Unauthorized");
-  // }, 10000);
 
   // test("GET /remove user from skill by id with valid token, should return 201 status and valid skill data", async () => {
   //   const res = await request(app).get(`/skills/users/remove/${expId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
