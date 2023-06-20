@@ -5,6 +5,7 @@ const { MediaFile, mediaFileSchemas } = require("./mediaFiles");
 const { Like, likeSchemas } = require("./likes");
 const { Comment, commentSchemas } = require("./comments");
 const { Experience, experienceSchemas } = require("./experience");
+const { Education, educationsSchemas } = require("./educations");
 
 module.exports = {
   User,
@@ -21,4 +22,6 @@ module.exports = {
   commentSchemas,
   Experience,
   experienceSchemas,
+  Education,
+  educationsSchemas,
 };

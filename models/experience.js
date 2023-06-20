@@ -52,7 +52,6 @@ experienceSchema.post("save", mongooseErrorHandler);
 const Experience = model("Experience", experienceSchema);
 
 const createExperienceSchema = Joi.object({
-  owner: Joi.string(),
   companyName: Joi.string().required(),
   employmentType: Joi.string()
     .valid("Full-time", "Part-time", "Self-employed", "Freelance", "Contract", "Internship", "Apprenticeship")
