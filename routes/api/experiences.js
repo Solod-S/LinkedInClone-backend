@@ -1,14 +1,14 @@
-const experienceRouter = require("express").Router();
+const experiencesRouter = require("express").Router();
 
 const { experiences } = require("../../controllers");
 const { validateBody, authenticate } = require("../../middlewares");
 const { experienceSchemas } = require("../../models");
 
 //  get own experiences
-experienceRouter.get("/", authenticate, experiences.getOwnExperiences);
+experiencesRouter.get("/", authenticate, experiences.getOwnExperiences);
 
 // create new experience
-experienceRouter.post(
+experiencesRouter.post(
   "/add",
   authenticate,
   validateBody(experienceSchemas.createExperienceSchema),
@@ -16,14 +16,14 @@ experienceRouter.post(
 );
 
 //  remove experience
-experienceRouter.delete("/remove/:expId", authenticate, experiences.deleteExperience);
+experiencesRouter.delete("/remove/:expId", authenticate, experiences.deleteExperience);
 
 //  update experience
-experienceRouter.patch(
+experiencesRouter.patch(
   "/update/:expId",
   authenticate,
   validateBody(experienceSchemas.updateExperienceSchema),
-  experiences.updateExperienceSchema
+  experiences.updateExperience
 );
 
-module.exports = experienceRouter;
+module.exports = experiencesRouter;

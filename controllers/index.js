@@ -7,6 +7,7 @@ const favorites = require("./favorites");
 const posts = require("./posts");
 const skills = require("./skills");
 const experiences = require("./experiences");
+const educations = require("./educations");
 
 module.exports = {
   users,
@@ -18,4 +19,5 @@ module.exports = {
   posts,
   skills,
   experiences,
+  educations,
 };

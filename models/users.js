@@ -128,10 +128,7 @@ const userSchema = Schema(
       default: "",
     },
     experience: [{ type: Schema.Types.ObjectId, ref: "Experience" }],
-    education: {
-      type: [educationSchema],
-      default: [],
-    },
+    education: [{ type: Schema.Types.ObjectId, ref: "Education" }],
     languages: {
       type: [languageSchema],
       default: [],

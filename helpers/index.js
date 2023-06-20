@@ -9,6 +9,7 @@ const commentTransformer = require("./transformer/commentTransformer");
 const likeTransformer = require("./transformer/likeTransformer");
 const skillTransformer = require("./transformer/skillTransformer");
 const experienceTransformer = require("./transformer/experienceTransformer");
+const educationTransformer = require("./transformer/educationTransformer");
 
 module.exports = {
   handleMongooseError,
@@ -22,4 +23,5 @@ module.exports = {
   likeTransformer,
   skillTransformer,
   experienceTransformer,
+  educationTransformer,
 };

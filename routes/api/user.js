@@ -1,46 +1,51 @@
-const userRouter = require("express").Router();
+const usersRouter = require("express").Router();
 
 const { users } = require("../../controllers");
 const { validateBody, authenticate } = require("../../middlewares");
 const { userSchemas } = require("../../models");
 
 //  sign-up
-userRouter.post("/register", validateBody(userSchemas.registerSchema), users.register);
-userRouter.get("/verify/:verificationCode", users.verifyEmail);
-userRouter.post("/verify", validateBody(userSchemas.emailSchema), users.resendVerifyEmail);
+usersRouter.post("/register", validateBody(userSchemas.registerSchema), users.register);
+usersRouter.get("/verify/:verificationCode", users.verifyEmail);
+usersRouter.post("/verify", validateBody(userSchemas.emailSchema), users.resendVerifyEmail);
 
 //  sign-in
-userRouter.post("/login", validateBody(userSchemas.loginSchema), users.login);
+usersRouter.post("/login", validateBody(userSchemas.loginSchema), users.login);
 
 //  chek user
-userRouter.get("/current", authenticate, users.getCurrent);
+usersRouter.get("/current", authenticate, users.getCurrent);
 
 // change password
-userRouter.post("/password-change", validateBody(userSchemas.passwordChangeSchema), authenticate, users.passwordChange);
+usersRouter.post(
+  "/password-change",
+  validateBody(userSchemas.passwordChangeSchema),
+  authenticate,
+  users.passwordChange
+);
 
 //  send password-reser link by email
-userRouter.post("/password-reset", validateBody(userSchemas.passwordResetRequestSchema), users.passwordResetByEmail);
+usersRouter.post("/password-reset", validateBody(userSchemas.passwordResetRequestSchema), users.passwordResetByEmail);
 
 //  restore password
-userRouter.post("/password-reset/:resetToken", validateBody(userSchemas.passwordRestoreSchema), users.passwordReset);
+usersRouter.post("/password-reset/:resetToken", validateBody(userSchemas.passwordRestoreSchema), users.passwordReset);
 
 // logout
-userRouter.get("/logout", authenticate, users.logout);
+usersRouter.get("/logout", authenticate, users.logout);
 
 // del-user
-userRouter.delete("/remove", authenticate, users.remove);
+usersRouter.delete("/remove", authenticate, users.remove);
 
 // get all users
-userRouter.get("/", authenticate, users.getAllUsers);
+usersRouter.get("/", authenticate, users.getAllUsers);
 
 // search user by query
-userRouter.get("/search", authenticate, users.getUsersByQuery);
+usersRouter.get("/search", authenticate, users.getUsersByQuery);
 
 // get user by id
-userRouter.get("/:userId", authenticate, users.getUserById);
+usersRouter.get("/:userId", authenticate, users.getUserById);
 
 // dev endpoints
-userRouter.post("/devregister", validateBody(userSchemas.registerSchema), users.devRegister);
-userRouter.post("/devverify", validateBody(userSchemas.emailSchema), users.devResendVerifyEmail);
+usersRouter.post("/devregister", validateBody(userSchemas.registerSchema), users.devRegister);
+usersRouter.post("/devverify", validateBody(userSchemas.emailSchema), users.devResendVerifyEmail);
 
-module.exports = userRouter;
+module.exports = usersRouter;

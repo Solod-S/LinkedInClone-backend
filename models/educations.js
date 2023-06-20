@@ -22,10 +22,6 @@ const educationsSchema = Schema(
       type: String,
       default: "",
     },
-    grade: {
-      type: String,
-      default: "",
-    },
     activitiesAndSocieties: {
       type: String,
       default: "",
@@ -42,6 +38,7 @@ const educationsSchema = Schema(
       type: Date,
       default: "",
     },
+    skills: [{ type: Schema.Types.ObjectId, ref: "Skill" }],
     mediaFiles: [{ type: Schema.Types.ObjectId, ref: "MediaFile" }],
   },
   { versionKey: false, timestamps: true }
@@ -51,7 +48,7 @@ educationsSchema.post("save", mongooseErrorHandler);
 
 const Education = model("educations", educationsSchema);
 
-const createeducationSchema = Joi.object({
+const createEducationSchema = Joi.object({
   school: Joi.string().required(),
   degree: Joi.string(),
   fieldOfStudy: Joi.string(),
@@ -60,6 +57,7 @@ const createeducationSchema = Joi.object({
   description: Joi.string(),
   startDate: Joi.string(),
   endDate: Joi.string(),
+  skills: Joi.array(),
   mediaFiles: Joi.array(),
 });
 
@@ -72,6 +70,7 @@ const updateeducationSchema = Joi.object({
   description: Joi.string(),
   startDate: Joi.string(),
   endDate: Joi.string(),
+  skills: Joi.array(),
   mediaFiles: Joi.array(),
 })
   .or(
@@ -83,12 +82,13 @@ const updateeducationSchema = Joi.object({
     "description",
     "startDate",
     "endDate",
+    "skills",
     "mediaFiles"
   )
   .required();
 
 const educationsSchemas = {
-  createeducationSchema,
+  createEducationSchema,
   updateeducationSchema,
 };
 

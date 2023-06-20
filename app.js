@@ -6,7 +6,7 @@ const swaggerUi = require("swagger-ui-express");
 
 const swaggerDocument = require("./routes/swagger/openapi.json");
 const {
-  userRouter,
+  usersRouter,
   ownPostsRouter,
   postsRouter,
   mediaFilesRouter,
@@ -14,7 +14,8 @@ const {
   favoritesRouter,
   commentsRouter,
   skillsRouter,
-  experienceRouter,
+  experiencesRouter,
+  educationsRouter,
 } = require("./routes/api/");
 
 const app = express();
@@ -26,7 +27,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use("/users", userRouter);
+app.use("/users", usersRouter);
 app.use("/own-posts", ownPostsRouter);
 app.use("/posts", postsRouter);
 app.use("/media-files", mediaFilesRouter);
@@ -34,7 +35,8 @@ app.use("/likes", likesRouter);
 app.use("/favorites", favoritesRouter);
 app.use("/comments", commentsRouter);
 app.use("/skills", skillsRouter);
-app.use("/experiences", experienceRouter);
+app.use("/experiences", experiencesRouter);
+app.use("/educations", educationsRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });

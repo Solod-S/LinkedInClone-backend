@@ -3,7 +3,7 @@ const { Experience } = require("../../models");
 const { HttpError } = require("../../routes/errors/HttpErrors");
 const { experienceTransformer } = require("../../helpers/index");
 
-const updateExperienceSchema = async (req, res, next) => {
+const updateExperience = async (req, res, next) => {
   const updateData = req.body; // new data from req.body
   const { _id } = req.user;
   const { expId } = req.params;
@@ -37,4 +37,4 @@ const updateExperienceSchema = async (req, res, next) => {
   });
 };
 
-module.exports = updateExperienceSchema;
+module.exports = updateExperience;
