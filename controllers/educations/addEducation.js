@@ -20,7 +20,7 @@ const addEducation = async (req, res, next) => {
   res.status(201).json({
     status: "success",
     message: "Education successfully created",
-    data: { experience: educationTransformer(newEducation) },
+    data: { education: educationTransformer(newEducation) },
   });
 };
 

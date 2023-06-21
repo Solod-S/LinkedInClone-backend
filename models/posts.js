@@ -28,12 +28,12 @@ const Post = model("Post", postSchema);
 
 const myPostSchema = Joi.object({
   description: Joi.string().required(),
-  mediaFiles: Joi.string(),
+  mediaFiles: Joi.array(),
 });
 
 const updateMyPostSchema = Joi.object({
   description: Joi.string(),
-  mediaFiles: Joi.string(),
+  mediaFiles: Joi.array(),
 })
   .or("description", "mediaFiles")
   .required();

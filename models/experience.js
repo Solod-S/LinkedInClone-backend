@@ -57,22 +57,30 @@ const createExperienceSchema = Joi.object({
     .valid("Full-time", "Part-time", "Self-employed", "Freelance", "Contract", "Internship", "Apprenticeship")
     .required(),
   position: Joi.string().required(),
-  location: Joi.string(),
+  location: Joi.string().allow(""),
   locationType: Joi.string().valid("On-site", "Hybrid", "Remote"),
-  startDate: Joi.string(),
-  endDate: Joi.string(),
-  skills: Joi.array(),
+  startDate: Joi.string().allow(""),
+  endDate: Joi.string().allow(""),
+  skills: Joi.array().allow(""),
   mediaFiles: Joi.array(),
 });
 
 const updateExperienceSchema = Joi.object({
   companyName: Joi.string(),
-  employmentType: Joi.string(),
+  employmentType: Joi.string().valid(
+    "Full-time",
+    "Part-time",
+    "Self-employed",
+    "Freelance",
+    "Contract",
+    "Internship",
+    "Apprenticeship"
+  ),
   position: Joi.string(),
-  location: Joi.string(),
-  locationType: Joi.string(),
-  startDate: Joi.string(),
-  endDate: Joi.string(),
+  location: Joi.string().allow(""),
+  locationType: Joi.string().valid("On-site", "Hybrid", "Remote"),
+  startDate: Joi.string().allow(""),
+  endDate: Joi.string().allow(""),
   skills: Joi.array(),
   mediaFiles: Joi.array(),
 })

@@ -25,6 +25,10 @@
       "description": "Experiences operation endpoints"
     },
     {
+      "name": "Educations",
+      "description": "Educations operation endpoints"
+    },
+    {
       "name": "Skills",
       "description": "Skills operation endpoints"
     },
@@ -796,6 +800,198 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ExperiencesDeleteExperienceResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/educations/add": {
+      "post": {
+        "tags": ["Educations"],
+        "summary": "Add new education",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "requestBody": {
+          "description": "Education's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EducationsCreateEducationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully create a new education",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EducationsCreateEducationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/educations/update/{educationId}": {
+      "patch": {
+        "tags": ["Educations"],
+        "summary": "Update the education",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "educationId",
+            "required": true,
+            "description": "Education's id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Education's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EducationsUpdateEducationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully update the education",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EducationsUpdateEducationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/educations": {
+      "get": {
+        "tags": ["Educations"],
+        "summary": "Get all own educations",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successfully fetch all own educations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EducationsGetEducationsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/educations/remove/{educationId}": {
+      "delete": {
+        "tags": ["Educations"],
+        "summary": "Delete education by id",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "educationId",
+            "required": true,
+            "description": "Education's id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully removed the education",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EducationsDeleteEducationResponse"
                 }
               }
             }
@@ -9797,6 +9993,16 @@
             "type": "string",
             "description": "End date",
             "example": "2023-06-17T08:35:03.692+00:00"
+          },
+          "skills": {
+            "type": "array",
+            "description": "Skills",
+            "example": []
+          },
+          "mediaFiles": {
+            "type": "array",
+            "description": "Media files",
+            "example": []
           }
         }
       },
@@ -10420,6 +10626,573 @@
                         }
                       }
                     }
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Posted at human",
+                    "example": "0 seconds ago"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-05-13T14:21:07.523Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "Updated at",
+                    "example": "2023-05-14T14:21:07.523Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EducationsCreateEducationRequest": {
+        "required": ["school"],
+        "type": "object",
+        "properties": {
+          "school": {
+            "type": "string",
+            "description": "School's name",
+            "example": "Best school"
+          },
+          "degree": {
+            "type": "string",
+            "description": "Degree",
+            "example": "Master's degree"
+          },
+          "fieldOfStudy": {
+            "type": "string",
+            "description": "Field of study",
+            "example": "Foreign Languages and Literatures, General"
+          },
+          "activitiesAndSocieties": {
+            "type": "string",
+            "description": "Activities and societies",
+            "example": ""
+          },
+          "description": {
+            "type": "string",
+            "description": "Description",
+            "example": ""
+          },
+          "startDate": {
+            "type": "string",
+            "description": "Start date",
+            "example": "2022-06-17T08:35:03.692+00:00"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "End date",
+            "example": "2023-06-17T08:35:03.692+00:00"
+          },
+          "skills": {
+            "type": "array",
+            "description": "Skills",
+            "example": []
+          },
+          "mediaFiles": {
+            "type": "array",
+            "description": "Media files",
+            "example": []
+          }
+        }
+      },
+      "EducationsCreateEducationResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Education successfully created"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "education": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Education's id",
+                    "example": "342831f346155749a2b6e914"
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "Owner's id",
+                    "example": "645fbdd9564a390fac4e7015"
+                  },
+                  "school": {
+                    "type": "string",
+                    "description": "School's name",
+                    "example": "Best school"
+                  },
+                  "degree": {
+                    "type": "string",
+                    "description": "degree",
+                    "example": "Master's degree"
+                  },
+                  "fieldOfStudy": {
+                    "type": "string",
+                    "description": "field of study",
+                    "example": "Foreign Languages and Literatures, General"
+                  },
+                  "activitiesAndSocieties": {
+                    "type": "string",
+                    "description": "Activities and societies",
+                    "example": ""
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "description",
+                    "example": ""
+                  },
+                  "startDate": {
+                    "type": "string",
+                    "description": "Start date",
+                    "example": "2022-06-17T08:35:03.692+00:00"
+                  },
+                  "endDate": {
+                    "type": "string",
+                    "description": "End date",
+                    "example": "2023-06-17T08:35:03.692+00:00"
+                  },
+                  "mediaFiles": {
+                    "type": "array",
+                    "description": "MediaFiles",
+                    "example": []
+                  },
+                  "skills": {
+                    "type": "array",
+                    "description": "Skills",
+                    "example": []
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Posted at human",
+                    "example": "0 seconds ago"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-05-13T14:21:07.523Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "Updated at",
+                    "example": "2023-05-14T14:21:07.523Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EducationsUpdateEducationRequest": {
+        "type": "object",
+        "properties": {
+          "school": {
+            "type": "string",
+            "description": "School's name",
+            "example": "Best school"
+          },
+          "degree": {
+            "type": "string",
+            "description": "Degree",
+            "example": "Master's degree"
+          },
+          "fieldOfStudy": {
+            "type": "string",
+            "description": "Field of study",
+            "example": "Foreign Languages and Literatures, General"
+          },
+          "activitiesAndSocieties": {
+            "type": "string",
+            "description": "Activities and societies",
+            "example": ""
+          },
+          "description": {
+            "type": "string",
+            "description": "Description",
+            "example": ""
+          },
+          "startDate": {
+            "type": "string",
+            "description": "Start date",
+            "example": "2022-06-17T08:35:03.692+00:00"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "End date",
+            "example": "2023-06-17T08:35:03.692+00:00"
+          },
+          "skills": {
+            "type": "array",
+            "description": "Skills",
+            "example": []
+          },
+          "mediaFiles": {
+            "type": "array",
+            "description": "Media files",
+            "example": []
+          }
+        },
+        "anyOf": [
+          { "required": ["school"] },
+          { "required": ["degree"] },
+          { "required": ["fieldOfStudy"] },
+          { "required": ["activitiesAndSocieties"] },
+          { "required": ["description"] },
+          { "required": ["startDate"] },
+          { "required": ["endDate"] },
+          { "required": ["mediaFiles"] },
+          { "required": ["skills"] }
+        ]
+      },
+      "EducationsUpdateEducationResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successfully updated an education"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "education": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Education's id",
+                    "example": "342831f346155749a2b6e914"
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "Owner's id",
+                    "example": "645fbdd9564a390fac4e7015"
+                  },
+                  "school": {
+                    "type": "string",
+                    "description": "School's name",
+                    "example": "Best school"
+                  },
+                  "degree": {
+                    "type": "string",
+                    "description": "degree",
+                    "example": "Master's degree"
+                  },
+                  "fieldOfStudy": {
+                    "type": "string",
+                    "description": "field of study",
+                    "example": "Foreign Languages and Literatures, General"
+                  },
+                  "activitiesAndSocieties": {
+                    "type": "string",
+                    "description": "Activities and societies",
+                    "example": ""
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "description",
+                    "example": ""
+                  },
+                  "startDate": {
+                    "type": "string",
+                    "description": "Start date",
+                    "example": "2022-06-17T08:35:03.692+00:00"
+                  },
+                  "endDate": {
+                    "type": "string",
+                    "description": "End date",
+                    "example": "2023-06-17T08:35:03.692+00:00"
+                  },
+                  "mediaFiles": {
+                    "type": "array",
+                    "description": "MediaFiles",
+                    "example": []
+                  },
+                  "skills": {
+                    "type": "array",
+                    "description": "Skills",
+                    "example": []
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Posted at human",
+                    "example": "0 seconds ago"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-05-13T14:21:07.523Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "Updated at",
+                    "example": "2023-05-14T14:21:07.523Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EducationsGetEducationsResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successfully get experiences"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "experiences": {
+                "type": "array",
+                "description": "All experiences",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "Experience's id",
+                      "example": "342831f346155749a2b6e914"
+                    },
+                    "owner": {
+                      "type": "string",
+                      "description": "Owner's id",
+                      "example": "645fbdd9564a390fac4e7015"
+                    },
+                    "companyName": {
+                      "type": "string",
+                      "description": "Company name",
+                      "example": "Good Company"
+                    },
+                    "employmentType": {
+                      "type": "string",
+                      "description": "Employment type",
+                      "example": "Full-time"
+                    },
+                    "position": {
+                      "type": "string",
+                      "description": "Position",
+                      "example": "Front End"
+                    },
+                    "location": {
+                      "type": "string",
+                      "description": "Location",
+                      "example": "Ukraine, Kiev"
+                    },
+                    "locationType": {
+                      "type": "string",
+                      "description": "Location type",
+                      "example": "Hybrid"
+                    },
+                    "startDate": {
+                      "type": "string",
+                      "description": "Start date",
+                      "example": "2022-06-17T08:35:03.692+00:00"
+                    },
+                    "endDate": {
+                      "type": "string",
+                      "description": "End date",
+                      "example": "2023-06-17T08:35:03.692+00:00"
+                    },
+                    "mediaFiles": {
+                      "type": "array",
+                      "description": "Array of media files associated with the post",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "Media file's id",
+                            "example": "6457a79b23576cf0aa13adec"
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "Media file's type",
+                            "example": "img"
+                          },
+                          "url": {
+                            "type": "string",
+                            "description": "Media file's url",
+                            "example": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          },
+                          "providerPublicId": {
+                            "type": "string",
+                            "description": "Cloudinary id",
+                            "example": "mnf8tsnyxfhztfemh4dq"
+                          },
+                          "owner": {
+                            "type": "string",
+                            "description": "User's id",
+                            "example": "6452b1d7f6a29d84c5b089fb"
+                          },
+                          "postId": {
+                            "type": "string",
+                            "description": "Post's id",
+                            "example": "64578c032ce9cc5ad13e723a"
+                          },
+                          "postedAtHuman": {
+                            "type": "string",
+                            "description": "Post's time",
+                            "example": "43 minutes ago"
+                          }
+                        }
+                      }
+                    },
+                    "skills": {
+                      "type": "array",
+                      "description": "Array of skills",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "Skill's id",
+                            "example": "6457a79b23576cf0aa13adec"
+                          },
+                          "Skill": {
+                            "type": "string",
+                            "description": "Skill's name",
+                            "example": "React"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "Created at",
+                            "example": "2023-05-13T14:21:07.523Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "Updated at",
+                            "example": "2023-05-14T14:21:07.523Z"
+                          }
+                        }
+                      }
+                    },
+                    "postedAtHuman": {
+                      "type": "string",
+                      "description": "Posted at human",
+                      "example": "33 seconds ago"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "Created at",
+                      "example": "2023-05-13T14:21:07.523Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "Updated at",
+                      "example": "2023-05-14T14:21:07.523Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "EducationsDeleteEducationResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Education successfully deleted"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "education": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Education's id",
+                    "example": "342831f346155749a2b6e914"
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "Owner's id",
+                    "example": "645fbdd9564a390fac4e7015"
+                  },
+                  "school": {
+                    "type": "string",
+                    "description": "School's name",
+                    "example": "Best school"
+                  },
+                  "degree": {
+                    "type": "string",
+                    "description": "degree",
+                    "example": "Master's degree"
+                  },
+                  "fieldOfStudy": {
+                    "type": "string",
+                    "description": "field of study",
+                    "example": "Foreign Languages and Literatures, General"
+                  },
+                  "activitiesAndSocieties": {
+                    "type": "string",
+                    "description": "Activities and societies",
+                    "example": ""
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "description",
+                    "example": ""
+                  },
+                  "startDate": {
+                    "type": "string",
+                    "description": "Start date",
+                    "example": "2022-06-17T08:35:03.692+00:00"
+                  },
+                  "endDate": {
+                    "type": "string",
+                    "description": "End date",
+                    "example": "2023-06-17T08:35:03.692+00:00"
+                  },
+                  "mediaFiles": {
+                    "type": "array",
+                    "description": "MediaFiles",
+                    "example": []
+                  },
+                  "skills": {
+                    "type": "array",
+                    "description": "Skills",
+                    "example": []
                   },
                   "postedAtHuman": {
                     "type": "string",

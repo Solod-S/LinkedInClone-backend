@@ -24,13 +24,13 @@ const Comment = model("Comment", commentSchema);
 
 const commentsSchema = Joi.object({
   description: Joi.string().required(),
-  mediaFiles: Joi.string(),
+  mediaFiles: Joi.array(),
   postId: Joi.string().required(),
 });
 
 const updateComment = Joi.object({
   description: Joi.string(),
-  mediaFiles: Joi.string(),
+  mediaFiles: Joi.array(),
   postId: Joi.string(),
 })
   .or("description", "postId", "mediaFiles")

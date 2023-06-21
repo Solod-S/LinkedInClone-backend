@@ -5,13 +5,13 @@ const { validateBody, authenticate } = require("../../middlewares");
 const { educationsSchemas } = require("../../models");
 
 //  get own experiences
-// educationsRouter.get("/", authenticate, experiences.getOwnExperiences);
+educationsRouter.get("/", authenticate, educations.getOwnEducations);
 
 // create new experience
 educationsRouter.post(
   "/add",
   authenticate,
-  // validateBody(educationsSchemas.createEducationSchema),
+  validateBody(educationsSchemas.createEducationSchema),
   educations.addEducation
 );
 
@@ -22,7 +22,7 @@ educationsRouter.delete("/remove/:educationId", authenticate, educations.deleteE
 educationsRouter.patch(
   "/update/:educationId",
   authenticate,
-  // validateBody(educationsSchemas.updateEducation),
+  validateBody(educationsSchemas.updateeducationSchema),
   educations.updateEducation
 );
 
