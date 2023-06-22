@@ -16,7 +16,7 @@ describe("Experience Test Suite", () => {
   beforeAll(async () => {
     await mongoose.connect(DB_HOST);
     server = app.listen(3009, () => {});
-  }, 10000);
+  }, 15000);
 
   afterAll(async () => {
     await mongoose.disconnect();

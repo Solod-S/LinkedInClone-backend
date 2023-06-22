@@ -16,7 +16,7 @@ describe("Own-post Test Suite", () => {
   beforeAll(async () => {
     await mongoose.connect(DB_HOST);
     server = app.listen(3002, () => {});
-  }, 10000);
+  }, 15000);
 
   afterAll(async () => {
     await mongoose.disconnect();
@@ -25,8 +25,8 @@ describe("Own-post Test Suite", () => {
 
   test("GET /own posts with valid token, should return 200 status and valid posts data", async () => {
     const res = await request(app).get(`/own-posts`).set("Authorization", `Bearer ${TEST_TOKEN}`);
-    const {status, message, data} = res.body
-    const {posts} = data
+    const { status, message, data } = res.body;
+    const { posts } = data;
 
     expect(res.status).toBe(200);
     expect(typeof status).toBe("string");
@@ -35,12 +35,12 @@ describe("Own-post Test Suite", () => {
     expect(message).toEqual("Successfully get posts");
     expect(typeof data).toBe("object");
     expect(Array.isArray(posts)).toBe(true);
-    expect(posts.every(({_id }) => typeof _id === "string")).toBe(true);
-    expect(posts.every(({description}) => typeof description === "string")).toBe(true);
-    expect(posts.every(({mediaFiles}) => Array.isArray(mediaFiles))).toBe(true);
-   expect(
+    expect(posts.every(({ _id }) => typeof _id === "string")).toBe(true);
+    expect(posts.every(({ description }) => typeof description === "string")).toBe(true);
+    expect(posts.every(({ mediaFiles }) => Array.isArray(mediaFiles))).toBe(true);
+    expect(
       posts.every(
-        ({owner}) =>
+        ({ owner }) =>
           typeof owner === "object" &&
           typeof owner._id === "string" &&
           typeof owner.name === "string" &&
@@ -63,15 +63,15 @@ describe("Own-post Test Suite", () => {
           typeof owner.other3 === "string"
       )
     ).toBe(true);
-       expect(posts.every(({postedAtHuman}) => typeof postedAtHuman === "string")).toBe(true);
-    expect(posts.every(({createdAt}) => typeof createdAt === "string")).toBe(true);
-    expect(posts.every(({updatedAt}) => typeof updatedAt === "string")).toBe(true);
-    expect(posts.every(({likes}) => Array.isArray(likes))).toBe(true);
-    expect(posts.every(({comments}) => Array.isArray(comments))).toBe(true);
-    expect(posts.every(({mediaFiles}) => Array.isArray(mediaFiles))).toBe(true);
+    expect(posts.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
+    expect(posts.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
+    expect(posts.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
+    expect(posts.every(({ likes }) => Array.isArray(likes))).toBe(true);
+    expect(posts.every(({ comments }) => Array.isArray(comments))).toBe(true);
+    expect(posts.every(({ mediaFiles }) => Array.isArray(mediaFiles))).toBe(true);
 
     // Checking objects in mediaFiles/comments/likes/owner
-    const likesContainsObjects = posts.some(({likes}) =>
+    const likesContainsObjects = posts.some(({ likes }) =>
       likes.every(
         (like) =>
           typeof like === "object" &&
@@ -82,7 +82,7 @@ describe("Own-post Test Suite", () => {
           typeof like.owner === "object"
       )
     );
-    const commentsContainsObjects = posts.some(({comments}) =>
+    const commentsContainsObjects = posts.some(({ comments }) =>
       comments.every(
         (comment) =>
           typeof comment === "object" &&
@@ -95,7 +95,7 @@ describe("Own-post Test Suite", () => {
           typeof comment.owner === "object"
       )
     );
-    const mediaFilesContainsObjects = posts.some(({mediaFiles}) =>
+    const mediaFilesContainsObjects = posts.some(({ mediaFiles }) =>
       mediaFiles.every(
         (media) =>
           typeof media === "object" &&
@@ -116,8 +116,8 @@ describe("Own-post Test Suite", () => {
 
   test("GET /own posts with valid token + pagination, should return 200 status and valid posts data", async () => {
     const res = await request(app).get(`/own-posts?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN}`);
-    const {status, message, data} = res.body
-    const {posts, totalPages, currentPage, perPage} = data
+    const { status, message, data } = res.body;
+    const { posts, totalPages, currentPage, perPage } = data;
 
     expect(res.status).toBe(200);
     expect(typeof status).toBe("string");
@@ -129,12 +129,12 @@ describe("Own-post Test Suite", () => {
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
     expect(Array.isArray(posts)).toBe(true);
-    expect(posts.every(({_id }) => typeof _id === "string")).toBe(true);
-    expect(posts.every(({description}) => typeof description === "string")).toBe(true);
-    expect(posts.every(({mediaFiles}) => Array.isArray(mediaFiles))).toBe(true);
-   expect(
+    expect(posts.every(({ _id }) => typeof _id === "string")).toBe(true);
+    expect(posts.every(({ description }) => typeof description === "string")).toBe(true);
+    expect(posts.every(({ mediaFiles }) => Array.isArray(mediaFiles))).toBe(true);
+    expect(
       posts.every(
-        ({owner}) =>
+        ({ owner }) =>
           typeof owner === "object" &&
           typeof owner._id === "string" &&
           typeof owner.name === "string" &&
@@ -157,15 +157,15 @@ describe("Own-post Test Suite", () => {
           typeof owner.other3 === "string"
       )
     ).toBe(true);
-       expect(posts.every(({postedAtHuman}) => typeof postedAtHuman === "string")).toBe(true);
-    expect(posts.every(({createdAt}) => typeof createdAt === "string")).toBe(true);
-    expect(posts.every(({updatedAt}) => typeof updatedAt === "string")).toBe(true);
-    expect(posts.every(({mediaFiles}) => Array.isArray(mediaFiles))).toBe(true);
-    expect(posts.every(({comments}) => Array.isArray(comments))).toBe(true);
-   expect(posts.every(({likes}) => Array.isArray(likes))).toBe(true);
-    
+    expect(posts.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
+    expect(posts.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
+    expect(posts.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
+    expect(posts.every(({ mediaFiles }) => Array.isArray(mediaFiles))).toBe(true);
+    expect(posts.every(({ comments }) => Array.isArray(comments))).toBe(true);
+    expect(posts.every(({ likes }) => Array.isArray(likes))).toBe(true);
+
     // Checking objects in mediaFiles/comments/likes/owner
-    const likesContainsObjects = posts.some(({likes}) =>
+    const likesContainsObjects = posts.some(({ likes }) =>
       likes.every(
         (like) =>
           typeof like === "object" &&
@@ -176,7 +176,7 @@ describe("Own-post Test Suite", () => {
           typeof like.owner === "object"
       )
     );
-    const commentsContainsObjects = posts.some(({comments}) =>
+    const commentsContainsObjects = posts.some(({ comments }) =>
       comments.every(
         (comment) =>
           typeof comment === "object" &&
@@ -189,7 +189,7 @@ describe("Own-post Test Suite", () => {
           typeof comment.owner === "object"
       )
     );
-    const mediaFilesContainsObjects = posts.some(({mediaFiles}) =>
+    const mediaFilesContainsObjects = posts.some(({ mediaFiles }) =>
       mediaFiles.every(
         (media) =>
           typeof media === "object" &&
@@ -210,7 +210,7 @@ describe("Own-post Test Suite", () => {
 
   test("GET /own posts with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/own-posts`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
-    const {status, body} = res
+    const { status, body } = res;
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
@@ -218,7 +218,7 @@ describe("Own-post Test Suite", () => {
 
   test("GET /own posts with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app).get(`/own-posts?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
-    const {status, body} = res
+    const { status, body } = res;
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
@@ -229,8 +229,8 @@ describe("Own-post Test Suite", () => {
       description:
         "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.",
     });
-    const {status, message, data} = res.body
-    const {post} = data
+    const { status, message, data } = res.body;
+    const { post } = data;
     postId = post._id;
 
     expect(res.status).toBe(201);
@@ -275,7 +275,7 @@ describe("Own-post Test Suite", () => {
       description:
         "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.",
     });
-    const {status, body} = res
+    const { status, body } = res;
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
@@ -283,7 +283,7 @@ describe("Own-post Test Suite", () => {
 
   test("POST /post without body, should return 400 status", async () => {
     const res = await request(app).post(`/own-posts/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({});
-    const {status, body} = res
+    const { status, body } = res;
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"description" is required');
@@ -294,7 +294,7 @@ describe("Own-post Test Suite", () => {
       .post(`/own-posts/add`)
       .set("Authorization", `Bearer ${TEST_TOKEN}`)
       .send({ 11: "ss" });
-      const {status, body} = res
+    const { status, body } = res;
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"description" is required');
@@ -308,8 +308,8 @@ describe("Own-post Test Suite", () => {
         description:
           "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.",
       });
-      const {status, message, data} = res.body
-      const {post} = data
+    const { status, message, data } = res.body;
+    const { post } = data;
 
     expect(res.status).toBe(200);
     expect(typeof status).toBe("string");
@@ -359,7 +359,7 @@ describe("Own-post Test Suite", () => {
         description:
           "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.",
       });
-      const {status, body} = res
+    const { status, body } = res;
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
@@ -370,7 +370,7 @@ describe("Own-post Test Suite", () => {
       .patch(`/own-posts/update/${postId}`)
       .set("Authorization", `Bearer ${TEST_TOKEN}`)
       .send({});
-    const {status} = res
+    const { status } = res;
 
     expect(status).toBe(400);
   }, 10000);
@@ -383,15 +383,15 @@ describe("Own-post Test Suite", () => {
         description:
           "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.",
       });
-    const {status, body} = res
-      
+    const { status, body } = res;
+
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
   }, 10000);
 
   test("DELETE /post with invalid token, should return 401 status", async () => {
     const res = await request(app).delete(`/own-posts/remove/${postId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
-    const {status, body} = res
+    const { status, body } = res;
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
@@ -399,8 +399,8 @@ describe("Own-post Test Suite", () => {
 
   test("DELETE /post with valid token, should return 200 status", async () => {
     const res = await request(app).delete(`/own-posts/remove/${postId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
-    const {status, message, data} = res.body
-    const {post} = data
+    const { status, message, data } = res.body;
+    const { post } = data;
 
     expect(res.status).toBe(200);
     expect(typeof status).toBe("string");
@@ -437,7 +437,7 @@ describe("Own-post Test Suite", () => {
     expect(typeof post.owner.other2).toBe("string");
     expect(typeof post.owner.other3).toBe("string");
 
-  const deletedPost = await Post.findById({ _id: postId })
-  expect(deletedPost).toBe(null);
+    const deletedPost = await Post.findById({ _id: postId });
+    expect(deletedPost).toBe(null);
   }, 10000);
 });

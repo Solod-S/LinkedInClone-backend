@@ -1,20 +1,41 @@
-const { MediaFile, Post, Comment } = require("../../models");
+const { MediaFile, Post, Comment, Education, Experience } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
 const { mediaFileTransformer } = require("../../helpers/index");
 
 const addMediaFile = async (req, res, next) => {
   const { _id } = req.user;
-const {location} = req.body
+  const { location } = req.body;
+  let mediaFileId = "";
+  let model = null;
 
-const mediaFileId = location === "posts"? req.body.postId : req.body.commentId
-const model = location === "posts"? Post : Comment
+  switch (location) {
+    case "posts":
+      mediaFileId = req.body.postId;
+      model = Post;
+      break;
+    case "comments":
+      mediaFileId = req.body.commentId;
+      model = Comment;
+      break;
+    case "education":
+      mediaFileId = req.body.educationId;
+      model = Education;
+      break;
+    case "experience":
+      mediaFileId = req.body.experienceId;
+      model = Experience;
+      break;
+    default:
+      break;
+  }
 
-const mediaFileDestination = await model.findById({ _id: mediaFileId });
+  const mediaFileDestination = await model.findById({ _id: mediaFileId });
+  console.log(mediaFileDestination);
 
-if (!mediaFileDestination || (mediaFileDestination.owner.toString()) !== _id.toString()) {
-  throw HttpError(404, "Not found");
-}
+  if (!mediaFileDestination || mediaFileDestination.owner.toString() !== _id.toString()) {
+    throw HttpError(404, "Not found");
+  }
 
   const newMediaFile = await MediaFile.create({
     ...req.body,

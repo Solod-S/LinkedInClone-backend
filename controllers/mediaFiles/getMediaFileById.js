@@ -33,6 +33,55 @@ const getMediaFileById = async (req, res, next) => {
         select: "_id type owner",
         populate: { path: "owner", select: "_id surname name avatarURL" },
       },
+    })
+    .populate({
+      path: "educationId",
+      select:
+        "_id school degree activitiesAndSocieties fieldOfStudy description startDate endDate skills mediaFiles owner",
+      populate: [
+        {
+          path: "owner",
+          select:
+            "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+        },
+        {
+          path: "skills",
+          select: "skill createdAt updatedAt",
+        },
+        {
+          path: "mediaFiles",
+          select: "url type owner location createdAt updatedAt",
+          populate: {
+            path: "owner",
+            select:
+              "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+          },
+        },
+      ],
+    })
+    .populate({
+      path: "experienceId",
+      select: "_id companyName employmentType position location locationType startDate endDate skills mediaFiles",
+      populate: [
+        {
+          path: "owner",
+          select:
+            "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+        },
+        {
+          path: "skills",
+          select: "skill createdAt updatedAt",
+        },
+        {
+          path: "mediaFiles",
+          select: "url type owner location createdAt updatedAt",
+          populate: {
+            path: "owner",
+            select:
+              "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+          },
+        },
+      ],
     });
 
   if (!mediaFile) {

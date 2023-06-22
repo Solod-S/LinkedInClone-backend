@@ -5,42 +5,6 @@ const mongooseErrorHandler = require("../helpers/utils/handleMongooseError");
 
 const emailRegexp = /^\w+([-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
-const educationSchema = Schema({
-  school: {
-    type: String,
-    required: true,
-  },
-  degree: {
-    type: String,
-    default: "",
-  },
-  fieldOfStudy: {
-    type: String,
-    default: "",
-  },
-  startDate: {
-    type: Date,
-    default: "",
-  },
-  endDate: {
-    type: Date,
-    default: "",
-  },
-  grade: {
-    type: String,
-    default: "",
-  },
-  activitiesAndSocieties: {
-    type: String,
-    default: "",
-  },
-  Description: {
-    type: String,
-    default: "",
-  },
-
-  mediaFiles: [{ type: Schema.Types.ObjectId, ref: "MediaFile" }],
-});
 const languageSchema = Schema({
   language: {
     type: String,

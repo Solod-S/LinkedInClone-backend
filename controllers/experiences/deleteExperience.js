@@ -16,7 +16,7 @@ const deleteExperience = async (req, res, next) => {
   const result = await Experience.findByIdAndDelete({ _id: expId })
     .populate({
       path: "mediaFiles",
-      select: "url type providerPublicId location createdAt updatedAt owner",
+      select: "url type providerPublicId location experienceId createdAt updatedAt owner",
     })
     .populate({
       path: "skills",

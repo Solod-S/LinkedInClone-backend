@@ -19,7 +19,7 @@ const updateEducation = async (req, res, next) => {
   })
     .populate({
       path: "mediaFiles",
-      select: "url type providerPublicId location createdAt updatedAt owner",
+      select: "url type providerPublicId location educationId createdAt updatedAt owner",
     })
     .populate({
       path: "skills",

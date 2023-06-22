@@ -12,7 +12,7 @@ describe("Post Test Suite", () => {
   beforeAll(async () => {
     await mongoose.connect(DB_HOST);
     server = app.listen(3005, () => {});
-  }, 10000);
+  }, 15000);
 
   afterAll(async () => {
     await mongoose.disconnect();

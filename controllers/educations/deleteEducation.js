@@ -16,7 +16,7 @@ const deleteEducation = async (req, res, next) => {
   const result = await Education.findByIdAndDelete({ _id: educationId })
     .populate({
       path: "mediaFiles",
-      select: "url type providerPublicId location createdAt updatedAt owner",
+      select: "url type providerPublicId location educationId createdAt updatedAt owner",
     })
     .populate({
       path: "skills",

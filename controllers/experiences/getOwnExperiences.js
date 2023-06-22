@@ -34,7 +34,7 @@ const getOwnExperiences = async (req, res, next) => {
     .limit(perPage)
     .populate({
       path: "mediaFiles",
-      select: "url type providerPublicId location createdAt updatedAt owner",
+      select: "url type providerPublicId location experienceId createdAt updatedAt owner",
     })
     .populate({
       path: "skills",

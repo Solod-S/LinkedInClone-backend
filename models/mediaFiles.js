@@ -6,13 +6,20 @@ const mongooseErrorHandler = require("../helpers/utils/handleMongooseError");
 const mediaFileSchema = new Schema(
   {
     type: { type: String, enum: ["img", "video"], default: "img" },
-    location: { type: String, enum: ["comments", "posts"], default: "posts", required: true },
+    location: {
+      type: String,
+      enum: ["comments", "posts", "education", "experience"],
+      default: "posts",
+      required: true,
+    },
     url: { type: String, required: true },
     providerPublicId: { type: String, default: "null", required: true },
     // this is => cloudinaryResource.public_id,
     owner: { type: Schema.Types.ObjectId, ref: "User", required: true },
     postId: { type: Schema.Types.ObjectId, ref: "Post" },
     commentId: { type: Schema.Types.ObjectId, ref: "Comment" },
+    educationId: { type: Schema.Types.ObjectId, ref: "Education" },
+    experienceId: { type: Schema.Types.ObjectId, ref: "Experience" },
   },
   { versionKey: false, timestamps: true }
 );
@@ -23,22 +30,26 @@ const MediaFile = model("MediaFile", mediaFileSchema);
 
 const mediaFilesSchema = Joi.object({
   type: Joi.string().valid("img", "video").required(),
-  location: Joi.string().valid("comments", "posts").required(),
+  location: Joi.string().valid("comments", "posts", "education", "experience").required(),
   url: Joi.string().required(),
   providerPublicId: Joi.string(),
   postId: Joi.string(),
   commentId: Joi.string(),
+  educationId: Joi.string(),
+  experienceId: Joi.string(),
 });
 
 const updateMediaFilesSchema = Joi.object({
   type: Joi.string().valid("img", "video"),
-  location: Joi.string().valid("comments", "posts"),
+  location: Joi.string().valid("comments", "posts", "education", "experience"),
   url: Joi.string(),
   providerPublicId: Joi.string(),
   postId: Joi.string(),
   commentId: Joi.string(),
+  educationId: Joi.string(),
+  experienceId: Joi.string(),
 })
-  .or("type", "location", "url", "providerPublicId", "postId", "commentId")
+  .or("type", "location", "url", "providerPublicId", "postId", "commentId", "educationId", "experienceId")
   .required();
 
 const mediaFileSchemas = {

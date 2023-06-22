@@ -16,7 +16,7 @@ describe("Favorites Test Suite", () => {
   beforeAll(async () => {
     await mongoose.connect(DB_HOST);
     server = app.listen(3006, () => {});
-  }, 10000);
+  }, 15000);
 
   afterAll(async () => {
     await mongoose.disconnect();
@@ -32,8 +32,8 @@ describe("Favorites Test Suite", () => {
     }
 
     const res = await request(app).get(`/favorites/posts/add/${postId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
-    const {status, message, data} = res.body
-    const {post} = data
+    const { status, message, data } = res.body;
+    const { post } = data;
 
     expect(res.status).toBe(201);
     expect(typeof status).toBe("string");
@@ -73,7 +73,7 @@ describe("Favorites Test Suite", () => {
 
   test("POST /post to favorites with invalid token and valid post id, should return 401 status", async () => {
     const res = await request(app).get(`/favorites/posts/add/${postId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
-    const {status, body} = res
+    const { status, body } = res;
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
@@ -83,7 +83,7 @@ describe("Favorites Test Suite", () => {
     const res = await request(app)
       .post(`/favorites/posts/add/123456789123456789123456`)
       .set("Authorization", `Bearer ${TEST_TOKEN}`);
-      const {status, body} = res
+    const { status, body } = res;
 
     expect(status).toBe(404);
     expect(typeof body.message).toBe("string") && expect(body.message).toBe("Post ID is invalid or not found");
@@ -91,8 +91,8 @@ describe("Favorites Test Suite", () => {
 
   test("GET /favorite posts with valid token, should return 200 status and valid posts data", async () => {
     const res = await request(app).get(`/favorites/posts`).set("Authorization", `Bearer ${TEST_TOKEN}`);
-    const {status, message, data} = res.body
-    const { posts} = data
+    const { status, message, data } = res.body;
+    const { posts } = data;
 
     expect(res.status).toBe(200);
     expect(typeof status).toBe("string");
@@ -101,12 +101,12 @@ describe("Favorites Test Suite", () => {
     expect(message).toEqual("Successfully get favorites");
     expect(typeof data).toBe("object");
     expect(Array.isArray(posts)).toBe(true);
-    expect(posts.every(({_id}) => typeof _id === "string")).toBe(true);
-    expect(posts.every(({description}) => typeof description === "string")).toBe(true);
-    expect(posts.every(({likes}) => Array.isArray(likes))).toBe(true);
-    expect(posts.every(({comments}) => Array.isArray(comments))).toBe(true);
-    expect(posts.every(({mediaFiles}) => Array.isArray(mediaFiles))).toBe(true);
-    expect(posts.every(({owner}) => typeof owner === "object")).toBe(true);
+    expect(posts.every(({ _id }) => typeof _id === "string")).toBe(true);
+    expect(posts.every(({ description }) => typeof description === "string")).toBe(true);
+    expect(posts.every(({ likes }) => Array.isArray(likes))).toBe(true);
+    expect(posts.every(({ comments }) => Array.isArray(comments))).toBe(true);
+    expect(posts.every(({ mediaFiles }) => Array.isArray(mediaFiles))).toBe(true);
+    expect(posts.every(({ owner }) => typeof owner === "object")).toBe(true);
     expect(
       posts.every(
         (post) =>
@@ -132,63 +132,63 @@ describe("Favorites Test Suite", () => {
           typeof post.owner.other3 === "string"
       )
     ).toBe(true);
-    expect(posts.every(({postedAtHuman}) => typeof postedAtHuman === "string")).toBe(true);
-    expect(posts.every(({createdAt}) => typeof createdAt === "string")).toBe(true);
-    expect(posts.every(({updatedAt}) => typeof updatedAt === "string")).toBe(true);
-    expect(posts.every(({mediaFiles}) => Array.isArray(mediaFiles))).toBe(true);
-    expect(posts.every(({comments}) => Array.isArray(comments))).toBe(true);
-    expect(posts.every(({likes}) => Array.isArray(likes))).toBe(true);
+    expect(posts.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
+    expect(posts.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
+    expect(posts.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
+    expect(posts.every(({ mediaFiles }) => Array.isArray(mediaFiles))).toBe(true);
+    expect(posts.every(({ comments }) => Array.isArray(comments))).toBe(true);
+    expect(posts.every(({ likes }) => Array.isArray(likes))).toBe(true);
 
     // Checking objects in mediaFiles/comments/likes/owner
-    const likesContainsObjects = posts.some(({likes}) =>
-    likes.every(
-      (like) =>
-        typeof like === "object" &&
-        typeof like._id === "string" &&
-        typeof like.type === "string" &&
-        typeof like.createdAt === "string" &&
-        typeof like.updatedAt === "string" &&
-        typeof like.owner === "object"
-    )
+    const likesContainsObjects = posts.some(({ likes }) =>
+      likes.every(
+        (like) =>
+          typeof like === "object" &&
+          typeof like._id === "string" &&
+          typeof like.type === "string" &&
+          typeof like.createdAt === "string" &&
+          typeof like.updatedAt === "string" &&
+          typeof like.owner === "object"
+      )
     );
-    const commentsContainsObjects = posts.some(({comments}) =>
-        comments.every(
-          (comment) =>
-            typeof comment === "object" &&
-            typeof comment._id === "string" &&
-            typeof comment.description === "string" &&
-            typeof comment.likes === "object" &&
-            typeof comment.mediaFiles === "object" &&
-            typeof comment.createdAt === "string" &&
-            typeof comment.updatedAt === "string" &&
-            typeof comment.owner === "object"
-        )
+    const commentsContainsObjects = posts.some(({ comments }) =>
+      comments.every(
+        (comment) =>
+          typeof comment === "object" &&
+          typeof comment._id === "string" &&
+          typeof comment.description === "string" &&
+          typeof comment.likes === "object" &&
+          typeof comment.mediaFiles === "object" &&
+          typeof comment.createdAt === "string" &&
+          typeof comment.updatedAt === "string" &&
+          typeof comment.owner === "object"
+      )
     );
-    const mediaFilesContainsObjects = posts.some(({mediaFiles}) =>
-        mediaFiles.every(
-          (media) =>
-            typeof media === "object" &&
-            typeof media._id === "string" &&
-            typeof media.type === "string" &&
-            typeof media.url === "string" &&
-            typeof media.providerPublicId === "string" &&
-            typeof media.createdAt === "string" &&
-            typeof media.updatedAt === "string" &&
-            typeof media.owner === "object"
-        )
+    const mediaFilesContainsObjects = posts.some(({ mediaFiles }) =>
+      mediaFiles.every(
+        (media) =>
+          typeof media === "object" &&
+          typeof media._id === "string" &&
+          typeof media.type === "string" &&
+          typeof media.url === "string" &&
+          typeof media.providerPublicId === "string" &&
+          typeof media.createdAt === "string" &&
+          typeof media.updatedAt === "string" &&
+          typeof media.owner === "object"
+      )
     );
 
-      expect(likesContainsObjects).toBe(true);
-      expect(commentsContainsObjects).toBe(true);
-      expect(mediaFilesContainsObjects).toBe(true);
+    expect(likesContainsObjects).toBe(true);
+    expect(commentsContainsObjects).toBe(true);
+    expect(mediaFilesContainsObjects).toBe(true);
   }, 10000);
 
   test("GET /favorite posts with valid token + pagination, should return 200 status and valid posts data", async () => {
     const res = await request(app)
       .get(`/favorites/posts?page=1&perPage=10`)
       .set("Authorization", `Bearer ${TEST_TOKEN}`);
-    const {status, data} = res.body
-    const {totalPages, currentPage, perPage, posts} = data
+    const { status, data } = res.body;
+    const { totalPages, currentPage, perPage, posts } = data;
 
     expect(res.status).toBe(200);
     expect(typeof status).toBe("string");
@@ -198,15 +198,15 @@ describe("Favorites Test Suite", () => {
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
     expect(Array.isArray(posts)).toBe(true);
-    expect(posts.every(({_id }) => typeof _id === "string")).toBe(true);
-    expect(posts.every(({description}) => typeof description === "string")).toBe(true);
-    expect(posts.every(({likes}) => Array.isArray(likes))).toBe(true);
-    expect(posts.every(({comments}) => Array.isArray(comments))).toBe(true);
-    expect(posts.every(({mediaFiles}) => Array.isArray(mediaFiles))).toBe(true);
-    expect(posts.every(({mediaFiles}) => Array.isArray(mediaFiles))).toBe(true);
+    expect(posts.every(({ _id }) => typeof _id === "string")).toBe(true);
+    expect(posts.every(({ description }) => typeof description === "string")).toBe(true);
+    expect(posts.every(({ likes }) => Array.isArray(likes))).toBe(true);
+    expect(posts.every(({ comments }) => Array.isArray(comments))).toBe(true);
+    expect(posts.every(({ mediaFiles }) => Array.isArray(mediaFiles))).toBe(true);
+    expect(posts.every(({ mediaFiles }) => Array.isArray(mediaFiles))).toBe(true);
     expect(
       posts.every(
-        ({owner}) =>
+        ({ owner }) =>
           typeof owner === "object" &&
           typeof owner._id === "string" &&
           typeof owner.name === "string" &&
@@ -229,60 +229,60 @@ describe("Favorites Test Suite", () => {
           typeof owner.other3 === "string"
       )
     ).toBe(true);
-    expect(posts.every(({postedAtHuman}) => typeof postedAtHuman === "string")).toBe(true);
-    expect(posts.every(({createdAt}) => typeof createdAt === "string")).toBe(true); 
-    expect(posts.every(({updatedAt}) => typeof updatedAt === "string")).toBe(true);
-    expect(posts.every(({mediaFiles}) => Array.isArray(mediaFiles))).toBe(true);
-    expect(posts.every(({comments}) => Array.isArray(comments))).toBe(true);
-    expect(posts.every(({likes}) => Array.isArray(likes))).toBe(true);
- 
+    expect(posts.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
+    expect(posts.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
+    expect(posts.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
+    expect(posts.every(({ mediaFiles }) => Array.isArray(mediaFiles))).toBe(true);
+    expect(posts.every(({ comments }) => Array.isArray(comments))).toBe(true);
+    expect(posts.every(({ likes }) => Array.isArray(likes))).toBe(true);
+
     // Checking objects in mediaFiles/comments/likes/owner
-    const likesContainsObjects = posts.some(({likes}) =>
-    likes.every(
-      (like) =>
-        typeof like === "object" &&
-        typeof like._id === "string" &&
-        typeof like.type === "string" &&
-        typeof like.createdAt === "string" &&
-        typeof like.updatedAt === "string" &&
-        typeof like.owner === "object"
-    )
+    const likesContainsObjects = posts.some(({ likes }) =>
+      likes.every(
+        (like) =>
+          typeof like === "object" &&
+          typeof like._id === "string" &&
+          typeof like.type === "string" &&
+          typeof like.createdAt === "string" &&
+          typeof like.updatedAt === "string" &&
+          typeof like.owner === "object"
+      )
     );
-    const commentsContainsObjects = posts.some(({comments}) =>
-        comments.every(
-          (comment) =>
-            typeof comment === "object" &&
-            typeof comment._id === "string" &&
-            typeof comment.description === "string" &&
-            typeof comment.likes === "object" &&
-            typeof comment.mediaFiles === "object" &&
-            typeof comment.createdAt === "string" &&
-            typeof comment.updatedAt === "string" &&
-            typeof comment.owner === "object"
-        )
+    const commentsContainsObjects = posts.some(({ comments }) =>
+      comments.every(
+        (comment) =>
+          typeof comment === "object" &&
+          typeof comment._id === "string" &&
+          typeof comment.description === "string" &&
+          typeof comment.likes === "object" &&
+          typeof comment.mediaFiles === "object" &&
+          typeof comment.createdAt === "string" &&
+          typeof comment.updatedAt === "string" &&
+          typeof comment.owner === "object"
+      )
     );
-    const mediaFilesContainsObjects = posts.some(({mediaFiles}) =>
-        mediaFiles.every(
-          (media) =>
-            typeof media === "object" &&
-            typeof media._id === "string" &&
-            typeof media.type === "string" &&
-            typeof media.url === "string" &&
-            typeof media.providerPublicId === "string" &&
-            typeof media.createdAt === "string" &&
-            typeof media.updatedAt === "string" &&
-            typeof media.owner === "object"
-        )
+    const mediaFilesContainsObjects = posts.some(({ mediaFiles }) =>
+      mediaFiles.every(
+        (media) =>
+          typeof media === "object" &&
+          typeof media._id === "string" &&
+          typeof media.type === "string" &&
+          typeof media.url === "string" &&
+          typeof media.providerPublicId === "string" &&
+          typeof media.createdAt === "string" &&
+          typeof media.updatedAt === "string" &&
+          typeof media.owner === "object"
+      )
     );
 
-      expect(likesContainsObjects).toBe(true);
-      expect(commentsContainsObjects).toBe(true);
-      expect(mediaFilesContainsObjects).toBe(true);
+    expect(likesContainsObjects).toBe(true);
+    expect(commentsContainsObjects).toBe(true);
+    expect(mediaFilesContainsObjects).toBe(true);
   }, 10000);
 
   test("GET /favorite posts with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/favorites/posts`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
-    const {status, body} = res
+    const { status, body } = res;
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
@@ -292,7 +292,7 @@ describe("Favorites Test Suite", () => {
     const res = await request(app)
       .get(`/favorites/posts?page=1&perPage=10`)
       .set("Authorization", `Bearer ${WRONG_TOKEN}`);
-      const {status, body} = res
+    const { status, body } = res;
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
@@ -302,7 +302,7 @@ describe("Favorites Test Suite", () => {
     const res = await request(app)
       .delete(`/favorites/posts/remove/${postId}`)
       .set("Authorization", `Bearer ${WRONG_TOKEN}`);
-      const {status, body} = res
+    const { status, body } = res;
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
@@ -312,7 +312,7 @@ describe("Favorites Test Suite", () => {
     const res = await request(app)
       .delete(`/favorites/posts/remove/123456789123456789123456`)
       .set("Authorization", `Bearer ${TEST_TOKEN}`);
-      const {status, body} = res
+    const { status, body } = res;
 
     expect(status).toBe(404);
     expect(typeof body.message).toBe("string") && expect(body.message).toBe("Post ID is invalid or not found");
@@ -322,8 +322,8 @@ describe("Favorites Test Suite", () => {
     const res = await request(app)
       .delete(`/favorites/posts/remove/${postId}`)
       .set("Authorization", `Bearer ${TEST_TOKEN}`);
-    const {status, message, data} = res.body
-    const {post} = data
+    const { status, message, data } = res.body;
+    const { post } = data;
 
     expect(res.status).toBe(200);
     expect(typeof status).toBe("string");

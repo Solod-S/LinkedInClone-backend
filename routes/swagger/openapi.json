@@ -10232,76 +10232,13 @@
                   },
                   "mediaFiles": {
                     "type": "array",
-                    "description": "Array of media files associated with the post",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "_id": {
-                          "type": "string",
-                          "description": "Media file's id",
-                          "example": "6457a79b23576cf0aa13adec"
-                        },
-                        "type": {
-                          "type": "string",
-                          "description": "Media file's type",
-                          "example": "img"
-                        },
-                        "url": {
-                          "type": "string",
-                          "description": "Media file's url",
-                          "example": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
-                        },
-                        "providerPublicId": {
-                          "type": "string",
-                          "description": "Cloudinary id",
-                          "example": "mnf8tsnyxfhztfemh4dq"
-                        },
-                        "owner": {
-                          "type": "string",
-                          "description": "User's id",
-                          "example": "6452b1d7f6a29d84c5b089fb"
-                        },
-                        "postId": {
-                          "type": "string",
-                          "description": "Post's id",
-                          "example": "64578c032ce9cc5ad13e723a"
-                        },
-                        "postedAtHuman": {
-                          "type": "string",
-                          "description": "Post's time",
-                          "example": "43 minutes ago"
-                        }
-                      }
-                    }
+                    "description": "MediaFiles",
+                    "example": []
                   },
                   "skills": {
                     "type": "array",
-                    "description": "Array of skills",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "_id": {
-                          "type": "string",
-                          "description": "Skill's id",
-                          "example": "6457a79b23576cf0aa13adec"
-                        },
-                        "Skill": {
-                          "type": "string",
-                          "description": "Skill's name",
-                          "example": "React"
-                        },
-                        "createdAt": {
-                          "type": "string",
-                          "description": "Created at",
-                          "example": "2023-05-13T14:21:07.523Z"
-                        },
-                        "updatedAt": {
-                          "type": "string",
-                          "description": "Updated at",
-                          "example": "2023-05-14T14:21:07.523Z"
-                        }
-                      }
-                    }
+                    "description": "Skills",
+                    "example": []
                   },
                   "postedAtHuman": {
                     "type": "string",
@@ -10424,9 +10361,14 @@
                             "description": "User's id",
                             "example": "6452b1d7f6a29d84c5b089fb"
                           },
-                          "postId": {
+                          "location": {
                             "type": "string",
-                            "description": "Post's id",
+                            "description": "location",
+                            "example": "experience"
+                          },
+                          "experienceId": {
+                            "type": "string",
+                            "description": "Experience's id",
                             "example": "64578c032ce9cc5ad13e723a"
                           },
                           "postedAtHuman": {
@@ -10585,9 +10527,14 @@
                           "description": "User's id",
                           "example": "6452b1d7f6a29d84c5b089fb"
                         },
-                        "postId": {
+                        "location": {
                           "type": "string",
-                          "description": "Post's id",
+                          "description": "location",
+                          "example": "experience"
+                        },
+                        "experienceId": {
+                          "type": "string",
+                          "description": "Experience's id",
                           "example": "64578c032ce9cc5ad13e723a"
                         },
                         "postedAtHuman": {
@@ -10978,40 +10925,30 @@
                 "items": {
                   "type": "object",
                   "properties": {
-                    "_id": {
+                    "school": {
                       "type": "string",
-                      "description": "Experience's id",
-                      "example": "342831f346155749a2b6e914"
+                      "description": "School's name",
+                      "example": "Best school"
                     },
-                    "owner": {
+                    "degree": {
                       "type": "string",
-                      "description": "Owner's id",
-                      "example": "645fbdd9564a390fac4e7015"
+                      "description": "Degree",
+                      "example": "Master's degree"
                     },
-                    "companyName": {
+                    "fieldOfStudy": {
                       "type": "string",
-                      "description": "Company name",
-                      "example": "Good Company"
+                      "description": "Field of study",
+                      "example": "Foreign Languages and Literatures, General"
                     },
-                    "employmentType": {
+                    "activitiesAndSocieties": {
                       "type": "string",
-                      "description": "Employment type",
-                      "example": "Full-time"
+                      "description": "Activities and societies",
+                      "example": ""
                     },
-                    "position": {
+                    "description": {
                       "type": "string",
-                      "description": "Position",
-                      "example": "Front End"
-                    },
-                    "location": {
-                      "type": "string",
-                      "description": "Location",
-                      "example": "Ukraine, Kiev"
-                    },
-                    "locationType": {
-                      "type": "string",
-                      "description": "Location type",
-                      "example": "Hybrid"
+                      "description": "Description",
+                      "example": ""
                     },
                     "startDate": {
                       "type": "string",
@@ -11054,9 +10991,14 @@
                             "description": "User's id",
                             "example": "6452b1d7f6a29d84c5b089fb"
                           },
-                          "postId": {
+                          "location": {
                             "type": "string",
-                            "description": "Post's id",
+                            "description": "location",
+                            "example": "education"
+                          },
+                          "educationId": {
+                            "type": "string",
+                            "description": "Education's id",
                             "example": "64578c032ce9cc5ad13e723a"
                           },
                           "postedAtHuman": {
@@ -11081,7 +11023,7 @@
                           "Skill": {
                             "type": "string",
                             "description": "Skill's name",
-                            "example": "React"
+                            "example": "English"
                           },
                           "createdAt": {
                             "type": "string",
@@ -11095,21 +11037,6 @@
                           }
                         }
                       }
-                    },
-                    "postedAtHuman": {
-                      "type": "string",
-                      "description": "Posted at human",
-                      "example": "33 seconds ago"
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "description": "Created at",
-                      "example": "2023-05-13T14:21:07.523Z"
-                    },
-                    "updatedAt": {
-                      "type": "string",
-                      "description": "Updated at",
-                      "example": "2023-05-14T14:21:07.523Z"
                     }
                   }
                 }
@@ -11186,13 +11113,81 @@
                   },
                   "mediaFiles": {
                     "type": "array",
-                    "description": "MediaFiles",
-                    "example": []
+                    "description": "Array of media files associated with the post",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "description": "Media file's id",
+                          "example": "6457a79b23576cf0aa13adec"
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "Media file's type",
+                          "example": "img"
+                        },
+                        "url": {
+                          "type": "string",
+                          "description": "Media file's url",
+                          "example": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                        },
+                        "providerPublicId": {
+                          "type": "string",
+                          "description": "Cloudinary id",
+                          "example": "mnf8tsnyxfhztfemh4dq"
+                        },
+                        "owner": {
+                          "type": "string",
+                          "description": "User's id",
+                          "example": "6452b1d7f6a29d84c5b089fb"
+                        },
+                        "location": {
+                          "type": "string",
+                          "description": "location",
+                          "example": "education"
+                        },
+                        "educationId": {
+                          "type": "string",
+                          "description": "Education's id",
+                          "example": "64578c032ce9cc5ad13e723a"
+                        },
+                        "postedAtHuman": {
+                          "type": "string",
+                          "description": "Post's time",
+                          "example": "43 minutes ago"
+                        }
+                      }
+                    }
                   },
                   "skills": {
                     "type": "array",
-                    "description": "Skills",
-                    "example": []
+                    "description": "Array of skills",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "description": "Skill's id",
+                          "example": "6457a79b23576cf0aa13adec"
+                        },
+                        "Skill": {
+                          "type": "string",
+                          "description": "Skill's name",
+                          "example": "English"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "description": "Created at",
+                          "example": "2023-05-13T14:21:07.523Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "description": "Updated at",
+                          "example": "2023-05-14T14:21:07.523Z"
+                        }
+                      }
+                    }
                   },
                   "postedAtHuman": {
                     "type": "string",

@@ -46,7 +46,7 @@ const educationsSchema = Schema(
 
 educationsSchema.post("save", mongooseErrorHandler);
 
-const Education = model("educations", educationsSchema);
+const Education = model("Education", educationsSchema);
 
 const createEducationSchema = Joi.object({
   school: Joi.string().required(),

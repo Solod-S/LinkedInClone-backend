@@ -25,7 +25,7 @@ describe("User Test Suite", () => {
     email = chance.email();
     await mongoose.connect(DB_HOST);
     server = app.listen(3001, () => {});
-  }, 10000);
+  }, 15000);
 
   afterAll(async () => {
     await mongoose.disconnect();
@@ -42,7 +42,7 @@ describe("User Test Suite", () => {
         surname: "Solod",
       })
       .set("Accept", "application/json");
-    const {status, message, data} = res.body
+    const { status, message, data } = res.body;
 
     expect(res.status).toBe(201);
     expect(typeof status).toBe("string");
@@ -197,8 +197,8 @@ describe("User Test Suite", () => {
         password: VALID_PASS,
       })
       .set("Accept", "application/json");
-    const {status, message, data} = res.body
-    const {user} = data
+    const { status, message, data } = res.body;
+    const { user } = data;
 
     token = data.token;
     userId = user._id;
@@ -351,8 +351,8 @@ describe("User Test Suite", () => {
         newPassword: VALID_PASS,
       })
       .set("Authorization", `Bearer ${token}`);
-    const {status, message, data} = res.body
-    const {user} = data
+    const { status, message, data } = res.body;
+    const { user } = data;
 
     expect(res.status).toBe(200);
     expect(typeof data).toBe("object");
@@ -422,8 +422,8 @@ describe("User Test Suite", () => {
         passssssword: VALID_PASS,
       })
       .set("Accept", "application/json");
-      const {status} = res
-      const {message} = res.body
+    const { status } = res;
+    const { message } = res.body;
 
     expect(status).toBe(400);
     expect(message).toEqual('"password" is required');
@@ -436,8 +436,8 @@ describe("User Test Suite", () => {
         password: VALID_PASS,
       })
       .set("Accept", "application/json");
-    const {status, message, data} = res.body
-    const {user} = data
+    const { status, message, data } = res.body;
+    const { user } = data;
 
     expect(res.status).toBe(200);
     expect(typeof status).toBe("string");
@@ -475,8 +475,8 @@ describe("User Test Suite", () => {
         password: VALID_PASS,
       })
       .set("Accept", "application/json");
-    const {status} = res
-    const {message} = res.body  
+    const { status } = res;
+    const { message } = res.body;
 
     expect(status).toBe(404);
     expect(message).toEqual("User not found");
@@ -484,8 +484,8 @@ describe("User Test Suite", () => {
 
   test("GET /current user data with valid token, should return 200 status and valid user data", async () => {
     const res = await request(app).get(`/users/current`).set("Authorization", `Bearer ${token}`);
-    const {status, message, data} = res.body
-    const {user} = data
+    const { status, message, data } = res.body;
+    const { user } = data;
 
     expect(res.status).toBe(200);
     expect(typeof status).toBe("string");
@@ -537,8 +537,8 @@ describe("User Test Suite", () => {
 
   test("GET /users(s) by search query with valid token, should return 200 status and valid user(s) data", async () => {
     const res = await request(app).get(`/users/search?search=111aSDSA2a`).set("Authorization", `Bearer ${token}`);
-    const {status, message} = res.body
-    
+    const { status, message } = res.body;
+
     expect(res.status).toBe(200);
     expect(typeof status).toBe("string");
     expect(status).toEqual("success");
@@ -566,8 +566,8 @@ describe("User Test Suite", () => {
 
   test("GET /user by id with valid token, should return 200 status and valid user data", async () => {
     const res = await request(app).get(`/users/${userId}`).set("Authorization", `Bearer ${token}`);
-    const {status, message, data} = res.body
-    const {user, posts} = data
+    const { status, message, data } = res.body;
+    const { user, posts } = data;
 
     expect(res.status).toBe(200);
     expect(typeof status).toBe("string");
@@ -597,14 +597,14 @@ describe("User Test Suite", () => {
     expect(user.languages instanceof Object).toBe(true);
     expect(typeof user.headLine).toBe("string");
     expect(Array.isArray(posts)).toBe(true);
-    expect(posts.every(({description}) => typeof description === "string")).toBe(true);
-   expect(posts.every(({likes}) => Array.isArray(likes))).toBe(true);
-    expect(posts.every(({comments}) => Array.isArray(comments))).toBe(true);
-    expect(posts.every(({mediaFiles}) => Array.isArray(mediaFiles))).toBe(true);
-    expect(posts.every(({mediaFiles}) => Array.isArray(mediaFiles))).toBe(true);
-   expect(
+    expect(posts.every(({ description }) => typeof description === "string")).toBe(true);
+    expect(posts.every(({ likes }) => Array.isArray(likes))).toBe(true);
+    expect(posts.every(({ comments }) => Array.isArray(comments))).toBe(true);
+    expect(posts.every(({ mediaFiles }) => Array.isArray(mediaFiles))).toBe(true);
+    expect(posts.every(({ mediaFiles }) => Array.isArray(mediaFiles))).toBe(true);
+    expect(
       posts.every(
-        ({owner}) =>
+        ({ owner }) =>
           typeof owner === "object" &&
           typeof owner._id === "string" &&
           typeof owner.name === "string" &&
@@ -627,8 +627,8 @@ describe("User Test Suite", () => {
           typeof owner.other3 === "string"
       )
     ).toBe(true);
-    expect(posts.every(({_id }) => typeof _id === "string")).toBe(true);
-       expect(posts.every(({postedAtHuman}) => typeof postedAtHuman === "string")).toBe(true);
+    expect(posts.every(({ _id }) => typeof _id === "string")).toBe(true);
+    expect(posts.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
   }, 10000);
 
   test("GET /users with invalid token, should return 401 status", async () => {
@@ -651,8 +651,8 @@ describe("User Test Suite", () => {
 
     // Make request to API endpoint with Authorization header
     const res = await request(app).get("/users").set("Authorization", `Bearer ${token}`);
-    const {status, message, data} = res.body
-    const {users} = data
+    const { status, message, data } = res.body;
+    const { users } = data;
 
     // Check status code and response format
     expect(res.status).toBe(200);
@@ -704,8 +704,8 @@ describe("User Test Suite", () => {
 
     // Make request to API endpoint with Authorization header
     const res = await request(app).get("/users?page=1&perPage=2").set("Authorization", `Bearer ${token}`);
-    const {status, message, data} = res.body
-    const {users} = data
+    const { status, message, data } = res.body;
+    const { users } = data;
 
     // Check status code and response format
     expect(res.status).toBe(200);
@@ -780,7 +780,7 @@ describe("User Test Suite", () => {
 
   test("DELETE /delete user with invalid token, should return 401 status", async () => {
     const res = await request(app).delete(`/users/remove`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
-    const {status, body} = res
+    const { status, body } = res;
 
     expect(status).toBe(401);
     expect(typeof body.message).toBe("string");
@@ -788,7 +788,7 @@ describe("User Test Suite", () => {
 
   test("DELETE /delete user without token, should return 401 status", async () => {
     const res = await request(app).delete(`/users/remove`);
-    const {status, body} = res
+    const { status, body } = res;
 
     expect(status).toBe(401);
     expect(typeof body.message).toBe("string");
@@ -802,14 +802,13 @@ describe("User Test Suite", () => {
         password: VALID_PASS,
       })
       .set("Accept", "application/json");
-    const {body} = userData
+    const { body } = userData;
 
     token = body.data.token;
-   
 
     const res = await request(app).delete(`/users/remove`).set("Authorization", `Bearer ${token}`);
-    const {status, message, data} = res.body
-    const {user} = data
+    const { status, message, data } = res.body;
+    const { user } = data;
 
     expect(res.status).toBe(200);
     expect(typeof status).toBe("string");
@@ -839,8 +838,7 @@ describe("User Test Suite", () => {
     expect(user.languages instanceof Object).toBe(true);
     expect(typeof user.headLine).toBe("string");
 
-    const deletedUser = await User.findById({ _id: userId })
+    const deletedUser = await User.findById({ _id: userId });
     expect(deletedUser).toBe(null);
-
   }, 10000);
 });
