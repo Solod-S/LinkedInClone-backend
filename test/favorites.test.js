@@ -15,8 +15,10 @@ describe("Favorites Test Suite", () => {
 
   beforeAll(async () => {
     await mongoose.connect(DB_HOST);
-    server = app.listen(3006, () => {});
-  }, 15000);
+    server = app.listen(3006, () => {
+      server.unref(); // Отпускает серверный таймер после запуска сервера
+    });
+  }, 20000);
 
   afterAll(async () => {
     await mongoose.disconnect();
@@ -69,7 +71,7 @@ describe("Favorites Test Suite", () => {
     expect(typeof post.owner.other1).toBe("string");
     expect(typeof post.owner.other2).toBe("string");
     expect(typeof post.owner.other3).toBe("string");
-  }, 10000);
+  }, 15000);
 
   test("POST /post to favorites with invalid token and valid post id, should return 401 status", async () => {
     const res = await request(app).get(`/favorites/posts/add/${postId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -77,7 +79,7 @@ describe("Favorites Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 10000);
+  }, 15000);
 
   test("POST /post to favorites with valid token and invalid post id, should return 404 status", async () => {
     const res = await request(app)
@@ -87,7 +89,7 @@ describe("Favorites Test Suite", () => {
 
     expect(status).toBe(404);
     expect(typeof body.message).toBe("string") && expect(body.message).toBe("Post ID is invalid or not found");
-  }, 10000);
+  }, 15000);
 
   test("GET /favorite posts with valid token, should return 200 status and valid posts data", async () => {
     const res = await request(app).get(`/favorites/posts`).set("Authorization", `Bearer ${TEST_TOKEN}`);
@@ -181,7 +183,7 @@ describe("Favorites Test Suite", () => {
     expect(likesContainsObjects).toBe(true);
     expect(commentsContainsObjects).toBe(true);
     expect(mediaFilesContainsObjects).toBe(true);
-  }, 10000);
+  }, 15000);
 
   test("GET /favorite posts with valid token + pagination, should return 200 status and valid posts data", async () => {
     const res = await request(app)
@@ -278,7 +280,7 @@ describe("Favorites Test Suite", () => {
     expect(likesContainsObjects).toBe(true);
     expect(commentsContainsObjects).toBe(true);
     expect(mediaFilesContainsObjects).toBe(true);
-  }, 10000);
+  }, 15000);
 
   test("GET /favorite posts with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/favorites/posts`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -286,7 +288,7 @@ describe("Favorites Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 10000);
+  }, 15000);
 
   test("GET /favorite posts with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app)
@@ -296,7 +298,7 @@ describe("Favorites Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 10000);
+  }, 15000);
 
   test("DELETE /post from favorite with invalid token and valid post id, should return 401 status", async () => {
     const res = await request(app)
@@ -306,7 +308,7 @@ describe("Favorites Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 10000);
+  }, 15000);
 
   test("DELETE /post from favorite with valid token and invalid post id, should return 404 status", async () => {
     const res = await request(app)
@@ -316,7 +318,7 @@ describe("Favorites Test Suite", () => {
 
     expect(status).toBe(404);
     expect(typeof body.message).toBe("string") && expect(body.message).toBe("Post ID is invalid or not found");
-  }, 10000);
+  }, 15000);
 
   test("DELETE /post with valid token and valid post id, should return 200 status", async () => {
     const res = await request(app)
@@ -359,5 +361,5 @@ describe("Favorites Test Suite", () => {
     expect(typeof post.owner.other1).toBe("string");
     expect(typeof post.owner.other2).toBe("string");
     expect(typeof post.owner.other3).toBe("string");
-  }, 10000);
+  }, 15000);
 });

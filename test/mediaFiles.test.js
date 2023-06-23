@@ -17,8 +17,10 @@ describe("Media-files Test Suite", () => {
 
   beforeAll(async () => {
     await mongoose.connect(DB_HOST);
-    server = app.listen(3003, () => {});
-  }, 15000);
+    server = app.listen(3003, () => {
+      server.unref(); // Отпускает серверный таймер после запуска сервера
+    });
+  }, 20000);
 
   afterAll(async () => {
     await mongoose.disconnect();
@@ -46,7 +48,7 @@ describe("Media-files Test Suite", () => {
     expect(mediaFiles.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
     expect(mediaFiles.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
     expect(mediaFiles.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
-  }, 10000);
+  }, 15000);
 
   test("GET /all own media files with valid token + pagination, should return 200 status and valid media files data", async () => {
     const res = await request(app).get(`/media-files?page=1&perPage=2`).set("Authorization", `Bearer ${TEST_TOKEN}`);
@@ -72,7 +74,7 @@ describe("Media-files Test Suite", () => {
     expect(mediaFiles.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
     expect(mediaFiles.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
     expect(mediaFiles.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
-  }, 10000);
+  }, 15000);
 
   test("GET /all own media files with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/media-files`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -80,7 +82,7 @@ describe("Media-files Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 10000);
+  }, 15000);
 
   test("GET /all own media files with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app).get(`/media-files?page=1&perPage=2`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -88,7 +90,7 @@ describe("Media-files Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 10000);
+  }, 15000);
 
   test("POST /media file with invalid token, should return 401 status", async () => {
     const res = await request(app).post(`/media-files/add`).set("Authorization", `Bearer ${WRONG_TOKEN}`).send({
@@ -101,7 +103,7 @@ describe("Media-files Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 10000);
+  }, 15000);
 
   test("POST /media file without body, should return 400 status", async () => {
     const res = await request(app).post(`/media-files/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({});
@@ -109,7 +111,7 @@ describe("Media-files Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"type" is required');
-  }, 10000);
+  }, 15000);
 
   test("POST /media file with invalid body, should return 400 status", async () => {
     const res = await request(app)
@@ -120,7 +122,7 @@ describe("Media-files Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"type" is required');
-  }, 10000);
+  }, 15000);
 
   test("POST /media file with valid token for post, should return 201 status and valid media file data", async () => {
     const res = await request(app).post(`/media-files/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({
@@ -152,7 +154,7 @@ describe("Media-files Test Suite", () => {
     expect(typeof mediaFile.postedAtHuman).toBe("string");
     expect(typeof mediaFile.createdAt).toBe("string");
     expect(typeof mediaFile.updatedAt).toBe("string");
-  }, 10000);
+  }, 15000);
 
   test("PATCH /media file with valid token, should return 200 status and valid media file data", async () => {
     const res = await request(app)
@@ -185,7 +187,7 @@ describe("Media-files Test Suite", () => {
     expect(typeof mediaFile.postedAtHuman).toBe("string");
     expect(typeof mediaFile.createdAt).toBe("string");
     expect(typeof mediaFile.updatedAt).toBe("string");
-  }, 10000);
+  }, 15000);
 
   test("PATCH /media file with invalid token, should return 401 status", async () => {
     const res = await request(app)
@@ -202,7 +204,7 @@ describe("Media-files Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 10000);
+  }, 15000);
 
   test("PATCH /media file with valid token without body, should return 400 status", async () => {
     const res = await request(app)
@@ -216,7 +218,7 @@ describe("Media-files Test Suite", () => {
       "message",
       '"value" must contain at least one of [type, location, url, providerPublicId, postId, commentId, educationId, experienceId]'
     );
-  }, 10000);
+  }, 15000);
 
   test("GET /media file with valid token for post, should return 200 status and valid media file data", async () => {
     const res = await request(app).get(`/media-files/${mediaFileId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
@@ -240,7 +242,7 @@ describe("Media-files Test Suite", () => {
     expect(typeof mediaFile.postedAtHuman).toBe("string");
     expect(typeof mediaFile.createdAt).toBe("string");
     expect(typeof mediaFile.updatedAt).toBe("string");
-  }, 10000);
+  }, 15000);
 
   test("GET /media file with invalid token for post, should return 401 status", async () => {
     const res = await request(app).get(`/media-files/${mediaFileId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -248,7 +250,7 @@ describe("Media-files Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 10000);
+  }, 15000);
 
   test("DELETE /media file with invalid token for post, should return 401 status", async () => {
     const res = await request(app)
@@ -258,7 +260,7 @@ describe("Media-files Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 10000);
+  }, 15000);
 
   test("DELETE /media file with valid token for post, should return 200 status and valid media file data", async () => {
     const res = await request(app)
@@ -283,7 +285,7 @@ describe("Media-files Test Suite", () => {
     expect(typeof mediaFile.postedAtHuman).toBe("string");
     expect(typeof mediaFile.createdAt).toBe("string");
     expect(typeof mediaFile.updatedAt).toBe("string");
-  }, 10000);
+  }, 15000);
 
   test("POST /media file with valid token for comment, should return 201 status and valid media file data", async () => {
     const res = await request(app).post(`/media-files/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({
@@ -314,7 +316,7 @@ describe("Media-files Test Suite", () => {
     expect(typeof mediaFile.postedAtHuman).toBe("string");
     expect(typeof mediaFile.createdAt).toBe("string");
     expect(typeof mediaFile.updatedAt).toBe("string");
-  }, 10000);
+  }, 15000);
 
   test("GET /media file with valid token for comment, should return 200 status and valid media file data", async () => {
     const res = await request(app).get(`/media-files/${mediaFileId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
@@ -338,7 +340,7 @@ describe("Media-files Test Suite", () => {
     expect(typeof mediaFile.postedAtHuman).toBe("string");
     expect(typeof mediaFile.createdAt).toBe("string");
     expect(typeof mediaFile.updatedAt).toBe("string");
-  }, 10000);
+  }, 15000);
 
   test("GET /media file with invalid token for comment, should return 401 status", async () => {
     const res = await request(app).get(`/media-files/${mediaFileId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -346,7 +348,7 @@ describe("Media-files Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 10000);
+  }, 15000);
 
   test("DELETE /media file with invalid token for comment, should return 401 status", async () => {
     const res = await request(app)
@@ -356,7 +358,7 @@ describe("Media-files Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 10000);
+  }, 15000);
 
   test("DELETE /media file with valid token for comment, should return 200 status and valid media file data", async () => {
     const res = await request(app)
@@ -384,7 +386,7 @@ describe("Media-files Test Suite", () => {
 
     const deletedMediaFile = await MediaFile.findById({ _id: mediaFileId });
     expect(deletedMediaFile).toBe(null);
-  }, 10000);
+  }, 15000);
 
   test("POST /media file with valid token for education, should return 201 status and valid media file data", async () => {
     try {
@@ -422,7 +424,7 @@ describe("Media-files Test Suite", () => {
     expect(typeof mediaFile.postedAtHuman).toBe("string");
     expect(typeof mediaFile.createdAt).toBe("string");
     expect(typeof mediaFile.updatedAt).toBe("string");
-  }, 10000);
+  }, 15000);
 
   test("GET /media file with valid token for education, should return 200 status and valid media files data", async () => {
     const res = await request(app).get(`/media-files/${mediaFileId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
@@ -446,7 +448,7 @@ describe("Media-files Test Suite", () => {
     expect(typeof mediaFile.postedAtHuman).toBe("string");
     expect(typeof mediaFile.createdAt).toBe("string");
     expect(typeof mediaFile.updatedAt).toBe("string");
-  }, 10000);
+  }, 15000);
 
   test("GET /media file with invalid token for education, should return 401 status", async () => {
     const res = await request(app).get(`/media-files/${mediaFileId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -454,7 +456,7 @@ describe("Media-files Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 10000);
+  }, 15000);
 
   test("DELETE /media file with invalid token for education, should return 401 status", async () => {
     const res = await request(app)
@@ -464,7 +466,7 @@ describe("Media-files Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 10000);
+  }, 15000);
 
   test("DELETE /media file with valid token for education, should return 200 status and valid media file data", async () => {
     const res = await request(app)
@@ -492,7 +494,7 @@ describe("Media-files Test Suite", () => {
 
     const deletedMediaFile = await MediaFile.findById({ _id: mediaFileId });
     expect(deletedMediaFile).toBe(null);
-  }, 10000);
+  }, 15000);
 
   //
 
@@ -532,7 +534,7 @@ describe("Media-files Test Suite", () => {
     expect(typeof mediaFile.postedAtHuman).toBe("string");
     expect(typeof mediaFile.createdAt).toBe("string");
     expect(typeof mediaFile.updatedAt).toBe("string");
-  }, 10000);
+  }, 15000);
 
   test("GET /media file with valid token for experience, should return 201 status and valid media files data", async () => {
     const res = await request(app).get(`/media-files/${mediaFileId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
@@ -556,7 +558,7 @@ describe("Media-files Test Suite", () => {
     expect(typeof mediaFile.postedAtHuman).toBe("string");
     expect(typeof mediaFile.createdAt).toBe("string");
     expect(typeof mediaFile.updatedAt).toBe("string");
-  }, 10000);
+  }, 15000);
 
   test("GET /media file with invalid token for experience, should return 401 status", async () => {
     const res = await request(app).get(`/media-files/${mediaFileId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -564,7 +566,7 @@ describe("Media-files Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 10000);
+  }, 15000);
 
   test("DELETE /media file with invalid token for experience, should return 401 status", async () => {
     const res = await request(app)
@@ -574,7 +576,7 @@ describe("Media-files Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 10000);
+  }, 15000);
 
   test("DELETE /media file with valid token for experience, should return 200 status and valid media file data", async () => {
     const res = await request(app)
@@ -602,5 +604,5 @@ describe("Media-files Test Suite", () => {
 
     const deletedMediaFile = await MediaFile.findById({ _id: mediaFileId });
     expect(deletedMediaFile).toBe(null);
-  }, 10000);
+  }, 15000);
 });

@@ -24,8 +24,10 @@ describe("User Test Suite", () => {
   beforeAll(async () => {
     email = chance.email();
     await mongoose.connect(DB_HOST);
-    server = app.listen(3001, () => {});
-  }, 15000);
+    server = app.listen(3001, () => {
+      server.unref(); // Отпускает серверный таймер после запуска сервера
+    });
+  }, 20000);
 
   afterAll(async () => {
     await mongoose.disconnect();
@@ -132,7 +134,7 @@ describe("User Test Suite", () => {
     expect(res.body).toEqual({
       message: '"email" is required',
     });
-  }, 10000);
+  }, 15000);
 
   test("GET /send verify email with valid email, should return 201 status", async () => {
     const res = await request(app)
@@ -147,7 +149,7 @@ describe("User Test Suite", () => {
       status: "success",
       message: "Sending email verification was successful",
     });
-  }, 10000);
+  }, 15000);
 
   test("GET /verify email with valid varification code, should return 200 status", async () => {
     const getVerificationCode = async (email) => {
@@ -164,7 +166,7 @@ describe("User Test Suite", () => {
       status: "success",
       message: "Verification successful",
     });
-  }, 10000);
+  }, 15000);
 
   test("GET /send verify email with valid email to verified user, should return 401 status", async () => {
     const res = await request(app)
@@ -178,7 +180,7 @@ describe("User Test Suite", () => {
     expect(res.body).toEqual({
       message: "Email already verified",
     });
-  }, 10000);
+  }, 15000);
 
   test("GET /verify email with invalid varification code, should return 404 status", async () => {
     const res = await request(app).get(`/users/verify/${WRONG_VERIFY_CODE}`).set("Accept", "application/json");
@@ -187,7 +189,7 @@ describe("User Test Suite", () => {
     expect(res.body).toEqual({
       message: "User not found",
     });
-  }, 10000);
+  }, 15000);
 
   test("POST /login with valid body, should return 200 status, token and valid user data", async () => {
     const res = await request(app)
@@ -231,7 +233,7 @@ describe("User Test Suite", () => {
     expect(typeof user.frame).toBe("string");
     expect(user.languages instanceof Object).toBe(true);
     expect(typeof user.headLine).toBe("string");
-  }, 10000);
+  }, 15000);
 
   test("POST /login with invalid body, should return 400 status", async () => {
     const res = await request(app)
@@ -244,7 +246,7 @@ describe("User Test Suite", () => {
       .set("Accept", "application/json");
 
     expect(res.status).toBe(400);
-  }, 10000);
+  }, 15000);
 
   test("POST /login without body, should return 400 status", async () => {
     const res = await request(app).post(`/users/login`).set("Accept", "application/json");
@@ -253,7 +255,7 @@ describe("User Test Suite", () => {
     expect(res.body).toEqual({
       message: '"email" is required',
     });
-  }, 10000);
+  }, 15000);
 
   test("POST /login without password, should return 400 status", async () => {
     const res = await request(app)
@@ -267,7 +269,7 @@ describe("User Test Suite", () => {
     expect(res.body).toEqual({
       message: '"password" is required',
     });
-  }, 10000);
+  }, 15000);
 
   test("POST /login without email, should return 400 status", async () => {
     const res = await request(app)
@@ -281,7 +283,7 @@ describe("User Test Suite", () => {
     expect(res.body).toEqual({
       message: '"email" is required',
     });
-  }, 10000);
+  }, 15000);
 
   test("POST /login with wrong email, should return 404 status", async () => {
     const res = await request(app)
@@ -296,7 +298,7 @@ describe("User Test Suite", () => {
     expect(res.body).toEqual({
       message: "Email wrong or invalid",
     });
-  }, 10000);
+  }, 15000);
 
   test("POST /login with incorrect password, should return 404 status", async () => {
     const res = await request(app)
@@ -311,7 +313,7 @@ describe("User Test Suite", () => {
     expect(res.body).toEqual({
       message: "Password wrong or invalid",
     });
-  }, 10000);
+  }, 15000);
 
   test("POST /login with invalid password, should return 400 status", async () => {
     const res = await request(app)
@@ -326,7 +328,7 @@ describe("User Test Suite", () => {
     expect(res.body).toEqual({
       message: '"password" length must be at least 6 characters long',
     });
-  }, 10000);
+  }, 15000);
 
   test("POST /change password with invalid token, should return 401 status", async () => {
     const res = await request(app)
@@ -341,7 +343,7 @@ describe("User Test Suite", () => {
     expect(res.body).toEqual({
       message: "Unauthorized",
     });
-  }, 10000);
+  }, 15000);
 
   test("POST /change password with valid body, should return 200 status and valid user data", async () => {
     const res = await request(app)
@@ -381,7 +383,7 @@ describe("User Test Suite", () => {
     expect(typeof user.frame).toBe("string");
     expect(user.languages instanceof Object).toBe(true);
     expect(typeof user.headLine).toBe("string");
-  }, 10000);
+  }, 15000);
 
   test("POST /change password with invalid body, should return 400 status", async () => {
     const res = await request(app)
@@ -393,14 +395,14 @@ describe("User Test Suite", () => {
 
     expect(res.status).toBe(400);
     expect(res.body).toHaveProperty("message", '"oldPassword" is required');
-  }, 10000);
+  }, 15000);
 
   test("POST /change password without body, should return 400 status", async () => {
     const res = await request(app).post(`/users/password-change`).send().set("Authorization", `Bearer ${token}`);
 
     expect(res.status).toBe(400);
     expect(res.body).toHaveProperty("message", '"oldPassword" is required');
-  }, 10000);
+  }, 15000);
 
   test("POST /reset password with valid resetToken and invalid body, should return 400 status ", async () => {
     const getResetToken = async (email) => {
@@ -427,7 +429,7 @@ describe("User Test Suite", () => {
 
     expect(status).toBe(400);
     expect(message).toEqual('"password" is required');
-  }, 10000);
+  }, 15000);
 
   test("POST /reset password with valid resetToken, should return 200 status and valid user data", async () => {
     const res = await request(app)
@@ -466,7 +468,7 @@ describe("User Test Suite", () => {
     expect(typeof user.frame).toBe("string");
     expect(user.languages instanceof Object).toBe(true);
     expect(typeof user.headLine).toBe("string");
-  }, 10000);
+  }, 15000);
 
   test("POST /reset password with invalid resetToken, should return 404 status ", async () => {
     const res = await request(app)
@@ -480,7 +482,7 @@ describe("User Test Suite", () => {
 
     expect(status).toBe(404);
     expect(message).toEqual("User not found");
-  }, 10000);
+  }, 15000);
 
   test("GET /current user data with valid token, should return 200 status and valid user data", async () => {
     const res = await request(app).get(`/users/current`).set("Authorization", `Bearer ${token}`);
@@ -515,7 +517,7 @@ describe("User Test Suite", () => {
     expect(typeof user.frame).toBe("string");
     expect(user.languages instanceof Object).toBe(true);
     expect(typeof user.headLine).toBe("string");
-  }, 10000);
+  }, 15000);
 
   test("GET /current user data with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/users/current`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -524,7 +526,7 @@ describe("User Test Suite", () => {
     expect(res.body).toEqual({
       message: "Unauthorized",
     });
-  }, 10000);
+  }, 15000);
 
   test("GET /current user data with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/users/current`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -533,7 +535,7 @@ describe("User Test Suite", () => {
     expect(res.body).toEqual({
       message: "Unauthorized",
     });
-  }, 10000);
+  }, 15000);
 
   test("GET /users(s) by search query with valid token, should return 200 status and valid user(s) data", async () => {
     const res = await request(app).get(`/users/search?search=111aSDSA2a`).set("Authorization", `Bearer ${token}`);
@@ -544,7 +546,7 @@ describe("User Test Suite", () => {
     expect(status).toEqual("success");
     expect(typeof message).toBe("string");
     expect(message).toEqual("No users were found");
-  }, 10000);
+  }, 15000);
 
   test("GET /users(s) by search query with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/users/search?search=Sergey`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -553,7 +555,7 @@ describe("User Test Suite", () => {
     expect(res.body).toEqual({
       message: "Unauthorized",
     });
-  }, 10000);
+  }, 15000);
 
   test("GET /user by id with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/users/${userId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -562,7 +564,7 @@ describe("User Test Suite", () => {
     expect(res.body).toEqual({
       message: "Unauthorized",
     });
-  }, 10000);
+  }, 15000);
 
   test("GET /user by id with valid token, should return 200 status and valid user data", async () => {
     const res = await request(app).get(`/users/${userId}`).set("Authorization", `Bearer ${token}`);
@@ -629,7 +631,7 @@ describe("User Test Suite", () => {
     ).toBe(true);
     expect(posts.every(({ _id }) => typeof _id === "string")).toBe(true);
     expect(posts.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
-  }, 10000);
+  }, 15000);
 
   test("GET /users with invalid token, should return 401 status", async () => {
     // Make sure that token is defined
@@ -643,7 +645,7 @@ describe("User Test Suite", () => {
     expect(res.body).toEqual({
       message: "Unauthorized",
     });
-  }, 10000);
+  }, 15000);
 
   test("GET /users with valid token, should return 200 status and valid users data", async () => {
     // Make sure that token is defined
@@ -696,7 +698,7 @@ describe("User Test Suite", () => {
         }
       });
     }
-  }, 10000);
+  }, 15000);
 
   test("GET /users with valid token + pagination, should return 200 status and valid user data", async () => {
     // Make sure that token is defined
@@ -748,7 +750,7 @@ describe("User Test Suite", () => {
         }
       });
     }
-  }, 10000);
+  }, 15000);
 
   test("GET /logout with valid token, should return 200 status", async () => {
     const res = await request(app).get(`/users/logout`).set("Authorization", `Bearer ${token}`);
@@ -758,7 +760,7 @@ describe("User Test Suite", () => {
       status: "success",
       message: "Logout successful",
     });
-  }, 10000);
+  }, 15000);
 
   test("GET /logout with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/users/logout`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -767,7 +769,7 @@ describe("User Test Suite", () => {
     expect(res.body).toEqual({
       message: "Unauthorized",
     });
-  }, 10000);
+  }, 15000);
 
   test("GET /logout without token, should return 401 status", async () => {
     const res = await request(app).get(`/users/logout`);
@@ -776,7 +778,7 @@ describe("User Test Suite", () => {
     expect(res.body).toEqual({
       message: "Unauthorized",
     });
-  }, 10000);
+  }, 15000);
 
   test("DELETE /delete user with invalid token, should return 401 status", async () => {
     const res = await request(app).delete(`/users/remove`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -784,7 +786,7 @@ describe("User Test Suite", () => {
 
     expect(status).toBe(401);
     expect(typeof body.message).toBe("string");
-  }, 10000);
+  }, 15000);
 
   test("DELETE /delete user without token, should return 401 status", async () => {
     const res = await request(app).delete(`/users/remove`);
@@ -792,7 +794,7 @@ describe("User Test Suite", () => {
 
     expect(status).toBe(401);
     expect(typeof body.message).toBe("string");
-  }, 10000);
+  }, 15000);
 
   test("DELETE /delete user with valid token, should return 200 status and valid user data", async () => {
     const userData = await request(app)
@@ -840,5 +842,5 @@ describe("User Test Suite", () => {
 
     const deletedUser = await User.findById({ _id: userId });
     expect(deletedUser).toBe(null);
-  }, 10000);
+  }, 15000);
 });

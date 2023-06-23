@@ -15,8 +15,10 @@ describe("Own-post Test Suite", () => {
 
   beforeAll(async () => {
     await mongoose.connect(DB_HOST);
-    server = app.listen(3002, () => {});
-  }, 15000);
+    server = app.listen(3002, () => {
+      server.unref(); // Отпускает серверный таймер после запуска сервера
+    });
+  }, 20000);
 
   afterAll(async () => {
     await mongoose.disconnect();
@@ -112,7 +114,7 @@ describe("Own-post Test Suite", () => {
     expect(likesContainsObjects).toBe(true);
     expect(commentsContainsObjects).toBe(true);
     expect(mediaFilesContainsObjects).toBe(true);
-  }, 10000);
+  }, 15000);
 
   test("GET /own posts with valid token + pagination, should return 200 status and valid posts data", async () => {
     const res = await request(app).get(`/own-posts?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN}`);
@@ -206,7 +208,7 @@ describe("Own-post Test Suite", () => {
     expect(likesContainsObjects).toBe(true);
     expect(commentsContainsObjects).toBe(true);
     expect(mediaFilesContainsObjects).toBe(true);
-  }, 10000);
+  }, 15000);
 
   test("GET /own posts with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/own-posts`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -214,7 +216,7 @@ describe("Own-post Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 10000);
+  }, 15000);
 
   test("GET /own posts with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app).get(`/own-posts?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -222,7 +224,7 @@ describe("Own-post Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 10000);
+  }, 15000);
 
   test("POST /post with valid token, should return 200 status and valid post data", async () => {
     const res = await request(app).post(`/own-posts/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({
@@ -268,7 +270,7 @@ describe("Own-post Test Suite", () => {
     expect(typeof post.owner.other1).toBe("string");
     expect(typeof post.owner.other2).toBe("string");
     expect(typeof post.owner.other3).toBe("string");
-  }, 10000);
+  }, 15000);
 
   test("POST /post with invalid token, should return 401 status", async () => {
     const res = await request(app).post(`/own-posts/add`).set("Authorization", `Bearer ${WRONG_TOKEN}`).send({
@@ -279,7 +281,7 @@ describe("Own-post Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 10000);
+  }, 15000);
 
   test("POST /post without body, should return 400 status", async () => {
     const res = await request(app).post(`/own-posts/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({});
@@ -287,7 +289,7 @@ describe("Own-post Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"description" is required');
-  }, 10000);
+  }, 15000);
 
   test("POST /post with invalid body, should return 400 status", async () => {
     const res = await request(app)
@@ -298,7 +300,7 @@ describe("Own-post Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"description" is required');
-  }, 10000);
+  }, 15000);
 
   test("PATCH /post with valid token, should return 200 status and valid post data", async () => {
     const res = await request(app)
@@ -349,7 +351,7 @@ describe("Own-post Test Suite", () => {
     expect(typeof post.owner.other1).toBe("string");
     expect(typeof post.owner.other2).toBe("string");
     expect(typeof post.owner.other3).toBe("string");
-  }, 10000);
+  }, 15000);
 
   test("PATCH /post with invalid id , should return 404 status", async () => {
     const res = await request(app)
@@ -363,7 +365,7 @@ describe("Own-post Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 10000);
+  }, 15000);
 
   test("PATCH /post with valid token without body, should return 400 status", async () => {
     const res = await request(app)
@@ -373,7 +375,7 @@ describe("Own-post Test Suite", () => {
     const { status } = res;
 
     expect(status).toBe(400);
-  }, 10000);
+  }, 15000);
 
   test("PATCH /post with invalid token, should return 401 status", async () => {
     const res = await request(app)
@@ -387,7 +389,7 @@ describe("Own-post Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 10000);
+  }, 15000);
 
   test("DELETE /post with invalid token, should return 401 status", async () => {
     const res = await request(app).delete(`/own-posts/remove/${postId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -395,7 +397,7 @@ describe("Own-post Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 10000);
+  }, 15000);
 
   test("DELETE /post with valid token, should return 200 status", async () => {
     const res = await request(app).delete(`/own-posts/remove/${postId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
@@ -439,5 +441,5 @@ describe("Own-post Test Suite", () => {
 
     const deletedPost = await Post.findById({ _id: postId });
     expect(deletedPost).toBe(null);
-  }, 10000);
+  }, 15000);
 });

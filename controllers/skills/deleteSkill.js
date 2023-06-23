@@ -1,4 +1,4 @@
-const { Skill } = require("../../models");
+const { Skill, Education, Experience } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
 const { skillTransformer } = require("../../helpers/index");
@@ -11,6 +11,9 @@ const deleteSkill = async (req, res, next) => {
   if (!skill) {
     throw HttpError(404, "Not found");
   }
+
+  await Education.updateMany({ skills: { $elemMatch: { $eq: skillId } } }, { $pull: { skills: skillId } });
+  await Experience.updateMany({ skills: { $elemMatch: { $eq: skillId } } }, { $pull: { skills: skillId } });
 
   const result = await Skill.findByIdAndDelete({ _id: skillId });
 
