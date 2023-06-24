@@ -5,24 +5,6 @@ const mongooseErrorHandler = require("../helpers/utils/handleMongooseError");
 
 const emailRegexp = /^\w+([-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
-const languageSchema = Schema({
-  language: {
-    type: String,
-    required: true,
-  },
-  level: {
-    type: String,
-    required: true,
-    enum: [
-      "Elementary proficiency",
-      "Limited working proficiency",
-      "Professional working proficiency",
-      "Full professional proficiency",
-      "Native or bilingual proficiency",
-    ],
-    default: "Elementary proficiency",
-  },
-});
 const userSchema = Schema(
   {
     name: {
@@ -93,10 +75,7 @@ const userSchema = Schema(
     },
     experience: [{ type: Schema.Types.ObjectId, ref: "Experience" }],
     education: [{ type: Schema.Types.ObjectId, ref: "Education" }],
-    languages: {
-      type: [languageSchema],
-      default: [],
-    },
+    languages: [{ type: Schema.Types.ObjectId, ref: "Language" }],
     headLine: {
       type: String,
       default: "",

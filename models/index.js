@@ -6,6 +6,7 @@ const { Like, likeSchemas } = require("./likes");
 const { Comment, commentSchemas } = require("./comments");
 const { Experience, experienceSchemas } = require("./experience");
 const { Education, educationsSchemas } = require("./educations");
+const { Language, languagesSchemas } = require("./language");
 
 module.exports = {
   User,
@@ -24,4 +25,6 @@ module.exports = {
   experienceSchemas,
   Education,
   educationsSchemas,
+  Language,
+  languagesSchemas,
 };

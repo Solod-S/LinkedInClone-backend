@@ -29,6 +29,10 @@
       "description": "Educations operation endpoints"
     },
     {
+      "name": "Languages",
+      "description": "Languages operation endpoints"
+    },
+    {
       "name": "Skills",
       "description": "Skills operation endpoints"
     },
@@ -992,6 +996,198 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EducationsDeleteEducationResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/languages/add": {
+      "post": {
+        "tags": ["Languages"],
+        "summary": "Add new language",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "requestBody": {
+          "description": "Language's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LanguagesCreateLanguageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully create a new language",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LanguagesCreateLanguageResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/languages/update/{languageId}": {
+      "patch": {
+        "tags": ["Languages"],
+        "summary": "Update the language",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "languageId",
+            "required": true,
+            "description": "Language's id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Language's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LanguagesUpdateLanguageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully update the language",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LanguagesUpdateLanguageResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/languages": {
+      "get": {
+        "tags": ["Languages"],
+        "summary": "Get all own languages",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successfully fetch all own languages",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LanguagesGetLanguagesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/languages/remove/{languageId}": {
+      "delete": {
+        "tags": ["Languages"],
+        "summary": "Delete language by id",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "languageId",
+            "required": true,
+            "description": "Language's id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully removed the language",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LanguagesDeleteLanguageResponse"
                 }
               }
             }
@@ -11193,6 +11389,290 @@
                     "type": "string",
                     "description": "Posted at human",
                     "example": "0 seconds ago"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-05-13T14:21:07.523Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "Updated at",
+                    "example": "2023-05-14T14:21:07.523Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "LanguagesCreateLanguageRequest": {
+        "required": ["language", "level"],
+        "type": "object",
+        "properties": {
+          "language": {
+            "type": "string",
+            "description": "Language",
+            "example": "English"
+          },
+          "level": {
+            "type": "string",
+            "description": "level",
+            "example": "Elementary proficiency"
+          }
+        }
+      },
+      "LanguagesCreateLanguageResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Language successfully created"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Language's id",
+                    "example": "342831f346155749a2b6e914"
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "Owner's id",
+                    "example": "645fbdd9564a390fac4e7015"
+                  },
+                  "language": {
+                    "type": "string",
+                    "description": "language",
+                    "example": "English"
+                  },
+                  "level": {
+                    "type": "string",
+                    "description": "level",
+                    "example": "Elementary proficiency"
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Posted at human",
+                    "example": "0 seconds ago"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-05-13T14:21:07.523Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "Updated at",
+                    "example": "2023-05-14T14:21:07.523Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "LanguagesUpdateLanguageRequest": {
+        "type": "object",
+        "properties": {
+          "language": {
+            "type": "string",
+            "description": "language",
+            "example": "Poland"
+          },
+          "level": {
+            "type": "string",
+            "description": "level",
+            "example": "Native or bilingual proficiency"
+          }
+        },
+        "anyOf": [{ "required": ["language"] }, { "required": ["level"] }]
+      },
+      "LanguagesUpdateLanguageResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successfully updated the language"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Language's id",
+                    "example": "342831f346155749a2b6e914"
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "Owner's id",
+                    "example": "645fbdd9564a390fac4e7015"
+                  },
+                  "language": {
+                    "type": "string",
+                    "description": "language",
+                    "example": "Poland"
+                  },
+                  "level": {
+                    "type": "string",
+                    "description": "level",
+                    "example": "Native or bilingual proficiency"
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Posted at human",
+                    "example": "41 minutes ago"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-05-13T14:21:07.523Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "Updated at",
+                    "example": "2023-05-14T14:21:07.523Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "LanguagesGetLanguagesResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successfully get languages"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "experiences": {
+                "type": "array",
+                "description": "All experiences",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "Language's id",
+                      "example": "342831f346155749a2b6e914"
+                    },
+                    "owner": {
+                      "type": "string",
+                      "description": "Owner's id",
+                      "example": "645fbdd9564a390fac4e7015"
+                    },
+                    "language": {
+                      "type": "string",
+                      "description": "language",
+                      "example": "Poland"
+                    },
+                    "level": {
+                      "type": "string",
+                      "description": "level",
+                      "example": "Native or bilingual proficiency"
+                    },
+                    "postedAtHuman": {
+                      "type": "string",
+                      "description": "Posted at human",
+                      "example": "41 minutes ago"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "Created at",
+                      "example": "2023-05-13T14:21:07.523Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "Updated at",
+                      "example": "2023-05-14T14:21:07.523Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "LanguagesDeleteLanguageResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Language successfully deleted"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Language's id",
+                    "example": "342831f346155749a2b6e914"
+                  },
+                  "owner": {
+                    "type": "string",
+                    "description": "Owner's id",
+                    "example": "645fbdd9564a390fac4e7015"
+                  },
+                  "language": {
+                    "type": "string",
+                    "description": "language",
+                    "example": "Poland"
+                  },
+                  "level": {
+                    "type": "string",
+                    "description": "level",
+                    "example": "Native or bilingual proficiency"
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Posted at human",
+                    "example": "43 minutes ago"
                   },
                   "createdAt": {
                     "type": "string",

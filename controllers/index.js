@@ -8,6 +8,7 @@ const posts = require("./posts");
 const skills = require("./skills");
 const experiences = require("./experiences");
 const educations = require("./educations");
+const languages = require("./languages");
 
 module.exports = {
   users,
@@ -20,4 +21,5 @@ module.exports = {
   skills,
   experiences,
   educations,
+  languages,
 };

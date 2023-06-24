@@ -8,6 +8,8 @@ const postsRouter = require("./posts");
 const skillsRouter = require("./skills");
 const experiencesRouter = require("./experiences");
 const educationsRouter = require("./educations");
+const languagesRouter = require("./languages");
+
 module.exports = {
   ownPostsRouter,
   usersRouter,
@@ -19,4 +21,5 @@ module.exports = {
   skillsRouter,
   experiencesRouter,
   educationsRouter,
+  languagesRouter,
 };
