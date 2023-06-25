@@ -10621,6 +10621,24 @@
                     }
                   }
                 }
+              },
+              "totalPages": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "currentPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "perPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 10
               }
             }
           }
@@ -11110,14 +11128,14 @@
             "type": "string",
             "description": "Response message",
             "format": "string",
-            "example": "Successfully get experiences"
+            "example": "Successfully get educations"
           },
           "data": {
             "type": "object",
             "properties": {
-              "experiences": {
+              "educations": {
                 "type": "array",
-                "description": "All experiences",
+                "description": "All educations",
                 "items": {
                   "type": "object",
                   "properties": {
@@ -11236,6 +11254,24 @@
                     }
                   }
                 }
+              },
+              "totalPages": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "currentPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "perPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 10
               }
             }
           }
@@ -11623,6 +11659,24 @@
                     }
                   }
                 }
+              },
+              "totalPages": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "currentPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "perPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 10
               }
             }
           }

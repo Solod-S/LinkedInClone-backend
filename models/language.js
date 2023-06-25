@@ -49,17 +49,17 @@ const createlanguageSchema = Joi.object({
 });
 
 const updateLanguageSchema = Joi.object({
-  language: Joi.string().required(),
-  level: Joi.string()
-    .required()
-    .valid(
-      "Elementary proficiency",
-      "Limited working proficiency",
-      "Professional working proficiency",
-      "Full professional proficiency",
-      "Native or bilingual proficiency"
-    ),
-});
+  language: Joi.string(),
+  level: Joi.string().valid(
+    "Elementary proficiency",
+    "Limited working proficiency",
+    "Professional working proficiency",
+    "Full professional proficiency",
+    "Native or bilingual proficiency"
+  ),
+})
+  .or("language", "level")
+  .required();
 
 const languagesSchemas = {
   createlanguageSchema,

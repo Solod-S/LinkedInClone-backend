@@ -37,7 +37,7 @@ const getOwnLanguages = async (req, res, next) => {
     status: "success",
     message: "Successfully get languages",
     data: {
-      educations: ownExperiences.map((education) => languageTransformer(education)),
+      languages: ownExperiences.map((education) => languageTransformer(education)),
       totalPages,
       currentPage: page,
       perPage,
