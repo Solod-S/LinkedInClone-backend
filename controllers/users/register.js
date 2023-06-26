@@ -25,6 +25,7 @@ const register = async (req, res) => {
     password: hashPassword,
     verificationCode,
     avatarURL,
+    verify: true,
   });
 
   const verifyEmail = createVerifyEmail(email, verificationCode);

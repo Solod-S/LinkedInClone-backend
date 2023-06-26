@@ -24,6 +24,7 @@ const devRegister = async (rec, res) => {
     password: hashPassword,
     verificationCode,
     avatarURL,
+    verify: true,
   });
 
   res.status(201).json({
