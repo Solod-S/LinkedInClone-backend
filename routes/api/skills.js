@@ -13,7 +13,7 @@ skillsRouter.post("/create", authenticate, validateBody(skillsSchemas.createSkil
 // //  search posts by query
 skillsRouter.get("/search", authenticate, skills.getSkillByQuery);
 
-// //  get post by id
+// //  get skill by id
 skillsRouter.get("/:skillId", authenticate, skills.getSkillById);
 
 // //  add user to skill

@@ -9,6 +9,7 @@ const skillsRouter = require("./skills");
 const experiencesRouter = require("./experiences");
 const educationsRouter = require("./educations");
 const languagesRouter = require("./languages");
+const companiesRouter = require("./companies");
 
 module.exports = {
   ownPostsRouter,
@@ -22,4 +23,5 @@ module.exports = {
   experiencesRouter,
   educationsRouter,
   languagesRouter,
+  companiesRouter,
 };

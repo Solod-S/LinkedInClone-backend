@@ -52,6 +52,7 @@ const companySchema = new Schema(
     owners: [{ type: Schema.Types.ObjectId, ref: "User", required: true }],
     workers: [{ type: Schema.Types.ObjectId, ref: "User" }],
     jobs: [{ type: Schema.Types.ObjectId, ref: "Job" }],
+    posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
   },
   { versionKey: false, timestamps: true }
 );
@@ -86,8 +87,6 @@ const updateCompanySchema = Joi.object({
   phone: Joi.number(),
   foundedYear: Joi.number(),
   employeesCount: Joi.number(),
-  workers: Joi.array(),
-  jobs: Joi.array(),
 })
   .or(
     "name",
@@ -99,9 +98,7 @@ const updateCompanySchema = Joi.object({
     "email",
     "phone",
     "foundedYear",
-    "employeesCount",
-    "workers",
-    "jobs"
+    "employeesCount"
   )
   .required();
 

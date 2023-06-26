@@ -24,7 +24,7 @@ const updateSkill = async (req, res, next) => {
   res.json({
     status: "success",
     message: "Successfully updated skill",
-    data: { post: skillTransformer(updatedskill) },
+    data: { skill: skillTransformer(updatedskill) },
   });
 };
 

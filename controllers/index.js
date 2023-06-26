@@ -9,6 +9,7 @@ const skills = require("./skills");
 const experiences = require("./experiences");
 const educations = require("./educations");
 const languages = require("./languages");
+const companies = require("./companies");
 
 module.exports = {
   users,
@@ -22,4 +23,5 @@ module.exports = {
   experiences,
   educations,
   languages,
+  companies,
 };

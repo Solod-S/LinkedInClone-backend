@@ -7,6 +7,7 @@ const { Comment, commentSchemas } = require("./comments");
 const { Experience, experienceSchemas } = require("./experience");
 const { Education, educationsSchemas } = require("./educations");
 const { Language, languagesSchemas } = require("./language");
+const { Company, companySchemas } = require("./company");
 
 module.exports = {
   User,
@@ -27,4 +28,6 @@ module.exports = {
   educationsSchemas,
   Language,
   languagesSchemas,
+  Company,
+  companySchemas,
 };

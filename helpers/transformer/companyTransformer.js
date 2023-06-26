@@ -1,0 +1,42 @@
+const human = require("human-time");
+
+const companyTransformer = ({
+  _id,
+  name,
+  logoURL,
+  description,
+  industry,
+  location,
+  website,
+  email,
+  phone,
+  foundedYear,
+  employeesCount,
+  owners,
+  workers,
+  jobs,
+  posts,
+  createdAt,
+  updatedAt,
+}) => ({
+  _id,
+  name,
+  logoURL,
+  description,
+  industry,
+  location,
+  website,
+  email,
+  phone,
+  foundedYear,
+  employeesCount,
+  owners,
+  workers,
+  jobs,
+  posts,
+  postedAtHuman: human(createdAt),
+  createdAt,
+  updatedAt,
+});
+
+module.exports = companyTransformer;
