@@ -5,8 +5,6 @@ const { educationTransformer } = require("../../helpers/index");
 const addEducation = async (req, res, next) => {
   const { _id } = req.user;
 
-  console.log(req.body, _id);
-
   const user = await User.findOne({ _id: _id });
 
   const newEducation = await Education.create({

@@ -19,13 +19,13 @@ companiesRouter.post(
 // companiesRouter.get("/search", authenticate, companies.getSkillByQuery);
 
 // //  get company by id
-// companiesRouter.get("/:companyId", authenticate, companies.getSkillById);
+companiesRouter.get("/:companyId", authenticate, companies.getCompanyById);
 
 //  add owner to company
 companiesRouter.get("/owners/add/:companyId", isCompanyOwnerMiddleware, companies.ownerAdd);
 
 // //  remove owner from company
-// companiesRouter.get("/owners/remove/:companyId", authenticate, companies.userRemove);
+companiesRouter.get("/owners/remove/:companyId", isCompanyOwnerMiddleware, companies.ownerRemove);
 
 //  delete company
 companiesRouter.delete("/remove/:companyId", isCompanyOwnerMiddleware, companies.deleteCompany);

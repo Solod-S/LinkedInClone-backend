@@ -31,7 +31,6 @@ const getSkillById = async (req, res, next) => {
   const totalPages = Math.ceil(totalUsers / pageSize);
   const currentPage = pageNumber;
 
-  console.log(totalUsers, pageSize);
 
   res.status(200).json({
     status: "success",

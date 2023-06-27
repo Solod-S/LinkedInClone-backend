@@ -25,6 +25,7 @@ const isCompanyOwnerMiddleware = async (req, res, next) => {
       next(HttpError(403, "Access denied. Company admin rights required"));
     }
     req.user = user;
+    req.company = company;
     next();
   } catch {
     next(HttpError(401));

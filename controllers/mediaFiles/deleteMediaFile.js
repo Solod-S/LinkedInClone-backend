@@ -21,7 +21,7 @@ const deleteMediaFile = async (req, res, next) => {
   }
 
   let model = null;
-  console.log(result.location);
+
   switch (result.location) {
     case "posts":
       model = Post;
