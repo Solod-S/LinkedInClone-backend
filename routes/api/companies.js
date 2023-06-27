@@ -5,7 +5,7 @@ const { validateBody, authenticate, isCompanyOwnerMiddleware } = require("../../
 const { companySchemas } = require("../../models");
 
 //  get all companies
-// companiesRouter.get("/", authenticate, companies.getAllSkills);
+companiesRouter.get("/", authenticate, companies.getAllCompanies);
 
 //  create company
 companiesRouter.post(
@@ -16,7 +16,7 @@ companiesRouter.post(
 );
 
 // //  search company by query
-// companiesRouter.get("/search", authenticate, companies.getSkillByQuery);
+companiesRouter.get("/search", authenticate, companies.getCompaniesByQuery);
 
 // //  get company by id
 companiesRouter.get("/:companyId", authenticate, companies.getCompanyById);
