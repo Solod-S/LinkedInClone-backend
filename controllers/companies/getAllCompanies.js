@@ -31,7 +31,7 @@ const getAllCompanies = async (req, res, next) => {
     .sort({ createdAt: -1 })
     .skip(skip < 0 ? 0 : skip)
     .limit(perPage)
-    .select("-posts -jobs -workers -owners");
+    .select("-publications -jobs -workers -owners");
 
   res.json({
     status: "success",

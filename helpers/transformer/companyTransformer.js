@@ -15,7 +15,7 @@ const companyTransformer = ({
   owners,
   workers,
   jobs,
-  posts,
+  publications,
   createdAt,
   updatedAt,
 }) => ({
@@ -33,7 +33,7 @@ const companyTransformer = ({
   owners,
   workers,
   jobs,
-  posts,
+  publications,
   postedAtHuman: human(createdAt),
   createdAt,
   updatedAt,

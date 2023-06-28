@@ -1,5 +1,5 @@
-const ownPostsRouter = require("./ownPosts");
 const usersRouter = require("./user");
+const ownPostsRouter = require("./ownPosts");
 const mediaFilesRouter = require("./mediaFiles");
 const likesRouter = require("./likes");
 const favoritesRouter = require("./favorites");
@@ -10,10 +10,11 @@ const experiencesRouter = require("./experiences");
 const educationsRouter = require("./educations");
 const languagesRouter = require("./languages");
 const companiesRouter = require("./companies");
+const ownPublicationsRouter = require("./ownPublication");
 
 module.exports = {
-  ownPostsRouter,
   usersRouter,
+  ownPostsRouter,
   mediaFilesRouter,
   likesRouter,
   favoritesRouter,
@@ -24,4 +25,5 @@ module.exports = {
   educationsRouter,
   languagesRouter,
   companiesRouter,
+  ownPublicationsRouter,
 };

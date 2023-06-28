@@ -4,7 +4,7 @@ const { companies } = require("../../controllers");
 const { validateBody, authenticate, isCompanyOwnerMiddleware } = require("../../middlewares");
 const { companySchemas } = require("../../models");
 
-//  get all companies
+// get all companies
 companiesRouter.get("/", authenticate, companies.getAllCompanies);
 
 //  create company
@@ -15,17 +15,23 @@ companiesRouter.post(
   companies.createCompany
 );
 
-// //  search company by query
+//  search company by query
 companiesRouter.get("/search", authenticate, companies.getCompaniesByQuery);
 
-// //  get company by id
+//  get company by id
 companiesRouter.get("/:companyId", authenticate, companies.getCompanyById);
 
 //  add owner to company
 companiesRouter.get("/owners/add/:companyId", isCompanyOwnerMiddleware, companies.ownerAdd);
 
-// //  remove owner from company
+//  remove owner from company
 companiesRouter.get("/owners/remove/:companyId", isCompanyOwnerMiddleware, companies.ownerRemove);
+
+//  add worker to company
+companiesRouter.get("/workers/add/:companyId", isCompanyOwnerMiddleware, companies.workerAdd);
+
+//  remove worker from company
+companiesRouter.get("/workers/remove/:companyId", isCompanyOwnerMiddleware, companies.workerRemove);
 
 //  delete company
 companiesRouter.delete("/remove/:companyId", isCompanyOwnerMiddleware, companies.deleteCompany);

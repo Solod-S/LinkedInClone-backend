@@ -15,16 +15,16 @@ const getCompanyById = async (req, res, next) => {
   switch (path) {
     case "workers":
       populateOptions =
-        "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site";
-      othersPath = ["posts", "jobs"];
+        "_id surname name avatarURL email subscription favorite publications about education experience frame headLine languages other1 other2 other3 phone site";
+      othersPath = ["publications", "jobs"];
       break;
-    case "posts":
-      populateOptions = "";
+    case "publications":
+      populateOptions = "description createdAt updatedAt";
       othersPath = ["workers", "jobs"];
       break;
     case "jobs":
       populateOptions = "";
-      othersPath = ["workers", "posts"];
+      othersPath = ["workers", "publications"];
       break;
     default:
       break;

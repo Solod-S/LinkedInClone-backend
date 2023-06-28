@@ -8,13 +8,13 @@ const { postSchemas } = require("../../models");
 ownPostsRouter.get("/", authenticate, ownPosts.getOwnPosts);
 
 //  create a new post
-ownPostsRouter.post("/add", authenticate, validateBody(postSchemas.myPostSchema), ownPosts.addOwnPost);
+ownPostsRouter.post("/add", authenticate, validateBody(postSchemas.createPostSchema), ownPosts.addOwnPost);
 
 //  update an own post
 ownPostsRouter.patch(
   "/update/:postId",
   authenticate,
-  validateBody(postSchemas.updateMyPostSchema),
+  validateBody(postSchemas.updatecreatePostSchema),
   ownPosts.updateOwnPost
 );
 

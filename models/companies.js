@@ -52,7 +52,7 @@ const companySchema = new Schema(
     owners: [{ type: Schema.Types.ObjectId, ref: "User", required: true }],
     workers: [{ type: Schema.Types.ObjectId, ref: "User" }],
     jobs: [{ type: Schema.Types.ObjectId, ref: "Job" }],
-    posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
+    publications: [{ type: Schema.Types.ObjectId, ref: "Publication" }],
   },
   { versionKey: false, timestamps: true }
 );

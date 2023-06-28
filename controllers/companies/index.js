@@ -7,6 +7,8 @@ const deleteCompany = require("./deleteCompany");
 const getCompanyById = require("./getCompanyById");
 const ownerAdd = require("./ownerAdd");
 const ownerRemove = require("./ownerRemove");
+const workerAdd = require("./workerAdd");
+const workerRemove = require("./workerRemove");
 
 module.exports = {
   getAllCompanies: ctrlWrapper(getAllCompanies),
@@ -17,4 +19,6 @@ module.exports = {
   getCompanyById: ctrlWrapper(getCompanyById),
   ownerAdd: ctrlWrapper(ownerAdd),
   ownerRemove: ctrlWrapper(ownerRemove),
+  workerAdd: ctrlWrapper(workerAdd),
+  workerRemove: ctrlWrapper(workerRemove),
 };

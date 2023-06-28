@@ -3,7 +3,7 @@ const Joi = require("joi");
 
 const mongooseErrorHandler = require("../helpers/utils/handleMongooseError");
 
-const postSchema = Schema(
+const publicationSchema = Schema(
   {
     owner: {
       type: Schema.Types.ObjectId,
@@ -22,28 +22,28 @@ const postSchema = Schema(
   { versionKey: false, timestamps: true }
 );
 
-postSchema.post("save", mongooseErrorHandler);
+publicationSchema.post("save", mongooseErrorHandler);
 
-const Post = model("Post", postSchema);
+const Publication = model("Publication", publicationSchema);
 
-const createPostSchema = Joi.object({
+const createPublicationSchema = Joi.object({
   description: Joi.string().required(),
   mediaFiles: Joi.array(),
 });
 
-const updatecreatePostSchema = Joi.object({
+const updatePublicationSchema = Joi.object({
   description: Joi.string(),
   mediaFiles: Joi.array(),
 })
   .or("description", "mediaFiles")
   .required();
 
-const postSchemas = {
-  createPostSchema,
-  updatecreatePostSchema,
+const publicationSchemas = {
+  createPublicationSchema,
+  updatePublicationSchema,
 };
 
 module.exports = {
-  Post,
-  postSchemas,
+  Publication,
+  publicationSchemas,
 };
