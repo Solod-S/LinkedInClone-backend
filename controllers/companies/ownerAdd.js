@@ -5,10 +5,11 @@ const { companyTransformer } = require("../../helpers/index");
 
 const ownerAdd = async (req, res, next) => {
   const { companyId } = req.params;
+  const { _id } = req.user;
   const { user = "" } = req.query;
   const company = await Company.findById({ _id: companyId });
 
-  if (!company) {
+  if (!company || !company.owners.includes(_id)) {
     throw HttpError(404, "Not found");
   }
 

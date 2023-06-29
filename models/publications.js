@@ -7,7 +7,7 @@ const publicationSchema = Schema(
   {
     owner: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Company",
       required: true,
     },
     description: {

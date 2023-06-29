@@ -12,6 +12,7 @@ const experienceTransformer = require("./transformer/experienceTransformer");
 const educationTransformer = require("./transformer/educationTransformer");
 const languageTransformer = require("./transformer/languageTransformer");
 const companyTransformer = require("./transformer/companyTransformer");
+const publicationTransformer = require("./transformer/publicationTransformer");
 
 module.exports = {
   handleMongooseError,
@@ -28,4 +29,5 @@ module.exports = {
   educationTransformer,
   languageTransformer,
   companyTransformer,
+  publicationTransformer,
 };

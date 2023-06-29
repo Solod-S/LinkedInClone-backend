@@ -10,7 +10,7 @@ const companySchema = new Schema(
       required: true,
       default: "",
     },
-    logoURL: {
+    avatarURL: {
       type: String,
       default: "",
     },
@@ -63,7 +63,7 @@ const Company = model("Company", companySchema);
 
 const createCompanySchema = Joi.object({
   name: Joi.string().required(),
-  logoURL: Joi.string(),
+  avatarURL: Joi.string(),
   description: Joi.string().required(),
   industry: Joi.string(),
   location: Joi.string().required(),
@@ -78,7 +78,7 @@ const createCompanySchema = Joi.object({
 
 const updateCompanySchema = Joi.object({
   name: Joi.string(),
-  logoURL: Joi.string(),
+  avatarURL: Joi.string(),
   description: Joi.string(),
   industry: Joi.string(),
   location: Joi.string(),
@@ -90,7 +90,7 @@ const updateCompanySchema = Joi.object({
 })
   .or(
     "name",
-    "logoURL",
+    "avatarURL",
     "description",
     "industry",
     "location",

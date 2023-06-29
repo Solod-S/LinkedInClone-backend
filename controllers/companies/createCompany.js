@@ -10,7 +10,9 @@ const createCompany = async (req, res, next) => {
   // Установка первой буквы в верхний регистр
   const formattedName = name.charAt(0).toUpperCase() + name.slice(1);
 
-  const companyAlreadyExist = await Company.findOne({ name: { $regex: new RegExp(`^${name}$`, "i") } });
+  const companyAlreadyExist =
+    (await Company.findOne({ name: { $regex: new RegExp(`^${name}$`, "i") } })) ||
+    (await Company.findOne({ owners: _id }));
 
   if (companyAlreadyExist) {
     throw HttpError(409, `Sorry, the company was created before`);

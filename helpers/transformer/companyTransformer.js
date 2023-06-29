@@ -3,7 +3,7 @@ const human = require("human-time");
 const companyTransformer = ({
   _id,
   name,
-  logoURL,
+  avatarURL,
   description,
   industry,
   location,
@@ -21,7 +21,7 @@ const companyTransformer = ({
 }) => ({
   _id,
   name,
-  logoURL,
+  avatarURL,
   description,
   industry,
   location,

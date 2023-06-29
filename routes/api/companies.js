@@ -1,7 +1,7 @@
 const companiesRouter = require("express").Router();
 
 const { companies } = require("../../controllers");
-const { validateBody, authenticate, isCompanyOwnerMiddleware } = require("../../middlewares");
+const { validateBody, authenticate } = require("../../middlewares");
 const { companySchemas } = require("../../models");
 
 // get all companies
@@ -22,24 +22,24 @@ companiesRouter.get("/search", authenticate, companies.getCompaniesByQuery);
 companiesRouter.get("/:companyId", authenticate, companies.getCompanyById);
 
 //  add owner to company
-companiesRouter.get("/owners/add/:companyId", isCompanyOwnerMiddleware, companies.ownerAdd);
+companiesRouter.get("/owners/add/:companyId", authenticate, companies.ownerAdd);
 
 //  remove owner from company
-companiesRouter.get("/owners/remove/:companyId", isCompanyOwnerMiddleware, companies.ownerRemove);
+companiesRouter.get("/owners/remove/:companyId", authenticate, companies.ownerRemove);
 
 //  add worker to company
-companiesRouter.get("/workers/add/:companyId", isCompanyOwnerMiddleware, companies.workerAdd);
+companiesRouter.get("/workers/add/:companyId", authenticate, companies.workerAdd);
 
 //  remove worker from company
-companiesRouter.get("/workers/remove/:companyId", isCompanyOwnerMiddleware, companies.workerRemove);
+companiesRouter.get("/workers/remove/:companyId", authenticate, companies.workerRemove);
 
 //  delete company
-companiesRouter.delete("/remove/:companyId", isCompanyOwnerMiddleware, companies.deleteCompany);
+companiesRouter.delete("/remove/:companyId", authenticate, companies.deleteCompany);
 
 //  update company
 companiesRouter.patch(
   "/update/:companyId",
-  isCompanyOwnerMiddleware,
+  authenticate,
   validateBody(companySchemas.updateCompanySchema),
   companies.updateCompany
 );

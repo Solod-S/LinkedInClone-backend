@@ -10,6 +10,7 @@ const experiences = require("./experiences");
 const educations = require("./educations");
 const languages = require("./languages");
 const companies = require("./companies");
+const ownPublications = require("./ownPublications");
 
 module.exports = {
   users,
@@ -24,4 +25,5 @@ module.exports = {
   educations,
   languages,
   companies,
+  ownPublications,
 };

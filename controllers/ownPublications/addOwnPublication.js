@@ -1,21 +1,26 @@
-const { Post, User } = require("../../models");
+const { Publication, Company } = require("../../models");
 
-const { postTransformer } = require("../../helpers/index");
+const { HttpError } = require("../../routes/errors/HttpErrors");
+const { publicationTransformer } = require("../../helpers/index");
 
-const addOwnPost = async (req, res, next) => {
+const addOwnPublication = async (req, res, next) => {
   const { _id } = req.user;
 
-  const user = await User.findOne({ _id: _id });
+  const company = await Company.findOne({ owners: _id });
 
-  const newPost = await Post.create({
+  if (!company) {
+    throw HttpError(404, "Not found");
+  }
+
+  const newPublication = await Publication.create({
     ...req.body,
-    owner: _id,
+    owner: company._id,
   });
 
-  user.posts.push(newPost._id);
-  await user.save();
+  company.publications.push(newPublication._id);
+  await company.save();
 
-  const post = await Post.findById({ _id: newPost._id })
+  const publication = await Publication.findById({ _id: newPublication._id })
     .populate({
       path: "comments",
       select: "owner description likes mediaFiles createdAt updatedAt",
@@ -65,15 +70,14 @@ const addOwnPost = async (req, res, next) => {
     })
     .populate({
       path: "owner",
-      select:
-        "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+      select: "_id name description industry location website email phone foundedYear employeesCount avatarURL",
     });
 
   res.status(201).json({
     status: "success",
-    message: "Post successfully created",
-    data: { post: postTransformer(post) },
+    message: "Publication successfully created",
+    data: { publications: publicationTransformer(publication) },
   });
 };
 
-module.exports = addOwnPost;
+module.exports = addOwnPublication;
