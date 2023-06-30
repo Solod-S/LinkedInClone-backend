@@ -1,4 +1,4 @@
-const { MediaFile, Post, Comment, Education, Experience } = require("../../models");
+const { MediaFile, Post, Comment, Education, Experience, Publication } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
 const { mediaFileTransformer } = require("../../helpers/index");
@@ -34,6 +34,9 @@ const deleteMediaFile = async (req, res, next) => {
       break;
     case "experience":
       model = Experience;
+      break;
+    case "publications":
+      model = Publication;
       break;
     default:
       break;

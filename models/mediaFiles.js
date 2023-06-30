@@ -8,7 +8,7 @@ const mediaFileSchema = new Schema(
     type: { type: String, enum: ["img", "video"], default: "img" },
     location: {
       type: String,
-      enum: ["comments", "posts", "education", "experience"],
+      enum: ["comments", "posts", "education", "experience", "publications"],
       default: "posts",
       required: true,
     },
@@ -20,6 +20,7 @@ const mediaFileSchema = new Schema(
     commentId: { type: Schema.Types.ObjectId, ref: "Comment" },
     educationId: { type: Schema.Types.ObjectId, ref: "Education" },
     experienceId: { type: Schema.Types.ObjectId, ref: "Experience" },
+    publicationId: { type: Schema.Types.ObjectId, ref: "Publication" },
   },
   { versionKey: false, timestamps: true }
 );
@@ -30,26 +31,38 @@ const MediaFile = model("MediaFile", mediaFileSchema);
 
 const mediaFilesSchema = Joi.object({
   type: Joi.string().valid("img", "video").required(),
-  location: Joi.string().valid("comments", "posts", "education", "experience").required(),
+  location: Joi.string().valid("comments", "posts", "education", "experience", "publications").required(),
   url: Joi.string().required(),
   providerPublicId: Joi.string(),
   postId: Joi.string(),
   commentId: Joi.string(),
   educationId: Joi.string(),
   experienceId: Joi.string(),
+  publicationId: Joi.string(),
 });
 
 const updateMediaFilesSchema = Joi.object({
   type: Joi.string().valid("img", "video"),
-  location: Joi.string().valid("comments", "posts", "education", "experience"),
+  location: Joi.string().valid("comments", "posts", "education", "experience", "publications"),
   url: Joi.string(),
   providerPublicId: Joi.string(),
   postId: Joi.string(),
   commentId: Joi.string(),
   educationId: Joi.string(),
   experienceId: Joi.string(),
+  publicationId: Joi.string(),
 })
-  .or("type", "location", "url", "providerPublicId", "postId", "commentId", "educationId", "experienceId")
+  .or(
+    "type",
+    "location",
+    "url",
+    "providerPublicId",
+    "postId",
+    "commentId",
+    "educationId",
+    "experienceId",
+    "publicationId"
+  )
   .required();
 
 const mediaFileSchemas = {

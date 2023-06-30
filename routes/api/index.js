@@ -11,6 +11,7 @@ const educationsRouter = require("./educations");
 const languagesRouter = require("./languages");
 const companiesRouter = require("./companies");
 const ownPublicationsRouter = require("./ownPublication");
+const publicationsRouter = require("./publications");
 
 module.exports = {
   usersRouter,
@@ -26,4 +27,5 @@ module.exports = {
   languagesRouter,
   companiesRouter,
   ownPublicationsRouter,
+  publicationsRouter,
 };

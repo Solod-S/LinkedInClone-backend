@@ -19,6 +19,7 @@ const {
   languagesRouter,
   companiesRouter,
   ownPublicationsRouter,
+  publicationsRouter,
 } = require("./routes/api/");
 
 const app = express();
@@ -43,6 +44,7 @@ app.use("/educations", educationsRouter);
 app.use("/languages", languagesRouter);
 app.use("/companies", companiesRouter);
 app.use("/own-publications", ownPublicationsRouter);
+app.use("/publications", publicationsRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });

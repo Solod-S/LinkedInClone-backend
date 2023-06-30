@@ -9,6 +9,7 @@ const { Education, educationsSchemas } = require("./educations");
 const { Language, languagesSchemas } = require("./language");
 const { Company, companySchemas } = require("./companies");
 const { Publication, publicationSchemas } = require("./publications");
+const { Job, JobSchemas } = require("./jobs");
 
 module.exports = {
   User,
@@ -33,4 +34,6 @@ module.exports = {
   companySchemas,
   Publication,
   publicationSchemas,
+  Job,
+  JobSchemas,
 };

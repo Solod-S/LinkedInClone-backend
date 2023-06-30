@@ -1,4 +1,6 @@
-const { MediaFile, Post, Comment, Education, Experience } = require("../../models");
+const { MediaFile, Post, Comment, Education, Experience, Publication, Company } = require("../../models");
+const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Types;
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
 const { mediaFileTransformer } = require("../../helpers/index");
@@ -26,14 +28,27 @@ const addMediaFile = async (req, res, next) => {
       mediaFileId = req.body.experienceId;
       model = Experience;
       break;
+    case "publications":
+      mediaFileId = req.body.publicationId;
+      model = Publication;
+      break;
     default:
       break;
   }
 
   const mediaFileDestination = await model.findById({ _id: mediaFileId });
-  console.log(mediaFileDestination);
 
-  if (!mediaFileDestination || mediaFileDestination.owner.toString() !== _id.toString()) {
+  if (!mediaFileDestination) {
+    throw HttpError(404, "Not found");
+  }
+
+  const company = await Company.findById({ _id: mediaFileDestination.owner });
+
+  if (
+    !mediaFileDestination || location !== "publications"
+      ? mediaFileDestination.owner.toString() !== _id.toString()
+      : !company.owners.includes(new ObjectId(_id))
+  ) {
     throw HttpError(404, "Not found");
   }
 
