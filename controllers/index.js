@@ -12,7 +12,7 @@ const languages = require("./languages");
 const companies = require("./companies");
 const ownPublications = require("./ownPublications");
 const publications = require("./publications");
-
+const ownJobs = require("./ownJobs");
 module.exports = {
   users,
   ownPosts,
@@ -28,4 +28,5 @@ module.exports = {
   companies,
   ownPublications,
   publications,
+  ownJobs,
 };

@@ -33,12 +33,12 @@ const mediaFilesSchema = Joi.object({
   type: Joi.string().valid("img", "video").required(),
   location: Joi.string().valid("comments", "posts", "education", "experience", "publications").required(),
   url: Joi.string().required(),
-  providerPublicId: Joi.string(),
-  postId: Joi.string(),
-  commentId: Joi.string(),
-  educationId: Joi.string(),
-  experienceId: Joi.string(),
-  publicationId: Joi.string(),
+  providerPublicId: Joi.string().allow(""),
+  postId: Joi.string().allow(""),
+  commentId: Joi.string().allow(""),
+  educationId: Joi.string().allow(""),
+  experienceId: Joi.string().allow(""),
+  publicationId: Joi.string().allow(""),
 });
 
 const updateMediaFilesSchema = Joi.object({

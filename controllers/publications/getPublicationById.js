@@ -1,36 +1,12 @@
 const { Publication } = require("../../models");
 
+const { HttpError } = require("../../routes/errors/HttpErrors");
 const { publicationTransformer } = require("../../helpers/index");
 
-const getAllPublications = async (req, res, next) => {
-  let page = parseInt(req.query.page) || 1;
-  const perPage = parseInt(req.query.perPage) || 10;
-  const skip = (page - 1) * perPage;
+const getPublicationById = async (req, res, next) => {
+  const { publicationId } = req.params;
 
-  const count = await Publication.countDocuments();
-  const totalPages = Math.ceil(count / perPage);
-
-  if (page > totalPages) {
-    page = totalPages;
-  }
-
-  if ((await Publication.find({})).length <= 0) {
-    return res.json({
-      status: "success",
-      message: "Successfully get publications",
-      data: {
-        publications: [],
-        totalPages,
-        currentPage: page,
-        perPage,
-      },
-    });
-  }
-
-  const publications = await Publication.find({})
-    .sort({ createdAt: -1 })
-    .skip(skip < 0 ? 0 : skip)
-    .limit(perPage)
+  const publication = await Publication.findById({ _id: publicationId })
     .populate({
       path: "comments",
       select: "owner description likes mediaFiles createdAt updatedAt",
@@ -83,16 +59,15 @@ const getAllPublications = async (req, res, next) => {
       select: "_id name description industry location website email phone foundedYear employeesCount avatarURL",
     });
 
-  res.json({
+  if (!publication) {
+    throw HttpError(404, "Not found");
+  }
+
+  res.status(200).json({
     status: "success",
-    message: "Successfully get publications",
-    data: {
-      publications: publications.map((publication) => publicationTransformer(publication)),
-      totalPages,
-      currentPage: page,
-      perPage,
-    },
+    message: "We successfully found the publication",
+    data: { publication: publicationTransformer(publication) },
   });
 };
 
-module.exports = getAllPublications;
+module.exports = getPublicationById;

@@ -76,7 +76,7 @@ const addOwnPublication = async (req, res, next) => {
   res.status(201).json({
     status: "success",
     message: "Publication successfully created",
-    data: { publications: publicationTransformer(publication) },
+    data: { publication: publicationTransformer(publication) },
   });
 };
 

@@ -82,8 +82,14 @@ jobSchema.post("save", mongooseErrorHandler);
 const Job = model("Job", jobSchema);
 
 const createJobSchema = Joi.object({
+  title: Joi.string().required(),
+  location: Joi.string().allow(""),
   description: Joi.string().required(),
-  mediaFiles: Joi.array(),
+  employmentType: Joi.string().required(),
+  seniorityLevel: Joi.string().required(),
+  industry: Joi.string().required(),
+  applyURL: Joi.string().allow(""),
+  skills: Joi.array(),
 });
 
 const updateJobSchema = Joi.object({

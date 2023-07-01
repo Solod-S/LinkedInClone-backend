@@ -140,18 +140,3 @@ module.exports = {
   User,
   userSchemas,
 };
-
-// const ss = {
-//   CompanyName: "MakeUp",
-//   EmploymentType: "Full-time",
-//   Position: "Manager",
-//   Location: "Ukraine, Kiev",
-//   LocationType: "On-site",
-//   StartDate: {},
-//   EndDate: {},
-//   skills: [{}],
-//   mediafile: {},
-// };
-// https://www.npmjs.com/package/react-flatpickr
-// https://solod-s.github.io/goit-js-hw-09/02-timer.html
-// https://solod-s.github.io/goit-js-hw-10/

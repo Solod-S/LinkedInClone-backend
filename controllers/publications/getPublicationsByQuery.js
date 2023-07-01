@@ -1,8 +1,8 @@
-const { Post } = require("../../models");
+const { Publication } = require("../../models");
 
-const { postTransformer } = require("../../helpers/index");
+const { publicationTransformer } = require("../../helpers/index");
 
-const getPostsByQuery = async (req, res, next) => {
+const getPublicationsByQuery = async (req, res, next) => {
   const { search = "" } = req.query;
   let page = parseInt(req.query.page) || 1;
   const perPage = parseInt(req.query.perPage) || 10;
@@ -10,19 +10,19 @@ const getPostsByQuery = async (req, res, next) => {
   const skip = (page - 1) * perPage;
 
   const query = { description: { $regex: trimmedKeyword, $options: "i" } };
-  const count = await Post.countDocuments(query);
+  const count = await Publication.countDocuments(query);
   const totalPages = Math.ceil(count / perPage);
 
   if (page > totalPages) {
     page = totalPages;
   }
 
-  if (!search || (await Post.find(query)).length <= 0 || (await Post.find()).length <= 0) {
+  if (!search || (await Publication.find(query)).length <= 0 || (await Publication.find()).length <= 0) {
     return res.json({
       status: "success",
-      message: "Successfully found such posts",
+      message: "Successfully found such publications",
       data: {
-        posts: [],
+        publications: [],
         totalPages: 0,
         currentPage: page,
         perPage,
@@ -30,7 +30,7 @@ const getPostsByQuery = async (req, res, next) => {
     });
   }
 
-  const posts = await Post.find(query)
+  const publications = await Publication.find(query)
     .sort({ createdAt: -1 })
     .skip(skip < 0 ? 0 : skip)
     .limit(perPage)
@@ -41,7 +41,7 @@ const getPostsByQuery = async (req, res, next) => {
         {
           path: "owner",
           select:
-            "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+            "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
         },
         {
           path: "mediaFiles",
@@ -49,7 +49,7 @@ const getPostsByQuery = async (req, res, next) => {
           populate: {
             path: "owner",
             select:
-              "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+              "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
           },
         },
         {
@@ -58,7 +58,7 @@ const getPostsByQuery = async (req, res, next) => {
           populate: {
             path: "owner",
             select:
-              "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+              "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
           },
         },
       ],
@@ -69,7 +69,7 @@ const getPostsByQuery = async (req, res, next) => {
       populate: {
         path: "owner",
         select:
-          "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+          "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
       },
     })
     .populate({
@@ -78,20 +78,24 @@ const getPostsByQuery = async (req, res, next) => {
       populate: {
         path: "owner",
         select:
-          "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+          "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
       },
     })
     .populate({
       path: "owner",
-      select:
-        "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+      select: "_id name description industry location website email phone foundedYear employeesCount avatarURL",
     });
 
   res.status(200).json({
     status: "success",
-    message: "Successfully found such posts",
-    data: { posts: posts.map((post) => postTransformer(post)), totalPages, currentPage: page, perPage },
+    message: "Successfully found such publications",
+    data: {
+      publications: publications.map((publication) => publicationTransformer(publication)),
+      totalPages,
+      currentPage: page,
+      perPage,
+    },
   });
 };
 
-module.exports = getPostsByQuery;
+module.exports = getPublicationsByQuery;

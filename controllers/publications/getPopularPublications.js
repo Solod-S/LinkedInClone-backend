@@ -2,7 +2,7 @@ const { Publication } = require("../../models");
 
 const { publicationTransformer } = require("../../helpers/index");
 
-const getAllPublications = async (req, res, next) => {
+const getPopularPublications = async (req, res, next) => {
   let page = parseInt(req.query.page) || 1;
   const perPage = parseInt(req.query.perPage) || 10;
   const skip = (page - 1) * perPage;
@@ -17,7 +17,7 @@ const getAllPublications = async (req, res, next) => {
   if ((await Publication.find({})).length <= 0) {
     return res.json({
       status: "success",
-      message: "Successfully get publications",
+      message: "Successfully get popular publications",
       data: {
         publications: [],
         totalPages,
@@ -28,7 +28,7 @@ const getAllPublications = async (req, res, next) => {
   }
 
   const publications = await Publication.find({})
-    .sort({ createdAt: -1 })
+    .sort({ likes: -1 })
     .skip(skip < 0 ? 0 : skip)
     .limit(perPage)
     .populate({
@@ -85,7 +85,7 @@ const getAllPublications = async (req, res, next) => {
 
   res.json({
     status: "success",
-    message: "Successfully get publications",
+    message: "Successfully get popular publications",
     data: {
       publications: publications.map((publication) => publicationTransformer(publication)),
       totalPages,
@@ -95,4 +95,4 @@ const getAllPublications = async (req, res, next) => {
   });
 };
 
-module.exports = getAllPublications;
+module.exports = getPopularPublications;

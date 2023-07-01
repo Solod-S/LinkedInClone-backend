@@ -7,12 +7,12 @@ const { authenticate } = require("../../middlewares");
 publicationsRouter.get("/", authenticate, publications.getAllPublications);
 
 //  get popular publications
-// publicationsRouter.get("/popular", authenticate, publications.getPopularPublications);
+publicationsRouter.get("/popular", authenticate, publications.getPopularPublications);
 
 // //  search publications by query
-// publicationsRouter.get("/search", authenticate, publications.getPublicationsByQuery);
+publicationsRouter.get("/search", authenticate, publications.getPublicationsByQuery);
 
 // //  get publication by id
-// publicationsRouter.get("/:publicationId", authenticate, publications.getPublicationById);
+publicationsRouter.get("/:publicationId", authenticate, publications.getPublicationById);
 
 module.exports = publicationsRouter;

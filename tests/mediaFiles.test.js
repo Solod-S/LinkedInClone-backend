@@ -216,7 +216,7 @@ describe("Media-files Test Suite", () => {
     expect(status).toBe(400);
     expect(body).toHaveProperty(
       "message",
-      '"value" must contain at least one of [type, location, url, providerPublicId, postId, commentId, educationId, experienceId]'
+      '"value" must contain at least one of [type, location, url, providerPublicId, postId, commentId, educationId, experienceId, publicationId]'
     );
   }, 15000);
 
