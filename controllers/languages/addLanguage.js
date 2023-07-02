@@ -5,8 +5,6 @@ const { languageTransformer } = require("../../helpers/index");
 const addLanguage = async (req, res, next) => {
   const { _id } = req.user;
 
-  console.log(req.body, _id);
-
   const user = await User.findOne({ _id: _id });
 
   const newLanguage = await Language.create({

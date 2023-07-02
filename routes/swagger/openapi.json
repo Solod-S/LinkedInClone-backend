@@ -59,6 +59,30 @@
     {
       "name": "Favorites",
       "description": "Favorites endpoints"
+    },
+    {
+      "name": "Companies",
+      "description": "Companies endpoints"
+    },
+    {
+      "name": "Companies",
+      "description": "Companies endpoints"
+    },
+    {
+      "name": "Own publications",
+      "description": "Own publications endpoints"
+    },
+    {
+      "name": "Publications",
+      "description": "Publications endpoints"
+    },
+    {
+      "name": "Own jobs",
+      "description": "Own jobs endpoints"
+    },
+    {
+      "name": "Jobs",
+      "description": "Jobs endpoints"
     }
   ],
   "paths": {

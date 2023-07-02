@@ -7,7 +7,6 @@ const updateLanguage = async (req, res, next) => {
   const updateData = req.body; // new data from req.body
   const { _id } = req.user;
   const { languageId } = req.params;
-  console.log(languageId);
 
   const language = await Language.findById({ _id: languageId });
 

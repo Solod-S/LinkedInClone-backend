@@ -4,7 +4,6 @@ const { userTransformer, postTransformer } = require("../../helpers/index");
 const getAllUsers = async (req, res, next) => {
   let page = parseInt(req.query.page) || 1;
   const perPage = parseInt(req.query.perPage) || 10;
-  const skip = (page - 1) * perPage;
 
   const count = await User.countDocuments();
   const totalPages = Math.ceil(count / perPage);
@@ -12,6 +11,8 @@ const getAllUsers = async (req, res, next) => {
   if (page > totalPages) {
     page = totalPages;
   }
+
+  const skip = (page - 1) * perPage;
 
   if ((await User.find({})).length <= 0) {
     return res.json({
@@ -131,68 +132,67 @@ const getAllUsers = async (req, res, next) => {
 
 module.exports = getAllUsers;
 
-
- // const users = await User.aggregate([
-  //   {
-  //     $lookup: {
-  //       from: "posts",
-  //       localField: "_id",
-  //       foreignField: "owner",
-  //       as: "posts",
-  //     },
-  //   },
-  //   {
-  //     $unwind: {
-  //       path: "$posts",
-  //       preserveNullAndEmptyArrays: true,
-  //     },
-  //   },
-  //   {
-  //     $sort: {
-  //       "posts.createdAt": -1,
-  //     },
-  //   },
-  //   {
-  //     $skip: skip < 0 ? 0 : skip,
-  //   },
-  //   {
-  //     $limit: perPage,
-  //   },
-  //   {
-  //     $lookup: {
-  //       from: "likes",
-  //       localField: "posts.likes",
-  //       foreignField: "_id",
-  //       as: "posts.likes",
-  //     },
-  //   },
-  //   {
-  //     $lookup: {
-  //       from: "comments",
-  //       localField: "posts.comments",
-  //       foreignField: "_id",
-  //       as: "posts.comments",
-  //     },
-  //   },
-  //   {
-  //     $lookup: {
-  //       from: "mediafiles",
-  //       localField: "posts.mediaFiles",
-  //       foreignField: "_id",
-  //       as: "posts.mediaFiles",
-  //     },
-  //   },
-  //   {
-  //     $group: {
-  //       _id: "$_id",
-  //       name: { $first: "$name" },
-  //       email: { $first: "$email" },
-  //       surname: { $first: "$surname" },
-  //       createdAt: { $first: "$createdAt" },
-  //       posts: { $push: "$posts" },
-  //     },
-  //   },
-  // ]);
+// const users = await User.aggregate([
+//   {
+//     $lookup: {
+//       from: "posts",
+//       localField: "_id",
+//       foreignField: "owner",
+//       as: "posts",
+//     },
+//   },
+//   {
+//     $unwind: {
+//       path: "$posts",
+//       preserveNullAndEmptyArrays: true,
+//     },
+//   },
+//   {
+//     $sort: {
+//       "posts.createdAt": -1,
+//     },
+//   },
+//   {
+//     $skip: skip < 0 ? 0 : skip,
+//   },
+//   {
+//     $limit: perPage,
+//   },
+//   {
+//     $lookup: {
+//       from: "likes",
+//       localField: "posts.likes",
+//       foreignField: "_id",
+//       as: "posts.likes",
+//     },
+//   },
+//   {
+//     $lookup: {
+//       from: "comments",
+//       localField: "posts.comments",
+//       foreignField: "_id",
+//       as: "posts.comments",
+//     },
+//   },
+//   {
+//     $lookup: {
+//       from: "mediafiles",
+//       localField: "posts.mediaFiles",
+//       foreignField: "_id",
+//       as: "posts.mediaFiles",
+//     },
+//   },
+//   {
+//     $group: {
+//       _id: "$_id",
+//       name: { $first: "$name" },
+//       email: { $first: "$email" },
+//       surname: { $first: "$surname" },
+//       createdAt: { $first: "$createdAt" },
+//       posts: { $push: "$posts" },
+//     },
+//   },
+// ]);
 
 // $match: Этот этап фильтрует пользователей на основе userQuery, которое содержит ключевое слово для поиска. В результате остаются только пользователи, у которых поле name соответствует заданному ключевому слову (регистронезависимый поиск).
 

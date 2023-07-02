@@ -3,24 +3,18 @@ const { Company, Job } = require("../../models");
 const { HttpError } = require("../../routes/errors/HttpErrors");
 const { jobTransformer } = require("../../helpers/index");
 
-const addOwnJobs = async (req, res, next) => {
+const deleteOwnJob = async (req, res, next) => {
   const { _id } = req.user;
+  const { jobId } = req.params;
 
+  const job = await Job.findById({ _id: jobId });
   const company = await Company.findOne({ owners: _id });
 
-  if (!company) {
+  if (!job || !company) {
     throw HttpError(404, "Not found");
   }
 
-  const newJob = await Job.create({
-    ...req.body,
-    owner: company._id,
-  });
-
-  company.jobs.push(newJob._id);
-  await company.save();
-
-  const job = await Job.findById({ _id: newJob._id })
+  const result = await Job.findByIdAndDelete({ _id: jobId })
     .populate({
       path: "applied",
       select:
@@ -30,11 +24,18 @@ const addOwnJobs = async (req, res, next) => {
       path: "skills",
       select: "_id skill",
     });
-  res.status(201).json({
+
+  if (!result) {
+    throw HttpError(404, "Not found");
+  }
+
+  await Company.updateOne({ jobs: { $elemMatch: { $eq: job._id } } }, { $pull: { jobs: job._id } });
+
+  res.json({
     status: "success",
-    message: "job successfully created",
-    data: { job: jobTransformer(job) },
+    message: "Job successfully deleted",
+    data: { job: jobTransformer(result) },
   });
 };
 
-module.exports = addOwnJobs;
+module.exports = deleteOwnJob;

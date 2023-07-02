@@ -85,7 +85,7 @@ const getMediaFileById = async (req, res, next) => {
     })
     .populate({
       path: "publicationId",
-      select: "_id description",
+      select: "_id description ",
       populate: [
         {
           path: "owner",

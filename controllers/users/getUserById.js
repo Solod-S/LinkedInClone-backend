@@ -5,7 +5,7 @@ const { postTransformer, userTransformer } = require("../../helpers/index");
 
 const getUserById = async (req, res, next) => {
   const { userId } = req.params;
-  console.log(userId);
+
   const user = await User.findById({ _id: userId })
     .populate({
       path: "posts",

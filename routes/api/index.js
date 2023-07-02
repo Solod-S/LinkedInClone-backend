@@ -13,6 +13,7 @@ const companiesRouter = require("./companies");
 const ownPublicationsRouter = require("./ownPublications");
 const publicationsRouter = require("./publications");
 const ownJobsRouter = require("./ownJobs");
+const jobsRouter = require("./jobs");
 
 module.exports = {
   usersRouter,
@@ -30,4 +31,5 @@ module.exports = {
   ownPublicationsRouter,
   publicationsRouter,
   ownJobsRouter,
+  jobsRouter,
 };

@@ -6,7 +6,6 @@ const { mediaFileTransformer } = require("../../helpers/index");
 const deleteMediaFile = async (req, res, next) => {
   const { _id } = req.user;
   const { mediaFileId } = req.params;
-  console.log(mediaFileId);
 
   const mediaFile = await MediaFile.findById({ _id: mediaFileId });
 

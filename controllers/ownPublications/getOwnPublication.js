@@ -6,7 +6,6 @@ const getOwnPublication = async (req, res, next) => {
   const { _id } = req.user;
   let page = parseInt(req.query.page) || 1;
   const perPage = parseInt(req.query.perPage) || 10;
-  const skip = (page - 1) * perPage;
 
   const company = await Company.findOne({ owners: _id });
   const count = await Publication.countDocuments({ owner: company._id });
@@ -15,6 +14,8 @@ const getOwnPublication = async (req, res, next) => {
   if (page > totalPages) {
     page = totalPages;
   }
+
+  const skip = (page - 1) * perPage;
 
   if ((await Publication.find({ owner: company._id })).length <= 0) {
     return res.json({

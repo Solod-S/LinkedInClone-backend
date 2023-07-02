@@ -5,7 +5,6 @@ const { publicationTransformer } = require("../../helpers/index");
 const getAllPublications = async (req, res, next) => {
   let page = parseInt(req.query.page) || 1;
   const perPage = parseInt(req.query.perPage) || 10;
-  const skip = (page - 1) * perPage;
 
   const count = await Publication.countDocuments();
   const totalPages = Math.ceil(count / perPage);
@@ -13,6 +12,8 @@ const getAllPublications = async (req, res, next) => {
   if (page > totalPages) {
     page = totalPages;
   }
+
+  const skip = (page - 1) * perPage;
 
   if ((await Publication.find({})).length <= 0) {
     return res.json({

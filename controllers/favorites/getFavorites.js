@@ -8,7 +8,6 @@ const getFavorites = async (req, res, next) => {
 
   let page = parseInt(req.query.page) || 1;
   const perPage = parseInt(req.query.perPage) || 10;
-  const skip = (page - 1) * perPage;
 
   const count = user.favorite.length;
   const totalPages = Math.ceil(count / perPage);
@@ -16,6 +15,8 @@ const getFavorites = async (req, res, next) => {
   if (page > totalPages) {
     page = totalPages;
   }
+
+  const skip = (page - 1) * perPage;
 
   if (user.favorite.length <= 0) {
     return res.json({

@@ -6,7 +6,6 @@ const getAllComments = async (req, res, next) => {
   const { _id } = req.user;
   let page = parseInt(req.query.page) || 1;
   const perPage = parseInt(req.query.perPage) || 10;
-  const skip = (page - 1) * perPage;
 
   const count = await Comment.countDocuments({ owner: _id });
   const totalPages = Math.ceil(count / perPage);
@@ -14,6 +13,8 @@ const getAllComments = async (req, res, next) => {
   if (page > totalPages) {
     page = totalPages;
   }
+
+  const skip = (page - 1) * perPage;
 
   if ((await Comment.find({ owner: _id })).length <= 0) {
     return res.json({
@@ -34,14 +35,15 @@ const getAllComments = async (req, res, next) => {
     .limit(perPage)
     .populate({
       path: "mediaFiles",
-      select: "url type providerPublicId location createdAt updatedAt"
-    }).populate({
+      select: "url type providerPublicId location createdAt updatedAt",
+    })
+    .populate({
       path: "likes",
       select: "owner type createdAt updatedAt",
-    }).populate({
+    })
+    .populate({
       path: "owner",
-      select:
-        "_id surname name avatarURL",
+      select: "_id surname name avatarURL",
     });
 
   res.json({

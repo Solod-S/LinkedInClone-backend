@@ -6,7 +6,6 @@ const getOwnExperiences = async (req, res, next) => {
   const { _id } = req.user;
   let page = parseInt(req.query.page) || 1;
   const perPage = parseInt(req.query.perPage) || 10;
-  const skip = (page - 1) * perPage;
 
   const count = await Experience.countDocuments({ owner: _id });
   const totalPages = Math.ceil(count / perPage);
@@ -14,6 +13,8 @@ const getOwnExperiences = async (req, res, next) => {
   if (page > totalPages) {
     page = totalPages;
   }
+
+  const skip = (page - 1) * perPage;
 
   if ((await Experience.find({ owner: _id })).length <= 0) {
     return res.json({

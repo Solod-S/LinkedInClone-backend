@@ -13,6 +13,8 @@ const companies = require("./companies");
 const ownPublications = require("./ownPublications");
 const publications = require("./publications");
 const ownJobs = require("./ownJobs");
+const jobs = require("./jobs");
+
 module.exports = {
   users,
   ownPosts,
@@ -29,4 +31,5 @@ module.exports = {
   ownPublications,
   publications,
   ownJobs,
+  jobs,
 };

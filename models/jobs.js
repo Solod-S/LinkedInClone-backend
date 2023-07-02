@@ -95,6 +95,7 @@ const createJobSchema = Joi.object({
 const updateJobSchema = Joi.object({
   description: Joi.string(),
   mediaFiles: Joi.array(),
+  skills: Joi.array(),
 })
   .or("description", "mediaFiles")
   .required();
