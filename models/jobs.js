@@ -85,19 +85,88 @@ const createJobSchema = Joi.object({
   title: Joi.string().required(),
   location: Joi.string().allow(""),
   description: Joi.string().required(),
-  employmentType: Joi.string().required(),
-  seniorityLevel: Joi.string().required(),
-  industry: Joi.string().required(),
+  employmentType: Joi.string()
+    .required()
+    .valid("Full-time", "Part-time", "Self-employed", "Freelance", "Contract", "Internship", "Apprenticeship"),
+  seniorityLevel: Joi.string()
+    .required()
+    .valid(
+      "Internship",
+      "Entry Level",
+      "Junior",
+      "Mid Level",
+      "Senior",
+      "Lead",
+      "Manager",
+      "Director",
+      "Executive",
+      "C-Level",
+      "Other"
+    ),
+  industry: Joi.string()
+    .required()
+    .valid(
+      "Information Technology (IT)",
+      "Finance and Banking",
+      "Healthcare and Medicine",
+      "Manufacturing and Industrial",
+      "Tourism and Hospitality",
+      "Education and Science",
+      "Retail",
+      "Marketing and Advertising",
+      "Arts and Entertainment",
+      "Automotive Industry",
+      "E-commerce",
+      "Other"
+    ),
   applyURL: Joi.string().allow(""),
   skills: Joi.array(),
 });
 
 const updateJobSchema = Joi.object({
+  title: Joi.string(),
+  location: Joi.string(),
   description: Joi.string(),
-  mediaFiles: Joi.array(),
+  employmentType: Joi.string().valid(
+    "Full-time",
+    "Part-time",
+    "Self-employed",
+    "Freelance",
+    "Contract",
+    "Internship",
+    "Apprenticeship"
+  ),
+  seniorityLevel: Joi.string().valid(
+    "Internship",
+    "Entry Level",
+    "Junior",
+    "Mid Level",
+    "Senior",
+    "Lead",
+    "Manager",
+    "Director",
+    "Executive",
+    "C-Level",
+    "Other"
+  ),
+  industry: Joi.string().valid(
+    "Information Technology (IT)",
+    "Finance and Banking",
+    "Healthcare and Medicine",
+    "Manufacturing and Industrial",
+    "Tourism and Hospitality",
+    "Education and Science",
+    "Retail",
+    "Marketing and Advertising",
+    "Arts and Entertainment",
+    "Automotive Industry",
+    "E-commerce",
+    "Other"
+  ),
+  applyURL: Joi.string(),
   skills: Joi.array(),
 })
-  .or("description", "mediaFiles")
+  .or("title", "location", "description", "employmentType", "seniorityLevel", "skills", "applyURL", "industry")
   .required();
 
 const JobSchemas = {

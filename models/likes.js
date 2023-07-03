@@ -9,8 +9,8 @@ const likeSchema = new Schema(
     location: Joi.string().valid("comments", "posts", "publications").required(),
     owner: { type: Schema.Types.ObjectId, ref: "User", required: true },
     postId: { type: Schema.Types.ObjectId, ref: "Post" },
-    commentId: { type: Schema.Types.ObjectId, ref: "Comment" },
     publicationId: { type: Schema.Types.ObjectId, ref: "Publication" },
+    commentId: { type: Schema.Types.ObjectId, ref: "Comment" },
   },
   { versionKey: false, timestamps: true }
 );
@@ -19,7 +19,7 @@ likeSchema.post("save", mongooseErrorHandler);
 
 const Like = model("Like", likeSchema);
 
-const likesSchema = Joi.object({
+const createLikeSchema = Joi.object({
   type: Joi.string().valid("like", "dislike").required(),
   location: Joi.string().valid("comments", "posts", "publications").required(),
   postId: Joi.string(),
@@ -28,7 +28,7 @@ const likesSchema = Joi.object({
 }).oxor("postId", "commentId", "publicationId");
 
 const likeSchemas = {
-  likesSchema,
+  createLikeSchema,
 };
 
 module.exports = {

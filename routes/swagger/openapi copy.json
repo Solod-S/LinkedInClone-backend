@@ -2905,57 +2905,6 @@
           }
         }
       }
-    },
-    "/companies/add": {
-      "post": {
-        "tags": ["Companies"],
-        "summary": "Create a new company",
-        "security": [{ "Bearer": [] }],
-        "parameters": [],
-        "requestBody": {
-          "description": "Company object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CompaniesCreateCompanyRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Successfully Created a new post",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/OwnPostsNewPostResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BadRequestResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Token is invalid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedResponse"
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
@@ -23667,7 +23616,6 @@
           "location": {
             "type": "string",
             "description": "Location ",
-            "enum": ["posts", "publications"],
             "example": "posts"
           },
           "postId": {
@@ -23838,13 +23786,8 @@
         "properties": {
           "description": {
             "type": "string",
-            "description": "Comment's description",
+            "description": "Post's description",
             "example": "Let's rock!!!"
-          },
-          "mediaFiles": {
-            "type": "array",
-            "description": "Comment's mediaFiles",
-            "example": []
           }
         }
       },
@@ -24406,7 +24349,6 @@
           "location": {
             "type": "string",
             "description": "Like's location",
-            "enum": ["comments", "posts", "publications"],
             "example": "posts"
           },
           "postId": {
@@ -28729,86 +28671,6 @@
             "description": "Response message",
             "format": "string",
             "example": "Sorry, we couldnt find post id in favorites"
-          }
-        }
-      },
-      "CompaniesCreateCompanyRequest": {
-        "required": ["name", "industry", "location"],
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "Company's name",
-            "example": "SuperDuperCompany"
-          },
-          "avatarURL": {
-            "type": "string",
-            "description": "Company's avatar",
-            "example": ""
-          },
-          "description": {
-            "type": "string",
-            "description": "Company's description",
-            "example": "This is the best company"
-          },
-          "industry": {
-            "type": "string",
-            "description": "Company's industry",
-            "enum": [
-              "Information Technology (IT)",
-              "Finance and Banking",
-              "Healthcare and Medicine",
-              "Manufacturing and Industrial",
-              "Tourism and Hospitality",
-              "Education and Science",
-              "Retail",
-              "Marketing and Advertising",
-              "Arts and Entertainment",
-              "Automotive Industry",
-              "E-commerce",
-              "Other"
-            ],
-            "example": "Information Technology (IT)"
-          },
-          "location": {
-            "type": "string",
-            "description": "Company's location",
-            "example": "Ukraine, Kiev"
-          },
-          "website": {
-            "type": "string",
-            "description": "Company's website",
-            "example": "www.website.com"
-          },
-          "email": {
-            "type": "string",
-            "description": "Company's email",
-            "example": "email@website.com"
-          },
-          "phone": {
-            "type": "number",
-            "description": "Company's phone",
-            "example": "+3999999999"
-          },
-          "foundedYear": {
-            "type": "number",
-            "description": "Company's founded year",
-            "example": "2001"
-          },
-          "employeesCount": {
-            "type": "number",
-            "description": "Company's employees count",
-            "example": "12321"
-          },
-          "workers": {
-            "type": "array",
-            "description": "Company's workers",
-            "example": []
-          },
-          "jobs": {
-            "type": "array",
-            "description": "Company's jobs",
-            "example": []
           }
         }
       }

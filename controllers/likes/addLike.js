@@ -9,23 +9,23 @@ const addLike = async (req, res, next) => {
 
   let mediaFileId = "";
   let model = null;
-  let serachParams = "";
+  let serchParams = "";
 
   switch (location) {
     case "posts":
       mediaFileId = postId;
       model = Post;
-      serachParams = { postId };
+      serchParams = { postId };
       break;
     case "publications":
       mediaFileId = publicationId;
       model = Publication;
-      serachParams = { publicationId };
+      serchParams = { publicationId };
       break;
     case "comments":
       mediaFileId = commentId;
       model = Comment;
-      serachParams = { commentId };
+      serchParams = { commentId };
       break;
     default:
       break;
@@ -36,7 +36,7 @@ const addLike = async (req, res, next) => {
   if (!data) {
     throw HttpError(404, "Not found");
   }
-  const likeIsExist = await Like.findOne({ ...serachParams, owner: _id });
+  const likeIsExist = await Like.findOne({ ...serchParams, owner: _id });
 
   if (likeIsExist) {
     const updatedLike = await Like.findOneAndUpdate({ _id: likeIsExist._id }, { type });

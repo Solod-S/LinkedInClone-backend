@@ -1,7 +1,7 @@
 const request = require("supertest");
 const mongoose = require("mongoose");
 
-const { Comment } = require("../models");
+const { Comment, Post, Publication } = require("../models");
 
 const app = require("../app");
 
@@ -9,6 +9,7 @@ require("dotenv").config();
 const { DB_HOST, TEST_TOKEN, WRONG_TOKEN } = process.env;
 
 let commentId = null;
+let destinationId = null;
 
 describe("Comments Test Suite", () => {
   let server;
@@ -49,7 +50,8 @@ describe("Comments Test Suite", () => {
     ).toBe(true);
     expect(comments.every(({ likes }) => Array.isArray(likes))).toBe(true);
     expect(comments.every(({ mediaFiles }) => Array.isArray(mediaFiles))).toBe(true);
-    expect(comments.every(({ postId, commentId }) => typeof postId || commentId === "object")).toBe(true);
+    expect(comments.every(({ location }) => typeof location === "string")).toBe(true);
+    expect(comments.every(({ postId, publicationId }) => typeof postId || publicationId === "object")).toBe(true);
     expect(comments.every(({ _id }) => typeof _id === "string")).toBe(true);
     expect(comments.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
     expect(comments.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
@@ -104,7 +106,8 @@ describe("Comments Test Suite", () => {
     expect(comments.every(({ owner }) => typeof owner === "object")).toBe(true);
     expect(comments.every(({ likes }) => typeof likes === "object")).toBe(true);
     expect(comments.every(({ mediaFiles }) => typeof mediaFiles === "object")).toBe(true);
-    expect(comments.every(({ postId, commentId }) => typeof postId || commentId === "object")).toBe(true);
+    expect(comments.every(({ location }) => typeof location === "string")).toBe(true);
+    expect(comments.every(({ postId, publicationId }) => typeof postId || publicationId === "object")).toBe(true);
     expect(comments.every(({ _id }) => typeof _id === "string")).toBe(true);
     expect(comments.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
     expect(comments.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
@@ -127,11 +130,11 @@ describe("Comments Test Suite", () => {
     expect(body).toHaveProperty("message", "Unauthorized");
   }, 15000);
 
-  test("POST /comment with invalid token, should return 401 status", async () => {
+  test("POST /post's comment with invalid token, should return 401 status", async () => {
     const res = await request(app).post(`/comments/add`).set("Authorization", `Bearer ${WRONG_TOKEN}`).send({
       description:
         "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.",
-      mediaFiles: "645c76832000b04e5130b8c8",
+      location: "posts",
       postId: "6467ce7e44ff2b38b8740e63",
     });
     const { status, body } = res;
@@ -140,7 +143,7 @@ describe("Comments Test Suite", () => {
     expect(body).toHaveProperty("message", "Unauthorized");
   }, 15000);
 
-  test("POST /comment without body, should return 400 status", async () => {
+  test("POST /post's comment without body, should return 400 status", async () => {
     const res = await request(app).post(`/comments/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({});
     const { status, body } = res;
 
@@ -148,7 +151,7 @@ describe("Comments Test Suite", () => {
     expect(body).toHaveProperty("message", '"description" is required');
   }, 15000);
 
-  test("POST /comment with invalid body, should return 400 status", async () => {
+  test("POST /post's comment with invalid body, should return 400 status", async () => {
     const res = await request(app)
       .post(`/comments/add`)
       .set("Authorization", `Bearer ${TEST_TOKEN}`)
@@ -159,11 +162,18 @@ describe("Comments Test Suite", () => {
     expect(body).toHaveProperty("message", '"description" is required');
   }, 15000);
 
-  test("POST /comment with valid token, should return 201 status and valid comment data", async () => {
+  test("POST /post's comment with valid token, should return 201 status and valid comment data", async () => {
+    try {
+      const firstPost = await Post.findOne().sort({ createdAt: 1 });
+      destinationId = firstPost._id;
+    } catch (error) {
+      console.log(error);
+    }
     const res = await request(app).post(`/comments/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({
       description:
         "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.",
-      postId: "647b919d84a5d3fb7f55c580",
+      location: "posts",
+      postId: destinationId,
     });
     const { status, message, data } = res.body;
     const { comment } = data;
@@ -191,7 +201,7 @@ describe("Comments Test Suite", () => {
     expect(typeof comment.updatedAt).toBe("string");
   }, 15000);
 
-  test("PATCH /comment with valid token, should return 200 status and valid comment data", async () => {
+  test("PATCH /post's comment with valid token, should return 200 status and valid comment data", async () => {
     const res = await request(app)
       .patch(`/comments/update/${commentId}`)
       .set("Authorization", `Bearer ${TEST_TOKEN}`)
@@ -220,7 +230,7 @@ describe("Comments Test Suite", () => {
     expect(typeof comment.updatedAt).toBe("string");
   }, 15000);
 
-  test("PATCH /comment with invalid token, should return 401 status", async () => {
+  test("PATCH /post's comment with invalid token, should return 401 status", async () => {
     const res = await request(app)
       .patch(`/comments/update/${commentId}`)
       .set("Authorization", `Bearer ${WRONG_TOKEN}`)
@@ -231,7 +241,7 @@ describe("Comments Test Suite", () => {
     expect(body).toHaveProperty("message", "Unauthorized");
   }, 15000);
 
-  test("PATCH /comment with valid token without body, should return 400 status", async () => {
+  test("PATCH /post's comment with valid token without body, should return 400 status", async () => {
     const res = await request(app)
       .patch(`/comments/update/${commentId}`)
       .set("Authorization", `Bearer ${TEST_TOKEN}`)
@@ -239,10 +249,13 @@ describe("Comments Test Suite", () => {
     const { status, body } = res;
 
     expect(status).toBe(400);
-    expect(body).toHaveProperty("message", '"value" must contain at least one of [description, postId, mediaFiles]');
+    expect(body).toHaveProperty(
+      "message",
+      '"value" must contain at least one of [description, location, postId, mediaFiles, publicationId]'
+    );
   }, 15000);
 
-  test("DELETE /comment with invalid token, should return 401 status", async () => {
+  test("DELETE /post's comment with invalid token, should return 401 status", async () => {
     const res = await request(app)
       .delete(`/comments/remove/${commentId}`)
       .set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -252,7 +265,7 @@ describe("Comments Test Suite", () => {
     expect(body).toHaveProperty("message", "Unauthorized");
   }, 15000);
 
-  test("DELETE /comment with valid token, should return 200 status and valid comment data", async () => {
+  test("DELETE /post's comment with valid token, should return 200 status and valid comment data", async () => {
     const res = await request(app).delete(`/comments/remove/${commentId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
     const { status, message, data } = res.body;
     const { comment } = data;
@@ -272,6 +285,171 @@ describe("Comments Test Suite", () => {
     expect(typeof comment.owner.name).toBe("string");
     expect(typeof comment.owner.avatarURL).toBe("string");
     expect(typeof comment.postId).toBe("string");
+    expect(typeof comment._id).toBe("string");
+    expect(typeof comment.postedAtHuman).toBe("string");
+    expect(typeof comment.createdAt).toBe("string");
+    expect(typeof comment.updatedAt).toBe("string");
+
+    const deletedComment = await Comment.findById({ _id: commentId });
+    expect(deletedComment).toBe(null);
+  }, 15000);
+
+  test("POST /publication's comment with invalid token, should return 401 status", async () => {
+    try {
+      const firstPost = await Publication.findOne().sort({ createdAt: 1 });
+      destinationId = firstPost._id;
+    } catch (error) {
+      console.log(error);
+    }
+
+    const res = await request(app).post(`/comments/add`).set("Authorization", `Bearer ${WRONG_TOKEN}`).send({
+      description:
+        "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.",
+      location: "publications",
+      publicationId: destinationId,
+    });
+    const { status, body } = res;
+
+    expect(status).toBe(401);
+    expect(body).toHaveProperty("message", "Unauthorized");
+  }, 15000);
+
+  test("POST /publication's comment without body, should return 400 status", async () => {
+    const res = await request(app).post(`/comments/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({});
+    const { status, body } = res;
+
+    expect(status).toBe(400);
+    expect(body).toHaveProperty("message", '"description" is required');
+  }, 15000);
+
+  test("POST /publication's comment with invalid body, should return 400 status", async () => {
+    const res = await request(app)
+      .post(`/comments/add`)
+      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .send({ 11: "ss" });
+    const { status, body } = res;
+
+    expect(status).toBe(400);
+    expect(body).toHaveProperty("message", '"description" is required');
+  }, 15000);
+
+  test("POST /publication's comment with valid token, should return 201 status and valid comment data", async () => {
+    const res = await request(app).post(`/comments/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({
+      description:
+        "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.",
+      location: "publications",
+      publicationId: "649c7ccc1bfdf2db5e1a2e38",
+    });
+    const { status, message, data } = res.body;
+    const { comment } = data;
+
+    commentId = comment._id;
+
+    expect(res.status).toBe(201);
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("Comment successfully created");
+    expect(typeof data).toBe("object");
+    expect(typeof comment).toBe("object");
+    expect(typeof comment.description).toBe("string");
+    expect(Array.isArray(comment.mediaFiles)).toBe(true);
+    expect(Array.isArray(comment.likes)).toBe(true);
+    expect(typeof comment.owner).toBe("object");
+    expect(typeof comment.owner._id).toBe("string");
+    expect(typeof comment.owner.name).toBe("string");
+    expect(typeof comment.owner.avatarURL).toBe("string");
+    expect(typeof comment.publicationId).toBe("string");
+    expect(typeof comment._id).toBe("string");
+    expect(typeof comment.postedAtHuman).toBe("string");
+    expect(typeof comment.createdAt).toBe("string");
+    expect(typeof comment.updatedAt).toBe("string");
+  }, 15000);
+
+  test("PATCH /publication's comment with valid token, should return 200 status and valid comment data", async () => {
+    const res = await request(app)
+      .patch(`/comments/update/${commentId}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .send({ description: "TEST" });
+    const { status, message, data } = res.body;
+    const { comment } = data;
+
+    expect(res.status).toBe(200);
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("Comment successfully updated");
+    expect(typeof data).toBe("object");
+    expect(typeof comment).toBe("object");
+    expect(typeof comment.description).toBe("string");
+    expect(Array.isArray(comment.mediaFiles)).toBe(true);
+    expect(Array.isArray(comment.likes)).toBe(true);
+    expect(typeof comment.owner).toBe("object");
+    expect(typeof comment.owner._id).toBe("string");
+    expect(typeof comment.owner.name).toBe("string");
+    expect(typeof comment.owner.avatarURL).toBe("string");
+    expect(typeof comment.publicationId).toBe("string");
+    expect(typeof comment._id).toBe("string");
+    expect(typeof comment.postedAtHuman).toBe("string");
+    expect(typeof comment.createdAt).toBe("string");
+    expect(typeof comment.updatedAt).toBe("string");
+  }, 15000);
+
+  test("PATCH /publication's comment with invalid token, should return 401 status", async () => {
+    const res = await request(app)
+      .patch(`/comments/update/${commentId}`)
+      .set("Authorization", `Bearer ${WRONG_TOKEN}`)
+      .send({ description: "TEST2" });
+    const { status, body } = res;
+
+    expect(status).toBe(401);
+    expect(body).toHaveProperty("message", "Unauthorized");
+  }, 15000);
+
+  test("PATCH /publication's comment with valid token without body, should return 400 status", async () => {
+    const res = await request(app)
+      .patch(`/comments/update/${commentId}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .send({});
+    const { status, body } = res;
+
+    expect(status).toBe(400);
+    expect(body).toHaveProperty(
+      "message",
+      '"value" must contain at least one of [description, location, postId, mediaFiles, publicationId]'
+    );
+  }, 15000);
+
+  test("DELETE /publication's comment with invalid token, should return 401 status", async () => {
+    const res = await request(app)
+      .delete(`/comments/remove/${commentId}`)
+      .set("Authorization", `Bearer ${WRONG_TOKEN}`);
+    const { status, body } = res;
+
+    expect(status).toBe(401);
+    expect(body).toHaveProperty("message", "Unauthorized");
+  }, 15000);
+
+  test("DELETE /publication's comment with valid token, should return 200 status and valid comment data", async () => {
+    const res = await request(app).delete(`/comments/remove/${commentId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const { status, message, data } = res.body;
+    const { comment } = data;
+
+    expect(res.status).toBe(200);
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("Comment successfully deleted");
+    expect(typeof data).toBe("object");
+    expect(typeof comment).toBe("object");
+    expect(typeof comment.description).toBe("string");
+    expect(Array.isArray(comment.mediaFiles)).toBe(true);
+    expect(Array.isArray(comment.likes)).toBe(true);
+    expect(typeof comment.owner).toBe("object");
+    expect(typeof comment.owner._id).toBe("string");
+    expect(typeof comment.owner.name).toBe("string");
+    expect(typeof comment.owner.avatarURL).toBe("string");
+    expect(typeof comment.publicationId).toBe("string");
     expect(typeof comment._id).toBe("string");
     expect(typeof comment.postedAtHuman).toBe("string");
     expect(typeof comment.createdAt).toBe("string");

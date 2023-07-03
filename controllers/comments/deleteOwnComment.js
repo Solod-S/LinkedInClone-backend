@@ -1,4 +1,4 @@
-const { Post, Comment, Like, MediaFile } = require("../../models");
+const { Post, Comment, Like, MediaFile, Publication } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
 const { commentTransformer } = require("../../helpers/index");
@@ -13,23 +13,26 @@ const deleteOwnComment = async (req, res, next) => {
     throw HttpError(404, "Not found");
   }
 
-  const result = await Comment.findByIdAndDelete({ _id: commentId }).populate({
-    path: "mediaFiles",
-    select: "url type providerPublicId location createdAt updatedAt"
-  }).populate({
-    path: "likes",
-    select: "owner type createdAt updatedAt",
-  }).populate({
-    path: "owner",
-    select:
-      "_id surname name avatarURL",
-  });
+  const result = await Comment.findByIdAndDelete({ _id: commentId })
+    .populate({
+      path: "mediaFiles",
+      select: "url type providerPublicId location createdAt updatedAt",
+    })
+    .populate({
+      path: "likes",
+      select: "owner type createdAt updatedAt",
+    })
+    .populate({
+      path: "owner",
+      select: "_id surname name avatarURL",
+    });
 
   if (!result) {
     throw HttpError(404, "Not found");
   }
 
   await Post.updateOne({ comments: { $elemMatch: { $eq: comment._id } } }, { $pull: { comments: comment._id } });
+  await Publication.updateOne({ comments: { $elemMatch: { $eq: comment._id } } }, { $pull: { comments: comment._id } });
   await Comment.updateOne({ comments: { $elemMatch: { $eq: comment._id } } }, { $pull: { comments: comment._id } });
   await MediaFile.deleteMany({ _id: { $in: comment.mediaFiles } });
   await Like.deleteMany({ _id: { $in: comment.likes } });

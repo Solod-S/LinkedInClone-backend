@@ -15,7 +15,7 @@ const deleteCompany = async (req, res, next) => {
 
   const result = await Company.findByIdAndDelete({ _id: companyId });
   await Publication.deleteMany({ owner: result._id });
-  // await Job.deleteMany({ owner: result._id });
+  await Job.deleteMany({ owner: result._id });
 
   res.json({
     status: "success",

@@ -1,31 +1,45 @@
-const { Comment, Post, MediaFile } = require("../../models");
+const { Comment, Post, Publication } = require("../../models");
 
-const { commentTransformer, mediaFileTransformer } = require("../../helpers/index");
+const { commentTransformer } = require("../../helpers/index");
 const { HttpError } = require("../../routes/errors/HttpErrors");
 
 const addComment = async (req, res, next) => {
   const { _id, name, surname, avatarURL } = req.user;
-  const { postId } = req.body;
-  const haveMediaFile = req.body.mediaFiles && req.body.mediaFiles.length > 0;
-  const post = await Post.findById({ _id: postId });
+  const { location, publicationId, postId } = req.body;
 
-  if (!post) {
-    throw HttpError(404, "Not found");
+  let destinationId = "";
+  let model = null;
+
+  switch (location) {
+    case "posts":
+      destinationId = postId;
+      model = Post;
+      break;
+    case "publications":
+      destinationId = publicationId;
+      model = Publication;
+      break;
+    default:
+      break;
   }
 
-  const mediaFiles = haveMediaFile ? mediaFileTransformer(await MediaFile.findById({ _id: req.body.mediaFiles })) : [];
+  const destinationPoint = await model.findById({ _id: destinationId });
+
+  if (!destinationPoint) {
+    throw HttpError(404, "Not found");
+  }
 
   const comment = await Comment.create({
     ...req.body,
     owner: _id,
   });
 
-  await Post.findByIdAndUpdate(postId, { $push: { comments: comment._id } }, { new: true });
+  await model.findByIdAndUpdate(destinationId, { $push: { comments: comment._id } }, { new: true });
 
   res.status(201).json({
     status: "success",
     message: "Comment successfully created",
-    data: { comment: { ...commentTransformer(comment), owner: { _id, name, surname, avatarURL }, mediaFiles } },
+    data: { comment: { ...commentTransformer(comment), owner: { _id, name, surname, avatarURL } } },
   });
 };
 
