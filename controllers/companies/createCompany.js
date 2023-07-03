@@ -27,7 +27,7 @@ const createCompany = async (req, res, next) => {
   res.status(201).json({
     status: "success",
     message: "Company successfully created",
-    company: { skill: companyTransformer(newCompany) },
+    data: { company: companyTransformer(newCompany) },
   });
 };
 
