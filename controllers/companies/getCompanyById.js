@@ -46,13 +46,13 @@ const getCompanyById = async (req, res, next) => {
         limit: 20,
       },
     })
-    // .populate({
-    //   path: othersPath[1],
-    //   select: "",
-    //   options: {
-    //     limit: 20,
-    //   },
-    // })
+    .populate({
+      path: othersPath[1],
+      select: "",
+      options: {
+        limit: 20,
+      },
+    })
     .lean();
 
   if (!company) {

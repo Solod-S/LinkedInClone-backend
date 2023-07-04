@@ -20,7 +20,7 @@ const deleteCompany = async (req, res, next) => {
   res.json({
     status: "success",
     message: "Company successfully deleted",
-    data: { Company: companyTransformer(result) },
+    data: { company: companyTransformer(result) },
   });
 };
 

@@ -625,6 +625,16 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -764,6 +774,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
                 }
               }
             }
@@ -1151,6 +1171,16 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1363,6 +1393,16 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1548,6 +1588,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
                 }
               }
             }
@@ -1833,6 +1883,16 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1942,6 +2002,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
                 }
               }
             }
@@ -2214,6 +2284,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
                 }
               }
             }
@@ -2529,6 +2609,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
                 }
               }
             }
@@ -2906,7 +2996,7 @@
         }
       }
     },
-    "/companies/add": {
+    "/companies/create": {
       "post": {
         "tags": ["Companies"],
         "summary": "Create a new company",
@@ -2967,12 +3057,22 @@
         }
       }
     },
-    "/companies/update": {
+    "/companies/update/{companyId}": {
       "patch": {
         "tags": ["Companies"],
         "summary": "Update the company",
         "security": [{ "Bearer": [] }],
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "description": "Company id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "description": "Company object",
           "required": true,
@@ -3436,6 +3536,66 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CompaniesGetCompanyByIdResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/companies/remove/{companyId}": {
+      "delete": {
+        "tags": ["Companies"],
+        "summary": "Delete company by id",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "description": "Company id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully delete the company",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompaniesRemoveCompanyByIdResponse"
                 }
               }
             }
@@ -30509,6 +30669,139 @@
             "description": "Status",
             "format": "string",
             "example": 10
+          }
+        }
+      },
+      "CompaniesRemoveCompanyByIdResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Company successfully deleted"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "company": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Company's id",
+                    "example": "642831f346155749a2b6e944"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Company's name",
+                    "example": "SuperDuperCompany 2022"
+                  },
+                  "avatarURL": {
+                    "type": "string",
+                    "description": "Company's avatar URL",
+                    "example": ""
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Company's description",
+                    "example": "This is the best company in 2023"
+                  },
+                  "industry": {
+                    "type": "string",
+                    "description": "Company's industry",
+                    "example": "Information Technology (IT)"
+                  },
+                  "location": {
+                    "type": "string",
+                    "description": "Company's industry",
+                    "example": "Ukraine, Kiev"
+                  },
+                  "website": {
+                    "type": "string",
+                    "description": "Company's website",
+                    "example": "www.website.com"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Company's email",
+                    "example": "email@website.com"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "description": "Company's phone",
+                    "example": 3999999999
+                  },
+                  "foundedYear": {
+                    "type": "string",
+                    "description": "Company's founded year",
+                    "example": 2001
+                  },
+                  "employeesCount": {
+                    "type": "string",
+                    "description": "Company's employees count",
+                    "example": 12321
+                  },
+                  "jobs": {
+                    "type": "array",
+                    "description": "Array of jobs associated with this company",
+                    "items": {
+                      "type": "string",
+                      "description": "Jobs ID"
+                    },
+                    "default": []
+                  },
+                  "publications": {
+                    "type": "array",
+                    "description": "Array of publications associated with this company",
+                    "items": {
+                      "type": "string",
+                      "description": "Publications ID"
+                    },
+                    "default": []
+                  },
+                  "workers": {
+                    "type": "array",
+                    "description": "Array of workers associated with this company",
+                    "items": {
+                      "type": "string",
+                      "description": "Workers ID"
+                    },
+                    "default": []
+                  },
+                  "owners": {
+                    "type": "array",
+                    "description": "Array of owners associated with this company",
+                    "items": {
+                      "type": "string",
+                      "description": "Owners ID"
+                    },
+                    "default": ["642831f346155749a2b6e944"]
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Post's time",
+                    "example": "55 seconds ago"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-06-05T10:21:34.989+00:00"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "Updated at",
+                    "example": "2023-06-06T10:18:55.162+00:00"
+                  }
+                }
+              }
+            }
           }
         }
       }
