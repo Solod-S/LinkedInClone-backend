@@ -3632,6 +3632,231 @@
           }
         }
       }
+    },
+    "/own-publications/add": {
+      "post": {
+        "tags": ["Own publications"],
+        "summary": "Create a new company's publication",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "requestBody": {
+          "description": "publication object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OwnPublicationsCreatePublicationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully create a new company's publication",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OwnPublicationsNewPublicationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/own-publications/update/{publicationId}": {
+      "patch": {
+        "tags": ["Own publications"],
+        "summary": "Update company's publication by id",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "publicationId",
+            "required": true,
+            "description": "Publication file id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Publication update object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OwnPublicationsUpdatePublicationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully update the company's publication",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OwnPublicationsUpdatePublicationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmptyBodyRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/own-publications": {
+      "get": {
+        "tags": ["Own publications"],
+        "summary": "Get all your company's publications",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "description": "Page number",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "required": false,
+            "description": "Number of items per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully fetch all your company's publications",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OwnPublicationsGetPublicatioResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/own-publications/remove/{publicationId}": {
+      "delete": {
+        "tags": ["Own publications"],
+        "summary": "Delete company's publication",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "publicationId",
+            "required": true,
+            "description": "Post id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully removed the company's publication",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OwnPublicationsDeletePublicationResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -30788,6 +31013,601 @@
                     "type": "string",
                     "description": "Post's time",
                     "example": "55 seconds ago"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-06-05T10:21:34.989+00:00"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "Updated at",
+                    "example": "2023-06-06T10:18:55.162+00:00"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "OwnPublicationsCreatePublicationRequest": {
+        "required": ["description"],
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Publication's text",
+            "example": "Tequila is an excellent teacher… Just last night it taught me to count… One Tequila, Two Tequila, Three Tequila, Floor!"
+          },
+          "mediaFiles": {
+            "type": "string",
+            "description": "Media files",
+            "example": []
+          }
+        }
+      },
+      "OwnPublicationsNewPublicationResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Publication successfully created"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "post": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "description": "Publication's text",
+                    "example": "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up."
+                  },
+                  "comments": {
+                    "type": "array",
+                    "description": "Array of comments associated with the post",
+                    "items": {
+                      "type": "string",
+                      "description": "Comment ID"
+                    },
+                    "default": []
+                  },
+                  "likes": {
+                    "type": "array",
+                    "description": "Array of likes associated with the post",
+                    "items": {
+                      "type": "string",
+                      "description": "Like ID"
+                    },
+                    "default": []
+                  },
+                  "mediaFiles": {
+                    "type": "array",
+                    "description": "Array of media files associated with the post",
+                    "items": {
+                      "type": "string",
+                      "description": "Media files ID"
+                    },
+                    "default": []
+                  },
+                  "owner": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "description": "Company's id",
+                        "example": "642831f346155749a2b6e944"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Company's name",
+                        "example": "Very Good Company"
+                      },
+                      "avatarURL": {
+                        "type": "string",
+                        "description": "Company's avatar link",
+                        "example": "User's avatar link"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Company's description",
+                        "example": "This is good company"
+                      },
+                      "industry": {
+                        "type": "string",
+                        "description": "Company's industry",
+                        "example": "Information Technology (IT)"
+                      },
+                      "location": {
+                        "type": "string",
+                        "description": "Company's location",
+                        "example": "Ukraine,Kiev"
+                      },
+                      "website": {
+                        "type": "string",
+                        "description": "Company's website",
+                        "example": "www.website.com"
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "Company's email",
+                        "format": "email"
+                      },
+                      "phone": {
+                        "type": "number",
+                        "description": "Company's phone",
+                        "example": "0937787878"
+                      },
+                      "foundedYear": {
+                        "type": "number",
+                        "description": "Company's founded year",
+                        "example": "2001"
+                      },
+                      "employeesCount": {
+                        "type": "number",
+                        "description": "Company's employees count",
+                        "example": "2142"
+                      }
+                    }
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Post's time",
+                    "example": "0 seconds ago"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-06-05T10:21:34.989+00:00"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "Updated at",
+                    "example": "2023-06-06T10:18:55.162+00:00"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "OwnPublicationsUpdatePublicationRequest": {
+        "required": ["description"],
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Publication's text",
+            "example": "Tequila is an excellent teacher… Just last night it taught me to count… One Tequila, Two Tequila, Three Tequila, Floor!"
+          },
+          "mediaFiles": {
+            "type": "string",
+            "description": "Media files",
+            "example": []
+          }
+        }
+      },
+      "OwnPublicationsUpdatePublicationResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successfully updated the publication"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "post": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "description": "Publication's text",
+                    "example": "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up."
+                  },
+                  "comments": {
+                    "type": "array",
+                    "description": "Array of comments associated with the post",
+                    "items": {
+                      "type": "string",
+                      "description": "Comment ID"
+                    },
+                    "default": []
+                  },
+                  "likes": {
+                    "type": "array",
+                    "description": "Array of likes associated with the post",
+                    "items": {
+                      "type": "string",
+                      "description": "Like ID"
+                    },
+                    "default": []
+                  },
+                  "mediaFiles": {
+                    "type": "array",
+                    "description": "Array of media files associated with the post",
+                    "items": {
+                      "type": "string",
+                      "description": "Media files ID"
+                    },
+                    "default": []
+                  },
+                  "owner": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "description": "Company's id",
+                        "example": "642831f346155749a2b6e944"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Company's name",
+                        "example": "Very Good Company"
+                      },
+                      "avatarURL": {
+                        "type": "string",
+                        "description": "Company's avatar link",
+                        "example": "User's avatar link"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Company's description",
+                        "example": "This is good company"
+                      },
+                      "industry": {
+                        "type": "string",
+                        "description": "Company's industry",
+                        "example": "Information Technology (IT)"
+                      },
+                      "location": {
+                        "type": "string",
+                        "description": "Company's location",
+                        "example": "Ukraine,Kiev"
+                      },
+                      "website": {
+                        "type": "string",
+                        "description": "Company's website",
+                        "example": "www.website.com"
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "Company's email",
+                        "format": "email"
+                      },
+                      "phone": {
+                        "type": "number",
+                        "description": "Company's phone",
+                        "example": "0937787878"
+                      },
+                      "foundedYear": {
+                        "type": "number",
+                        "description": "Company's founded year",
+                        "example": "2001"
+                      },
+                      "employeesCount": {
+                        "type": "number",
+                        "description": "Company's employees count",
+                        "example": "2142"
+                      }
+                    }
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Post's time",
+                    "example": "43 minutes ago"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-06-05T10:21:34.989+00:00"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "Updated at",
+                    "example": "2023-06-06T10:18:55.162+00:00"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "OwnPublicationsGetPublicatioResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successfully get publications"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "publications": {
+                "type": "array",
+                "description": "All publications",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "post": {
+                      "type": "object",
+                      "properties": {
+                        "description": {
+                          "type": "string",
+                          "description": "Publication's text",
+                          "example": "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up."
+                        },
+                        "comments": {
+                          "type": "array",
+                          "description": "Array of comments associated with the post",
+                          "items": {
+                            "type": "string",
+                            "description": "Comment ID"
+                          },
+                          "default": []
+                        },
+                        "likes": {
+                          "type": "array",
+                          "description": "Array of likes associated with the post",
+                          "items": {
+                            "type": "string",
+                            "description": "Like ID"
+                          },
+                          "default": []
+                        },
+                        "mediaFiles": {
+                          "type": "array",
+                          "description": "Array of media files associated with the post",
+                          "items": {
+                            "type": "string",
+                            "description": "Media files ID"
+                          },
+                          "default": []
+                        },
+                        "owner": {
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string",
+                              "description": "Company's id",
+                              "example": "642831f346155749a2b6e944"
+                            },
+                            "name": {
+                              "type": "string",
+                              "description": "Company's name",
+                              "example": "Very Good Company"
+                            },
+                            "avatarURL": {
+                              "type": "string",
+                              "description": "Company's avatar link",
+                              "example": "User's avatar link"
+                            },
+                            "description": {
+                              "type": "string",
+                              "description": "Company's description",
+                              "example": "This is good company"
+                            },
+                            "industry": {
+                              "type": "string",
+                              "description": "Company's industry",
+                              "example": "Information Technology (IT)"
+                            },
+                            "location": {
+                              "type": "string",
+                              "description": "Company's location",
+                              "example": "Ukraine,Kiev"
+                            },
+                            "website": {
+                              "type": "string",
+                              "description": "Company's website",
+                              "example": "www.website.com"
+                            },
+                            "email": {
+                              "type": "string",
+                              "description": "Company's email",
+                              "format": "email"
+                            },
+                            "phone": {
+                              "type": "number",
+                              "description": "Company's phone",
+                              "example": "0937787878"
+                            },
+                            "foundedYear": {
+                              "type": "number",
+                              "description": "Company's founded year",
+                              "example": "2001"
+                            },
+                            "employeesCount": {
+                              "type": "number",
+                              "description": "Company's employees count",
+                              "example": "2142"
+                            }
+                          }
+                        },
+                        "postedAtHuman": {
+                          "type": "string",
+                          "description": "Post's time",
+                          "example": "0 seconds ago"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "description": "Created at",
+                          "example": "2023-06-05T10:21:34.989+00:00"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "description": "Updated at",
+                          "example": "2023-06-06T10:18:55.162+00:00"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "totalPages": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "currentPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "perPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 10
+              }
+            }
+          }
+        }
+      },
+      "OwnPublicationsDeletePublicationResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Publication successfully deleted"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "post": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "description": "Publication's text",
+                    "example": "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up."
+                  },
+                  "comments": {
+                    "type": "array",
+                    "description": "Array of comments associated with the post",
+                    "items": {
+                      "type": "string",
+                      "description": "Comment ID"
+                    },
+                    "default": []
+                  },
+                  "likes": {
+                    "type": "array",
+                    "description": "Array of likes associated with the post",
+                    "items": {
+                      "type": "string",
+                      "description": "Like ID"
+                    },
+                    "default": []
+                  },
+                  "mediaFiles": {
+                    "type": "array",
+                    "description": "Array of media files associated with the post",
+                    "items": {
+                      "type": "string",
+                      "description": "Media files ID"
+                    },
+                    "default": []
+                  },
+                  "owner": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "description": "Company's id",
+                        "example": "642831f346155749a2b6e944"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Company's name",
+                        "example": "Very Good Company"
+                      },
+                      "avatarURL": {
+                        "type": "string",
+                        "description": "Company's avatar link",
+                        "example": "User's avatar link"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Company's description",
+                        "example": "This is good company"
+                      },
+                      "industry": {
+                        "type": "string",
+                        "description": "Company's industry",
+                        "example": "Information Technology (IT)"
+                      },
+                      "location": {
+                        "type": "string",
+                        "description": "Company's location",
+                        "example": "Ukraine,Kiev"
+                      },
+                      "website": {
+                        "type": "string",
+                        "description": "Company's website",
+                        "example": "www.website.com"
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "Company's email",
+                        "format": "email"
+                      },
+                      "phone": {
+                        "type": "number",
+                        "description": "Company's phone",
+                        "example": "0937787878"
+                      },
+                      "foundedYear": {
+                        "type": "number",
+                        "description": "Company's founded year",
+                        "example": "2001"
+                      },
+                      "employeesCount": {
+                        "type": "number",
+                        "description": "Company's employees count",
+                        "example": "2142"
+                      }
+                    }
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Post's time",
+                    "example": "0 seconds ago"
                   },
                   "createdAt": {
                     "type": "string",
