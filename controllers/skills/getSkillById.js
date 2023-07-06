@@ -31,10 +31,9 @@ const getSkillById = async (req, res, next) => {
   const totalPages = Math.ceil(totalUsers / pageSize);
   const currentPage = pageNumber;
 
-
   res.status(200).json({
     status: "success",
-    message: "We successfully found the skill",
+    message: "Successfully found the skill",
     data: {
       skill: skillTransformer(skill),
       users: skill.users,

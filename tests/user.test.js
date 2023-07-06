@@ -575,7 +575,7 @@ describe("User Test Suite", () => {
     expect(typeof status).toBe("string");
     expect(status).toEqual("success");
     expect(typeof message).toBe("string");
-    expect(message).toEqual("We successfully found the user");
+    expect(message).toEqual("Successfully found the user");
     expect(typeof data).toBe("object");
     expect(user instanceof Object).toBe(true);
     expect(typeof user._id).toBe("string");
@@ -662,7 +662,7 @@ describe("User Test Suite", () => {
     expect(typeof status).toBe("string");
     expect(status).toEqual("success");
     expect(typeof message).toBe("string");
-    expect(message).toEqual("We successfully found users");
+    expect(message).toEqual("Successfully found users");
     expect(typeof message).toBe("string");
     expect(typeof data).toBe("object");
     expect(Array.isArray(users)).toBe(true);
@@ -715,7 +715,7 @@ describe("User Test Suite", () => {
     expect(typeof status).toBe("string");
     expect(status).toEqual("success");
     expect(typeof message).toBe("string");
-    expect(message).toEqual("We successfully found users");
+    expect(message).toEqual("Successfully found users");
     expect(typeof data).toBe("object");
     expect(Array.isArray(users)).toBe(true);
 

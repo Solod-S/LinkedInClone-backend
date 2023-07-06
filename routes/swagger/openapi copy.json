@@ -7371,7 +7371,7 @@
             "type": "string",
             "description": "Response message",
             "format": "string",
-            "example": "We successfully found the user"
+            "example": "Successfully found the user"
           },
           "data": {
             "type": "object",
@@ -8634,7 +8634,7 @@
             "type": "string",
             "description": "Response message",
             "format": "string",
-            "example": "We successfully found users"
+            "example": "Successfully found users"
           },
           "data": {
             "type": "object",
@@ -8880,7 +8880,7 @@
             "type": "string",
             "description": "Response message",
             "format": "string",
-            "example": "We successfully found such user(s)"
+            "example": "Successfully found such user(s)"
           },
           "data": {
             "type": "object",
@@ -12029,7 +12029,7 @@
             "type": "string",
             "description": "Response message",
             "format": "string",
-            "example": "We successfully found the skill"
+            "example": "Successfully found the skill"
           },
           "data": {
             "type": "object",
@@ -21442,7 +21442,7 @@
             "type": "string",
             "description": "Response message",
             "format": "string",
-            "example": "We successfully found the post"
+            "example": "Successfully found the post"
           },
           "data": {
             "type": "object",

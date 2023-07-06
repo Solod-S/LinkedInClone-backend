@@ -516,7 +516,7 @@ describe("Post Test Suite", () => {
     expect(typeof status).toBe("string");
     expect(status).toEqual("success");
     expect(typeof message).toBe("string");
-    expect(message).toEqual("We successfully found the post");
+    expect(message).toEqual("Successfully found the post");
     expect(typeof data).toBe("object");
     expect(typeof post).toBe("object");
     expect(typeof post.description).toBe("string");

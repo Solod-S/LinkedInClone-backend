@@ -66,7 +66,7 @@ const getCompanyById = async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    message: "We successfully found the company",
+    message: "Successfully found the company",
     data: {
       company: companyTransformer(company),
       workers: company.workers,

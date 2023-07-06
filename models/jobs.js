@@ -101,7 +101,7 @@ const createJobSchema = Joi.object({
       "Director",
       "Executive",
       "C-Level",
-      "Other"
+      "Other",
     ),
   industry: Joi.string()
     .required()

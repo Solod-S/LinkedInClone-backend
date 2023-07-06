@@ -28,7 +28,7 @@ const getJobById = async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    message: "We successfully found the job",
+    message: "Successfully found the job",
     data: { job: jobTransformer(job) },
   });
 };

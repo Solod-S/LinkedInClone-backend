@@ -120,7 +120,7 @@ const getAllUsers = async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    message: "We successfully found users",
+    message: "Successfully found users",
     data: {
       users: transformedUsers,
       totalPages,

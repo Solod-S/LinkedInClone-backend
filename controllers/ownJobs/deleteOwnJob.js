@@ -23,6 +23,9 @@ const deleteOwnJob = async (req, res, next) => {
     .populate({
       path: "skills",
       select: "_id skill",
+    }).populate({
+      path: "owner",
+      select: "_id name description industry location website email phone foundedYear employeesCount avatarURL",
     });
 
   if (!result) {

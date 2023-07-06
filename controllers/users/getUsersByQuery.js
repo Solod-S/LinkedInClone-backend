@@ -130,7 +130,7 @@ const getUsersByQuery = async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    message: "We successfully found such user(s)",
+    message: "Successfully found such user(s)",
     data: {
       users: transformedUsers,
       totalPages,

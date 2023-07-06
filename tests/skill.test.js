@@ -168,7 +168,7 @@ describe("Skill Test Suite", () => {
     expect(typeof status).toBe("string");
     expect(status).toEqual("success");
     expect(typeof message).toBe("string");
-    expect(message).toEqual("We successfully found the skill");
+    expect(message).toEqual("Successfully found the skill");
     expect(typeof data).toBe("object");
     expect(typeof skill._id).toBe("string");
     expect(typeof skill.skill).toBe("string");

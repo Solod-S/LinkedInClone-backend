@@ -65,7 +65,7 @@ const getPublicationById = async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    message: "We successfully found the publication",
+    message: "Successfully found the publication",
     data: { publication: publicationTransformer(publication) },
   });
 };

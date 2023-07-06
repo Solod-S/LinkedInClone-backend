@@ -338,7 +338,7 @@ describe("Comments Test Suite", () => {
       description:
         "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.",
       location: "publications",
-      publicationId: "649c7ccc1bfdf2db5e1a2e38",
+      publicationId: "64a4f8498e458e654e4a9531",
     });
     const { status, message, data } = res.body;
     const { comment } = data;
