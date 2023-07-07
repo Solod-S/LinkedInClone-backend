@@ -10,6 +10,6 @@ favoritesRouter.get("/posts", authenticate, favorites.getFavorites);
 favoritesRouter.get("/posts/add/:postId", authenticate, favorites.addFavorite);
 
 //  delete from favorites
-favoritesRouter.delete("/posts/remove/:postId", authenticate, favorites.deleteFavorite);
+favoritesRouter.get("/posts/remove/:postId", authenticate, favorites.deleteFavorite);
 
 module.exports = favoritesRouter;

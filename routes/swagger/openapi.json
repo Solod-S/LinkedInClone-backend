@@ -2946,7 +2946,7 @@
       }
     },
     "/favorites/posts/remove/{postId}": {
-      "delete": {
+      "get": {
         "tags": ["Favorites"],
         "summary": "Remove from favorites",
         "security": [{ "Bearer": [] }],
@@ -4285,6 +4285,345 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/OwnJobsDeleteJobResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs": {
+      "get": {
+        "tags": ["Jobs"],
+        "summary": "Get all jobs",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "description": "Page number",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "required": false,
+            "description": "Number of items per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully fetch all jobs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobsGetJobsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/popular": {
+      "get": {
+        "tags": ["Jobs"],
+        "summary": "Get all popular jobs",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "description": "Page number",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "required": false,
+            "description": "Number of items per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully fetch all popular jobs (sorted by applied users)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobsGetPopularJobsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/search": {
+      "get": {
+        "tags": ["Jobs"],
+        "summary": "Search jobs by query",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "search",
+            "required": true,
+            "description": "Search query",
+            "schema": {
+              "type": "string",
+              "example": "Work"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "description": "Page number",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "required": false,
+            "description": "Number of items per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully find jobs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobsSearchJobsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/{jobId}": {
+      "get": {
+        "tags": ["Jobs"],
+        "summary": "Get job's data",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "jobId",
+            "required": true,
+            "description": "Job id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully get job data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobsGetJobByIdResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/apply/{jobId}": {
+      "get": {
+        "tags": ["Jobs"],
+        "summary": "Apply for a job",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "jobId",
+            "required": true,
+            "description": "Job id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully applyed to this job",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobsApplyJobByIdResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "User was applyed to this job before",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobsApplyUsersAppliedBeforeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/unapply/{jobId}": {
+      "get": {
+        "tags": ["Jobs"],
+        "summary": "Unapply for a job",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "jobId",
+            "required": true,
+            "description": "Job id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully unapplyed from this job",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobsUnApplyJobByIdResponse"
                 }
               }
             }
@@ -33509,6 +33848,1043 @@
                     "type": "string",
                     "description": "Updated at",
                     "example": "2023-06-06T10:18:55.162+00:00"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "JobsGetJobsResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successfully get jobs"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "jobs": {
+                "type": "array",
+                "description": "All jobs",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "Job's id",
+                      "example": "642831f346155749a2b6e944"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Job's title",
+                      "example": "Work of your dream!"
+                    },
+                    "location": {
+                      "type": "string",
+                      "description": "Job's location",
+                      "example": "Ukraine, Kiev"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Job's text",
+                      "example": "Job's text"
+                    },
+                    "employmentType": {
+                      "type": "string",
+                      "description": "Job's employment type",
+                      "example": "Full-time"
+                    },
+                    "seniorityLevel": {
+                      "type": "string",
+                      "description": "Job's seniority level",
+                      "example": "Junior"
+                    },
+                    "industry": {
+                      "type": "string",
+                      "description": "Job's industry",
+                      "example": "Other"
+                    },
+                    "applyURL": {
+                      "type": "string",
+                      "description": "Job's apply URL",
+                      "example": ""
+                    },
+                    "skills": {
+                      "type": "array",
+                      "description": "Array of skills associated with the job",
+                      "items": {
+                        "type": "string",
+                        "description": "Skill ID"
+                      },
+                      "default": []
+                    },
+                    "applied": {
+                      "type": "array",
+                      "description": "Array of users wich were applied to this job",
+                      "items": {
+                        "type": "string",
+                        "description": "Users ID"
+                      },
+                      "default": []
+                    },
+                    "postedAtHuman": {
+                      "type": "string",
+                      "description": "Post's time",
+                      "example": "10 minutes ago"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "Created at",
+                      "example": "2023-06-05T10:21:34.989+00:00"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "Updated at",
+                      "example": "2023-06-06T10:18:55.162+00:00"
+                    },        
+                    "owner": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "description": "Company's id",
+                          "example": "642831f346155749a2b6e944"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "Company's name",
+                          "example": "Very Good Company"
+                        },
+                        "avatarURL": {
+                          "type": "string",
+                          "description": "Company's avatar link",
+                          "example": "User's avatar link"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Company's description",
+                          "example": "This is good company"
+                        },
+                        "industry": {
+                          "type": "string",
+                          "description": "Company's industry",
+                          "example": "Information Technology (IT)"
+                        },
+                        "location": {
+                          "type": "string",
+                          "description": "Company's location",
+                          "example": "Ukraine,Kiev"
+                        },
+                        "website": {
+                          "type": "string",
+                          "description": "Company's website",
+                          "example": "www.website.com"
+                        },
+                        "email": {
+                          "type": "string",
+                          "description": "Company's email",
+                          "format": "email"
+                        },
+                        "phone": {
+                          "type": "number",
+                          "description": "Company's phone",
+                          "example": "0937787878"
+                        },
+                        "foundedYear": {
+                          "type": "number",
+                          "description": "Company's founded year",
+                          "example": "2001"
+                        },
+                        "employeesCount": {
+                          "type": "number",
+                          "description": "Company's employees count",
+                          "example": "2142"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "totalPages": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "currentPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "perPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 10
+              }
+            }
+          }
+        }
+      },
+      "JobsGetPopularJobsResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successfully get popular jobs"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "jobs": {
+                "type": "array",
+                "description": "All jobs",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "Job's id",
+                      "example": "642831f346155749a2b6e944"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Job's title",
+                      "example": "Work of your dream!"
+                    },
+                    "location": {
+                      "type": "string",
+                      "description": "Job's location",
+                      "example": "Ukraine, Kiev"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Job's text",
+                      "example": "Job's text"
+                    },
+                    "employmentType": {
+                      "type": "string",
+                      "description": "Job's employment type",
+                      "example": "Full-time"
+                    },
+                    "seniorityLevel": {
+                      "type": "string",
+                      "description": "Job's seniority level",
+                      "example": "Junior"
+                    },
+                    "industry": {
+                      "type": "string",
+                      "description": "Job's industry",
+                      "example": "Other"
+                    },
+                    "applyURL": {
+                      "type": "string",
+                      "description": "Job's apply URL",
+                      "example": ""
+                    },
+                    "skills": {
+                      "type": "array",
+                      "description": "Array of skills associated with the job",
+                      "items": {
+                        "type": "string",
+                        "description": "Skill ID"
+                      },
+                      "default": []
+                    },
+                    "applied": {
+                      "type": "array",
+                      "description": "Array of users wich were applied to this job",
+                      "items": {
+                        "type": "string",
+                        "description": "Users ID"
+                      },
+                      "default": []
+                    },
+                    "postedAtHuman": {
+                      "type": "string",
+                      "description": "Post's time",
+                      "example": "10 minutes ago"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "Created at",
+                      "example": "2023-06-05T10:21:34.989+00:00"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "Updated at",
+                      "example": "2023-06-06T10:18:55.162+00:00"
+                    },        
+                    "owner": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "description": "Company's id",
+                          "example": "642831f346155749a2b6e944"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "Company's name",
+                          "example": "Very Good Company"
+                        },
+                        "avatarURL": {
+                          "type": "string",
+                          "description": "Company's avatar link",
+                          "example": "User's avatar link"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Company's description",
+                          "example": "This is good company"
+                        },
+                        "industry": {
+                          "type": "string",
+                          "description": "Company's industry",
+                          "example": "Information Technology (IT)"
+                        },
+                        "location": {
+                          "type": "string",
+                          "description": "Company's location",
+                          "example": "Ukraine,Kiev"
+                        },
+                        "website": {
+                          "type": "string",
+                          "description": "Company's website",
+                          "example": "www.website.com"
+                        },
+                        "email": {
+                          "type": "string",
+                          "description": "Company's email",
+                          "format": "email"
+                        },
+                        "phone": {
+                          "type": "number",
+                          "description": "Company's phone",
+                          "example": "0937787878"
+                        },
+                        "foundedYear": {
+                          "type": "number",
+                          "description": "Company's founded year",
+                          "example": "2001"
+                        },
+                        "employeesCount": {
+                          "type": "number",
+                          "description": "Company's employees count",
+                          "example": "2142"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "totalPages": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "currentPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "perPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 10
+              }
+            }
+          }
+        }
+      },
+      "JobsSearchJobsResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successfully found such jobs"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "jobs": {
+                "type": "array",
+                "description": "All jobs",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "Job's id",
+                      "example": "642831f346155749a2b6e944"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Job's title",
+                      "example": "Work of your dream!"
+                    },
+                    "location": {
+                      "type": "string",
+                      "description": "Job's location",
+                      "example": "Ukraine, Kiev"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Job's text",
+                      "example": "Job's text"
+                    },
+                    "employmentType": {
+                      "type": "string",
+                      "description": "Job's employment type",
+                      "example": "Full-time"
+                    },
+                    "seniorityLevel": {
+                      "type": "string",
+                      "description": "Job's seniority level",
+                      "example": "Junior"
+                    },
+                    "industry": {
+                      "type": "string",
+                      "description": "Job's industry",
+                      "example": "Other"
+                    },
+                    "applyURL": {
+                      "type": "string",
+                      "description": "Job's apply URL",
+                      "example": ""
+                    },
+                    "skills": {
+                      "type": "array",
+                      "description": "Array of skills associated with the job",
+                      "items": {
+                        "type": "string",
+                        "description": "Skill ID"
+                      },
+                      "default": []
+                    },
+                    "applied": {
+                      "type": "array",
+                      "description": "Array of users wich were applied to this job",
+                      "items": {
+                        "type": "string",
+                        "description": "Users ID"
+                      },
+                      "default": []
+                    },
+                    "postedAtHuman": {
+                      "type": "string",
+                      "description": "Post's time",
+                      "example": "10 minutes ago"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "Created at",
+                      "example": "2023-06-05T10:21:34.989+00:00"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "Updated at",
+                      "example": "2023-06-06T10:18:55.162+00:00"
+                    },        
+                    "owner": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "description": "Company's id",
+                          "example": "642831f346155749a2b6e944"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "Company's name",
+                          "example": "Very Good Company"
+                        },
+                        "avatarURL": {
+                          "type": "string",
+                          "description": "Company's avatar link",
+                          "example": "User's avatar link"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Company's description",
+                          "example": "This is good company"
+                        },
+                        "industry": {
+                          "type": "string",
+                          "description": "Company's industry",
+                          "example": "Information Technology (IT)"
+                        },
+                        "location": {
+                          "type": "string",
+                          "description": "Company's location",
+                          "example": "Ukraine,Kiev"
+                        },
+                        "website": {
+                          "type": "string",
+                          "description": "Company's website",
+                          "example": "www.website.com"
+                        },
+                        "email": {
+                          "type": "string",
+                          "description": "Company's email",
+                          "format": "email"
+                        },
+                        "phone": {
+                          "type": "number",
+                          "description": "Company's phone",
+                          "example": "0937787878"
+                        },
+                        "foundedYear": {
+                          "type": "number",
+                          "description": "Company's founded year",
+                          "example": "2001"
+                        },
+                        "employeesCount": {
+                          "type": "number",
+                          "description": "Company's employees count",
+                          "example": "2142"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "totalPages": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "currentPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "perPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 10
+              }
+            }
+          }
+        }
+      },
+      "JobsGetJobByIdResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successfully found the job"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "job": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Job's id",
+                    "example": "642831f346155749a2b6e944"
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "Job's title",
+                    "example": "Work of your dream!"
+                  },
+                  "location": {
+                    "type": "string",
+                    "description": "Job's location",
+                    "example": "Ukraine, Kiev"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Job's text",
+                    "example": "Job's text"
+                  },
+                  "employmentType": {
+                    "type": "string",
+                    "description": "Job's employment type",
+                    "example": "Full-time"
+                  },
+                  "seniorityLevel": {
+                    "type": "string",
+                    "description": "Job's seniority level",
+                    "example": "Junior"
+                  },
+                  "industry": {
+                    "type": "string",
+                    "description": "Job's industry",
+                    "example": "Other"
+                  },
+                  "applyURL": {
+                    "type": "string",
+                    "description": "Job's apply URL",
+                    "example": ""
+                  },
+                  "skills": {
+                    "type": "array",
+                    "description": "Array of skills associated with the job",
+                    "items": {
+                      "type": "string",
+                      "description": "Skill ID"
+                    },
+                    "default": []
+                  },
+                  "applied": {
+                    "type": "array",
+                    "description": "Array of users wich were applied to this job",
+                    "items": {
+                      "type": "string",
+                      "description": "Users ID"
+                    },
+                    "default": []
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Post's time",
+                    "example": "45 seconds ago"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-06-05T10:21:34.989+00:00"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "Updated at",
+                    "example": "2023-06-06T10:18:55.162+00:00"
+                  },        
+                  "owner": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "description": "Company's id",
+                        "example": "642831f346155749a2b6e944"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Company's name",
+                        "example": "Very Good Company"
+                      },
+                      "avatarURL": {
+                        "type": "string",
+                        "description": "Company's avatar link",
+                        "example": "User's avatar link"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Company's description",
+                        "example": "This is good company"
+                      },
+                      "industry": {
+                        "type": "string",
+                        "description": "Company's industry",
+                        "example": "Information Technology (IT)"
+                      },
+                      "location": {
+                        "type": "string",
+                        "description": "Company's location",
+                        "example": "Ukraine,Kiev"
+                      },
+                      "website": {
+                        "type": "string",
+                        "description": "Company's website",
+                        "example": "www.website.com"
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "Company's email",
+                        "format": "email"
+                      },
+                      "phone": {
+                        "type": "number",
+                        "description": "Company's phone",
+                        "example": "0937787878"
+                      },
+                      "foundedYear": {
+                        "type": "number",
+                        "description": "Company's founded year",
+                        "example": "2001"
+                      },
+                      "employeesCount": {
+                        "type": "number",
+                        "description": "Company's employees count",
+                        "example": "2142"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "JobsApplyJobByIdResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "User successfully applyed to this job"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "job": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Job's id",
+                    "example": "642831f346155749a2b6e944"
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "Job's title",
+                    "example": "Work of your dream!"
+                  },
+                  "location": {
+                    "type": "string",
+                    "description": "Job's location",
+                    "example": "Ukraine, Kiev"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Job's text",
+                    "example": "Job's text"
+                  },
+                  "employmentType": {
+                    "type": "string",
+                    "description": "Job's employment type",
+                    "example": "Full-time"
+                  },
+                  "seniorityLevel": {
+                    "type": "string",
+                    "description": "Job's seniority level",
+                    "example": "Junior"
+                  },
+                  "industry": {
+                    "type": "string",
+                    "description": "Job's industry",
+                    "example": "Other"
+                  },
+                  "applyURL": {
+                    "type": "string",
+                    "description": "Job's apply URL",
+                    "example": ""
+                  },
+                  "skills": {
+                    "type": "array",
+                    "description": "Array of skills associated with the job",
+                    "items": {
+                      "type": "string",
+                      "description": "Skill ID"
+                    },
+                    "default": []
+                  },
+                  "applied": {
+                    "type": "array",
+                    "description": "Array of users wich were applied to this job",
+                    "items": {
+                      "type": "string",
+                      "description": "Users ID"
+                    },
+                    "default": ["645fbdd9564a390fac4e7015"]
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Post's time",
+                    "example": "45 seconds ago"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-06-05T10:21:34.989+00:00"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "Updated at",
+                    "example": "2023-06-06T10:18:55.162+00:00"
+                  },        
+                  "owner": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "description": "Company's id",
+                        "example": "642831f346155749a2b6e944"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Company's name",
+                        "example": "Very Good Company"
+                      },
+                      "avatarURL": {
+                        "type": "string",
+                        "description": "Company's avatar link",
+                        "example": "User's avatar link"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Company's description",
+                        "example": "This is good company"
+                      },
+                      "industry": {
+                        "type": "string",
+                        "description": "Company's industry",
+                        "example": "Information Technology (IT)"
+                      },
+                      "location": {
+                        "type": "string",
+                        "description": "Company's location",
+                        "example": "Ukraine,Kiev"
+                      },
+                      "website": {
+                        "type": "string",
+                        "description": "Company's website",
+                        "example": "www.website.com"
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "Company's email",
+                        "format": "email"
+                      },
+                      "phone": {
+                        "type": "number",
+                        "description": "Company's phone",
+                        "example": "0937787878"
+                      },
+                      "foundedYear": {
+                        "type": "number",
+                        "description": "Company's founded year",
+                        "example": "2001"
+                      },
+                      "employeesCount": {
+                        "type": "number",
+                        "description": "Company's employees count",
+                        "example": "2142"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "JobsApplyUsersAppliedBeforeResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Sorry, the user was applyed to this job before"
+          }
+        }
+      },
+      "JobsUnApplyJobByIdResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "User successfully unapplyed from this job"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "job": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Job's id",
+                    "example": "642831f346155749a2b6e944"
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "Job's title",
+                    "example": "Work of your dream!"
+                  },
+                  "location": {
+                    "type": "string",
+                    "description": "Job's location",
+                    "example": "Ukraine, Kiev"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Job's text",
+                    "example": "Job's text"
+                  },
+                  "employmentType": {
+                    "type": "string",
+                    "description": "Job's employment type",
+                    "example": "Full-time"
+                  },
+                  "seniorityLevel": {
+                    "type": "string",
+                    "description": "Job's seniority level",
+                    "example": "Junior"
+                  },
+                  "industry": {
+                    "type": "string",
+                    "description": "Job's industry",
+                    "example": "Other"
+                  },
+                  "applyURL": {
+                    "type": "string",
+                    "description": "Job's apply URL",
+                    "example": ""
+                  },
+                  "skills": {
+                    "type": "array",
+                    "description": "Array of skills associated with the job",
+                    "items": {
+                      "type": "string",
+                      "description": "Skill ID"
+                    },
+                    "default": []
+                  },
+                  "applied": {
+                    "type": "array",
+                    "description": "Array of users wich were applied to this job",
+                    "items": {
+                      "type": "string",
+                      "description": "Users ID"
+                    },
+                    "default": []
+                  },
+                  "postedAtHuman": {
+                    "type": "string",
+                    "description": "Post's time",
+                    "example": "45 seconds ago"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "description": "Created at",
+                    "example": "2023-06-05T10:21:34.989+00:00"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "description": "Updated at",
+                    "example": "2023-06-06T10:18:55.162+00:00"
+                  },        
+                  "owner": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "description": "Company's id",
+                        "example": "642831f346155749a2b6e944"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Company's name",
+                        "example": "Very Good Company"
+                      },
+                      "avatarURL": {
+                        "type": "string",
+                        "description": "Company's avatar link",
+                        "example": "User's avatar link"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Company's description",
+                        "example": "This is good company"
+                      },
+                      "industry": {
+                        "type": "string",
+                        "description": "Company's industry",
+                        "example": "Information Technology (IT)"
+                      },
+                      "location": {
+                        "type": "string",
+                        "description": "Company's location",
+                        "example": "Ukraine,Kiev"
+                      },
+                      "website": {
+                        "type": "string",
+                        "description": "Company's website",
+                        "example": "www.website.com"
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "Company's email",
+                        "format": "email"
+                      },
+                      "phone": {
+                        "type": "number",
+                        "description": "Company's phone",
+                        "example": "0937787878"
+                      },
+                      "foundedYear": {
+                        "type": "number",
+                        "description": "Company's founded year",
+                        "example": "2001"
+                      },
+                      "employeesCount": {
+                        "type": "number",
+                        "description": "Company's employees count",
+                        "example": "2142"
+                      }
+                    }
                   }
                 }
               }

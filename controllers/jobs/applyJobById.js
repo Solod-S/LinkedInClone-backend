@@ -28,11 +28,11 @@ const applyJobById = async (req, res, next) => {
 
   job.applied.push(_id);
   await job.save();
-  await job.populate({
-    path: "applied",
-    select:
-      "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
-  });
+  // await job.populate({
+  //   path: "applied",
+  //   select:
+  //     "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
+  // });
 
   res.status(201).json({
     status: "success",

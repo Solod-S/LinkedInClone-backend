@@ -302,7 +302,7 @@ describe("Favorites Test Suite", () => {
 
   test("DELETE /post from favorite with invalid token and valid post id, should return 401 status", async () => {
     const res = await request(app)
-      .delete(`/favorites/posts/remove/${postId}`)
+      .get(`/favorites/posts/remove/${postId}`)
       .set("Authorization", `Bearer ${WRONG_TOKEN}`);
     const { status, body } = res;
 
@@ -312,7 +312,7 @@ describe("Favorites Test Suite", () => {
 
   test("DELETE /post from favorite with valid token and invalid post id, should return 404 status", async () => {
     const res = await request(app)
-      .delete(`/favorites/posts/remove/123456789123456789123456`)
+      .get(`/favorites/posts/remove/123456789123456789123456`)
       .set("Authorization", `Bearer ${TEST_TOKEN}`);
     const { status, body } = res;
 
@@ -322,7 +322,7 @@ describe("Favorites Test Suite", () => {
 
   test("DELETE /post with valid token and valid post id, should return 200 status", async () => {
     const res = await request(app)
-      .delete(`/favorites/posts/remove/${postId}`)
+      .get(`/favorites/posts/remove/${postId}`)
       .set("Authorization", `Bearer ${TEST_TOKEN}`);
     const { status, message, data } = res.body;
     const { post } = data;

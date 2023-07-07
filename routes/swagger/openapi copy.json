@@ -2856,7 +2856,7 @@
       }
     },
     "/favorites/posts/remove/{postId}": {
-      "delete": {
+      "get": {
         "tags": ["Favorites"],
         "summary": "Remove from favorites",
         "security": [{ "Bearer": [] }],

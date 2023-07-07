@@ -1,14 +1,19 @@
 const request = require("supertest");
 const mongoose = require("mongoose");
 
-const { Comment, Post, Publication } = require("../models");
+const { Comment, Post, Publication, Company, User } = require("../models");
 
 const app = require("../app");
 
 require("dotenv").config();
-const { DB_HOST, TEST_TOKEN, WRONG_TOKEN } = process.env;
+const { DB_HOST, TEST_TOKEN, WRONG_TOKEN,USER_ID } = process.env;
+
+let company = null
+let post = null
+let publication = null
 
 let commentId = null;
+let companyId = null;
 let destinationId = null;
 
 describe("Comments Test Suite", () => {
@@ -19,9 +24,43 @@ describe("Comments Test Suite", () => {
     server = app.listen(3004, () => {
       server.unref(); // Отпускает серверный таймер после запуска сервера
     });
+
+    try {
+      const companyAlreadyExist = await Company.findOne({ owners: USER_ID })    
+      companyId = companyAlreadyExist._id
+      if(!companyAlreadyExist) {
+        company = await Company.create({
+          "name": "SuperDuperCompany",
+          "avatarURL": "",
+          "description": "This is the best company",
+          "industry": "Information Technology (IT)",
+          "location": "Ukraine, Kiev",
+          "website": "www.website.com",
+          "email": "email@website.com",
+          "phone": 3999999999,
+          "foundedYear": 2001,
+          "employeesCount": 12321,
+          "workers": [],
+          "jobs": [],
+          "owners": [USER_ID],
+        } 
+        );
+        companyId = company._id
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
   }, 20000);
 
   afterAll(async () => {
+    try {
+      await Company.findByIdAndDelete({ _id: company._id})
+      await Post.findByIdAndDelete({ _id: post._id})
+      await Publication.findByIdAndDelete({ _id: publication._id})
+    } catch (error) {
+      console.log(error)
+    }
     await mongoose.disconnect();
     await server.close();
   });
@@ -131,11 +170,34 @@ describe("Comments Test Suite", () => {
   }, 15000);
 
   test("POST /post's comment with invalid token, should return 401 status", async () => {
+
+    try {
+      const firstPost = await Post.findOne().sort({ createdAt: 1 });
+      
+      if(!firstPost) {
+        const user = await User.findOne({ _id: USER_ID });
+
+        post = await Post.create({
+          "description": "Tequila is an excellent teacher… Just last night it taught me to count… One Tequila, Two Tequila, Three Tequila, Floor!",
+          owner: USER_ID,
+        });
+      
+        user.posts.push(post._id);
+        await user.save();
+
+        destinationId = post._id;
+      } else {
+        destinationId = firstPost._id;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
     const res = await request(app).post(`/comments/add`).set("Authorization", `Bearer ${WRONG_TOKEN}`).send({
       description:
         "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.",
       location: "posts",
-      postId: "6467ce7e44ff2b38b8740e63",
+      postId: destinationId,
     });
     const { status, body } = res;
 
@@ -163,12 +225,6 @@ describe("Comments Test Suite", () => {
   }, 15000);
 
   test("POST /post's comment with valid token, should return 201 status and valid comment data", async () => {
-    try {
-      const firstPost = await Post.findOne().sort({ createdAt: 1 });
-      destinationId = firstPost._id;
-    } catch (error) {
-      console.log(error);
-    }
     const res = await request(app).post(`/comments/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({
       description:
         "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.",
@@ -297,7 +353,20 @@ describe("Comments Test Suite", () => {
   test("POST /publication's comment with invalid token, should return 401 status", async () => {
     try {
       const firstPost = await Publication.findOne().sort({ createdAt: 1 });
-      destinationId = firstPost._id;
+      
+      if(!firstPost) {
+        publication = await Publication.create({
+          "description": "test1", 
+          "owner": companyId,
+        });
+      
+        company.publications.push(publication._id);
+        await company.save();
+
+        destinationId = publication._id;
+      } else {
+        destinationId = firstPost._id;
+      }
     } catch (error) {
       console.log(error);
     }
@@ -338,7 +407,7 @@ describe("Comments Test Suite", () => {
       description:
         "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.",
       location: "publications",
-      publicationId: "64a4f8498e458e654e4a9531",
+      publicationId: destinationId,
     });
     const { status, message, data } = res.body;
     const { comment } = data;
