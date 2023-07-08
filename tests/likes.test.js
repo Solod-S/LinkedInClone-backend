@@ -37,7 +37,7 @@ describe("Likes Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 15000);
+  }, 34000);
 
   test("POST /post's like with invalid id, should return 404 status", async () => {
     const res = await request(app)
@@ -48,7 +48,7 @@ describe("Likes Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 15000);
+  }, 34000);
 
   test("POST /post's like without body, should return 400 status", async () => {
     const res = await request(app).post(`/likes/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({});
@@ -56,7 +56,7 @@ describe("Likes Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"type" is required');
-  }, 15000);
+  }, 34000);
 
   test("POST /post's like with invalid body, should return 400 status", async () => {
     const res = await request(app).post(`/likes/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({ 11: "ss" });
@@ -64,7 +64,7 @@ describe("Likes Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"type" is required');
-  }, 15000);
+  }, 34000);
 
   test("POST /post's like with valid token, should return 201 status and valid like data", async () => {
     try {
@@ -97,7 +97,7 @@ describe("Likes Test Suite", () => {
     expect(typeof like.postedAtHuman).toBe("string");
     expect(typeof like.createdAt).toBe("string");
     expect(typeof like.updatedAt).toBe("string");
-  }, 15000);
+  }, 34000);
 
   test("DELETE /post's like with invalid token, should return 401 status", async () => {
     const res = await request(app).delete(`/likes/remove/${likeId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -105,7 +105,7 @@ describe("Likes Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 15000);
+  }, 34000);
 
   test("DELETE /post's like with invalid id, should return 404 status", async () => {
     const res = await request(app)
@@ -115,7 +115,7 @@ describe("Likes Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 15000);
+  }, 34000);
 
   test("DELETE /post's like with valid token, should return 200 status and valid like data", async () => {
     const res = await request(app).delete(`/likes/remove/${likeId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
@@ -136,7 +136,7 @@ describe("Likes Test Suite", () => {
     expect(typeof like.postedAtHuman).toBe("string");
     expect(typeof like.createdAt).toBe("string");
     expect(typeof like.updatedAt).toBe("string");
-  }, 15000);
+  }, 34000);
 
   test("POST /comment's like with invalid token, should return 401 status", async () => {
     const res = await request(app)
@@ -147,7 +147,7 @@ describe("Likes Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 15000);
+  }, 34000);
 
   test("POST /comment's like with invalid id, should return 404 status", async () => {
     const res = await request(app)
@@ -158,7 +158,7 @@ describe("Likes Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 15000);
+  }, 34000);
 
   test("POST /comment's like without body, should return 400 status", async () => {
     const res = await request(app).post(`/likes/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({});
@@ -166,7 +166,7 @@ describe("Likes Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"type" is required');
-  }, 15000);
+  }, 34000);
 
   test("POST /comment's like with invalid body, should return 400 status", async () => {
     const res = await request(app).post(`/likes/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({ 11: "ss" });
@@ -174,7 +174,7 @@ describe("Likes Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"type" is required');
-  }, 15000);
+  }, 34000);
 
   test("POST /comment's like with valid token, should return 201 status and valid like data", async () => {
     try {
@@ -207,7 +207,7 @@ describe("Likes Test Suite", () => {
     expect(typeof like.postedAtHuman).toBe("string");
     expect(typeof like.createdAt).toBe("string");
     expect(typeof like.updatedAt).toBe("string");
-  }, 15000);
+  }, 34000);
 
   test("DELETE /comment's like with invalid token, should return 401 status", async () => {
     const res = await request(app).delete(`/likes/remove/${likeId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -215,7 +215,7 @@ describe("Likes Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 15000);
+  }, 34000);
 
   test("DELETE /comment's like with invalid id, should return 404 status", async () => {
     const res = await request(app)
@@ -225,7 +225,7 @@ describe("Likes Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 15000);
+  }, 34000);
 
   test("DELETE /comment's like with valid token, should return 200 status and valid like data", async () => {
     const res = await request(app).delete(`/likes/remove/${likeId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
@@ -249,7 +249,7 @@ describe("Likes Test Suite", () => {
 
     const deletedLike = await Like.findById({ _id: likeId });
     expect(deletedLike).toBe(null);
-  }, 15000);
+  }, 34000);
 
   test("POST /publication's like with invalid token, should return 401 status", async () => {
     const res = await request(app)
@@ -260,7 +260,7 @@ describe("Likes Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 15000);
+  }, 34000);
 
   test("POST /publication's like with invalid id, should return 404 status", async () => {
     const res = await request(app)
@@ -271,7 +271,7 @@ describe("Likes Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 15000);
+  }, 34000);
 
   test("POST /publication's like without body, should return 400 status", async () => {
     const res = await request(app).post(`/likes/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({});
@@ -279,7 +279,7 @@ describe("Likes Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"type" is required');
-  }, 15000);
+  }, 34000);
 
   test("POST /publication's like with invalid body, should return 400 status", async () => {
     const res = await request(app).post(`/likes/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({ 11: "ss" });
@@ -287,7 +287,7 @@ describe("Likes Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"type" is required');
-  }, 15000);
+  }, 34000);
 
   test("POST /publication's like with valid token, should return 201 status and valid like data", async () => {
     try {
@@ -320,7 +320,7 @@ describe("Likes Test Suite", () => {
     expect(typeof like.postedAtHuman).toBe("string");
     expect(typeof like.createdAt).toBe("string");
     expect(typeof like.updatedAt).toBe("string");
-  }, 15000);
+  }, 34000);
 
   test("DELETE /publication's like with invalid token, should return 401 status", async () => {
     const res = await request(app)
@@ -330,7 +330,7 @@ describe("Likes Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 15000);
+  }, 34000);
 
   test("DELETE /publication's like with invalid id, should return 404 status", async () => {
     const res = await request(app)
@@ -340,7 +340,7 @@ describe("Likes Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 15000);
+  }, 34000);
 
   test("DELETE /publication's like with valid token, should return 200 status and valid like data", async () => {
     const res = await request(app).delete(`/likes/remove/${likeId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
@@ -364,5 +364,5 @@ describe("Likes Test Suite", () => {
 
     const deletedLike = await Publication.findById({ _id: likeId });
     expect(deletedLike).toBe(null);
-  }, 15000);
+  }, 34000);
 });

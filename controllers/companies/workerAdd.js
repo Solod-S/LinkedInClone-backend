@@ -19,7 +19,7 @@ const workerAdd = async (req, res, next) => {
   company.workers.push(user);
   await company.save();
 
-  res.status(201).json({
+  res.status(200).json({
     status: "success",
     message: "User was successfully added to this company workers",
     data: {

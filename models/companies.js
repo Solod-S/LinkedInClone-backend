@@ -128,6 +128,8 @@ const updateCompanySchema = Joi.object({
   phone: Joi.number(),
   foundedYear: Joi.number(),
   employeesCount: Joi.number(),
+  workers: Joi.array(),
+  jobs: Joi.array(),
 })
   .or(
     "name",
@@ -139,7 +141,9 @@ const updateCompanySchema = Joi.object({
     "email",
     "phone",
     "foundedYear",
-    "employeesCount"
+    "employeesCount",
+    "workers",
+    "jobs"
   )
   .required();
 

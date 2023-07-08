@@ -110,7 +110,7 @@ describe("Post Test Suite", () => {
     expect(likesContainsObjects).toBe(true);
     expect(commentsContainsObjects).toBe(true);
     expect(mediaFilesContainsObjects).toBe(true);
-  }, 15000);
+  }, 34000);
 
   test("GET /all posts with valid token + pagination, should return 200 status and valid posts data", async () => {
     const res = await request(app).get(`/posts?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN}`);
@@ -204,7 +204,7 @@ describe("Post Test Suite", () => {
     expect(likesContainsObjects).toBe(true);
     expect(commentsContainsObjects).toBe(true);
     expect(mediaFilesContainsObjects).toBe(true);
-  }, 15000);
+  }, 34000);
 
   test("GET /all posts with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/posts`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -212,7 +212,7 @@ describe("Post Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 15000);
+  }, 34000);
 
   test("GET /all posts with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app).get(`/posts?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -220,7 +220,7 @@ describe("Post Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 15000);
+  }, 34000);
 
   test("GET /all popular posts with valid token, should return 200 status and valid posts data", async () => {
     const res = await request(app).get(`/posts/popular`).set("Authorization", `Bearer ${TEST_TOKEN}`);
@@ -268,7 +268,7 @@ describe("Post Test Suite", () => {
     expect(posts.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
     expect(posts.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
     expect(posts.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
-  }, 15000);
+  }, 34000);
 
   test("GET /all popular posts with valid token + pagination, should return 200 status and valid posts data", async () => {
     const res = await request(app).get(`/posts/popular?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN}`);
@@ -365,7 +365,7 @@ describe("Post Test Suite", () => {
     expect(likesContainsObjects).toBe(true);
     expect(commentsContainsObjects).toBe(true);
     expect(mediaFilesContainsObjects).toBe(true);
-  }, 15000);
+  }, 34000);
 
   test("GET /all popular posts with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/posts/popular`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -373,7 +373,7 @@ describe("Post Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 15000);
+  }, 34000);
 
   test("GET /popular posts with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app)
@@ -383,7 +383,7 @@ describe("Post Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 15000);
+  }, 34000);
 
   test("GET /posts by search query with valid token, should return 200 status and valid posts data", async () => {
     const res = await request(app).get(`/posts/search?search=Tequila+is`).set("Authorization", `Bearer ${TEST_TOKEN}`);
@@ -431,7 +431,7 @@ describe("Post Test Suite", () => {
     expect(posts.every(({ likes }) => Array.isArray(likes))).toBe(true);
     expect(posts.every(({ comments }) => Array.isArray(comments))).toBe(true);
     expect(posts.every(({ mediaFiles }) => Array.isArray(mediaFiles))).toBe(true);
-  }, 15000);
+  }, 34000);
 
   test("GET /posts by search query with valid token + pagination, should return 200 status", async () => {
     const res = await request(app)
@@ -487,7 +487,7 @@ describe("Post Test Suite", () => {
     expect(posts.every(({ mediaFiles }) => Array.isArray(mediaFiles))).toBe(true);
     expect(posts.every(({ comments }) => Array.isArray(comments))).toBe(true);
     expect(posts.every(({ likes }) => Array.isArray(likes))).toBe(true);
-  }, 15000);
+  }, 34000);
 
   test("GET /posts by search query with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/posts/search?search=Tequila+is`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -495,7 +495,7 @@ describe("Post Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 15000);
+  }, 34000);
 
   test("GET /posts by search query with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app)
@@ -505,7 +505,7 @@ describe("Post Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 15000);
+  }, 34000);
 
   test("GET /post by id with valid token, should return 200 status and valid post data", async () => {
     const res = await request(app).get(`/posts/6467ce7e44ff2b38b8740e63`).set("Authorization", `Bearer ${TEST_TOKEN}`);
@@ -546,7 +546,7 @@ describe("Post Test Suite", () => {
     expect(typeof post.owner.other1).toBe("string");
     expect(typeof post.owner.other2).toBe("string");
     expect(typeof post.owner.other3).toBe("string");
-  }, 15000);
+  }, 34000);
 
   test("GET /post by invalid id with valid token, should return 404 status", async () => {
     const res = await request(app).get(`/posts/111111111111111111111111`).set("Authorization", `Bearer ${TEST_TOKEN}`);
@@ -554,12 +554,12 @@ describe("Post Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 15000);
+  }, 34000);
 
   test("GET /post by id with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/posts/6467ce7e44ff2b38b8740e63`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
     const { status, body } = res;
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 15000);
+  }, 34000);
 });

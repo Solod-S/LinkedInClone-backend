@@ -20,7 +20,7 @@ const ownerAdd = async (req, res, next) => {
   company.owners.push(user);
   await company.save();
 
-  res.status(201).json({
+  res.status(200).json({
     status: "success",
     message: "User was successfully added to this company owners",
     data: {

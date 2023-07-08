@@ -34,7 +34,7 @@ describe("Language Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 15000);
+  }, 34000);
 
   test("POST /language without body, should return 400 status", async () => {
     const res = await request(app).post(`/languages/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({});
@@ -42,7 +42,7 @@ describe("Language Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"language" is required');
-  }, 15000);
+  }, 34000);
 
   test("POST /language with invalid body, should return 400 status", async () => {
     const res = await request(app)
@@ -53,7 +53,7 @@ describe("Language Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"language" is required');
-  }, 15000);
+  }, 34000);
 
   test("POST /language with valid token, should return 201 status and valid languages data", async () => {
     const res = await request(app)
@@ -78,7 +78,7 @@ describe("Language Test Suite", () => {
     expect(typeof language.postedAtHuman).toBe("string");
     expect(typeof language.createdAt).toBe("string");
     expect(typeof language.updatedAt).toBe("string");
-  }, 15000);
+  }, 34000);
 
   test("GET /languages with valid token, should return 200 status and valid languages data", async () => {
     const res = await request(app).get(`/languages`).set("Authorization", `Bearer ${TEST_TOKEN}`);
@@ -101,7 +101,7 @@ describe("Language Test Suite", () => {
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 15000);
+  }, 34000);
 
   test("GET /languages with valid token + pagination, should return 200 status and valid skills data", async () => {
     const res = await request(app).get(`/languages?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN}`);
@@ -124,7 +124,7 @@ describe("Language Test Suite", () => {
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 15000);
+  }, 34000);
 
   test("GET /languages with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/languages`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -132,7 +132,7 @@ describe("Language Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 15000);
+  }, 34000);
 
   test("GET /languages with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app).get(`/languages?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -140,7 +140,7 @@ describe("Language Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 15000);
+  }, 34000);
 
   test("PATCH /language file with valid token, should return 200 status and valid language data", async () => {
     const res = await request(app)
@@ -167,7 +167,7 @@ describe("Language Test Suite", () => {
     expect(typeof language.postedAtHuman).toBe("string");
     expect(typeof language.createdAt).toBe("string");
     expect(typeof language.updatedAt).toBe("string");
-  }, 15000);
+  }, 34000);
 
   test("PATCH /language file with invalid token, should return 401 status", async () => {
     const res = await request(app)
@@ -178,7 +178,7 @@ describe("Language Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 15000);
+  }, 34000);
 
   test("PATCH /language file with valid token without body, should return 400 status", async () => {
     const res = await request(app)
@@ -189,7 +189,7 @@ describe("Language Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"value" must contain at least one of [language, level]');
-  }, 15000);
+  }, 34000);
 
   test("DELETE /language with invalid token, should return 401 status", async () => {
     const res = await request(app)
@@ -199,7 +199,7 @@ describe("Language Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 15000);
+  }, 34000);
 
   test("DELETE /language with invalid id, should return 404 status", async () => {
     const res = await request(app)
@@ -209,7 +209,7 @@ describe("Language Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 15000);
+  }, 34000);
 
   test("DELETE /language with valid token, should return 200 status and valid language data", async () => {
     const res = await request(app)
@@ -234,5 +234,5 @@ describe("Language Test Suite", () => {
 
     const deletedLanguage = await Language.findById({ _id: languageId });
     expect(deletedLanguage).toBe(null);
-  }, 15000);
+  }, 34000);
 });

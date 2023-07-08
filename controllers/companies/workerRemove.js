@@ -17,7 +17,7 @@ const workerRemove = async (req, res, next) => {
   company.workers.pull(user);
   await company.save();
 
-  res.status(201).json({
+  res.status(200).json({
     status: "success",
     message: "User was successfully removed from this company workers",
     data: {
