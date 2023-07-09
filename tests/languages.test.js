@@ -6,7 +6,7 @@ const { Language } = require("../models");
 const app = require("../app");
 
 require("dotenv").config();
-const { DB_HOST, TEST_TOKEN, WRONG_TOKEN } = process.env;
+const { DB_HOST, TEST_TOKEN1, WRONG_TOKEN } = process.env;
 
 let languageId = null;
 
@@ -18,7 +18,7 @@ describe("Language Test Suite", () => {
     server = app.listen(3108, () => {
       server.unref(); // Отпускает серверный таймер после запуска сервера
     });
-  }, 20000);
+  }, 18000);
 
   afterAll(async () => {
     await mongoose.disconnect();
@@ -37,7 +37,7 @@ describe("Language Test Suite", () => {
   }, 34000);
 
   test("POST /language without body, should return 400 status", async () => {
-    const res = await request(app).post(`/languages/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({});
+    const res = await request(app).post(`/languages/add`).set("Authorization", `Bearer ${TEST_TOKEN1}`).send({});
     const { status, body } = res;
 
     expect(status).toBe(400);
@@ -47,7 +47,7 @@ describe("Language Test Suite", () => {
   test("POST /language with invalid body, should return 400 status", async () => {
     const res = await request(app)
       .post(`/languages/add`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
       .send({ languageEE: "Eng", level: "Elementary proficiency" });
     const { status, body } = res;
 
@@ -58,7 +58,7 @@ describe("Language Test Suite", () => {
   test("POST /language with valid token, should return 201 status and valid languages data", async () => {
     const res = await request(app)
       .post(`/languages/add`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
       .send({ language: "Eng", level: "Elementary proficiency" });
     const { status, message, data } = res.body;
     const { language } = data;
@@ -81,7 +81,7 @@ describe("Language Test Suite", () => {
   }, 34000);
 
   test("GET /languages with valid token, should return 200 status and valid languages data", async () => {
-    const res = await request(app).get(`/languages`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/languages`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { languages, totalPages, currentPage, perPage } = data;
 
@@ -104,7 +104,7 @@ describe("Language Test Suite", () => {
   }, 34000);
 
   test("GET /languages with valid token + pagination, should return 200 status and valid skills data", async () => {
-    const res = await request(app).get(`/languages?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/languages?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { languages, totalPages, currentPage, perPage } = data;
 
@@ -145,7 +145,7 @@ describe("Language Test Suite", () => {
   test("PATCH /language file with valid token, should return 200 status and valid language data", async () => {
     const res = await request(app)
       .patch(`/languages/update/${languageId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
       .send({ language: "Poland", level: "Elementary proficiency" });
     const { status, message, data } = res.body;
     const { language } = data;
@@ -183,7 +183,7 @@ describe("Language Test Suite", () => {
   test("PATCH /language file with valid token without body, should return 400 status", async () => {
     const res = await request(app)
       .patch(`/languages/update/${languageId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
       .send({});
     const { status, body } = res;
 
@@ -204,7 +204,7 @@ describe("Language Test Suite", () => {
   test("DELETE /language with invalid id, should return 404 status", async () => {
     const res = await request(app)
       .delete(`/languages/remove/111111111111111111111111`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
@@ -214,7 +214,7 @@ describe("Language Test Suite", () => {
   test("DELETE /language with valid token, should return 200 status and valid language data", async () => {
     const res = await request(app)
       .delete(`/languages/remove/${languageId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { language } = data;
 

@@ -27,7 +27,7 @@ describe("User Test Suite", () => {
     server = app.listen(3001, () => {
       server.unref(); // Отпускает серверный таймер после запуска сервера
     });
-  }, 20000);
+  }, 18000);
 
   afterAll(async () => {
     await mongoose.disconnect();

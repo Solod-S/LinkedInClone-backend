@@ -3300,7 +3300,7 @@
             "description": "User id",
             "schema": {
               "type": "string",
-              "example": "645fbdd9564a390fac4e7015"
+              "example": "64899bfaa965fe494d468101"
             }
           }
         ],
@@ -3380,7 +3380,7 @@
             "description": "User id",
             "schema": {
               "type": "string",
-              "example": "645fbdd9564a390fac4e7015"
+              "example": "64899bfaa965fe494d468101"
             }
           }
         ],
@@ -3464,6 +3464,69 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CompaniesGetCompaniesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/companies/search": {
+      "get": {
+        "tags": ["Companies"],
+        "summary": "Search companies by query",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "search",
+            "required": true,
+            "description": "Search query",
+            "schema": {
+              "type": "string",
+              "example": "Company"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "description": "Page number",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "required": false,
+            "description": "Number of items per page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully find such companies",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompaniesSearchCompaniesResponse"
                 }
               }
             }
@@ -31186,7 +31249,7 @@
                       "type": "string",
                       "description": "Owners ID"
                     },
-                    "default": ["642831f346155749a2b6e944", "6492d709a241b2ff75394447"]
+                    "default": ["642831f346155749a2b6e944", "64899bfaa965fe494d468101"]
                   },
                   "postedAtHuman": {
                     "type": "string",
@@ -31366,7 +31429,7 @@
             "type": "string",
             "description": "Response message",
             "format": "string",
-            "example": "Successfully get companie"
+            "example": "Successfully get companies"
           },
           "data": {
             "type": "object",
@@ -31377,133 +31440,266 @@
                 "items": {
                   "type": "object",
                   "properties": {
-                    "status": {
+                    "_id": {
                       "type": "string",
-                      "description": "Status",
-                      "format": "string",
-                      "example": "success"
+                      "description": "Company's id",
+                      "example": "642831f346155749a2b6e944"
                     },
-                    "message": {
+                    "name": {
                       "type": "string",
-                      "description": "Response message",
-                      "format": "string",
-                      "example": "User was successfully added to this company workers"
+                      "description": "Company's name",
+                      "example": "SuperDuperCompany 2022"
                     },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "company": {
-                          "type": "object",
-                          "properties": {
-                            "_id": {
-                              "type": "string",
-                              "description": "Company's id",
-                              "example": "642831f346155749a2b6e944"
-                            },
-                            "name": {
-                              "type": "string",
-                              "description": "Company's name",
-                              "example": "SuperDuperCompany 2022"
-                            },
-                            "avatarURL": {
-                              "type": "string",
-                              "description": "Company's avatar URL",
-                              "example": ""
-                            },
-                            "description": {
-                              "type": "string",
-                              "description": "Company's description",
-                              "example": "This is the best company in 2023"
-                            },
-                            "industry": {
-                              "type": "string",
-                              "description": "Company's industry",
-                              "example": "Information Technology (IT)"
-                            },
-                            "location": {
-                              "type": "string",
-                              "description": "Company's industry",
-                              "example": "Ukraine, Kiev"
-                            },
-                            "website": {
-                              "type": "string",
-                              "description": "Company's website",
-                              "example": "www.website.com"
-                            },
-                            "email": {
-                              "type": "string",
-                              "description": "Company's email",
-                              "example": "email@website.com"
-                            },
-                            "phone": {
-                              "type": "string",
-                              "description": "Company's phone",
-                              "example": 3999999999
-                            },
-                            "foundedYear": {
-                              "type": "string",
-                              "description": "Company's founded year",
-                              "example": 2001
-                            },
-                            "employeesCount": {
-                              "type": "string",
-                              "description": "Company's employees count",
-                              "example": 12321
-                            },
-                            "jobs": {
-                              "type": "array",
-                              "description": "Array of jobs associated with this company",
-                              "items": {
-                                "type": "string",
-                                "description": "Jobs ID"
-                              },
-                              "default": []
-                            },
-                            "publications": {
-                              "type": "array",
-                              "description": "Array of publications associated with this company",
-                              "items": {
-                                "type": "string",
-                                "description": "Publications ID"
-                              },
-                              "default": []
-                            },
-                            "workers": {
-                              "type": "array",
-                              "description": "Array of workers associated with this company",
-                              "items": {
-                                "type": "string",
-                                "description": "Workers ID"
-                              },
-                              "default": ["645fbdd9564a390fac4e7015"]
-                            },
-                            "owners": {
-                              "type": "array",
-                              "description": "Array of owners associated with this company",
-                              "items": {
-                                "type": "string",
-                                "description": "Owners ID"
-                              },
-                              "default": ["642831f346155749a2b6e944"]
-                            },
-                            "postedAtHuman": {
-                              "type": "string",
-                              "description": "Post's time",
-                              "example": "55 seconds ago"
-                            },
-                            "createdAt": {
-                              "type": "string",
-                              "description": "Created at",
-                              "example": "2023-06-05T10:21:34.989+00:00"
-                            },
-                            "updatedAt": {
-                              "type": "string",
-                              "description": "Updated at",
-                              "example": "2023-06-06T10:18:55.162+00:00"
-                            }
-                          }
-                        }
-                      }
+                    "avatarURL": {
+                      "type": "string",
+                      "description": "Company's avatar URL",
+                      "example": ""
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Company's description",
+                      "example": "This is the best company in 2023"
+                    },
+                    "industry": {
+                      "type": "string",
+                      "description": "Company's industry",
+                      "example": "Information Technology (IT)"
+                    },
+                    "location": {
+                      "type": "string",
+                      "description": "Company's industry",
+                      "example": "Ukraine, Kiev"
+                    },
+                    "website": {
+                      "type": "string",
+                      "description": "Company's website",
+                      "example": "www.website.com"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "Company's email",
+                      "example": "email@website.com"
+                    },
+                    "phone": {
+                      "type": "string",
+                      "description": "Company's phone",
+                      "example": 3999999999
+                    },
+                    "foundedYear": {
+                      "type": "string",
+                      "description": "Company's founded year",
+                      "example": 2001
+                    },
+                    "employeesCount": {
+                      "type": "string",
+                      "description": "Company's employees count",
+                      "example": 12321
+                    },
+                    "jobs": {
+                      "type": "array",
+                      "description": "Array of jobs associated with this company",
+                      "items": {
+                        "type": "string",
+                        "description": "Jobs ID"
+                      },
+                      "default": []
+                    },
+                    "publications": {
+                      "type": "array",
+                      "description": "Array of publications associated with this company",
+                      "items": {
+                        "type": "string",
+                        "description": "Publications ID"
+                      },
+                      "default": []
+                    },
+                    "workers": {
+                      "type": "array",
+                      "description": "Array of workers associated with this company",
+                      "items": {
+                        "type": "string",
+                        "description": "Workers ID"
+                      },
+                      "default": ["645fbdd9564a390fac4e7015"]
+                    },
+                    "owners": {
+                      "type": "array",
+                      "description": "Array of owners associated with this company",
+                      "items": {
+                        "type": "string",
+                        "description": "Owners ID"
+                      },
+                      "default": ["642831f346155749a2b6e944"]
+                    },
+                    "postedAtHuman": {
+                      "type": "string",
+                      "description": "Post's time",
+                      "example": "55 seconds ago"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "Created at",
+                      "example": "2023-06-05T10:21:34.989+00:00"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "Updated at",
+                      "example": "2023-06-06T10:18:55.162+00:00"
+                    }
+                  }
+                }
+              },
+              "totalPages": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "currentPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 1
+              },
+              "perPage": {
+                "type": "number",
+                "description": "Status",
+                "format": "string",
+                "example": 10
+              }
+            }
+          }
+        }
+      },
+      "CompaniesSearchCompaniesResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status",
+            "format": "string",
+            "example": "success"
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "format": "string",
+            "example": "Successfully found such companies"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "companies": {
+                "type": "array",
+                "description": "All companies",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "Company's id",
+                      "example": "642831f346155749a2b6e944"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Company's name",
+                      "example": "SuperDuperCompany 2022"
+                    },
+                    "avatarURL": {
+                      "type": "string",
+                      "description": "Company's avatar URL",
+                      "example": ""
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Company's description",
+                      "example": "This is the best company in 2023"
+                    },
+                    "industry": {
+                      "type": "string",
+                      "description": "Company's industry",
+                      "example": "Information Technology (IT)"
+                    },
+                    "location": {
+                      "type": "string",
+                      "description": "Company's industry",
+                      "example": "Ukraine, Kiev"
+                    },
+                    "website": {
+                      "type": "string",
+                      "description": "Company's website",
+                      "example": "www.website.com"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "Company's email",
+                      "example": "email@website.com"
+                    },
+                    "phone": {
+                      "type": "string",
+                      "description": "Company's phone",
+                      "example": 3999999999
+                    },
+                    "foundedYear": {
+                      "type": "string",
+                      "description": "Company's founded year",
+                      "example": 2001
+                    },
+                    "employeesCount": {
+                      "type": "string",
+                      "description": "Company's employees count",
+                      "example": 12321
+                    },
+                    "jobs": {
+                      "type": "array",
+                      "description": "Array of jobs associated with this company",
+                      "items": {
+                        "type": "string",
+                        "description": "Jobs ID"
+                      },
+                      "default": []
+                    },
+                    "publications": {
+                      "type": "array",
+                      "description": "Array of publications associated with this company",
+                      "items": {
+                        "type": "string",
+                        "description": "Publications ID"
+                      },
+                      "default": []
+                    },
+                    "workers": {
+                      "type": "array",
+                      "description": "Array of workers associated with this company",
+                      "items": {
+                        "type": "string",
+                        "description": "Workers ID"
+                      },
+                      "default": ["645fbdd9564a390fac4e7015"]
+                    },
+                    "owners": {
+                      "type": "array",
+                      "description": "Array of owners associated with this company",
+                      "items": {
+                        "type": "string",
+                        "description": "Owners ID"
+                      },
+                      "default": ["642831f346155749a2b6e944"]
+                    },
+                    "postedAtHuman": {
+                      "type": "string",
+                      "description": "Post's time",
+                      "example": "55 seconds ago"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "description": "Created at",
+                      "example": "2023-06-05T10:21:34.989+00:00"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "description": "Updated at",
+                      "example": "2023-06-06T10:18:55.162+00:00"
                     }
                   }
                 }

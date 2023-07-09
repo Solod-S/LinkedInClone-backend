@@ -6,7 +6,7 @@ const { MediaFile, Education, Experience } = require("../models");
 const app = require("../app");
 
 require("dotenv").config();
-const { DB_HOST, TEST_TOKEN, WRONG_TOKEN } = process.env;
+const { DB_HOST, TEST_TOKEN1, WRONG_TOKEN } = process.env;
 
 let mediaFileId = null;
 let educationId = null;
@@ -20,7 +20,7 @@ describe("Media-files Test Suite", () => {
     server = app.listen(3003, () => {
       server.unref(); // Отпускает серверный таймер после запуска сервера
     });
-  }, 20000);
+  }, 18000);
 
   afterAll(async () => {
     await mongoose.disconnect();
@@ -28,7 +28,7 @@ describe("Media-files Test Suite", () => {
   });
 
   test("GET /all own media files with valid token, should return 200 status and valid media files data", async () => {
-    const res = await request(app).get(`/media-files`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/media-files`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { mediaFiles } = data;
 
@@ -51,7 +51,7 @@ describe("Media-files Test Suite", () => {
   }, 34000);
 
   test("GET /all own media files with valid token + pagination, should return 200 status and valid media files data", async () => {
-    const res = await request(app).get(`/media-files?page=1&perPage=2`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/media-files?page=1&perPage=2`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { totalPages, currentPage, perPage, mediaFiles } = data;
 
@@ -106,7 +106,7 @@ describe("Media-files Test Suite", () => {
   }, 34000);
 
   test("POST /media file without body, should return 400 status", async () => {
-    const res = await request(app).post(`/media-files/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({});
+    const res = await request(app).post(`/media-files/add`).set("Authorization", `Bearer ${TEST_TOKEN1}`).send({});
     const { status, body } = res;
 
     expect(status).toBe(400);
@@ -116,7 +116,7 @@ describe("Media-files Test Suite", () => {
   test("POST /media file with invalid body, should return 400 status", async () => {
     const res = await request(app)
       .post(`/media-files/add`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
       .send({ 11: "ss" });
     const { status, body } = res;
 
@@ -125,7 +125,7 @@ describe("Media-files Test Suite", () => {
   }, 34000);
 
   test("POST /media file with valid token for post, should return 201 status and valid media file data", async () => {
-    const res = await request(app).post(`/media-files/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({
+    const res = await request(app).post(`/media-files/add`).set("Authorization", `Bearer ${TEST_TOKEN1}`).send({
       type: "img",
       postId: "6482aef1adb1ffcd901caf76",
       location: "posts",
@@ -159,7 +159,7 @@ describe("Media-files Test Suite", () => {
   test("PATCH /media file with valid token, should return 200 status and valid media file data", async () => {
     const res = await request(app)
       .patch(`/media-files/update/${mediaFileId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
       .send({
         type: "video",
         location: "posts",
@@ -209,7 +209,7 @@ describe("Media-files Test Suite", () => {
   test("PATCH /media file with valid token without body, should return 400 status", async () => {
     const res = await request(app)
       .patch(`/media-files/update/${mediaFileId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
       .send({});
     const { status, body } = res;
 
@@ -221,7 +221,7 @@ describe("Media-files Test Suite", () => {
   }, 34000);
 
   test("GET /media file with valid token for post, should return 200 status and valid media file data", async () => {
-    const res = await request(app).get(`/media-files/${mediaFileId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/media-files/${mediaFileId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { mediaFile } = data;
 
@@ -265,7 +265,7 @@ describe("Media-files Test Suite", () => {
   test("DELETE /media file with valid token for post, should return 200 status and valid media file data", async () => {
     const res = await request(app)
       .delete(`/media-files/remove/${mediaFileId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { mediaFile } = data;
 
@@ -288,7 +288,7 @@ describe("Media-files Test Suite", () => {
   }, 34000);
 
   test("POST /media file with valid token for comment, should return 201 status and valid media file data", async () => {
-    const res = await request(app).post(`/media-files/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({
+    const res = await request(app).post(`/media-files/add`).set("Authorization", `Bearer ${TEST_TOKEN1}`).send({
       type: "img",
       commentId: "647b919dc1ac35ed31c82d2b",
       location: "comments",
@@ -319,7 +319,7 @@ describe("Media-files Test Suite", () => {
   }, 34000);
 
   test("GET /media file with valid token for comment, should return 200 status and valid media file data", async () => {
-    const res = await request(app).get(`/media-files/${mediaFileId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/media-files/${mediaFileId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { mediaFile } = data;
 
@@ -363,7 +363,7 @@ describe("Media-files Test Suite", () => {
   test("DELETE /media file with valid token for comment, should return 200 status and valid media file data", async () => {
     const res = await request(app)
       .delete(`/media-files/remove/${mediaFileId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { mediaFile } = data;
 
@@ -396,7 +396,7 @@ describe("Media-files Test Suite", () => {
       console.log(error);
     }
 
-    const res = await request(app).post(`/media-files/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({
+    const res = await request(app).post(`/media-files/add`).set("Authorization", `Bearer ${TEST_TOKEN1}`).send({
       type: "img",
       educationId,
       location: "education",
@@ -427,7 +427,7 @@ describe("Media-files Test Suite", () => {
   }, 34000);
 
   test("GET /media file with valid token for education, should return 200 status and valid media files data", async () => {
-    const res = await request(app).get(`/media-files/${mediaFileId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/media-files/${mediaFileId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { mediaFile } = data;
 
@@ -471,7 +471,7 @@ describe("Media-files Test Suite", () => {
   test("DELETE /media file with valid token for education, should return 200 status and valid media file data", async () => {
     const res = await request(app)
       .delete(`/media-files/remove/${mediaFileId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { mediaFile } = data;
 
@@ -506,7 +506,7 @@ describe("Media-files Test Suite", () => {
       console.log(error);
     }
 
-    const res = await request(app).post(`/media-files/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({
+    const res = await request(app).post(`/media-files/add`).set("Authorization", `Bearer ${TEST_TOKEN1}`).send({
       type: "img",
       experienceId,
       location: "experience",
@@ -537,7 +537,7 @@ describe("Media-files Test Suite", () => {
   }, 34000);
 
   test("GET /media file with valid token for experience, should return 201 status and valid media files data", async () => {
-    const res = await request(app).get(`/media-files/${mediaFileId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/media-files/${mediaFileId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { mediaFile } = data;
 
@@ -581,7 +581,7 @@ describe("Media-files Test Suite", () => {
   test("DELETE /media file with valid token for experience, should return 200 status and valid media file data", async () => {
     const res = await request(app)
       .delete(`/media-files/remove/${mediaFileId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { mediaFile } = data;
 

@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const app = require("../app");
 
 require("dotenv").config();
-const { DB_HOST, TEST_TOKEN, WRONG_TOKEN } = process.env;
+const { DB_HOST, TEST_TOKEN1, WRONG_TOKEN } = process.env;
 
 describe("Post Test Suite", () => {
   let server;
@@ -14,7 +14,7 @@ describe("Post Test Suite", () => {
     server = app.listen(3005, () => {
       server.unref(); // Отпускает серверный таймер после запуска сервера
     });
-  }, 20000);
+  }, 18000);
 
   afterAll(async () => {
     await mongoose.disconnect();
@@ -22,7 +22,7 @@ describe("Post Test Suite", () => {
   });
 
   test("GET /all posts with valid token, should return 200 status and valid posts data", async () => {
-    const res = await request(app).get(`/posts`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/posts`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { posts } = data;
 
@@ -113,7 +113,7 @@ describe("Post Test Suite", () => {
   }, 34000);
 
   test("GET /all posts with valid token + pagination, should return 200 status and valid posts data", async () => {
-    const res = await request(app).get(`/posts?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/posts?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { posts, totalPages, currentPage, perPage } = data;
 
@@ -223,7 +223,7 @@ describe("Post Test Suite", () => {
   }, 34000);
 
   test("GET /all popular posts with valid token, should return 200 status and valid posts data", async () => {
-    const res = await request(app).get(`/posts/popular`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/posts/popular`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { posts } = data;
 
@@ -271,7 +271,7 @@ describe("Post Test Suite", () => {
   }, 34000);
 
   test("GET /all popular posts with valid token + pagination, should return 200 status and valid posts data", async () => {
-    const res = await request(app).get(`/posts/popular?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/posts/popular?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { posts, totalPages, currentPage, perPage } = data;
 
@@ -386,7 +386,7 @@ describe("Post Test Suite", () => {
   }, 34000);
 
   test("GET /posts by search query with valid token, should return 200 status and valid posts data", async () => {
-    const res = await request(app).get(`/posts/search?search=Tequila+is`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/posts/search?search=Tequila+is`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { posts } = data;
 
@@ -436,7 +436,7 @@ describe("Post Test Suite", () => {
   test("GET /posts by search query with valid token + pagination, should return 200 status", async () => {
     const res = await request(app)
       .get(`/posts/search?search=Tequila+is&page=1&perPage=10`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { posts, totalPages, currentPage, perPage } = data;
 
@@ -508,7 +508,7 @@ describe("Post Test Suite", () => {
   }, 34000);
 
   test("GET /post by id with valid token, should return 200 status and valid post data", async () => {
-    const res = await request(app).get(`/posts/6467ce7e44ff2b38b8740e63`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/posts/6467ce7e44ff2b38b8740e63`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { post } = data;
 
@@ -549,7 +549,7 @@ describe("Post Test Suite", () => {
   }, 34000);
 
   test("GET /post by invalid id with valid token, should return 404 status", async () => {
-    const res = await request(app).get(`/posts/111111111111111111111111`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/posts/111111111111111111111111`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, body } = res;
 
     expect(status).toBe(404);

@@ -6,7 +6,7 @@ const { Post } = require("../models");
 const app = require("../app");
 
 require("dotenv").config();
-const { DB_HOST, TEST_TOKEN, WRONG_TOKEN } = process.env;
+const { DB_HOST, TEST_TOKEN1, WRONG_TOKEN } = process.env;
 
 let postId = null;
 
@@ -18,7 +18,7 @@ describe("Favorites Test Suite", () => {
     server = app.listen(3006, () => {
       server.unref(); // Отпускает серверный таймер после запуска сервера
     });
-  }, 20000);
+  }, 18000);
 
   afterAll(async () => {
     await mongoose.disconnect();
@@ -33,7 +33,7 @@ describe("Favorites Test Suite", () => {
       console.log(error);
     }
 
-    const res = await request(app).get(`/favorites/posts/add/${postId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/favorites/posts/add/${postId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { post } = data;
 
@@ -84,7 +84,7 @@ describe("Favorites Test Suite", () => {
   test("POST /post to favorites with valid token and invalid post id, should return 404 status", async () => {
     const res = await request(app)
       .post(`/favorites/posts/add/123456789123456789123456`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
@@ -92,7 +92,7 @@ describe("Favorites Test Suite", () => {
   }, 34000);
 
   test("GET /favorite posts with valid token, should return 200 status and valid posts data", async () => {
-    const res = await request(app).get(`/favorites/posts`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/favorites/posts`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { posts } = data;
 
@@ -188,7 +188,7 @@ describe("Favorites Test Suite", () => {
   test("GET /favorite posts with valid token + pagination, should return 200 status and valid posts data", async () => {
     const res = await request(app)
       .get(`/favorites/posts?page=1&perPage=10`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, data } = res.body;
     const { totalPages, currentPage, perPage, posts } = data;
 
@@ -313,7 +313,7 @@ describe("Favorites Test Suite", () => {
   test("DELETE /post from favorite with valid token and invalid post id, should return 404 status", async () => {
     const res = await request(app)
       .get(`/favorites/posts/remove/123456789123456789123456`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
@@ -323,7 +323,7 @@ describe("Favorites Test Suite", () => {
   test("DELETE /post with valid token and valid post id, should return 200 status", async () => {
     const res = await request(app)
       .get(`/favorites/posts/remove/${postId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { post } = data;
 

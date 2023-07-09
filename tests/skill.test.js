@@ -6,7 +6,7 @@ const { Skill } = require("../models");
 const app = require("../app");
 
 require("dotenv").config();
-const { DB_HOST, TEST_TOKEN, WRONG_TOKEN } = process.env;
+const { DB_HOST, TEST_TOKEN1, WRONG_TOKEN } = process.env;
 
 let skillId = null;
 
@@ -18,7 +18,7 @@ describe("Skill Test Suite", () => {
     server = app.listen(3008, () => {
       server.unref(); // Отпускает серверный таймер после запуска сервера
     });
-  }, 20000);
+  }, 18000);
 
   afterAll(async () => {
     await mongoose.disconnect();
@@ -37,7 +37,7 @@ describe("Skill Test Suite", () => {
   }, 34000);
 
   test("POST /skill without body, should return 400 status", async () => {
-    const res = await request(app).post(`/skills/create`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({});
+    const res = await request(app).post(`/skills/create`).set("Authorization", `Bearer ${TEST_TOKEN1}`).send({});
     const { status, body } = res;
 
     expect(status).toBe(400);
@@ -47,7 +47,7 @@ describe("Skill Test Suite", () => {
   test("POST /skill with invalid body, should return 400 status", async () => {
     const res = await request(app)
       .post(`/skills/create`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
       .send({ ssskiill: "some skill" });
     const { status, body } = res;
 
@@ -58,7 +58,7 @@ describe("Skill Test Suite", () => {
   test("POST /skill with valid token, should return 201 status and valid skill data", async () => {
     const res = await request(app)
       .post(`/skills/create`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
       .send({ skill: "Some skill 999" });
     const { status, message, data } = res.body;
     const { skill } = data;
@@ -81,7 +81,7 @@ describe("Skill Test Suite", () => {
   test("POST /skill clone with valid token, should return 200 status and valid like data", async () => {
     const res = await request(app)
       .post(`/skills/create`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
       .send({ skill: "Some skill 999" });
     const { status, message, data } = res.body;
     const { skill } = data;
@@ -100,7 +100,7 @@ describe("Skill Test Suite", () => {
   }, 34000);
 
   test("GET /skills with valid token, should return 200 status and valid skill data", async () => {
-    const res = await request(app).get(`/skills`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/skills`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { skills, totalPages, currentPage, perPage } = data;
 
@@ -122,7 +122,7 @@ describe("Skill Test Suite", () => {
   }, 34000);
 
   test("GET /skills with valid token + pagination, should return 200 status and valid skills data", async () => {
-    const res = await request(app).get(`/skills?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/skills?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { skills, totalPages, currentPage, perPage } = data;
 
@@ -160,7 +160,7 @@ describe("Skill Test Suite", () => {
   }, 34000);
 
   test("GET /skill by id with valid token, should return 200 status and valid skill data", async () => {
-    const res = await request(app).get(`/skills/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/skills/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { skill, users } = data;
 
@@ -204,7 +204,7 @@ describe("Skill Test Suite", () => {
   }, 34000);
 
   test("GET /skill by invalid id with valid token, should return 404 status", async () => {
-    const res = await request(app).get(`/skills/111111111111111111111111`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/skills/111111111111111111111111`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
@@ -220,7 +220,7 @@ describe("Skill Test Suite", () => {
   }, 34000);
 
   test("GET /remove user from skill by id with valid token, should return 201 status and valid skill data", async () => {
-    const res = await request(app).get(`/skills/users/remove/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/skills/users/remove/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { skill } = data;
 
@@ -238,7 +238,7 @@ describe("Skill Test Suite", () => {
   }, 34000);
 
   test("GET /remove user from skill by repeted id, should return 404 status", async () => {
-    const res = await request(app).get(`/skills/users/remove/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/skills/users/remove/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
@@ -248,7 +248,7 @@ describe("Skill Test Suite", () => {
   test("GET /remove user from skill by invalid id, should return 404 status", async () => {
     const res = await request(app)
       .get(`/skills/users/remove/111111111111111111111111`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
@@ -264,7 +264,7 @@ describe("Skill Test Suite", () => {
   }, 34000);
 
   test("GET /add user to skill by id with valid token, should return 201 status and valid skill data", async () => {
-    const res = await request(app).get(`/skills/users/add/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/skills/users/add/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { skill } = data;
 
@@ -282,7 +282,7 @@ describe("Skill Test Suite", () => {
   }, 34000);
 
   test("GET /add user to skill by repeted id, should return 409 status", async () => {
-    const res = await request(app).get(`/skills/users/add/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/skills/users/add/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, body } = res;
 
     expect(status).toBe(409);
@@ -292,7 +292,7 @@ describe("Skill Test Suite", () => {
   test("GET /add user to skill by invalid id, should return 404 status", async () => {
     const res = await request(app)
       .get(`/skills/users/add/111111111111111111111111`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
@@ -308,7 +308,7 @@ describe("Skill Test Suite", () => {
   }, 34000);
 
   test("GET /skills by search query with valid token, should return 200 status and valid skills data", async () => {
-    const res = await request(app).get(`/skills/search?search=999`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/skills/search?search=999`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { skills, totalPages, currentPage, perPage } = data;
 
@@ -332,7 +332,7 @@ describe("Skill Test Suite", () => {
   test("GET /skills by search query with valid token + pagination, should return 200 status and valid skills data", async () => {
     const res = await request(app)
       .get(`/skills/search?search=999&page=1&perPage=10`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { skills, totalPages, currentPage, perPage } = data;
 
@@ -382,7 +382,7 @@ describe("Skill Test Suite", () => {
   test("DELETE /skill with invalid id, should return 404 status", async () => {
     const res = await request(app)
       .delete(`/skills/remove/111111111111111111111111`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
@@ -390,7 +390,7 @@ describe("Skill Test Suite", () => {
   }, 34000);
 
   test("DELETE /skill with valid token, should return 200 status and valid like data", async () => {
-    const res = await request(app).delete(`/skills/remove/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).delete(`/skills/remove/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { skill } = data;
 

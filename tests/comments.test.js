@@ -6,7 +6,7 @@ const { Comment, Post, Publication, Company, User } = require("../models");
 const app = require("../app");
 
 require("dotenv").config();
-const { DB_HOST, TEST_TOKEN, WRONG_TOKEN,USER_ID } = process.env;
+const { DB_HOST, TEST_TOKEN1, WRONG_TOKEN,USER_ID } = process.env;
 
 let company = null
 let post = null
@@ -51,7 +51,7 @@ describe("Comments Test Suite", () => {
       console.log(error)
     }
 
-  }, 20000);
+  }, 18000);
 
   afterAll(async () => {
     try {
@@ -66,7 +66,7 @@ describe("Comments Test Suite", () => {
   });
 
   test("GET /all own comments with valid token, should return 200 status and valid comments data", async () => {
-    const res = await request(app).get(`/comments`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/comments`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { comments } = data;
 
@@ -127,7 +127,7 @@ describe("Comments Test Suite", () => {
   }, 34000);
 
   test("GET /all own comments with valid token + pagination, should return 200 status and valid comments data", async () => {
-    const res = await request(app).get(`/comments?page=1&perPage=2`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).get(`/comments?page=1&perPage=2`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { comments, totalPages, currentPage, perPage } = data;
 
@@ -206,7 +206,7 @@ describe("Comments Test Suite", () => {
   }, 34000);
 
   test("POST /post's comment without body, should return 400 status", async () => {
-    const res = await request(app).post(`/comments/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({});
+    const res = await request(app).post(`/comments/add`).set("Authorization", `Bearer ${TEST_TOKEN1}`).send({});
     const { status, body } = res;
 
     expect(status).toBe(400);
@@ -216,7 +216,7 @@ describe("Comments Test Suite", () => {
   test("POST /post's comment with invalid body, should return 400 status", async () => {
     const res = await request(app)
       .post(`/comments/add`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
       .send({ 11: "ss" });
     const { status, body } = res;
 
@@ -225,7 +225,7 @@ describe("Comments Test Suite", () => {
   }, 34000);
 
   test("POST /post's comment with valid token, should return 201 status and valid comment data", async () => {
-    const res = await request(app).post(`/comments/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({
+    const res = await request(app).post(`/comments/add`).set("Authorization", `Bearer ${TEST_TOKEN1}`).send({
       description:
         "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.",
       location: "posts",
@@ -260,7 +260,7 @@ describe("Comments Test Suite", () => {
   test("PATCH /post's comment with valid token, should return 200 status and valid comment data", async () => {
     const res = await request(app)
       .patch(`/comments/update/${commentId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
       .send({ description: "TEST" });
     const { status, message, data } = res.body;
     const { comment } = data;
@@ -300,7 +300,7 @@ describe("Comments Test Suite", () => {
   test("PATCH /post's comment with valid token without body, should return 400 status", async () => {
     const res = await request(app)
       .patch(`/comments/update/${commentId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
       .send({});
     const { status, body } = res;
 
@@ -322,7 +322,7 @@ describe("Comments Test Suite", () => {
   }, 34000);
 
   test("DELETE /post's comment with valid token, should return 200 status and valid comment data", async () => {
-    const res = await request(app).delete(`/comments/remove/${commentId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).delete(`/comments/remove/${commentId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { comment } = data;
 
@@ -384,7 +384,7 @@ describe("Comments Test Suite", () => {
   }, 34000);
 
   test("POST /publication's comment without body, should return 400 status", async () => {
-    const res = await request(app).post(`/comments/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({});
+    const res = await request(app).post(`/comments/add`).set("Authorization", `Bearer ${TEST_TOKEN1}`).send({});
     const { status, body } = res;
 
     expect(status).toBe(400);
@@ -394,7 +394,7 @@ describe("Comments Test Suite", () => {
   test("POST /publication's comment with invalid body, should return 400 status", async () => {
     const res = await request(app)
       .post(`/comments/add`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
       .send({ 11: "ss" });
     const { status, body } = res;
 
@@ -403,7 +403,7 @@ describe("Comments Test Suite", () => {
   }, 34000);
 
   test("POST /publication's comment with valid token, should return 201 status and valid comment data", async () => {
-    const res = await request(app).post(`/comments/add`).set("Authorization", `Bearer ${TEST_TOKEN}`).send({
+    const res = await request(app).post(`/comments/add`).set("Authorization", `Bearer ${TEST_TOKEN1}`).send({
       description:
         "My horoscope said I was going to get my heart broken in 12 years time… So I bought a puppy to cheer me up.",
       location: "publications",
@@ -438,7 +438,7 @@ describe("Comments Test Suite", () => {
   test("PATCH /publication's comment with valid token, should return 200 status and valid comment data", async () => {
     const res = await request(app)
       .patch(`/comments/update/${commentId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
       .send({ description: "TEST" });
     const { status, message, data } = res.body;
     const { comment } = data;
@@ -478,7 +478,7 @@ describe("Comments Test Suite", () => {
   test("PATCH /publication's comment with valid token without body, should return 400 status", async () => {
     const res = await request(app)
       .patch(`/comments/update/${commentId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
       .send({});
     const { status, body } = res;
 
@@ -500,7 +500,7 @@ describe("Comments Test Suite", () => {
   }, 34000);
 
   test("DELETE /publication's comment with valid token, should return 200 status and valid comment data", async () => {
-    const res = await request(app).delete(`/comments/remove/${commentId}`).set("Authorization", `Bearer ${TEST_TOKEN}`);
+    const res = await request(app).delete(`/comments/remove/${commentId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { comment } = data;
 
