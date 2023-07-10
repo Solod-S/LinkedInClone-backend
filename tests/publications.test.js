@@ -63,7 +63,7 @@ describe("Publications Test Suite", () => {
     expect(publications.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
   }, 34000);
 
-  test("GET /all publications with valid token + pagination, should return 200 status and valid posts data", async () => {
+  test("GET /all publications with valid token + pagination, should return 200 status and valid publications data", async () => {
     const res = await request(app).get(`/publications?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { publications, totalPages, currentPage, perPage } = data;
