@@ -6,7 +6,7 @@ const { Company, Publication, Job } = require("../models");
 const app = require("../app");
 
 require("dotenv").config();
-const { DB_HOST, TEST_TOKEN1, WRONG_TOKEN, USER_ID, USER_ID2 } = process.env;
+const { DB_HOST, TEST_TOKEN1, WRONG_TOKEN, USER_ID, USER_ID_PUBLICATION_TEST } = process.env;
 
 let companyId = null;
 
@@ -26,6 +26,7 @@ describe("Company Test Suite", () => {
         await Publication.deleteMany({ owner: companyAlreadyExist._id });
         await Job.deleteMany({ owner: companyAlreadyExist._id });
       }
+      
     } catch (error) {
       console.log(error)
     }
@@ -365,7 +366,7 @@ describe("Company Test Suite", () => {
   }, 34000);
 
   test("GET /add owner to company by id with valid token, should return 200 status and valid company data", async () => {
-    const res = await request(app).get(`/companies/owners/add/${companyId}?user=${USER_ID2}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+    const res = await request(app).get(`/companies/owners/add/${companyId}?user=${USER_ID_PUBLICATION_TEST}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { company } = data;
 
@@ -397,7 +398,7 @@ describe("Company Test Suite", () => {
   }, 34000);
 
   test("GET /add owner to company by repeted id, should return 409 status", async () => {
-    const res = await request(app).get(`/companies/owners/add/${companyId}?user=${USER_ID2}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+    const res = await request(app).get(`/companies/owners/add/${companyId}?user=${USER_ID_PUBLICATION_TEST}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, body } = res;
 
     expect(status).toBe(409);
@@ -406,7 +407,7 @@ describe("Company Test Suite", () => {
 
   test("GET /add owner to company by invalid id, should return 404 status", async () => {
     const res = await request(app)
-      .get(`/companies/owners/add/111111111111111111111111?user=${USER_ID2}`)
+      .get(`/companies/owners/add/111111111111111111111111?user=${USER_ID_PUBLICATION_TEST}`)
       .set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, body } = res;
 
@@ -415,7 +416,7 @@ describe("Company Test Suite", () => {
   }, 34000);
 
   test("GET /add owner to company by id with invalid token, should return 401 status", async () => {
-    const res = await request(app).get(`/companies/owners/add/${companyId}?user=${USER_ID2}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+    const res = await request(app).get(`/companies/owners/add/${companyId}?user=${USER_ID_PUBLICATION_TEST}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
     const { status, body } = res;
 
     expect(status).toBe(401);
@@ -423,7 +424,7 @@ describe("Company Test Suite", () => {
   }, 34000);
 
   test("GET /remove owner from company by id with valid token, should return 200 status and valid company data", async () => {
-    const res = await request(app).get(`/companies/owners/remove/${companyId}?user=${USER_ID2}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+    const res = await request(app).get(`/companies/owners/remove/${companyId}?user=${USER_ID_PUBLICATION_TEST}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;
     const { company } = data;
 
@@ -455,7 +456,7 @@ describe("Company Test Suite", () => {
   }, 34000);
 
   test("GET /remove owner from company by repeted id, should return 404 status", async () => {
-    const res = await request(app).get(`/companies/owners/remove/${companyId}?user=${USER_ID2}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+    const res = await request(app).get(`/companies/owners/remove/${companyId}?user=${USER_ID_PUBLICATION_TEST}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
@@ -464,7 +465,7 @@ describe("Company Test Suite", () => {
 
   test("GET /remove owner from company by invalid id, should return 404 status", async () => {
     const res = await request(app)
-      .get(`/companies/owners/remove/111111111111111111111111?user=${USER_ID2}`)
+      .get(`/companies/owners/remove/111111111111111111111111?user=${USER_ID_PUBLICATION_TEST}`)
       .set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, body } = res;
 
@@ -473,7 +474,7 @@ describe("Company Test Suite", () => {
   }, 34000);
 
   test("GET /remove owner from company by id with invalid token, should return 401 status", async () => {
-    const res = await request(app).get(`/companies/owners/remove/${companyId}?user=${USER_ID2}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+    const res = await request(app).get(`/companies/owners/remove/${companyId}?user=${USER_ID_PUBLICATION_TEST}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
     const { status, body } = res;
 
     expect(status).toBe(401);

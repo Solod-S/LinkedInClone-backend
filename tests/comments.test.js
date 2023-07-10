@@ -6,7 +6,7 @@ const { Comment, Post, Publication, Company, User } = require("../models");
 const app = require("../app");
 
 require("dotenv").config();
-const { DB_HOST, TEST_TOKEN1, WRONG_TOKEN,USER_ID } = process.env;
+const { DB_HOST, TEST_TOKEN1, WRONG_TOKEN,USER_ID_COMMENTS_TEST } = process.env;
 
 let company = null
 let post = null
@@ -26,11 +26,11 @@ describe("Comments Test Suite", () => {
     });
 
     try {
-      const companyAlreadyExist = await Company.findOne({ owners: USER_ID })    
+      const companyAlreadyExist = await Company.findOne({ owners: USER_ID_COMMENTS_TEST })    
       companyId = companyAlreadyExist._id
       if(!companyAlreadyExist) {
         company = await Company.create({
-          "name": "SuperDuperCompany",
+          "name": "SuperDuperCompany Comment",
           "avatarURL": "",
           "description": "This is the best company",
           "industry": "Information Technology (IT)",
@@ -42,7 +42,7 @@ describe("Comments Test Suite", () => {
           "employeesCount": 12321,
           "workers": [],
           "jobs": [],
-          "owners": [USER_ID],
+          "owners": [USER_ID_COMMENTS_TEST],
         } 
         );
         companyId = company._id
@@ -175,11 +175,11 @@ describe("Comments Test Suite", () => {
       const firstPost = await Post.findOne().sort({ createdAt: 1 });
       
       if(!firstPost) {
-        const user = await User.findOne({ _id: USER_ID });
+        const user = await User.findOne({ _id: USER_ID_COMMENTS_TEST });
 
         post = await Post.create({
           "description": "Tequila is an excellent teacher… Just last night it taught me to count… One Tequila, Two Tequila, Three Tequila, Floor!",
-          owner: USER_ID,
+          owner: USER_ID_COMMENTS_TEST,
         });
       
         user.posts.push(post._id);

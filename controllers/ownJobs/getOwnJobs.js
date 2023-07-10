@@ -6,8 +6,22 @@ const getOwnJobs = async (req, res, next) => {
   const { _id } = req.user;
   let page = parseInt(req.query.page) || 1;
   const perPage = parseInt(req.query.perPage) || 10;
-
+ 
   const company = await Company.findOne({ owners: _id });
+
+  if ( !company) {
+    return res.json({
+      status: "success",
+      message: "Successfully get jobs",
+      data: {
+        jobs: [],
+        totalPages: 0,
+        currentPage: page,
+        perPage,
+      },
+    });
+  }
+
   const count = await Job.countDocuments({ owner: company._id });
   const totalPages = Math.ceil(count / perPage);
 
@@ -17,7 +31,7 @@ const getOwnJobs = async (req, res, next) => {
 
   const skip = (page - 1) * perPage;
 
-  if ((await Job.find({ owner: company._id })).length <= 0) {
+  if ( (await Job.find({ owner: company._id })).length <= 0) {
     return res.json({
       status: "success",
       message: "Successfully get jobs",

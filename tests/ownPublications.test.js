@@ -6,7 +6,7 @@ const { Company, Publication } = require("../models");
 const app = require("../app");
 
 require("dotenv").config();
-const { DB_HOST, TEST_TOKEN2, WRONG_TOKEN, USER_ID2} = process.env;
+const { DB_HOST, TEST_TOKEN_PUBLICATION_TEST, WRONG_TOKEN, USER_ID_PUBLICATION_TEST} = process.env;
 
 
 let company = null
@@ -23,7 +23,7 @@ describe("Own-publication Test Suite", () => {
     });
 
     try {
-      const companyAlreadyExist = await Company.findOne({ owners: USER_ID2 })
+      const companyAlreadyExist = await Company.findOne({ owners: USER_ID_PUBLICATION_TEST })
       if(!companyAlreadyExist) {
 
         company = await Company.create({
@@ -39,7 +39,7 @@ describe("Own-publication Test Suite", () => {
             "employeesCount": 12321,
             "workers": [],
             "jobs": [],
-          "owners": [USER_ID2],
+          "owners": [USER_ID_PUBLICATION_TEST],
         });
       }
     } catch (error) {
@@ -60,7 +60,7 @@ describe("Own-publication Test Suite", () => {
   });
 
   test("POST /publication with valid token, should return 200 status and valid publication data", async () => {
-    const res = await request(app).post(`/own-publications/add`).set("Authorization", `Bearer ${TEST_TOKEN2}`).send({
+    const res = await request(app).post(`/own-publications/add`).set("Authorization", `Bearer ${TEST_TOKEN_PUBLICATION_TEST}`).send({
       description: "Tequila is an excellent teacher… Just last night it taught me to count… One Tequila, Two Tequila, Three Tequila, Floor!",
       mediaFiles: [],});
     const { status, message, data } = res.body;
@@ -109,7 +109,7 @@ describe("Own-publication Test Suite", () => {
   }, 34000);
 
   test("POST /publication without body, should return 400 status", async () => {
-    const res = await request(app).post(`/own-publications/add`).set("Authorization", `Bearer ${TEST_TOKEN2}`).send({});
+    const res = await request(app).post(`/own-publications/add`).set("Authorization", `Bearer ${TEST_TOKEN_PUBLICATION_TEST}`).send({});
     const { status, body } = res;
 
     expect(status).toBe(400);
@@ -119,7 +119,7 @@ describe("Own-publication Test Suite", () => {
   test("POST /publication with invalid body, should return 400 status", async () => {
     const res = await request(app)
       .post(`/own-publications/add`)
-      .set("Authorization", `Bearer ${TEST_TOKEN2}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_PUBLICATION_TEST}`)
       .send({ 11: "ss" });
     const { status, body } = res;
 
@@ -130,7 +130,7 @@ describe("Own-publication Test Suite", () => {
   test("PATCH /publication with valid token, should return 200 status and valid publication data", async () => {
     const res = await request(app)
       .patch(`/own-publications/update/${publicationId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN2}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_PUBLICATION_TEST}`)
       .send({  description: "WOOOWWWW!",
       mediaFiles: [],});
       const { status, message, data } = res.body;
@@ -171,7 +171,7 @@ describe("Own-publication Test Suite", () => {
   test("PATCH /publication with invalid id , should return 404 status", async () => {
     const res = await request(app)
       .patch(`/own-publications/update/111111111111111111111111`)
-      .set("Authorization", `Bearer ${TEST_TOKEN2}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_PUBLICATION_TEST}`)
       .send({
         description: "WOOOWWWW!",
       mediaFiles: [],});
@@ -184,7 +184,7 @@ describe("Own-publication Test Suite", () => {
   test("PATCH /publication with valid token without body, should return 400 status", async () => {
     const res = await request(app)
       .patch(`/own-publications/update/${publicationId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN2}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_PUBLICATION_TEST}`)
       .send({});
     const { status } = res;
 
@@ -205,7 +205,7 @@ describe("Own-publication Test Suite", () => {
   }, 34000);
 
   test("GET /own publications with valid token, should return 200 status and valid publications data", async () => {
-    const res = await request(app).get(`/own-publications`).set("Authorization", `Bearer ${TEST_TOKEN2}`);
+    const res = await request(app).get(`/own-publications`).set("Authorization", `Bearer ${TEST_TOKEN_PUBLICATION_TEST}`);
     const { status, message, data } = res.body;
     const { publications, totalPages, currentPage, perPage } = data;
 
@@ -247,7 +247,7 @@ describe("Own-publication Test Suite", () => {
   }, 34000);
 
   test("GET /own publications with valid token + pagination, should return 200 status and valid posts data", async () => {
-    const res = await request(app).get(`/own-publications?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN2}`);
+    const res = await request(app).get(`/own-publications?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN_PUBLICATION_TEST}`);
     const { status, message, data } = res.body;
     const { publications, totalPages, currentPage, perPage } = data;
 
@@ -313,7 +313,7 @@ describe("Own-publication Test Suite", () => {
   }, 34000);
 
   test("DELETE /publication with valid token, should return 200 status", async () => {
-    const res = await request(app).delete(`/own-publications/remove/${publicationId}`).set("Authorization", `Bearer ${TEST_TOKEN2}`);
+    const res = await request(app).delete(`/own-publications/remove/${publicationId}`).set("Authorization", `Bearer ${TEST_TOKEN_PUBLICATION_TEST}`);
     const { status, message, data } = res.body;
     const { publication } = data;
 

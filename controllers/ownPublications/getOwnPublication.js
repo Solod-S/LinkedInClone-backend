@@ -8,6 +8,20 @@ const getOwnPublication = async (req, res, next) => {
   const perPage = parseInt(req.query.perPage) || 10;
 
   const company = await Company.findOne({ owners: _id });
+
+  if ( !company) {
+    return res.json({
+      status: "success",
+      message: "Successfully get publications",
+      data: {
+        publications: [],
+        totalPages: 0,
+        currentPage: page,
+        perPage,
+      },
+    });
+  }
+
   const count = await Publication.countDocuments({ owner: company._id });
   const totalPages = Math.ceil(count / perPage);
 
