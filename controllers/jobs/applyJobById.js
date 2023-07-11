@@ -34,7 +34,7 @@ const applyJobById = async (req, res, next) => {
   //     "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
   // });
 
-  res.status(201).json({
+  res.status(200).json({
     status: "success",
     message: "User successfully applyed to this job",
     data: { job: jobTransformer(job) },
