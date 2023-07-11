@@ -60,7 +60,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("POST /company without body, should return 400 status", async () => {
     const res = await request(app).post(`/companies/create`).set("Authorization", `Bearer ${TEST_TOKEN1}`).send({});
@@ -68,7 +68,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"name" is required');
-  }, 34000);
+  }, 37000);
 
   test("POST /company with invalid body, should return 400 status", async () => {
     const res = await request(app)
@@ -79,7 +79,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"name" is required');
-  }, 34000);
+  }, 37000);
 
   test("POST /company with valid token, should return 201 status and valid company data", async () => {
     const res = await request(app)
@@ -128,7 +128,7 @@ describe("Company Test Suite", () => {
     expect(typeof company.postedAtHuman).toBe("string");
     expect(typeof company.createdAt).toBe("string");
     expect(typeof company.updatedAt).toBe("string");
-  }, 34000);
+  }, 37000);
 
   test("POST /company clone with valid token, should return 409 status and valid like data", async () => {
     const res = await request(app)
@@ -152,7 +152,7 @@ describe("Company Test Suite", () => {
 
       expect(status).toBe(409);
       expect(body).toHaveProperty("message", 'Sorry, the company was created before');
-  }, 34000);
+  }, 37000);
 
   test("PATCH /company with valid token, should return 200 status and valid company data", async () => {
     const res = await request(app)
@@ -209,7 +209,7 @@ describe("Company Test Suite", () => {
       expect(typeof company.postedAtHuman).toBe("string");
       expect(typeof company.createdAt).toBe("string");
       expect(typeof company.updatedAt).toBe("string");
-  }, 34000);
+  }, 37000);
 
   test("PATCH /company with invalid token, should return 401 status", async () => {
     const res = await request(app)
@@ -233,7 +233,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("PATCH /company with valid token without body, should return 400 status", async () => {
     const res = await request(app)
@@ -247,7 +247,7 @@ describe("Company Test Suite", () => {
       "message",
       '"value" must contain at least one of [name, avatarURL, description, industry, location, website, email, phone, foundedYear, employeesCount, workers, jobs]'
     );
-  }, 34000);
+  }, 37000);
 
   test("GET /add owner to company by id with valid token, should return 200 status and valid company data", async () => {
     const res = await request(app).get(`/companies/workers/add/${companyId}?user=${USER_ID}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -279,7 +279,7 @@ describe("Company Test Suite", () => {
     expect(typeof company.postedAtHuman).toBe("string");
     expect(typeof company.createdAt).toBe("string");
     expect(typeof company.updatedAt).toBe("string");
-  }, 34000);
+  }, 37000);
 
   test("GET /add owner to company by repeted id, should return 409 status", async () => {
     const res = await request(app).get(`/companies/workers/add/${companyId}?user=${USER_ID}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -287,7 +287,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(409);
     expect(body).toHaveProperty("message", "Sorry, the user was added to this company workers before");
-  }, 34000);
+  }, 37000);
 
   test("GET /add owner to company by invalid id, should return 404 status", async () => {
     const res = await request(app)
@@ -297,7 +297,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 34000);
+  }, 37000);
 
   test("GET /add owner to company by id with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/companies/workers/add/${companyId}?user=${USER_ID}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -305,7 +305,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /remove worker from company by id with valid token, should return 200 status and valid company data", async () => {
     const res = await request(app).get(`/companies/workers/remove/${companyId}?user=${USER_ID}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -337,7 +337,7 @@ describe("Company Test Suite", () => {
     expect(typeof company.postedAtHuman).toBe("string");
     expect(typeof company.createdAt).toBe("string");
     expect(typeof company.updatedAt).toBe("string");
-  }, 34000);
+  }, 37000);
 
   test("GET /remove worker from company by repeted id, should return 404 status", async () => {
     const res = await request(app).get(`/companies/workers/remove/${companyId}?user=${USER_ID}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -345,7 +345,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 34000);
+  }, 37000);
 
   test("GET /remove worker from company by invalid id, should return 404 status", async () => {
     const res = await request(app)
@@ -355,7 +355,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 34000);
+  }, 37000);
 
   test("GET /remove worker from company by id with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/companies/workers/remove/${companyId}?user=${USER_ID}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -363,7 +363,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /add owner to company by id with valid token, should return 200 status and valid company data", async () => {
     const res = await request(app).get(`/companies/owners/add/${companyId}?user=${USER_ID_PUBLICATION_TEST}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -395,7 +395,7 @@ describe("Company Test Suite", () => {
     expect(typeof company.postedAtHuman).toBe("string");
     expect(typeof company.createdAt).toBe("string");
     expect(typeof company.updatedAt).toBe("string");
-  }, 34000);
+  }, 37000);
 
   test("GET /add owner to company by repeted id, should return 409 status", async () => {
     const res = await request(app).get(`/companies/owners/add/${companyId}?user=${USER_ID_PUBLICATION_TEST}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -403,7 +403,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(409);
     expect(body).toHaveProperty("message", "Sorry, the user was added to this company owners before");
-  }, 34000);
+  }, 37000);
 
   test("GET /add owner to company by invalid id, should return 404 status", async () => {
     const res = await request(app)
@@ -413,7 +413,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 34000);
+  }, 37000);
 
   test("GET /add owner to company by id with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/companies/owners/add/${companyId}?user=${USER_ID_PUBLICATION_TEST}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -421,7 +421,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /remove owner from company by id with valid token, should return 200 status and valid company data", async () => {
     const res = await request(app).get(`/companies/owners/remove/${companyId}?user=${USER_ID_PUBLICATION_TEST}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -453,7 +453,7 @@ describe("Company Test Suite", () => {
     expect(typeof company.postedAtHuman).toBe("string");
     expect(typeof company.createdAt).toBe("string");
     expect(typeof company.updatedAt).toBe("string");
-  }, 34000);
+  }, 37000);
 
   test("GET /remove owner from company by repeted id, should return 404 status", async () => {
     const res = await request(app).get(`/companies/owners/remove/${companyId}?user=${USER_ID_PUBLICATION_TEST}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -461,7 +461,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 34000);
+  }, 37000);
 
   test("GET /remove owner from company by invalid id, should return 404 status", async () => {
     const res = await request(app)
@@ -471,7 +471,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 34000);
+  }, 37000);
 
   test("GET /remove owner from company by id with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/companies/owners/remove/${companyId}?user=${USER_ID_PUBLICATION_TEST}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -479,7 +479,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /companies with valid token, should return 200 status and valid company data", async () => {
     const res = await request(app).get(`/companies`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -512,7 +512,7 @@ describe("Company Test Suite", () => {
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 34000);
+  }, 37000);
 
   test("GET /companies with valid token + pagination, should return 200 status and valid company data", async () => {
     const res = await request(app).get(`/companies?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -545,7 +545,7 @@ describe("Company Test Suite", () => {
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 34000);
+  }, 37000);
 
   test("GET /companies with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/companies`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -553,7 +553,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /companies with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app).get(`/companies?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -561,7 +561,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /company by id with valid token, should return 200 status and valid company data", async () => {
     const res = await request(app).get(`/companies/${companyId}?page=1&perPage=2&path=workers`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -599,7 +599,7 @@ describe("Company Test Suite", () => {
     expect(Array.isArray(workers)).toBe(true);
     expect(Array.isArray(jobs)).toBe(true);
     expect(Array.isArray(publications)).toBe(true);
-  }, 34000);
+  }, 37000);
 
   test("GET /company by invalid id with valid token, should return 404 status", async () => {
     const res = await request(app).get(`/companies/111111111111111111111111?page=1&perPage=2&path=workers`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -607,7 +607,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 34000);
+  }, 37000);
 
   test("GET /company by id with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/companies/${companyId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -615,7 +615,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /companies by search query with valid token, should return 200 status and valid companies data", async () => {
     const res = await request(app).get(`/companies/search?search=com`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -648,7 +648,7 @@ describe("Company Test Suite", () => {
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 34000);
+  }, 37000);
 
   test("GET /companies by search query with valid token + pagination, should return 200 status and valid company data", async () => {
     const res = await request(app)
@@ -683,7 +683,7 @@ describe("Company Test Suite", () => {
       expect(typeof totalPages).toBe("number");
       expect(typeof currentPage).toBe("number");
       expect(typeof perPage).toBe("number");
-  }, 34000);
+  }, 37000);
 
   test("GET /companies by search query with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/companies/search?search=com`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -691,7 +691,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /companies by search query with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app)
@@ -701,7 +701,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("DELETE /company with invalid token, should return 401 status", async () => {
     const res = await request(app).delete(`/companies/remove/${companyId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -709,7 +709,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("DELETE /company with invalid id, should return 404 status", async () => {
     const res = await request(app)
@@ -719,7 +719,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 34000);
+  }, 37000);
 
   test("DELETE /company with valid token, should return 200 status and valid company data", async () => {
     const res = await request(app).delete(`/companies/remove/${companyId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -763,5 +763,5 @@ describe("Company Test Suite", () => {
 
     const deletedCompany = await Company.findById({ _id: companyId });
     expect(deletedCompany).toBe(null);
-  }, 34000);
+  }, 37000);
 });

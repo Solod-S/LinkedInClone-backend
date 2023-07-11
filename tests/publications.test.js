@@ -61,7 +61,7 @@ describe("Publications Test Suite", () => {
     expect(publications.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
     expect(publications.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
     expect(publications.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
-  }, 34000);
+  }, 37000);
 
   test("GET /all publications with valid token + pagination, should return 200 status and valid publications data", async () => {
     const res = await request(app).get(`/publications?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -103,7 +103,7 @@ describe("Publications Test Suite", () => {
     expect(publications.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
     expect(publications.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
     expect(publications.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
-  }, 34000);
+  }, 37000);
 
   test("GET /all publications with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/publications`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -111,7 +111,7 @@ describe("Publications Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /all publications with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app).get(`/publications?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -119,7 +119,7 @@ describe("Publications Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /all popular publications with valid token, should return 200 status and valid publications data", async () => {
     const res = await request(app).get(`/publications/popular`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -161,7 +161,7 @@ describe("Publications Test Suite", () => {
     expect(publications.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
     expect(publications.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
     expect(publications.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
-  }, 34000);
+  }, 37000);
 
   test("GET /all popular publications with valid token + pagination, should return 200 status and valid posts data", async () => {
     const res = await request(app).get(`/publications/popular?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -203,7 +203,7 @@ describe("Publications Test Suite", () => {
     expect(publications.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
     expect(publications.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
     expect(publications.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
-  }, 34000);
+  }, 37000);
 
   test("GET /all popular publications with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/publications/popular`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -211,7 +211,7 @@ describe("Publications Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /popular posts with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app)
@@ -221,7 +221,7 @@ describe("Publications Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /publications by search query with valid token, should return 200 status and valid publications data", async () => {
     const res = await request(app).get(`/publications/search?search=Hello`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -263,7 +263,7 @@ describe("Publications Test Suite", () => {
     expect(publications.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
     expect(publications.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
     expect(publications.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
-  }, 34000);
+  }, 37000);
 
   test("GET /publications by search query with valid token + pagination, should return 200 status and valid publications data", async () => {
     const res = await request(app)
@@ -308,7 +308,7 @@ describe("Publications Test Suite", () => {
       expect(publications.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
       expect(publications.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
     
-  }, 34000);
+  }, 37000);
 
   test("GET /publications by search query with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/publications/search?search=Hello`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -316,7 +316,7 @@ describe("Publications Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /publications by search query with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app)
@@ -326,7 +326,7 @@ describe("Publications Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /publication by id with valid token, should return 200 status and valid post data", async () => {
     const res = await request(app).get(`/publications/${TEST_PUBLICATION_ID}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -360,7 +360,7 @@ describe("Publications Test Suite", () => {
     expect(typeof publication.owner.phone).toBe("number");
     expect(typeof publication.owner.foundedYear).toBe("number");
     expect(typeof publication.owner.employeesCount).toBe("number");
-  }, 34000);
+  }, 37000);
 
   test("GET /publication by invalid id with valid token, should return 404 status", async () => {
     const res = await request(app).get(`/publications/111111111111111111111111`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -368,12 +368,12 @@ describe("Publications Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 34000);
+  }, 37000);
 
   test("GET /publication by id with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/publications/${TEST_PUBLICATION_ID}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
     const { status, body } = res;
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 });

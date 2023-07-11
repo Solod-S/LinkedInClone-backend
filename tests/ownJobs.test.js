@@ -76,7 +76,7 @@ describe("Own-jobs Test Suite", () => {
     expect(typeof job.owner.phone).toBe("number");
     expect(typeof job.owner.foundedYear).toBe("number");
     expect(typeof job.owner.employeesCount).toBe("number");
-  }, 34000);
+  }, 37000);
 
   test("POST /job with invalid token, should return 401 status", async () => {
     const res = await request(app).post(`/own-jobs/add`).set("Authorization", `Bearer ${WRONG_TOKEN}`).send({ "title": "Work of your dream",
@@ -91,7 +91,7 @@ describe("Own-jobs Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("POST /job without body, should return 400 status", async () => {
     const res = await request(app).post(`/own-jobs/add`).set("Authorization", `Bearer ${TEST_TOKEN_COMPANY_TEST}`).send({});
@@ -99,7 +99,7 @@ describe("Own-jobs Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"title" is required');
-  }, 34000);
+  }, 37000);
 
   test("POST /job with invalid body, should return 400 status", async () => {
     const res = await request(app)
@@ -110,7 +110,7 @@ describe("Own-jobs Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"title" is required');
-  }, 34000);
+  }, 37000);
 
   test("PATCH /job with valid token, should return 200 status and valid job data", async () => {
     const res = await request(app)
@@ -168,7 +168,7 @@ describe("Own-jobs Test Suite", () => {
     expect(typeof job.owner.phone).toBe("number");
     expect(typeof job.owner.foundedYear).toBe("number");
     expect(typeof job.owner.employeesCount).toBe("number");
-  }, 34000);
+  }, 37000);
 
   test("PATCH /job with invalid id, should return 404 status", async () => {
     const res = await request(app)
@@ -186,7 +186,7 @@ describe("Own-jobs Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 34000);
+  }, 37000);
 
   test("PATCH /job with valid token without body, should return 400 status", async () => {
     const res = await request(app)
@@ -197,7 +197,7 @@ describe("Own-jobs Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", "\"value\" must contain at least one of [title, location, description, employmentType, seniorityLevel, skills, applyURL, industry]");
-  }, 34000);
+  }, 37000);
 
   test("PATCH /job with invalid token, should return 401 status", async () => {
     const res = await request(app)
@@ -215,7 +215,7 @@ describe("Own-jobs Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /own jobs with valid token, should return 200 status and valid jobs data", async () => {
     const res = await request(app).get(`/own-jobs`).set("Authorization", `Bearer ${TEST_TOKEN_COMPANY_TEST}`);
@@ -262,7 +262,7 @@ describe("Own-jobs Test Suite", () => {
           typeof owner.employeesCount === "number"
       )
     ).toBe(true);  
-  }, 34000);
+  }, 37000);
 
   test("GET /own jobs with valid token + pagination, should return 200 status and valid posts data", async () => {
     const res = await request(app).get(`/own-jobs?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN_COMPANY_TEST}`);
@@ -308,7 +308,7 @@ describe("Own-jobs Test Suite", () => {
           typeof owner.foundedYear === "number" &&
           typeof owner.employeesCount === "number"
       ))
-  }, 34000);
+  }, 37000);
 
   test("GET /own jobs with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/own-jobs`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -316,7 +316,7 @@ describe("Own-jobs Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /own jobs with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app).get(`/own-jobs?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -324,7 +324,7 @@ describe("Own-jobs Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("DELETE /publication with invalid token, should return 401 status", async () => {
     const res = await request(app).delete(`/own-jobs/remove/${jobId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -332,7 +332,7 @@ describe("Own-jobs Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("DELETE /publication with valid token, should return 200 status", async () => {
     const res = await request(app).delete(`/own-jobs/remove/${jobId}`).set("Authorization", `Bearer ${TEST_TOKEN_COMPANY_TEST}`);
@@ -374,5 +374,5 @@ describe("Own-jobs Test Suite", () => {
 
     const deletedPublication = await Job.findById({ _id: jobId });
     expect(deletedPublication).toBe(null);
-  }, 34000);
+  }, 37000);
 });

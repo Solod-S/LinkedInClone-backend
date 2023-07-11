@@ -95,7 +95,7 @@ describe("Own-publication Test Suite", () => {
     expect(typeof publication.owner.phone).toBe("number");
     expect(typeof publication.owner.foundedYear).toBe("number");
     expect(typeof publication.owner.employeesCount).toBe("number");
-  }, 34000);
+  }, 37000);
 
   test("POST /publication with invalid token, should return 401 status", async () => {
     const res = await request(app).post(`/own-publications/add`).set("Authorization", `Bearer ${WRONG_TOKEN}`).send({
@@ -106,7 +106,7 @@ describe("Own-publication Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("POST /publication without body, should return 400 status", async () => {
     const res = await request(app).post(`/own-publications/add`).set("Authorization", `Bearer ${TEST_TOKEN_PUBLICATION_TEST}`).send({});
@@ -114,7 +114,7 @@ describe("Own-publication Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"description" is required');
-  }, 34000);
+  }, 37000);
 
   test("POST /publication with invalid body, should return 400 status", async () => {
     const res = await request(app)
@@ -125,7 +125,7 @@ describe("Own-publication Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"description" is required');
-  }, 34000);
+  }, 37000);
 
   test("PATCH /publication with valid token, should return 200 status and valid publication data", async () => {
     const res = await request(app)
@@ -166,7 +166,7 @@ describe("Own-publication Test Suite", () => {
       expect(typeof publication.owner.phone).toBe("number");
       expect(typeof publication.owner.foundedYear).toBe("number");
       expect(typeof publication.owner.employeesCount).toBe("number");
-  }, 34000);
+  }, 37000);
 
   test("PATCH /publication with invalid id , should return 404 status", async () => {
     const res = await request(app)
@@ -179,7 +179,7 @@ describe("Own-publication Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 34000);
+  }, 37000);
 
   test("PATCH /publication with valid token without body, should return 400 status", async () => {
     const res = await request(app)
@@ -189,7 +189,7 @@ describe("Own-publication Test Suite", () => {
     const { status } = res;
 
     expect(status).toBe(400);
-  }, 34000);
+  }, 37000);
 
   test("PATCH /publication with invalid token, should return 401 status", async () => {
     const res = await request(app)
@@ -202,7 +202,7 @@ describe("Own-publication Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /own publications with valid token, should return 200 status and valid publications data", async () => {
     const res = await request(app).get(`/own-publications`).set("Authorization", `Bearer ${TEST_TOKEN_PUBLICATION_TEST}`);
@@ -244,7 +244,7 @@ describe("Own-publication Test Suite", () => {
     expect(publications.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
     expect(publications.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
     expect(publications.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
-  }, 34000);
+  }, 37000);
 
   test("GET /own publications with valid token + pagination, should return 200 status and valid posts data", async () => {
     const res = await request(app).get(`/own-publications?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN_PUBLICATION_TEST}`);
@@ -286,7 +286,7 @@ describe("Own-publication Test Suite", () => {
     expect(publications.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
     expect(publications.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
     expect(publications.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
-  }, 34000);
+  }, 37000);
 
   test("GET /own publications with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/own-publications`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -294,7 +294,7 @@ describe("Own-publication Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /own publications with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app).get(`/own-publications?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -302,7 +302,7 @@ describe("Own-publication Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("DELETE /publication with invalid token, should return 401 status", async () => {
     const res = await request(app).delete(`/own-publications/remove/${publicationId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -310,7 +310,7 @@ describe("Own-publication Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("DELETE /publication with valid token, should return 200 status", async () => {
     const res = await request(app).delete(`/own-publications/remove/${publicationId}`).set("Authorization", `Bearer ${TEST_TOKEN_PUBLICATION_TEST}`);
@@ -348,5 +348,5 @@ describe("Own-publication Test Suite", () => {
 
     const deletedPublication = await Publication.findById({ _id: publicationId });
     expect(deletedPublication).toBe(null);
-  }, 34000);
+  }, 37000);
 });

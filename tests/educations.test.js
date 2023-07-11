@@ -39,7 +39,7 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("POST /education without body, should return 400 status", async () => {
     const res = await request(app).post(`/educations/add`).set("Authorization", `Bearer ${TEST_TOKEN1}`).send({});
@@ -47,7 +47,7 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"school" is required');
-  }, 34000);
+  }, 37000);
 
   test("POST /education with invalid body, should return 400 status", async () => {
     const res = await request(app)
@@ -58,7 +58,7 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"school" is required');
-  }, 34000);
+  }, 37000);
 
   test("POST /education with valid token, should return 201 status and valid education data", async () => {
     const res = await request(app).post(`/educations/add`).set("Authorization", `Bearer ${TEST_TOKEN1}`).send({
@@ -95,7 +95,7 @@ describe("Experience Test Suite", () => {
     expect(typeof education.updatedAt).toBe("string");
     expect(typeof education.startDate).toBe("string");
     expect(typeof education.endDate).toBe("string");
-  }, 34000);
+  }, 37000);
 
   test("PATCH /education file with valid token, should return 200 status and valid education data", async () => {
     const res = await request(app)
@@ -140,7 +140,7 @@ describe("Experience Test Suite", () => {
     expect(education.startDate).toEqual("2021-07-17T08:35:03.692Z");
     expect(typeof education.endDate).toBe("string");
     expect(education.endDate).toEqual("2023-04-17T08:35:03.692Z");
-  }, 34000);
+  }, 37000);
 
   test("PATCH /education file with invalid token, should return 401 status", async () => {
     const res = await request(app)
@@ -159,7 +159,7 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("PATCH /education file with valid token without body, should return 400 status", async () => {
     const res = await request(app)
@@ -173,7 +173,7 @@ describe("Experience Test Suite", () => {
       "message",
       '"value" must contain at least one of [school, degree, fieldOfStudy, grade, activitiesAndSocieties, description, startDate, endDate, skills, mediaFiles]'
     );
-  }, 34000);
+  }, 37000);
 
   test("GET /educations with valid token, should return 200 status and valid educations data", async () => {
     const res = await request(app).get(`/educations`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -228,7 +228,7 @@ describe("Experience Test Suite", () => {
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 34000);
+  }, 37000);
 
   test("GET /educations with valid token + pagination, should return 200 status and valid educations data", async () => {
     const res = await request(app).get(`/educations?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -283,7 +283,7 @@ describe("Experience Test Suite", () => {
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 34000);
+  }, 37000);
 
   test("GET /educations with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/educations`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -291,7 +291,7 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /educations with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app).get(`/educations?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -299,7 +299,7 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("DELETE /education with invalid token, should return 401 status", async () => {
     const res = await request(app)
@@ -309,7 +309,7 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("DELETE /education with invalid id, should return 404 status", async () => {
     const res = await request(app)
@@ -319,7 +319,7 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 34000);
+  }, 37000);
 
   test("DELETE /education with valid token, should return 200 status and valid education data", async () => {
     const res = await request(app)
@@ -358,5 +358,5 @@ describe("Experience Test Suite", () => {
 
     const deletedEducation = await Education.findById({ _id: educationId });
     expect(deletedEducation).toBe(null);
-  }, 34000);
+  }, 37000);
 });

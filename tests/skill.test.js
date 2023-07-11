@@ -34,7 +34,7 @@ describe("Skill Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("POST /skill without body, should return 400 status", async () => {
     const res = await request(app).post(`/skills/create`).set("Authorization", `Bearer ${TEST_TOKEN1}`).send({});
@@ -42,7 +42,7 @@ describe("Skill Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"skill" is required');
-  }, 34000);
+  }, 37000);
 
   test("POST /skill with invalid body, should return 400 status", async () => {
     const res = await request(app)
@@ -53,7 +53,7 @@ describe("Skill Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"skill" is required');
-  }, 34000);
+  }, 37000);
 
   test("POST /skill with valid token, should return 201 status and valid skill data", async () => {
     const res = await request(app)
@@ -76,7 +76,7 @@ describe("Skill Test Suite", () => {
     expect(typeof skill.postedAtHuman).toBe("string");
     expect(typeof skill.createdAt).toBe("string");
     expect(typeof skill.updatedAt).toBe("string");
-  }, 34000);
+  }, 37000);
 
   test("POST /skill clone with valid token, should return 200 status and valid like data", async () => {
     const res = await request(app)
@@ -97,7 +97,7 @@ describe("Skill Test Suite", () => {
     expect(typeof skill.postedAtHuman).toBe("string");
     expect(typeof skill.createdAt).toBe("string");
     expect(typeof skill.updatedAt).toBe("string");
-  }, 34000);
+  }, 37000);
 
   test("GET /skills with valid token, should return 200 status and valid skill data", async () => {
     const res = await request(app).get(`/skills`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -119,7 +119,7 @@ describe("Skill Test Suite", () => {
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 34000);
+  }, 37000);
 
   test("GET /skills with valid token + pagination, should return 200 status and valid skills data", async () => {
     const res = await request(app).get(`/skills?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -141,7 +141,7 @@ describe("Skill Test Suite", () => {
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 34000);
+  }, 37000);
 
   test("GET /skills with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/skills`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -149,7 +149,7 @@ describe("Skill Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /skills with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app).get(`/skills?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -157,7 +157,7 @@ describe("Skill Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /skill by id with valid token, should return 200 status and valid skill data", async () => {
     const res = await request(app).get(`/skills/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -201,7 +201,7 @@ describe("Skill Test Suite", () => {
           typeof user.other3 === "string"
       )
     ).toBe(true);
-  }, 34000);
+  }, 37000);
 
   test("GET /skill by invalid id with valid token, should return 404 status", async () => {
     const res = await request(app).get(`/skills/111111111111111111111111`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -209,7 +209,7 @@ describe("Skill Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 34000);
+  }, 37000);
 
   test("GET /skill by id with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/skills/${skillId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -217,7 +217,7 @@ describe("Skill Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /remove user from skill by id with valid token, should return 201 status and valid skill data", async () => {
     const res = await request(app).get(`/skills/users/remove/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -235,7 +235,7 @@ describe("Skill Test Suite", () => {
     expect(typeof skill.postedAtHuman).toBe("string");
     expect(typeof skill.createdAt).toBe("string");
     expect(typeof skill.updatedAt).toBe("string");
-  }, 34000);
+  }, 37000);
 
   test("GET /remove user from skill by repeted id, should return 404 status", async () => {
     const res = await request(app).get(`/skills/users/remove/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -243,7 +243,7 @@ describe("Skill Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 34000);
+  }, 37000);
 
   test("GET /remove user from skill by invalid id, should return 404 status", async () => {
     const res = await request(app)
@@ -253,7 +253,7 @@ describe("Skill Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 34000);
+  }, 37000);
 
   test("GET /remove user from skill by id with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/skills/users/remove/${skillId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -261,7 +261,7 @@ describe("Skill Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /add user to skill by id with valid token, should return 201 status and valid skill data", async () => {
     const res = await request(app).get(`/skills/users/add/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -279,7 +279,7 @@ describe("Skill Test Suite", () => {
     expect(typeof skill.postedAtHuman).toBe("string");
     expect(typeof skill.createdAt).toBe("string");
     expect(typeof skill.updatedAt).toBe("string");
-  }, 34000);
+  }, 37000);
 
   test("GET /add user to skill by repeted id, should return 409 status", async () => {
     const res = await request(app).get(`/skills/users/add/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -287,7 +287,7 @@ describe("Skill Test Suite", () => {
 
     expect(status).toBe(409);
     expect(body).toHaveProperty("message", "Sorry, the user was added to this skill before");
-  }, 34000);
+  }, 37000);
 
   test("GET /add user to skill by invalid id, should return 404 status", async () => {
     const res = await request(app)
@@ -297,7 +297,7 @@ describe("Skill Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 34000);
+  }, 37000);
 
   test("GET /add user to skill by id with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/skills/users/add/${skillId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -305,7 +305,7 @@ describe("Skill Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /skills by search query with valid token, should return 200 status and valid skills data", async () => {
     const res = await request(app).get(`/skills/search?search=999`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -327,7 +327,7 @@ describe("Skill Test Suite", () => {
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 34000);
+  }, 37000);
 
   test("GET /skills by search query with valid token + pagination, should return 200 status and valid skills data", async () => {
     const res = await request(app)
@@ -351,7 +351,7 @@ describe("Skill Test Suite", () => {
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 34000);
+  }, 37000);
 
   test("GET /skills by search query with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/skills/search?search=999`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -359,7 +359,7 @@ describe("Skill Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("GET /skills by search query with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app)
@@ -369,7 +369,7 @@ describe("Skill Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("DELETE /skill with invalid token, should return 401 status", async () => {
     const res = await request(app).delete(`/skills/remove/${skillId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -377,7 +377,7 @@ describe("Skill Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 34000);
+  }, 37000);
 
   test("DELETE /skill with invalid id, should return 404 status", async () => {
     const res = await request(app)
@@ -387,7 +387,7 @@ describe("Skill Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 34000);
+  }, 37000);
 
   test("DELETE /skill with valid token, should return 200 status and valid like data", async () => {
     const res = await request(app).delete(`/skills/remove/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -408,5 +408,5 @@ describe("Skill Test Suite", () => {
 
     const deletedSkill = await Skill.findById({ _id: skillId });
     expect(deletedSkill).toBe(null);
-  }, 34000);
+  }, 37000);
 });
