@@ -27,41 +27,53 @@ A Social Network developed with MERN stack. [OUTDATED]
 
 - Create experience
 - Update experience
-- Get all own experiences
+- Get own experiences
 - Delete experience
 
 - Create education
 - Update education
-- Get all own educations
+- Get own educations
 - Delete education
 
 - Create language
 - Update language
-- Get all own languages
+- Get own languages
 - Delete language
 
-- Create own posts
-- Edit own posts
-- Delete own posts
-- Create own media files
-- Edit own media files
-- Delete own media files
-- Create own comments
-- Edit own comments
-- Delete own comments
-- Create likes
-- Change likes
-- Delete likes
-- Add to favorites
-- Delete from favorites
-- Create own company
-- Edit own company
-- Companies search
-- Add workers to company
-- Remove workers from company
-- Add owners to company
-- Remove owners from company
-- Delete own company
+- Create skill
+- Update skill
+- Get all skills
+- Get own skill
+- Get skill by id
+- Skills search
+- Add user to skill
+- Remove user from skill
+- Delete skill
+
+- Create post
+- Update post
+- Get own posts
+- Delete post
+
+- Get all posts
+- Get all popular skill
+- Search post by id
+- Get post by id
+
+- Create media file
+- Update media file
+- Get media files
+- Get own media files
+- Get media files by id
+- Delete media file
+
+- Create comment
+- Update comment
+- Get own comments
+- Delete comment
+
+- Add like
+- Remove like
 
 ## How to build your own..?
 

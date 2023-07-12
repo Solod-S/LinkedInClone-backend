@@ -9,6 +9,9 @@ jobsRouter.get("/", authenticate, jobs.getAllJobs);
 //  get popular jobs
 jobsRouter.get("/popular", authenticate, jobs.getPopularJobs);
 
+//  get applied jobs
+jobsRouter.get("/applied", authenticate, jobs.getAppliedJobs);
+
 // search jobs by query
 jobsRouter.get("/search", authenticate, jobs.getJobsByQuery);
 

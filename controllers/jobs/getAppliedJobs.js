@@ -2,11 +2,12 @@ const { Job } = require("../../models");
 
 const { jobTransformer } = require("../../helpers/index");
 
-const getPopularJobs = async (req, res, next) => {
+const getAppliedJobs = async (req, res, next) => {
+  const { _id } = req.user;
   let page = parseInt(req.query.page) || 1;
   const perPage = parseInt(req.query.perPage) || 10;
 
-  const count = await Job.countDocuments();
+  const count = await Job.countDocuments({ applied: _id });
   const totalPages = Math.ceil(count / perPage);
 
   if (page > totalPages) {
@@ -18,7 +19,7 @@ const getPopularJobs = async (req, res, next) => {
   if ((await Job.find({})).length <= 0) {
     return res.json({
       status: "success",
-      message: "Successfully get popular jobs",
+      message: "Successfully get applied jobs",
       data: {
         jobs: [],
         totalPages,
@@ -28,7 +29,7 @@ const getPopularJobs = async (req, res, next) => {
     });
   }
 
-  const jobs = await Job.find({})
+  const jobs = await Job.find({ applied: _id })
     .sort({ likes: -1 })
     .skip(skip < 0 ? 0 : skip)
     .limit(perPage)
@@ -49,7 +50,7 @@ const getPopularJobs = async (req, res, next) => {
 
   res.json({
     status: "success",
-    message: "Successfully get popular jobs",
+    message: "Successfully get applied jobs",
     data: {
       jobs: jobs.map((job) => jobTransformer(job)),
       totalPages,
@@ -59,4 +60,4 @@ const getPopularJobs = async (req, res, next) => {
   });
 };
 
-module.exports = getPopularJobs;
+module.exports = getAppliedJobs;

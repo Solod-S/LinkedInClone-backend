@@ -40,11 +40,11 @@ const getJobsByQuery = async (req, res, next) => {
     .sort({ createdAt: -1 })
     .skip(skip < 0 ? 0 : skip)
     .limit(perPage)
-    .populate({
-      path: "applied",
-      select:
-        "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
-    })
+    // .populate({
+    //   path: "applied",
+    //   select:
+    //     "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
+    // })
     .populate({
       path: "skills",
       select: "_id skill",

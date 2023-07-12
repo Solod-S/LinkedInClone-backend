@@ -7,11 +7,11 @@ const getJobById = async (req, res, next) => {
   const { jobId } = req.params;
 
   const job = await Job.findById({ _id: jobId })
-    .populate({
-      path: "applied",
-      select:
-        "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
-    })
+    // .populate({
+    //   path: "applied",
+    //   select:
+    //     "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
+    // })
     .populate({
       path: "skills",
       select: "_id skill",
