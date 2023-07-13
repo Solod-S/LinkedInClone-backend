@@ -61,7 +61,7 @@ const createExperienceSchema = Joi.object({
   locationType: Joi.string().valid("On-site", "Hybrid", "Remote"),
   startDate: Joi.string().allow(""),
   endDate: Joi.string().allow(""),
-  skills: Joi.array().allow(""),
+  skills: Joi.array(),
   mediaFiles: Joi.array(),
 });
 

@@ -124,6 +124,40 @@ const passwordRestoreSchema = Joi.object({
   password: Joi.string().min(6).required(),
 });
 
+const updateUserSchema = Joi.object({
+  name: Joi.string(),
+  surname: Joi.string(),
+  email: Joi.string(),
+  phone: Joi.string().allow(""),
+  site: Joi.string().allow(""),
+  other1: Joi.string().allow(""),
+  other2: Joi.string().allow(""),
+  other3: Joi.string().allow(""),
+  avatarURL: Joi.string().allow(""),
+  about: Joi.string().allow(""),
+  headLine: Joi.string().allow(""),
+  frame: Joi.string().valid(
+    "Original",
+    "Open to work",
+    "Hiring"
+  ),
+})
+  .or(
+    "name",
+    "surname",
+    "email",
+    "phone",
+    "site",
+    "other1",
+    "other2",
+    "other3",
+    "avatarURL",
+    "about",
+    "headLine",
+    "frame",
+  )
+  .required();
+
 const userSchemas = {
   registerSchema,
   emailSchema,
@@ -132,6 +166,7 @@ const userSchemas = {
   passwordChangeSchema,
   passwordResetRequestSchema,
   passwordRestoreSchema,
+  updateUserSchema
 };
 
 const User = model("User", userSchema);

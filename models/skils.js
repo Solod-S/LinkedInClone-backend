@@ -24,7 +24,7 @@ const createSkillSchema = Joi.object({
 });
 
 const updateSkillSchema = Joi.object({
-  skill: Joi.string().required(),
+  skill: Joi.string(),
 });
 
 const skillsSchemas = {

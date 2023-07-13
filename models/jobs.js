@@ -125,7 +125,7 @@ const createJobSchema = Joi.object({
 
 const updateJobSchema = Joi.object({
   title: Joi.string(),
-  location: Joi.string(),
+  location: Joi.string().allow(""),
   description: Joi.string(),
   employmentType: Joi.string().valid(
     "Full-time",
@@ -163,7 +163,7 @@ const updateJobSchema = Joi.object({
     "E-commerce",
     "Other"
   ),
-  applyURL: Joi.string(),
+  applyURL: Joi.string().allow(""),
   skills: Joi.array(),
 })
   .or("title", "location", "description", "employmentType", "seniorityLevel", "skills", "applyURL", "industry")

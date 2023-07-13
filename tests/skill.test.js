@@ -108,7 +108,7 @@ describe("Skill Test Suite", () => {
     expect(typeof status).toBe("string");
     expect(status).toEqual("success");
     expect(typeof message).toBe("string");
-    expect(message).toEqual("Successfully get skills");
+    expect(message).toEqual("Successfully get all skills");
     expect(typeof data).toBe("object");
     expect(Array.isArray(skills)).toBe(true);
     expect(skills.every(({ _id }) => typeof _id === "string")).toBe(true);
@@ -130,7 +130,7 @@ describe("Skill Test Suite", () => {
     expect(typeof status).toBe("string");
     expect(status).toEqual("success");
     expect(typeof message).toBe("string");
-    expect(message).toEqual("Successfully get skills");
+    expect(message).toEqual("Successfully get all skills");
     expect(typeof data).toBe("object");
     expect(Array.isArray(skills)).toBe(true);
     expect(skills.every(({ _id }) => typeof _id === "string")).toBe(true);
@@ -158,6 +158,66 @@ describe("Skill Test Suite", () => {
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
   }, 37000);
+
+test("GET /own skills with valid token, should return 200 status and valid skill data", async () => {
+  const res = await request(app).get(`/skills/own`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+  const { status, message, data } = res.body;
+  const { skills, totalPages, currentPage, perPage } = data;
+
+  expect(res.status).toBe(200);
+  expect(typeof status).toBe("string");
+  expect(status).toEqual("success");
+  expect(typeof message).toBe("string");
+  expect(message).toEqual("Successfully get own skills");
+  expect(typeof data).toBe("object");
+  expect(Array.isArray(skills)).toBe(true);
+  expect(skills.every(({ _id }) => typeof _id === "string")).toBe(true);
+  expect(skills.every(({ skill }) => typeof skill === "string")).toBe(true);
+  expect(skills.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
+  expect(skills.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
+  expect(skills.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
+  expect(typeof totalPages).toBe("number");
+  expect(typeof currentPage).toBe("number");
+  expect(typeof perPage).toBe("number");
+}, 37000);
+
+test("GET /own skills with valid token + pagination, should return 200 status and valid skills data", async () => {
+  const res = await request(app).get(`/skills/own?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+  const { status, message, data } = res.body;
+  const { skills, totalPages, currentPage, perPage } = data;
+
+  expect(res.status).toBe(200);
+  expect(typeof status).toBe("string");
+  expect(status).toEqual("success");
+  expect(typeof message).toBe("string");
+  expect(message).toEqual("Successfully get own skills");
+  expect(typeof data).toBe("object");
+  expect(Array.isArray(skills)).toBe(true);
+  expect(skills.every(({ _id }) => typeof _id === "string")).toBe(true);
+  expect(skills.every(({ skill }) => typeof skill === "string")).toBe(true);
+  expect(skills.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
+  expect(skills.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
+  expect(skills.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
+  expect(typeof totalPages).toBe("number");
+  expect(typeof currentPage).toBe("number");
+  expect(typeof perPage).toBe("number");
+}, 37000);
+
+test("GET /own skills with invalid token, should return 401 status", async () => {
+  const res = await request(app).get(`/skills/own`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+  const { status, body } = res;
+
+  expect(status).toBe(401);
+  expect(body).toHaveProperty("message", "Unauthorized");
+}, 37000);
+
+test("GET /own skills with invalid token + pagination, should return 401 status", async () => {
+  const res = await request(app).get(`/skills/own?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+  const { status, body } = res;
+
+  expect(status).toBe(401);
+  expect(body).toHaveProperty("message", "Unauthorized");
+}, 37000);
 
   test("GET /skill by id with valid token, should return 200 status and valid skill data", async () => {
     const res = await request(app).get(`/skills/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
@@ -203,7 +263,7 @@ describe("Skill Test Suite", () => {
     ).toBe(true);
   }, 37000);
 
-  test("GET /skill by invalid id with valid token, should return 404 status", async () => {
+  test("GET /skill by id invalid id with valid token, should return 404 status", async () => {
     const res = await request(app).get(`/skills/111111111111111111111111`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, body } = res;
 

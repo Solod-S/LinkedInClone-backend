@@ -241,6 +241,116 @@ describe("Publications Test Suite", () => {
     expect(body).toHaveProperty("message", "Unauthorized");
   }, 37000);
 
+  test("GET /all applied jobs with valid token, should return 200 status and valid jobs data", async () => {
+    const res = await request(app).get(`/jobs/popular`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+    const { status, message, data } = res.body;
+    const { jobs, totalPages, currentPage, perPage } = data;
+
+    expect(res.status).toBe(200);
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("Successfully get popular jobs");
+    expect(typeof totalPages).toBe("number");
+    expect(typeof currentPage).toBe("number");
+    expect(typeof perPage).toBe("number");
+    expect(typeof data).toBe("object");
+    expect(Array.isArray(jobs)).toBe(true);
+    expect(jobs.every(({ _id }) => typeof _id === "string")).toBe(true);
+    expect(jobs.every(({ title }) => typeof title === "string")).toBe(true);
+    expect(jobs.every(({ location }) => typeof location === "string")).toBe(true);
+    expect(jobs.every(({ description }) => typeof description === "string")).toBe(true);
+    expect(jobs.every(({ employmentType }) => typeof employmentType === "string")).toBe(true);
+    expect(jobs.every(({ seniorityLevel }) => typeof seniorityLevel === "string")).toBe(true);
+    expect(jobs.every(({ industry }) => typeof industry === "string")).toBe(true);
+    expect(jobs.every(({ applyURL }) => typeof applyURL === "string")).toBe(true);
+    expect(jobs.every(({ skills }) => Array.isArray(skills))).toBe(true);
+    expect(jobs.every(({ applied }) => Array.isArray(applied))).toBe(true);
+    expect(jobs.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
+    expect(jobs.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
+    expect(jobs.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
+    expect(
+      jobs.every(
+        ({ owner }) =>
+          typeof owner === "object" &&
+          typeof owner._id === "string" &&
+          typeof owner.name === "string" &&
+          typeof owner.avatarURL === "string" &&
+          typeof owner.description === "string" &&
+          typeof owner.industry === "string" &&
+          typeof owner.location === "string" &&
+          typeof owner.website === "string" &&
+          typeof owner.email === "string" &&
+          typeof owner.phone === "number" &&
+          typeof owner.foundedYear === "number" &&
+          typeof owner.employeesCount === "number"
+      )
+    ).toBe(true);
+  }, 37000);
+
+  test("GET /all applied jobs with valid token + pagination, should return 200 status and valid posts data", async () => {
+    const res = await request(app).get(`/jobs/applied?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+    const { status, message, data } = res.body;
+    const { jobs, totalPages, currentPage, perPage } = data;
+
+    expect(res.status).toBe(200);
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("Successfully get applied jobs");
+    expect(typeof totalPages).toBe("number");
+    expect(typeof currentPage).toBe("number");
+    expect(typeof perPage).toBe("number");
+    expect(typeof data).toBe("object");
+    expect(Array.isArray(jobs)).toBe(true);
+    expect(jobs.every(({ _id }) => typeof _id === "string")).toBe(true);
+    expect(jobs.every(({ title }) => typeof title === "string")).toBe(true);
+    expect(jobs.every(({ location }) => typeof location === "string")).toBe(true);
+    expect(jobs.every(({ description }) => typeof description === "string")).toBe(true);
+    expect(jobs.every(({ employmentType }) => typeof employmentType === "string")).toBe(true);
+    expect(jobs.every(({ seniorityLevel }) => typeof seniorityLevel === "string")).toBe(true);
+    expect(jobs.every(({ industry }) => typeof industry === "string")).toBe(true);
+    expect(jobs.every(({ applyURL }) => typeof applyURL === "string")).toBe(true);
+    expect(jobs.every(({ skills }) => Array.isArray(skills))).toBe(true);
+    expect(jobs.every(({ applied }) => Array.isArray(applied))).toBe(true);
+    expect(jobs.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
+    expect(jobs.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
+    expect(jobs.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
+    expect(
+      jobs.every(
+        ({ owner }) =>
+          typeof owner === "object" &&
+          typeof owner._id === "string" &&
+          typeof owner.name === "string" &&
+          typeof owner.avatarURL === "string" &&
+          typeof owner.description === "string" &&
+          typeof owner.industry === "string" &&
+          typeof owner.location === "string" &&
+          typeof owner.website === "string" &&
+          typeof owner.email === "string" &&
+          typeof owner.phone === "number" &&
+          typeof owner.foundedYear === "number" &&
+          typeof owner.employeesCount === "number"
+      )
+    ).toBe(true);
+  }, 37000);
+
+  test("GET /all applied jobs with invalid token, should return 401 status", async () => {
+    const res = await request(app).get(`/jobs/applied`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+    const { status, body } = res;
+
+    expect(status).toBe(401);
+    expect(body).toHaveProperty("message", "Unauthorized");
+  }, 37000);
+
+  test("GET /all applied jobs with invalid token + pagination, should return 401 status", async () => {
+    const res = await request(app).get(`/jobs/applied?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+    const { status, body } = res;
+
+    expect(status).toBe(401);
+    expect(body).toHaveProperty("message", "Unauthorized");
+  }, 37000);
+
   test("GET /jobs by search query with valid token, should return 200 status and valid jobs data", async () => {
     const res = await request(app).get(`/jobs/search?search=Work`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
     const { status, message, data } = res.body;

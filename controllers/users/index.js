@@ -13,6 +13,7 @@ const logout = require("./logout");
 const passwordChange = require("./passwordChange");
 const passwordResetByEmail = require("./passwordResetByEmail");
 const passwordReset = require("./passwordReset");
+const updateUser = require("./updateUser");
 const remove = require("./remove");
 
 module.exports = {
@@ -30,5 +31,6 @@ module.exports = {
   passwordChange: ctrlWrapper(passwordChange),
   passwordResetByEmail: ctrlWrapper(passwordResetByEmail),
   passwordReset: ctrlWrapper(passwordReset),
+  updateUser: ctrlWrapper(updateUser),
   remove: ctrlWrapper(remove),
 };

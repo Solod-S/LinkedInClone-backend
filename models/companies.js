@@ -99,14 +99,14 @@ const createCompanySchema = Joi.object({
   email: Joi.string().allow(""),
   phone: Joi.number().allow(""),
   foundedYear: Joi.number().allow(""),
-  employeesCount: Joi.number(),
+  employeesCount: Joi.number().default(0),
   workers: Joi.array(),
   jobs: Joi.array(),
 });
 
 const updateCompanySchema = Joi.object({
   name: Joi.string(),
-  avatarURL: Joi.string(),
+  avatarURL: Joi.string().allow(""),
   description: Joi.string(),
   industry: Joi.string().valid(
     "Information Technology (IT)",
@@ -123,10 +123,10 @@ const updateCompanySchema = Joi.object({
     "Other"
   ),
   location: Joi.string(),
-  website: Joi.string(),
-  email: Joi.string(),
-  phone: Joi.number(),
-  foundedYear: Joi.number(),
+  website: Joi.string().allow(""),
+  email: Joi.string().allow(""),
+  phone: Joi.number().allow(""),
+  foundedYear: Joi.number().allow(""),
   employeesCount: Joi.number(),
   workers: Joi.array(),
   jobs: Joi.array(),

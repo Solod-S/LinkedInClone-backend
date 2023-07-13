@@ -29,6 +29,9 @@ usersRouter.post("/password-reset", validateBody(userSchemas.passwordResetReques
 //  restore password
 usersRouter.post("/password-reset/:resetToken", validateBody(userSchemas.passwordRestoreSchema), users.passwordReset);
 
+//  update user
+usersRouter.post("/update", authenticate, validateBody(userSchemas.updateUserSchema), users.updateUser);
+
 // logout
 usersRouter.get("/logout", authenticate, users.logout);
 

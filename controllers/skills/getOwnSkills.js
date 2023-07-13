@@ -2,11 +2,13 @@ const { Skill } = require("../../models");
 
 const { skillTransformer } = require("../../helpers/index");
 
-const getAllSkills = async (req, res, next) => {
+const getOwnSkills = async (req, res, next) => {
+  const { _id } = req.user;
   let page = parseInt(req.query.page) || 1;
   const perPage = parseInt(req.query.perPage) || 10;
+  console.log(_id)
 
-  const count = await Skill.countDocuments();
+  const count = await Skill.countDocuments({ users: _id });
   const totalPages = Math.ceil(count / perPage);
 
   if (page > totalPages) {
@@ -15,10 +17,10 @@ const getAllSkills = async (req, res, next) => {
 
   const skip = (page - 1) * perPage;
 
-  if ((await Skill.find({})).length <= 0) {
+  if ((await Skill.find({ users: _id })).length <= 0) {
     return res.json({
       status: "success",
-      message: "Successfully get all skills",
+      message: "Successfully get own skills",
       data: {
         skills: [],
         totalPages,
@@ -28,7 +30,7 @@ const getAllSkills = async (req, res, next) => {
     });
   }
 
-  const skills = await Skill.find({})
+  const skills = await Skill.find({ users: _id })
     .sort({ createdAt: -1 })
     .skip(skip < 0 ? 0 : skip)
     .limit(perPage)
@@ -36,7 +38,7 @@ const getAllSkills = async (req, res, next) => {
 
   res.json({
     status: "success",
-    message: "Successfully get all skills",
+    message: "Successfully get own skills",
     data: {
       skills: skills.map((skill) => skillTransformer(skill)),
       totalPages,
@@ -46,4 +48,4 @@ const getAllSkills = async (req, res, next) => {
   });
 };
 
-module.exports = getAllSkills;
+module.exports = getOwnSkills;

@@ -7,6 +7,9 @@ const { skillsSchemas } = require("../../models");
 //  get all skills
 skillsRouter.get("/", authenticate, skills.getAllSkills);
 
+//  get own skills
+skillsRouter.get("/own", authenticate, skills.getOwnSkills);
+
 //  create skill
 skillsRouter.post("/create", authenticate, validateBody(skillsSchemas.createSkillSchema), skills.createSkill);
 
