@@ -1,4 +1,4 @@
-const { MediaFile, Post, Comment, Education, Experience, Publication, Company } = require("../../models");
+const { MediaFile, Post, Comment, Education, Experience, Publication, Company, User } = require("../../models");
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Types;
 
@@ -32,6 +32,10 @@ const addMediaFile = async (req, res, next) => {
       mediaFileId = req.body.publicationId;
       model = Publication;
       break;
+    case "users":
+      mediaFileId = req.body.userId;
+      model = User;
+      break;
     default:
       break;
   }
@@ -42,14 +46,20 @@ const addMediaFile = async (req, res, next) => {
     throw HttpError(404, "Not found");
   }
 
-  const company = await Company.findById({ _id: mediaFileDestination.owner });
+  if (location !== "users") {
+    const company = await Company.findById({ _id: mediaFileDestination.owner });
 
-  if (
-    !mediaFileDestination || location !== "publications"
-      ? mediaFileDestination.owner.toString() !== _id.toString()
-      : !company.owners.includes(new ObjectId(_id))
-  ) {
-    throw HttpError(404, "Not found");
+    if (
+      !mediaFileDestination || location !== "publications"
+        ? mediaFileDestination.owner.toString() !== _id.toString()
+        : !company.owners.includes(new ObjectId(_id))
+    ) {
+      throw HttpError(404, "Not found");
+    }
+  } else {
+    if (mediaFileDestination.id.toString() !== _id.toString()) {
+      throw HttpError(404, "Not found");
+    }
   }
 
   const newMediaFile = await MediaFile.create({
@@ -57,7 +67,13 @@ const addMediaFile = async (req, res, next) => {
     owner: req.user._id,
   });
 
-  mediaFileDestination.mediaFiles.push(newMediaFile._id);
+  if (location === "users" && mediaFileDestination.avatarURL) {
+    await MediaFile.findByIdAndDelete({ _id: mediaFileDestination.avatarURL });
+  }
+
+  location !== "users"
+    ? mediaFileDestination.mediaFiles.push(newMediaFile._id)
+    : (mediaFileDestination.avatarURL = newMediaFile._id);
   await mediaFileDestination.save();
 
   res.status(201).json({

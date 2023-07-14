@@ -24,7 +24,7 @@ const userTransformer = ({
   name,
   surname,
   email,
-  avatarURL,
+  avatarURL: avatarURL ? avatarURL.url : "",
   favorite,
   posts,
   subscription,

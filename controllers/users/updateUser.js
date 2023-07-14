@@ -7,10 +7,13 @@ const updateUser = async (req, res, next) => {
   const { _id } = req.user;
   const updateData = req.body; // new data from req.body
 
-  console.log(_id)
+  console.log(_id);
 
   const updatedUser = await User.findByIdAndUpdate(_id, updateData, {
     new: true, // return updated company
+  }).populate({
+    path: "avatarURL",
+    select: "url",
   });
 
   if (!updatedUser) {

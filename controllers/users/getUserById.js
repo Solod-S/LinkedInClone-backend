@@ -86,6 +86,10 @@ const getUserById = async (req, res, next) => {
             "name surname site phone headLine about languages education frame experience email avatarURL subscription posts",
         },
       ],
+    })
+    .populate({
+      path: "avatarURL",
+      select: "url",
     });
 
   if (!user) {

@@ -139,6 +139,11 @@ const getMediaFileById = async (req, res, next) => {
           },
         },
       ],
+    })
+    .populate({
+      path: "userId",
+      select:
+        "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
     });
 
   if (!mediaFile) {

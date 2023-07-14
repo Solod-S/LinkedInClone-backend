@@ -6,7 +6,7 @@ const { Skill } = require("../models");
 const app = require("../app");
 
 require("dotenv").config();
-const { DB_HOST, TEST_TOKEN1, WRONG_TOKEN } = process.env;
+const { DB_HOST, TEST_TOKEN_USER, WRONG_TOKEN } = process.env;
 
 let skillId = null;
 
@@ -34,31 +34,31 @@ describe("Skill Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 37000);
+  }, 47000);
 
   test("POST /skill without body, should return 400 status", async () => {
-    const res = await request(app).post(`/skills/create`).set("Authorization", `Bearer ${TEST_TOKEN1}`).send({});
+    const res = await request(app).post(`/skills/create`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`).send({});
     const { status, body } = res;
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"skill" is required');
-  }, 37000);
+  }, 47000);
 
   test("POST /skill with invalid body, should return 400 status", async () => {
     const res = await request(app)
       .post(`/skills/create`)
-      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`)
       .send({ ssskiill: "some skill" });
     const { status, body } = res;
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"skill" is required');
-  }, 37000);
+  }, 47000);
 
   test("POST /skill with valid token, should return 201 status and valid skill data", async () => {
     const res = await request(app)
       .post(`/skills/create`)
-      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`)
       .send({ skill: "Some skill 999" });
     const { status, message, data } = res.body;
     const { skill } = data;
@@ -76,12 +76,12 @@ describe("Skill Test Suite", () => {
     expect(typeof skill.postedAtHuman).toBe("string");
     expect(typeof skill.createdAt).toBe("string");
     expect(typeof skill.updatedAt).toBe("string");
-  }, 37000);
+  }, 47000);
 
   test("POST /skill clone with valid token, should return 200 status and valid like data", async () => {
     const res = await request(app)
       .post(`/skills/create`)
-      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`)
       .send({ skill: "Some skill 999" });
     const { status, message, data } = res.body;
     const { skill } = data;
@@ -97,10 +97,10 @@ describe("Skill Test Suite", () => {
     expect(typeof skill.postedAtHuman).toBe("string");
     expect(typeof skill.createdAt).toBe("string");
     expect(typeof skill.updatedAt).toBe("string");
-  }, 37000);
+  }, 47000);
 
   test("GET /skills with valid token, should return 200 status and valid skill data", async () => {
-    const res = await request(app).get(`/skills`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+    const res = await request(app).get(`/skills`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, message, data } = res.body;
     const { skills, totalPages, currentPage, perPage } = data;
 
@@ -119,10 +119,10 @@ describe("Skill Test Suite", () => {
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 37000);
+  }, 47000);
 
   test("GET /skills with valid token + pagination, should return 200 status and valid skills data", async () => {
-    const res = await request(app).get(`/skills?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+    const res = await request(app).get(`/skills?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, message, data } = res.body;
     const { skills, totalPages, currentPage, perPage } = data;
 
@@ -141,7 +141,7 @@ describe("Skill Test Suite", () => {
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 37000);
+  }, 47000);
 
   test("GET /skills with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/skills`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -149,7 +149,7 @@ describe("Skill Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 37000);
+  }, 47000);
 
   test("GET /skills with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app).get(`/skills?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -157,70 +157,72 @@ describe("Skill Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 37000);
+  }, 47000);
 
-test("GET /own skills with valid token, should return 200 status and valid skill data", async () => {
-  const res = await request(app).get(`/skills/own`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
-  const { status, message, data } = res.body;
-  const { skills, totalPages, currentPage, perPage } = data;
+  test("GET /own skills with valid token, should return 200 status and valid skill data", async () => {
+    const res = await request(app).get(`/skills/own`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+    const { status, message, data } = res.body;
+    const { skills, totalPages, currentPage, perPage } = data;
 
-  expect(res.status).toBe(200);
-  expect(typeof status).toBe("string");
-  expect(status).toEqual("success");
-  expect(typeof message).toBe("string");
-  expect(message).toEqual("Successfully get own skills");
-  expect(typeof data).toBe("object");
-  expect(Array.isArray(skills)).toBe(true);
-  expect(skills.every(({ _id }) => typeof _id === "string")).toBe(true);
-  expect(skills.every(({ skill }) => typeof skill === "string")).toBe(true);
-  expect(skills.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
-  expect(skills.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
-  expect(skills.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
-  expect(typeof totalPages).toBe("number");
-  expect(typeof currentPage).toBe("number");
-  expect(typeof perPage).toBe("number");
-}, 37000);
+    expect(res.status).toBe(200);
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("Successfully get own skills");
+    expect(typeof data).toBe("object");
+    expect(Array.isArray(skills)).toBe(true);
+    expect(skills.every(({ _id }) => typeof _id === "string")).toBe(true);
+    expect(skills.every(({ skill }) => typeof skill === "string")).toBe(true);
+    expect(skills.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
+    expect(skills.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
+    expect(skills.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
+    expect(typeof totalPages).toBe("number");
+    expect(typeof currentPage).toBe("number");
+    expect(typeof perPage).toBe("number");
+  }, 47000);
 
-test("GET /own skills with valid token + pagination, should return 200 status and valid skills data", async () => {
-  const res = await request(app).get(`/skills/own?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
-  const { status, message, data } = res.body;
-  const { skills, totalPages, currentPage, perPage } = data;
+  test("GET /own skills with valid token + pagination, should return 200 status and valid skills data", async () => {
+    const res = await request(app)
+      .get(`/skills/own?page=1&perPage=10`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+    const { status, message, data } = res.body;
+    const { skills, totalPages, currentPage, perPage } = data;
 
-  expect(res.status).toBe(200);
-  expect(typeof status).toBe("string");
-  expect(status).toEqual("success");
-  expect(typeof message).toBe("string");
-  expect(message).toEqual("Successfully get own skills");
-  expect(typeof data).toBe("object");
-  expect(Array.isArray(skills)).toBe(true);
-  expect(skills.every(({ _id }) => typeof _id === "string")).toBe(true);
-  expect(skills.every(({ skill }) => typeof skill === "string")).toBe(true);
-  expect(skills.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
-  expect(skills.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
-  expect(skills.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
-  expect(typeof totalPages).toBe("number");
-  expect(typeof currentPage).toBe("number");
-  expect(typeof perPage).toBe("number");
-}, 37000);
+    expect(res.status).toBe(200);
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("Successfully get own skills");
+    expect(typeof data).toBe("object");
+    expect(Array.isArray(skills)).toBe(true);
+    expect(skills.every(({ _id }) => typeof _id === "string")).toBe(true);
+    expect(skills.every(({ skill }) => typeof skill === "string")).toBe(true);
+    expect(skills.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
+    expect(skills.every(({ createdAt }) => typeof createdAt === "string")).toBe(true);
+    expect(skills.every(({ updatedAt }) => typeof updatedAt === "string")).toBe(true);
+    expect(typeof totalPages).toBe("number");
+    expect(typeof currentPage).toBe("number");
+    expect(typeof perPage).toBe("number");
+  }, 47000);
 
-test("GET /own skills with invalid token, should return 401 status", async () => {
-  const res = await request(app).get(`/skills/own`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
-  const { status, body } = res;
+  test("GET /own skills with invalid token, should return 401 status", async () => {
+    const res = await request(app).get(`/skills/own`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+    const { status, body } = res;
 
-  expect(status).toBe(401);
-  expect(body).toHaveProperty("message", "Unauthorized");
-}, 37000);
+    expect(status).toBe(401);
+    expect(body).toHaveProperty("message", "Unauthorized");
+  }, 47000);
 
-test("GET /own skills with invalid token + pagination, should return 401 status", async () => {
-  const res = await request(app).get(`/skills/own?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
-  const { status, body } = res;
+  test("GET /own skills with invalid token + pagination, should return 401 status", async () => {
+    const res = await request(app).get(`/skills/own?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+    const { status, body } = res;
 
-  expect(status).toBe(401);
-  expect(body).toHaveProperty("message", "Unauthorized");
-}, 37000);
+    expect(status).toBe(401);
+    expect(body).toHaveProperty("message", "Unauthorized");
+  }, 47000);
 
   test("GET /skill by id with valid token, should return 200 status and valid skill data", async () => {
-    const res = await request(app).get(`/skills/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+    const res = await request(app).get(`/skills/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, message, data } = res.body;
     const { skill, users } = data;
 
@@ -261,15 +263,17 @@ test("GET /own skills with invalid token + pagination, should return 401 status"
           typeof user.other3 === "string"
       )
     ).toBe(true);
-  }, 37000);
+  }, 47000);
 
   test("GET /skill by id invalid id with valid token, should return 404 status", async () => {
-    const res = await request(app).get(`/skills/111111111111111111111111`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+    const res = await request(app)
+      .get(`/skills/111111111111111111111111`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 37000);
+  }, 47000);
 
   test("GET /skill by id with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/skills/${skillId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -277,10 +281,12 @@ test("GET /own skills with invalid token + pagination, should return 401 status"
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 37000);
+  }, 47000);
 
   test("GET /remove user from skill by id with valid token, should return 201 status and valid skill data", async () => {
-    const res = await request(app).get(`/skills/users/remove/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+    const res = await request(app)
+      .get(`/skills/users/remove/${skillId}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, message, data } = res.body;
     const { skill } = data;
 
@@ -295,25 +301,27 @@ test("GET /own skills with invalid token + pagination, should return 401 status"
     expect(typeof skill.postedAtHuman).toBe("string");
     expect(typeof skill.createdAt).toBe("string");
     expect(typeof skill.updatedAt).toBe("string");
-  }, 37000);
+  }, 47000);
 
   test("GET /remove user from skill by repeted id, should return 404 status", async () => {
-    const res = await request(app).get(`/skills/users/remove/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+    const res = await request(app)
+      .get(`/skills/users/remove/${skillId}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 37000);
+  }, 47000);
 
   test("GET /remove user from skill by invalid id, should return 404 status", async () => {
     const res = await request(app)
       .get(`/skills/users/remove/111111111111111111111111`)
-      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 37000);
+  }, 47000);
 
   test("GET /remove user from skill by id with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/skills/users/remove/${skillId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -321,10 +329,12 @@ test("GET /own skills with invalid token + pagination, should return 401 status"
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 37000);
+  }, 47000);
 
   test("GET /add user to skill by id with valid token, should return 201 status and valid skill data", async () => {
-    const res = await request(app).get(`/skills/users/add/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+    const res = await request(app)
+      .get(`/skills/users/add/${skillId}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, message, data } = res.body;
     const { skill } = data;
 
@@ -339,25 +349,27 @@ test("GET /own skills with invalid token + pagination, should return 401 status"
     expect(typeof skill.postedAtHuman).toBe("string");
     expect(typeof skill.createdAt).toBe("string");
     expect(typeof skill.updatedAt).toBe("string");
-  }, 37000);
+  }, 47000);
 
   test("GET /add user to skill by repeted id, should return 409 status", async () => {
-    const res = await request(app).get(`/skills/users/add/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+    const res = await request(app)
+      .get(`/skills/users/add/${skillId}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, body } = res;
 
     expect(status).toBe(409);
     expect(body).toHaveProperty("message", "Sorry, the user was added to this skill before");
-  }, 37000);
+  }, 47000);
 
   test("GET /add user to skill by invalid id, should return 404 status", async () => {
     const res = await request(app)
       .get(`/skills/users/add/111111111111111111111111`)
-      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 37000);
+  }, 47000);
 
   test("GET /add user to skill by id with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/skills/users/add/${skillId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -365,10 +377,10 @@ test("GET /own skills with invalid token + pagination, should return 401 status"
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 37000);
+  }, 47000);
 
   test("GET /skills by search query with valid token, should return 200 status and valid skills data", async () => {
-    const res = await request(app).get(`/skills/search?search=999`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+    const res = await request(app).get(`/skills/search?search=999`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, message, data } = res.body;
     const { skills, totalPages, currentPage, perPage } = data;
 
@@ -387,12 +399,12 @@ test("GET /own skills with invalid token + pagination, should return 401 status"
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 37000);
+  }, 47000);
 
   test("GET /skills by search query with valid token + pagination, should return 200 status and valid skills data", async () => {
     const res = await request(app)
       .get(`/skills/search?search=999&page=1&perPage=10`)
-      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, message, data } = res.body;
     const { skills, totalPages, currentPage, perPage } = data;
 
@@ -411,7 +423,7 @@ test("GET /own skills with invalid token + pagination, should return 401 status"
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 37000);
+  }, 47000);
 
   test("GET /skills by search query with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/skills/search?search=999`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -419,7 +431,7 @@ test("GET /own skills with invalid token + pagination, should return 401 status"
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 37000);
+  }, 47000);
 
   test("GET /skills by search query with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app)
@@ -429,7 +441,7 @@ test("GET /own skills with invalid token + pagination, should return 401 status"
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 37000);
+  }, 47000);
 
   test("DELETE /skill with invalid token, should return 401 status", async () => {
     const res = await request(app).delete(`/skills/remove/${skillId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -437,20 +449,22 @@ test("GET /own skills with invalid token + pagination, should return 401 status"
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 37000);
+  }, 47000);
 
   test("DELETE /skill with invalid id, should return 404 status", async () => {
     const res = await request(app)
       .delete(`/skills/remove/111111111111111111111111`)
-      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 37000);
+  }, 47000);
 
   test("DELETE /skill with valid token, should return 200 status and valid like data", async () => {
-    const res = await request(app).delete(`/skills/remove/${skillId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+    const res = await request(app)
+      .delete(`/skills/remove/${skillId}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, message, data } = res.body;
     const { skill } = data;
 
@@ -468,5 +482,5 @@ test("GET /own skills with invalid token + pagination, should return 401 status"
 
     const deletedSkill = await Skill.findById({ _id: skillId });
     expect(deletedSkill).toBe(null);
-  }, 37000);
+  }, 47000);
 });

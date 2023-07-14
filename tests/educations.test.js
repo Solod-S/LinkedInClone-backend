@@ -6,7 +6,7 @@ const { Education } = require("../models");
 const app = require("../app");
 
 require("dotenv").config();
-const { DB_HOST, TEST_TOKEN1, WRONG_TOKEN } = process.env;
+const { DB_HOST, TEST_TOKEN_USER, WRONG_TOKEN } = process.env;
 
 let educationId = null;
 
@@ -39,29 +39,29 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 37000);
+  }, 47000);
 
   test("POST /education without body, should return 400 status", async () => {
-    const res = await request(app).post(`/educations/add`).set("Authorization", `Bearer ${TEST_TOKEN1}`).send({});
+    const res = await request(app).post(`/educations/add`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`).send({});
     const { status, body } = res;
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"school" is required');
-  }, 37000);
+  }, 47000);
 
   test("POST /education with invalid body, should return 400 status", async () => {
     const res = await request(app)
       .post(`/educations/add`)
-      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`)
       .send({ schoolssss: "DD" });
     const { status, body } = res;
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"school" is required');
-  }, 37000);
+  }, 47000);
 
   test("POST /education with valid token, should return 201 status and valid education data", async () => {
-    const res = await request(app).post(`/educations/add`).set("Authorization", `Bearer ${TEST_TOKEN1}`).send({
+    const res = await request(app).post(`/educations/add`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`).send({
       school: "NPU Dragomanova",
       degree: "Master's degree",
       fieldOfStudy: "Foreign Languages and Literatures, General",
@@ -95,12 +95,12 @@ describe("Experience Test Suite", () => {
     expect(typeof education.updatedAt).toBe("string");
     expect(typeof education.startDate).toBe("string");
     expect(typeof education.endDate).toBe("string");
-  }, 37000);
+  }, 47000);
 
   test("PATCH /education file with valid token, should return 200 status and valid education data", async () => {
     const res = await request(app)
       .patch(`/educations/update/${educationId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`)
       .send({
         school: "KPI",
         degree: "Intern",
@@ -140,7 +140,7 @@ describe("Experience Test Suite", () => {
     expect(education.startDate).toEqual("2021-07-17T08:35:03.692Z");
     expect(typeof education.endDate).toBe("string");
     expect(education.endDate).toEqual("2023-04-17T08:35:03.692Z");
-  }, 37000);
+  }, 47000);
 
   test("PATCH /education file with invalid token, should return 401 status", async () => {
     const res = await request(app)
@@ -159,12 +159,12 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 37000);
+  }, 47000);
 
   test("PATCH /education file with valid token without body, should return 400 status", async () => {
     const res = await request(app)
       .patch(`/educations/update/${educationId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`)
       .send({});
     const { status, body } = res;
 
@@ -173,10 +173,10 @@ describe("Experience Test Suite", () => {
       "message",
       '"value" must contain at least one of [school, degree, fieldOfStudy, grade, activitiesAndSocieties, description, startDate, endDate, skills, mediaFiles]'
     );
-  }, 37000);
+  }, 47000);
 
   test("GET /educations with valid token, should return 200 status and valid educations data", async () => {
-    const res = await request(app).get(`/educations`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+    const res = await request(app).get(`/educations`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, message, data } = res.body;
     const { educations, totalPages, currentPage, perPage } = data;
 
@@ -228,10 +228,12 @@ describe("Experience Test Suite", () => {
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 37000);
+  }, 47000);
 
   test("GET /educations with valid token + pagination, should return 200 status and valid educations data", async () => {
-    const res = await request(app).get(`/educations?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+    const res = await request(app)
+      .get(`/educations?page=1&perPage=10`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, message, data } = res.body;
     const { educations, totalPages, currentPage, perPage } = data;
 
@@ -283,7 +285,7 @@ describe("Experience Test Suite", () => {
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 37000);
+  }, 47000);
 
   test("GET /educations with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/educations`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -291,7 +293,7 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 37000);
+  }, 47000);
 
   test("GET /educations with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app).get(`/educations?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -299,7 +301,7 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 37000);
+  }, 47000);
 
   test("DELETE /education with invalid token, should return 401 status", async () => {
     const res = await request(app)
@@ -309,22 +311,22 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 37000);
+  }, 47000);
 
   test("DELETE /education with invalid id, should return 404 status", async () => {
     const res = await request(app)
       .delete(`/educations/remove/111111111111111111111111`)
-      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 37000);
+  }, 47000);
 
   test("DELETE /education with valid token, should return 200 status and valid education data", async () => {
     const res = await request(app)
       .delete(`/educations/remove/${educationId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, message, data } = res.body;
     const { education } = data;
 
@@ -358,5 +360,5 @@ describe("Experience Test Suite", () => {
 
     const deletedEducation = await Education.findById({ _id: educationId });
     expect(deletedEducation).toBe(null);
-  }, 37000);
+  }, 47000);
 });

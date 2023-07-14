@@ -46,10 +46,7 @@ const userSchema = Schema(
       type: String,
       required: true,
     },
-    avatarURL: {
-      type: String,
-      default: "",
-    },
+    avatarURL: { type: Schema.Types.ObjectId, ref: "MediaFile" },
     verify: {
       type: Boolean,
       default: false,
@@ -127,7 +124,6 @@ const passwordRestoreSchema = Joi.object({
 const updateUserSchema = Joi.object({
   name: Joi.string(),
   surname: Joi.string(),
-  email: Joi.string(),
   phone: Joi.string().allow(""),
   site: Joi.string().allow(""),
   other1: Joi.string().allow(""),
@@ -136,26 +132,9 @@ const updateUserSchema = Joi.object({
   avatarURL: Joi.string().allow(""),
   about: Joi.string().allow(""),
   headLine: Joi.string().allow(""),
-  frame: Joi.string().valid(
-    "Original",
-    "Open to work",
-    "Hiring"
-  ),
+  frame: Joi.string().valid("Original", "Open to work", "Hiring"),
 })
-  .or(
-    "name",
-    "surname",
-    "email",
-    "phone",
-    "site",
-    "other1",
-    "other2",
-    "other3",
-    "avatarURL",
-    "about",
-    "headLine",
-    "frame",
-  )
+  .or("name", "surname", "phone", "site", "other1", "other2", "other3", "avatarURL", "about", "headLine", "frame")
   .required();
 
 const userSchemas = {
@@ -166,7 +145,7 @@ const userSchemas = {
   passwordChangeSchema,
   passwordResetRequestSchema,
   passwordRestoreSchema,
-  updateUserSchema
+  updateUserSchema,
 };
 
 const User = model("User", userSchema);

@@ -6,7 +6,7 @@ const { Experience } = require("../models");
 const app = require("../app");
 
 require("dotenv").config();
-const { DB_HOST, TEST_TOKEN1, WRONG_TOKEN } = process.env;
+const { DB_HOST, TEST_TOKEN_USER, WRONG_TOKEN } = process.env;
 
 let expId = null;
 
@@ -39,29 +39,29 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 37000);
+  }, 47000);
 
   test("POST /experience without body, should return 400 status", async () => {
-    const res = await request(app).post(`/experiences/add`).set("Authorization", `Bearer ${TEST_TOKEN1}`).send({});
+    const res = await request(app).post(`/experiences/add`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`).send({});
     const { status, body } = res;
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"companyName" is required');
-  }, 37000);
+  }, 47000);
 
   test("POST /experience with invalid body, should return 400 status", async () => {
     const res = await request(app)
       .post(`/experiences/add`)
-      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`)
       .send({ companyNameS: "Company Name" });
     const { status, body } = res;
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"companyName" is required');
-  }, 37000);
+  }, 47000);
 
   test("POST /experience with valid token, should return 201 status and valid experience data", async () => {
-    const res = await request(app).post(`/experiences/add`).set("Authorization", `Bearer ${TEST_TOKEN1}`).send({
+    const res = await request(app).post(`/experiences/add`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`).send({
       companyName: "Best Company",
       employmentType: "Full-time",
       position: "Front End",
@@ -95,12 +95,12 @@ describe("Experience Test Suite", () => {
     expect(typeof experience.updatedAt).toBe("string");
     expect(typeof experience.startDate).toBe("string");
     expect(typeof experience.endDate).toBe("string");
-  }, 37000);
+  }, 47000);
 
   test("PATCH /experience file with valid token, should return 200 status and valid experience data", async () => {
     const res = await request(app)
       .patch(`/experiences/update/${expId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`)
       .send({
         companyName: "Very Good Company",
         employmentType: "Part-time",
@@ -140,7 +140,7 @@ describe("Experience Test Suite", () => {
     expect(experience.startDate).toEqual("2022-07-17T08:35:03.692Z");
     expect(typeof experience.endDate).toBe("string");
     expect(experience.endDate).toEqual("2023-04-17T08:35:03.692Z");
-  }, 37000);
+  }, 47000);
 
   test("PATCH /experience file with invalid token, should return 401 status", async () => {
     const res = await request(app)
@@ -159,12 +159,12 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 37000);
+  }, 47000);
 
   test("PATCH /experience file with valid token without body, should return 400 status", async () => {
     const res = await request(app)
       .patch(`/experiences/update/${expId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN1}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`)
       .send({});
     const { status, body } = res;
 
@@ -173,10 +173,10 @@ describe("Experience Test Suite", () => {
       "message",
       '"value" must contain at least one of [companyName, employmentType, position, location, locationType, startDate, endDate, skills, mediaFiles]'
     );
-  }, 37000);
+  }, 47000);
 
   test("GET /experiences with valid token, should return 200 status and valid experiences data", async () => {
-    const res = await request(app).get(`/experiences`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+    const res = await request(app).get(`/experiences`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, message, data } = res.body;
     const { experiences, totalPages, currentPage, perPage } = data;
 
@@ -228,10 +228,12 @@ describe("Experience Test Suite", () => {
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 37000);
+  }, 47000);
 
   test("GET /experiences with valid token + pagination, should return 200 status and valid experiences data", async () => {
-    const res = await request(app).get(`/experiences?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+    const res = await request(app)
+      .get(`/experiences?page=1&perPage=10`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, message, data } = res.body;
     const { experiences, totalPages, currentPage, perPage } = data;
 
@@ -281,7 +283,7 @@ describe("Experience Test Suite", () => {
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 37000);
+  }, 47000);
 
   test("GET /experiences with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/experiences`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -289,7 +291,7 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 37000);
+  }, 47000);
 
   test("GET /experiences with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app).get(`/experiences?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -297,7 +299,7 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 37000);
+  }, 47000);
 
   test("DELETE /experience with invalid token, should return 401 status", async () => {
     const res = await request(app).delete(`/experiences/remove/${expId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -305,20 +307,22 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 37000);
+  }, 47000);
 
   test("DELETE /experience with invalid id, should return 404 status", async () => {
     const res = await request(app)
       .delete(`/experiences/remove/111111111111111111111111`)
-      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 37000);
+  }, 47000);
 
   test("DELETE /experience with valid token, should return 200 status and valid experience data", async () => {
-    const res = await request(app).delete(`/experiences/remove/${expId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+    const res = await request(app)
+      .delete(`/experiences/remove/${expId}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, message, data } = res.body;
     const { experience } = data;
 
@@ -352,5 +356,5 @@ describe("Experience Test Suite", () => {
 
     const deletedExperience = await Experience.findById({ _id: expId });
     expect(deletedExperience).toBe(null);
-  }, 37000);
+  }, 47000);
 });

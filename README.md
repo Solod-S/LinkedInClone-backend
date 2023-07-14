@@ -11,6 +11,58 @@
 
 A Social Network developed with MERN stack.
 
+## Technologies Used
+    express
+    morgan
+    nodemon
+    dotenv
+    mongoose
+    joi
+    jsonwebtoken
+    bcrypt
+    cors
+    cross-env
+    sendgrid
+    swagger-ui-express
+    jest
+    supertest
+    chance
+    gravatar
+    human-time
+    multer
+    chalk
+    uuid
+
+## How to build your own..?
+
+1. First install all dependencies with npm or Yarn:
+   ```javascript
+   npm install
+   ```
+   or
+   ```javascript
+   yarn;
+   ```
+2. Create a `.env` file and insert the following code. Replace values with yours!!
+
+   ```javascript
+   PORT = YOUR_PORT;
+   DB_HOST = "mongo db";
+   SECRET_KEY = "anything-secret";
+   BASE_URL = "server base url";
+   FRONTEND_BASE_URL = "front end base url";
+   SENDGRID_API_KEY = "key for sendgrid ";
+   MAILER_EMAIL = "social-network@info.com";
+   ```
+
+3. Start the server
+
+   ```javascript
+   npx nodemon server
+   ```
+
+4. Enjoy!!
+
 ## Features and Fuctionality
 
 #### User account operations
@@ -137,63 +189,10 @@ A Social Network developed with MERN stack.
 - Apply for a job
 - Unapply from a job
 
-## Technologies Used
-    express
-    morgan
-    nodemon
-    dotenv
-    mongoose
-    joi
-    jsonwebtoken
-    bcrypt
-    cors
-    cross-env
-    sendgrid
-    swagger-ui-express
-    jest
-    supertest
-    chance
-    gravatar
-    human-time
-    multer
-    chalk
-    uuid
-
 ## Future Plans
 
-- Write SPA (React/Redux/Axios...)
-- Write mobile aplication (ReactNative/ExpoCLI)
-
-## How to build your own..?
-
-1. First install all dependencies with npm or Yarn:
-   ```javascript
-   npm install
-   ```
-   or
-   ```javascript
-   yarn;
-   ```
-2. Create a `.env` file and insert the following code. Replace values with yours!!
-
-   ```javascript
-   PORT = YOUR_PORT;
-   DB_HOST = "mongo db";
-   SECRET_KEY = "anything-secret";
-   BASE_URL = "server base url";
-   FRONTEND_BASE_URL = "front end base url";
-   SENDGRID_API_KEY = "key for sendgrid ";
-   MAILER_EMAIL = "social-network@info.com";
-   ```
-
-3. Start the server
-
-   ```javascript
-   npx nodemon server
-   ```
-
-4. Enjoy!!
-
+- Write SPA (React/Redux/Axios/...)
+- Write mobile aplication (ReactNative/ExpoCLI/...)
 
 ## Contributing
 

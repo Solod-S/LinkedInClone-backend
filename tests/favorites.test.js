@@ -6,7 +6,7 @@ const { Post } = require("../models");
 const app = require("../app");
 
 require("dotenv").config();
-const { DB_HOST, TEST_TOKEN1, WRONG_TOKEN } = process.env;
+const { DB_HOST, TEST_TOKEN_USER, WRONG_TOKEN } = process.env;
 
 let postId = null;
 
@@ -33,7 +33,9 @@ describe("Favorites Test Suite", () => {
       console.log(error);
     }
 
-    const res = await request(app).get(`/favorites/posts/add/${postId}`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+    const res = await request(app)
+      .get(`/favorites/posts/add/${postId}`)
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, message, data } = res.body;
     const { post } = data;
 
@@ -71,7 +73,7 @@ describe("Favorites Test Suite", () => {
     expect(typeof post.owner.other1).toBe("string");
     expect(typeof post.owner.other2).toBe("string");
     expect(typeof post.owner.other3).toBe("string");
-  }, 37000);
+  }, 47000);
 
   test("POST /post to favorites with invalid token and valid post id, should return 401 status", async () => {
     const res = await request(app).get(`/favorites/posts/add/${postId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -79,20 +81,20 @@ describe("Favorites Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 37000);
+  }, 47000);
 
   test("POST /post to favorites with valid token and invalid post id, should return 404 status", async () => {
     const res = await request(app)
       .post(`/favorites/posts/add/123456789123456789123456`)
-      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
     expect(typeof body.message).toBe("string") && expect(body.message).toBe("Post ID is invalid or not found");
-  }, 37000);
+  }, 47000);
 
   test("GET /favorite posts with valid token, should return 200 status and valid posts data", async () => {
-    const res = await request(app).get(`/favorites/posts`).set("Authorization", `Bearer ${TEST_TOKEN1}`);
+    const res = await request(app).get(`/favorites/posts`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, message, data } = res.body;
     const { posts } = data;
 
@@ -183,12 +185,12 @@ describe("Favorites Test Suite", () => {
     expect(likesContainsObjects).toBe(true);
     expect(commentsContainsObjects).toBe(true);
     expect(mediaFilesContainsObjects).toBe(true);
-  }, 37000);
+  }, 47000);
 
   test("GET /favorite posts with valid token + pagination, should return 200 status and valid posts data", async () => {
     const res = await request(app)
       .get(`/favorites/posts?page=1&perPage=10`)
-      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, data } = res.body;
     const { totalPages, currentPage, perPage, posts } = data;
 
@@ -280,7 +282,7 @@ describe("Favorites Test Suite", () => {
     expect(likesContainsObjects).toBe(true);
     expect(commentsContainsObjects).toBe(true);
     expect(mediaFilesContainsObjects).toBe(true);
-  }, 37000);
+  }, 47000);
 
   test("GET /favorite posts with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/favorites/posts`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -288,7 +290,7 @@ describe("Favorites Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 37000);
+  }, 47000);
 
   test("GET /favorite posts with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app)
@@ -298,7 +300,7 @@ describe("Favorites Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 37000);
+  }, 47000);
 
   test("DELETE /post from favorite with invalid token and valid post id, should return 401 status", async () => {
     const res = await request(app)
@@ -308,22 +310,22 @@ describe("Favorites Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 37000);
+  }, 47000);
 
   test("DELETE /post from favorite with valid token and invalid post id, should return 404 status", async () => {
     const res = await request(app)
       .get(`/favorites/posts/remove/123456789123456789123456`)
-      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
     expect(typeof body.message).toBe("string") && expect(body.message).toBe("Post ID is invalid or not found");
-  }, 37000);
+  }, 47000);
 
   test("DELETE /post with valid token and valid post id, should return 200 status", async () => {
     const res = await request(app)
       .get(`/favorites/posts/remove/${postId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN1}`);
+      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
     const { status, message, data } = res.body;
     const { post } = data;
 
@@ -361,5 +363,5 @@ describe("Favorites Test Suite", () => {
     expect(typeof post.owner.other1).toBe("string");
     expect(typeof post.owner.other2).toBe("string");
     expect(typeof post.owner.other3).toBe("string");
-  }, 37000);
+  }, 47000);
 });

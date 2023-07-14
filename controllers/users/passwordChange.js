@@ -11,7 +11,7 @@ const passwordChange = async (req, res) => {
   const isOldPasswordValid = await bcrypt.compare(oldPassword, password);
 
   if (!isOldPasswordValid) {
-    throw HttpError(404, "Old password is incorrect");
+    throw HttpError(403, "Old password is incorrect");
   }
 
   const newBcryptedPassword = await bcrypt.hash(newPassword, 10);
@@ -96,6 +96,10 @@ const passwordChange = async (req, res) => {
             "name surname site phone headLine about languages education frame experience email avatarURL subscription posts",
         },
       ],
+    })
+    .populate({
+      path: "avatarURL",
+      select: "url",
     });
 
   res.json({

@@ -8,7 +8,7 @@ const mediaFileSchema = new Schema(
     type: { type: String, enum: ["img", "video"], default: "img" },
     location: {
       type: String,
-      enum: ["comments", "posts", "education", "experience", "publications"],
+      enum: ["comments", "posts", "education", "experience", "publications", "users"],
       default: "posts",
       required: true,
     },
@@ -21,6 +21,7 @@ const mediaFileSchema = new Schema(
     educationId: { type: Schema.Types.ObjectId, ref: "Education" },
     experienceId: { type: Schema.Types.ObjectId, ref: "Experience" },
     publicationId: { type: Schema.Types.ObjectId, ref: "Publication" },
+    userId: { type: Schema.Types.ObjectId, ref: "User" },
   },
   { versionKey: false, timestamps: true }
 );
@@ -31,7 +32,7 @@ const MediaFile = model("MediaFile", mediaFileSchema);
 
 const mediaFilesSchema = Joi.object({
   type: Joi.string().valid("img", "video").required(),
-  location: Joi.string().valid("comments", "posts", "education", "experience", "publications").required(),
+  location: Joi.string().valid("comments", "posts", "education", "experience", "publications", "users").required(),
   url: Joi.string().required(),
   providerPublicId: Joi.string().allow(""),
   postId: Joi.string(),
@@ -39,11 +40,12 @@ const mediaFilesSchema = Joi.object({
   educationId: Joi.string(),
   experienceId: Joi.string(),
   publicationId: Joi.string(),
-}).oxor("postId", "commentId", "educationId", "experienceId", "publicationId");;
+  userId: Joi.string(),
+}).oxor("postId", "commentId", "educationId", "experienceId", "publicationId", "userId");
 
 const updateMediaFilesSchema = Joi.object({
   type: Joi.string().valid("img", "video"),
-  location: Joi.string().valid("comments", "posts", "education", "experience", "publications"),
+  location: Joi.string().valid("comments", "posts", "education", "experience", "publications", "users"),
   url: Joi.string(),
   providerPublicId: Joi.string().allow(""),
   postId: Joi.string(),
@@ -51,6 +53,7 @@ const updateMediaFilesSchema = Joi.object({
   educationId: Joi.string(),
   experienceId: Joi.string(),
   publicationId: Joi.string(),
+  userId: Joi.string(),
 })
   .or(
     "type",
@@ -61,7 +64,8 @@ const updateMediaFilesSchema = Joi.object({
     "commentId",
     "educationId",
     "experienceId",
-    "publicationId"
+    "publicationId",
+    "userId"
   )
   .required();
 
