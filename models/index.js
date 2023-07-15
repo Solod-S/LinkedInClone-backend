@@ -1,4 +1,5 @@
 const { User, userSchemas } = require("./users");
+const { Token, tokenSchemas } = require("./token");
 const { Post, postSchemas } = require("./posts");
 const { Skill, skillsSchemas } = require("./skils");
 const { MediaFile, mediaFileSchemas } = require("./mediaFiles");
@@ -14,6 +15,8 @@ const { Job, JobSchemas } = require("./jobs");
 module.exports = {
   User,
   userSchemas,
+  Token,
+  tokenSchemas,
   Post,
   postSchemas,
   Skill,

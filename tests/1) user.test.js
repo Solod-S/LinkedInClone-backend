@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Chance = require("chance");
 const uuid = require("uuid");
 
-const { User } = require("../models");
+const { User, Token } = require("../models");
 
 const chance = new Chance();
 const app = require("../app");
@@ -842,5 +842,8 @@ describe("User Test Suite", () => {
 
     const deletedUser = await User.findById({ _id: userId });
     expect(deletedUser).toBe(null);
+
+    const deletedToken = await Token.findOne({ token });
+    expect(deletedToken).toBe(null);
   }, 47000);
 });

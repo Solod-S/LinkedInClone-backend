@@ -46,7 +46,7 @@ const userSchema = Schema(
       type: String,
       required: true,
     },
-    avatarURL: { type: Schema.Types.ObjectId, ref: "MediaFile" },
+    avatarURL: { type: Schema.Types.ObjectId, ref: "MediaFile", default: null },
     verify: {
       type: Boolean,
       default: false,
@@ -54,10 +54,11 @@ const userSchema = Schema(
     subscription: [{ type: Schema.Types.ObjectId, ref: "User" }],
     favorite: [{ type: Schema.Types.ObjectId, ref: "Post" }],
     posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
-    token: {
-      type: String,
-      default: "",
-    },
+    token: [{ type: Schema.Types.ObjectId, ref: "Token" }],
+    // token: {
+    //   type: String,
+    //   default: "",
+    // },
     verificationCode: {
       type: String,
       default: "",

@@ -44,9 +44,11 @@ const deleteMediaFile = async (req, res, next) => {
       break;
   }
   result.location !== "users"
-  ?
-  await model.updateOne({ mediaFiles: { $elemMatch: { $eq: mediaFileId } } }, { $pull: { mediaFiles: mediaFileId } }) :
-  await model.updateOne({ avatarURL: { $elemMatch: { $eq: mediaFileId } } }, { $pull: { avatarURL: mediaFileId } }) 
+    ? await model.updateOne(
+        { mediaFiles: { $elemMatch: { $eq: mediaFileId } } },
+        { $pull: { mediaFiles: mediaFileId } }
+      )
+    : await model.updateOne({ avatarURL: null });
 
   res.json({
     status: "success",

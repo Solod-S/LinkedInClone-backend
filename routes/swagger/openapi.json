@@ -4946,7 +4946,8 @@
           "email": {
             "type": "string",
             "description": "User's email",
-            "format": "email"
+            "format": "email",
+            "example": "solodsn098@gmail.com"
           },
           "password": {
             "type": "string",
@@ -5048,7 +5049,8 @@
           "email": {
             "type": "string",
             "description": "User's email",
-            "format": "email"
+            "format": "email",
+            "example": "solodsn098@gmail.com"
           },
           "password": {
             "type": "string",
@@ -7205,7 +7207,8 @@
           "email": {
             "type": "string",
             "description": "User's email",
-            "format": "email"
+            "format": "email",
+            "example": "solodsn098@gmail.com"
           }
         }
       },

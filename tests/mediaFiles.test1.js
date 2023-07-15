@@ -700,7 +700,7 @@ describe("Media-files Test Suite", () => {
     expect(typeof mediaFile.url).toBe("string");
     expect(typeof mediaFile.providerPublicId).toBe("string");
     expect(typeof mediaFile.owner).toBe("string");
-    expect(typeof mediaFile.experienceId).toBe("string");
+    expect(typeof mediaFile.userId).toBe("string");
     expect(typeof mediaFile._id).toBe("string");
     expect(typeof mediaFile.postedAtHuman).toBe("string");
     expect(typeof mediaFile.createdAt).toBe("string");

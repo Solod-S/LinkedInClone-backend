@@ -5,8 +5,8 @@ const uuid = require("uuid");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
 
-const devRegister = async (rec, res) => {
-  const { email, password } = rec.body;
+const devRegister = async (req, res) => {
+  const { email, password } = req.body;
 
   const user = await User.findOne({ email });
 
@@ -16,10 +16,9 @@ const devRegister = async (rec, res) => {
 
   const hashPassword = await bcrypt.hash(password, 10);
   const verificationCode = uuid.v4();
-  
 
   const newUser = await User.create({
-    ...rec.body,
+    ...req.body,
     password: hashPassword,
     verificationCode,
   });

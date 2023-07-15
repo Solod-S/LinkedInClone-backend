@@ -1,9 +1,10 @@
-const { User } = require("../../models");
+const { User, Token } = require("../../models");
 
 const logout = async (req, res) => {
-  const { _id } = req.user;
+  const { token, _id } = req.token;
 
-  await User.findByIdAndUpdate(_id, { token: "" });
+  await User.updateOne({ token: { $elemMatch: { $eq: _id } } }, { $pull: { token: _id } });
+  await Token.findOneAndDelete({ token });
 
   res.status(200).json({
     status: "success",

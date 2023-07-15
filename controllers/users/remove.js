@@ -1,4 +1,4 @@
-const { User, Skill } = require("../../models");
+const { User, Skill, Token, Job } = require("../../models");
 
 const { userTransformer } = require("../../helpers/index");
 
@@ -93,6 +93,8 @@ const remove = async (req, res) => {
 
   // Remove user's ID from the 'users' array in all Skill documents
   await Skill.updateMany({}, { $pull: { users: _id } });
+  await Token.deleteMany({ owner: _id });
+  await Job.updateMany({}, { $pull: { applied: _id } });
 
   res.status(200).json({
     status: "success",

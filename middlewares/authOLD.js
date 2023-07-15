@@ -1,4 +1,4 @@
-const { User, Token } = require("../models/");
+const { User } = require("../models");
 
 const jwt = require("jsonwebtoken");
 
@@ -104,15 +104,12 @@ const authenticate = async (req, res, next) => {
           },
         ],
       });
-
-    const tokenData = await Token.findOne({ token });
-
-    if (!user || !tokenData || !user.token.includes(tokenData._id)) {
+    if (!user || !user.token || user.token !== token) {
       next(HttpError(401, "Unauthorized"));
     }
 
     req.user = user;
-    req.token = { token, _id: tokenData.id };
+
     next();
   } catch {
     next(HttpError(401));
