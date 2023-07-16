@@ -18,7 +18,7 @@ describe("Own-jobs Test Suite", () => {
     server = app.listen(3105, () => {
       server.unref(); // Отпускает серверный таймер после запуска сервера
     });
-  }, 18000);
+  }, 47000);
 
   afterAll(async () => {
     await mongoose.disconnect();
@@ -80,19 +80,16 @@ describe("Own-jobs Test Suite", () => {
   }, 47000);
 
   test("POST /job with invalid token, should return 401 status", async () => {
-    const res = await request(app)
-      .post(`/own-jobs/add`)
-      .set("Authorization", `Bearer ${WRONG_TOKEN}`)
-      .send({
-        title: "Work of your dream",
-        location: "Ukraine, Kiev",
-        description: "Hello!!",
-        employmentType: "Full-time",
-        seniorityLevel: "Junior",
-        industry: "Other",
-        applyURL: "",
-        skills: [],
-      });
+    const res = await request(app).post(`/own-jobs/add`).set("Authorization", `Bearer ${WRONG_TOKEN}`).send({
+      title: "Work of your dream",
+      location: "Ukraine, Kiev",
+      description: "Hello!!",
+      employmentType: "Full-time",
+      seniorityLevel: "Junior",
+      industry: "Other",
+      applyURL: "",
+      skills: [],
+    });
     const { status, body } = res;
 
     expect(status).toBe(401);

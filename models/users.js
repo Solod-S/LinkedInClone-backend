@@ -122,7 +122,7 @@ const passwordRestoreSchema = Joi.object({
   password: Joi.string().min(6).required(),
 });
 
-const updateUserSchema = Joi.object({
+const userUpdateSchema = Joi.object({
   name: Joi.string(),
   surname: Joi.string(),
   phone: Joi.string().allow(""),
@@ -146,7 +146,7 @@ const userSchemas = {
   passwordChangeSchema,
   passwordResetRequestSchema,
   passwordRestoreSchema,
-  updateUserSchema,
+  userUpdateSchema,
 };
 
 const User = model("User", userSchema);

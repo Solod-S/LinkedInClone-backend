@@ -7,7 +7,7 @@ const { sendEmail } = require("../../helpers");
 const { createVerifyEmail } = require("../../helpers");
 const { HttpError } = require("../../routes/errors/HttpErrors");
 
-const register = async (req, res) => {
+const userRegister = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
 
@@ -35,4 +35,4 @@ const register = async (req, res) => {
   });
 };
 
-module.exports = register;
+module.exports = userRegister;

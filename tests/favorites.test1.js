@@ -18,7 +18,7 @@ describe("Favorites Test Suite", () => {
     server = app.listen(3006, () => {
       server.unref(); // Отпускает серверный таймер после запуска сервера
     });
-  }, 18000);
+  }, 47000);
 
   afterAll(async () => {
     await mongoose.disconnect();

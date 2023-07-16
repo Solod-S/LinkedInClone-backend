@@ -1,4 +1,4 @@
-const { User } = require("../../models");
+const { User, Token } = require("../../models");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -8,7 +8,7 @@ const { SECRET_KEY } = process.env;
 
 const { userTransformer } = require("../../helpers/index");
 
-const login = async (req, res) => {
+const userLogin = async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
@@ -30,12 +30,12 @@ const login = async (req, res) => {
   const payload = {
     id: user._id,
   };
-
   // const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "700h" });
   const token = jwt.sign(payload, SECRET_KEY);
-  await User.findByIdAndUpdate(user._id, { token });
+  const newToken = await Token.create({ owner: user._id, token });
+  await User.findByIdAndUpdate(user._id, { $push: { token: newToken._id } }, { new: true });
 
-  const currentUser = await User.findOne({ token })
+  const currentUser = await User.findOne({ token: { $in: [newToken._id] } })
     .populate({
       path: "posts",
       select: "description createdAt updatedAt",
@@ -128,4 +128,4 @@ const login = async (req, res) => {
   });
 };
 
-module.exports = login;
+module.exports = userLogin;

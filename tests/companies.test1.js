@@ -29,7 +29,7 @@ describe("Company Test Suite", () => {
     } catch (error) {
       console.log(error);
     }
-  }, 18000);
+  }, 47000);
 
   afterAll(async () => {
     await mongoose.disconnect();

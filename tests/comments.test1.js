@@ -49,7 +49,7 @@ describe("Comments Test Suite", () => {
     } catch (error) {
       console.log(error);
     }
-  }, 18000);
+  }, 47000);
 
   afterAll(async () => {
     try {

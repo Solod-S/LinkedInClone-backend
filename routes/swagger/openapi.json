@@ -15242,9 +15242,20 @@
                       "example": "Sergey Nikolayovich"
                     },
                     "avatarURL": {
-                      "type": "string",
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        }
+                      },
                       "description": "User's avatar link",
-                      "example": "User's avatar link"
+                      "example": {
+                        "_id": "64b28c4ffe873daadea81b50",
+                        "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                      }
                     },
                     "favorite": {
                       "type": "array",

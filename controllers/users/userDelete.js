@@ -1,8 +1,8 @@
-const { User, Skill, Token, Job } = require("../../models");
+const { User, Skill, Token, Job, MediaFile, Company, Experience, Education } = require("../../models");
 
 const { userTransformer } = require("../../helpers/index");
 
-const remove = async (req, res) => {
+const userDelete = async (req, res) => {
   const { _id } = req.user;
 
   const deletedUser = await User.findOneAndDelete({ _id })
@@ -91,10 +91,15 @@ const remove = async (req, res) => {
       select: "url",
     });
 
-  // Remove user's ID from the 'users' array in all Skill documents
-  await Skill.updateMany({}, { $pull: { users: _id } });
   await Token.deleteMany({ owner: _id });
-  await Job.updateMany({}, { $pull: { applied: _id } });
+  await Experience.deleteMany({ owner: _id });
+  await Education.deleteMany({ owner: _id });
+  await MediaFile.deleteOne({ location: "users", owner: _id });
+  await Job.updateMany({ applied: { $elemMatch: { $eq: _id } } }, { $pull: { applied: _id } });
+  await Skill.updateMany({ users: { $elemMatch: { $eq: _id } } }, { $pull: { users: _id } });
+  await Company.updateMany({ workers: { $elemMatch: { $eq: _id } } }, { $pull: { workers: _id } });
+  await Company.updateMany({ owners: { $elemMatch: { $eq: _id } } }, { $pull: { owners: _id } });
+  await User.updateMany({ subscription: { $elemMatch: { $eq: _id } } }, { $pull: { subscription: _id } });
 
   res.status(200).json({
     status: "success",
@@ -103,4 +108,4 @@ const remove = async (req, res) => {
   });
 };
 
-module.exports = remove;
+module.exports = userDelete;

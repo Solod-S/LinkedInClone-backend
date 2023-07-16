@@ -15,6 +15,10 @@ const getSkillById = async (req, res, next) => {
       path: "users",
       select:
         "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+      populate: {
+        path: "avatarURL",
+        select: "url",
+      },
       options: {
         skip: (pageNumber - 1) * pageSize,
         limit: pageSize,

@@ -3,7 +3,7 @@ const { User } = require("../../models");
 const { HttpError } = require("../../routes/errors/HttpErrors");
 const { userTransformer } = require("../../helpers/index");
 
-const updateUser = async (req, res, next) => {
+const userUpdate = async (req, res, next) => {
   const { _id } = req.user;
   const updateData = req.body; // new data from req.body
 
@@ -27,4 +27,4 @@ const updateUser = async (req, res, next) => {
   });
 };
 
-module.exports = updateUser;
+module.exports = userUpdate;

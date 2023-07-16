@@ -1,3 +1,4 @@
+const testsUtils = require("./testsUtils/index");
 const handleMongooseError = require("./utils/handleMongooseError");
 const sendEmail = require("./email/sendEmail");
 const createVerifyEmail = require("./email/createVerifyEmail");
@@ -16,6 +17,7 @@ const publicationTransformer = require("./transformer/publicationTransformer");
 const jobTransformer = require("./transformer/jobTransformer");
 
 module.exports = {
+  testsUtils,
   handleMongooseError,
   sendEmail,
   createVerifyEmail,

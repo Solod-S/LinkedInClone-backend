@@ -1,6 +1,6 @@
 const { User, Token } = require("../../models");
 
-const logout = async (req, res) => {
+const userLogout = async (req, res) => {
   const { token, _id } = req.token;
 
   await User.updateOne({ token: { $elemMatch: { $eq: _id } } }, { $pull: { token: _id } });
@@ -12,4 +12,4 @@ const logout = async (req, res) => {
   });
 };
 
-module.exports = logout;
+module.exports = userLogout;

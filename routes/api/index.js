@@ -1,4 +1,4 @@
-const usersRouter = require("./user");
+const usersRouter = require("./users");
 const ownPostsRouter = require("./ownPosts");
 const mediaFilesRouter = require("./mediaFiles");
 const likesRouter = require("./likes");
