@@ -14,13 +14,29 @@ const getUserById = async (req, res, next) => {
         {
           path: "comments",
           select: "owner description likes mediaFiles createdAt updatedAt",
-          populate: { path: "owner", select: "_id surname name avatarURL" },
+          populate: {
+            path: "owner",
+            select: "_id surname name avatarURL",
+            populate: { path: "avatarURL", select: "url" },
+          },
         },
-        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+        {
+          path: "likes",
+          select: "owner type",
+          populate: {
+            path: "owner",
+            select: "_id surname name avatarURL",
+            populate: { path: "avatarURL", select: "url" },
+          },
+        },
         {
           path: "mediaFiles",
           select: "url type owner location createdAt updatedAt",
-          populate: { path: "owner", select: "_id surname name avatarURL" },
+          populate: {
+            path: "owner",
+            select: "_id surname name avatarURL",
+            populate: { path: "avatarURL", select: "url" },
+          },
         },
       ],
     })
@@ -31,13 +47,29 @@ const getUserById = async (req, res, next) => {
         {
           path: "comments",
           select: "owner description likes mediaFiles createdAt updatedAt",
-          populate: { path: "owner", select: "_id surname name avatarURL" },
+          populate: {
+            path: "owner",
+            select: "_id surname name avatarURL",
+            populate: { path: "avatarURL", select: "url" },
+          },
         },
-        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+        {
+          path: "likes",
+          select: "owner type",
+          populate: {
+            path: "owner",
+            select: "_id surname name avatarURL",
+            populate: { path: "avatarURL", select: "url" },
+          },
+        },
         {
           path: "mediaFiles",
           select: "url type owner location createdAt updatedAt",
-          populate: { path: "owner", select: "_id surname name avatarURL" },
+          populate: {
+            path: "owner",
+            select: "_id surname name avatarURL",
+            populate: { path: "avatarURL", select: "url" },
+          },
         },
       ],
     })
@@ -53,13 +85,29 @@ const getUserById = async (req, res, next) => {
             {
               path: "comments",
               select: "owner description likes mediaFiles createdAt updatedAt",
-              populate: { path: "owner", select: "_id surname name avatarURL" },
+              populate: {
+                path: "owner",
+                select: "_id surname name avatarURL",
+                populate: { path: "avatarURL", select: "url" },
+              },
             },
-            { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+            {
+              path: "likes",
+              select: "owner type",
+              populate: {
+                path: "owner",
+                select: "_id surname name avatarURL",
+                populate: { path: "avatarURL", select: "url" },
+              },
+            },
             {
               path: "mediaFiles",
               select: "url type owner location createdAt updatedAt",
-              populate: { path: "owner", select: "_id surname name avatarURL" },
+              populate: {
+                path: "owner",
+                select: "_id surname name avatarURL",
+                populate: { path: "avatarURL", select: "url" },
+              },
             },
           ],
         },
@@ -70,13 +118,29 @@ const getUserById = async (req, res, next) => {
             {
               path: "comments",
               select: "owner description likes mediaFiles createdAt updatedAt",
-              populate: { path: "owner", select: "_id surname name avatarURL" },
+              populate: {
+                path: "owner",
+                select: "_id surname name avatarURL",
+                populate: { path: "avatarURL", select: "url" },
+              },
             },
-            { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+            {
+              path: "likes",
+              select: "owner type",
+              populate: {
+                path: "owner",
+                select: "_id surname name avatarURL",
+                populate: { path: "avatarURL", select: "url" },
+              },
+            },
             {
               path: "mediaFiles",
               select: "url type owner location createdAt updatedAt",
-              populate: { path: "owner", select: "_id surname name avatarURL" },
+              populate: {
+                path: "owner",
+                select: "_id surname name avatarURL",
+                populate: { path: "avatarURL", select: "url" },
+              },
             },
           ],
         },
@@ -84,6 +148,11 @@ const getUserById = async (req, res, next) => {
           path: "subscription",
           select:
             "name surname site phone headLine about languages education frame experience email avatarURL subscription posts",
+          populate: { path: "avatarURL", select: "url" },
+        },
+        {
+          path: "avatarURL",
+          select: "url",
         },
       ],
     })
@@ -100,22 +169,34 @@ const getUserById = async (req, res, next) => {
     .populate({
       path: "mediaFiles",
       select: "url type providerPublicId location createdAt updatedAt",
-      populate: { path: "owner", select: "_id surname name avatarURL" },
+      populate: { path: "owner", select: "_id surname name avatarURL", populate: { path: "avatarURL", select: "url" } },
     })
     .populate({
       path: "likes",
       select: "owner type",
-      populate: { path: "owner", select: "_id surname name avatarURL" },
+      populate: { path: "owner", select: "_id surname name avatarURL", populate: { path: "avatarURL", select: "url" } },
     })
     .populate({
       path: "comments",
       populate: [
-        { path: "owner", select: "_id surname name avatarURL" },
-        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+        { path: "owner", select: "_id surname name avatarURL", populate: { path: "avatarURL", select: "url" } },
+        {
+          path: "likes",
+          select: "owner type",
+          populate: {
+            path: "owner",
+            select: "_id surname name avatarURL",
+            populate: { path: "avatarURL", select: "url" },
+          },
+        },
         {
           path: "mediaFiles",
           select: "url type owner location createdAt updatedAt",
-          populate: { path: "owner", select: "_id surname name avatarURL" },
+          populate: {
+            path: "owner",
+            select: "_id surname name avatarURL",
+            populate: { path: "avatarURL", select: "url" },
+          },
         },
       ],
     });

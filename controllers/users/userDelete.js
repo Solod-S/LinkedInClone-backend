@@ -13,13 +13,29 @@ const userDelete = async (req, res) => {
         {
           path: "comments",
           select: "owner description likes mediaFiles createdAt updatedAt",
-          populate: { path: "owner", select: "_id surname name avatarURL" },
+          populate: {
+            path: "owner",
+            select: "_id surname name avatarURL",
+            populate: { path: "avatarURL", select: "url" },
+          },
         },
-        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+        {
+          path: "likes",
+          select: "owner type",
+          populate: {
+            path: "owner",
+            select: "_id surname name avatarURL",
+            populate: { path: "avatarURL", select: "url" },
+          },
+        },
         {
           path: "mediaFiles",
           select: "url type owner location createdAt updatedAt",
-          populate: { path: "owner", select: "_id surname name avatarURL" },
+          populate: {
+            path: "owner",
+            select: "_id surname name avatarURL",
+            populate: { path: "avatarURL", select: "url" },
+          },
         },
       ],
     })
@@ -30,13 +46,29 @@ const userDelete = async (req, res) => {
         {
           path: "comments",
           select: "owner description likes mediaFiles createdAt updatedAt",
-          populate: { path: "owner", select: "_id surname name avatarURL" },
+          populate: {
+            path: "owner",
+            select: "_id surname name avatarURL",
+            populate: { path: "avatarURL", select: "url" },
+          },
         },
-        { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+        {
+          path: "likes",
+          select: "owner type",
+          populate: {
+            path: "owner",
+            select: "_id surname name avatarURL",
+            populate: { path: "avatarURL", select: "url" },
+          },
+        },
         {
           path: "mediaFiles",
           select: "url type owner location createdAt updatedAt",
-          populate: { path: "owner", select: "_id surname name avatarURL" },
+          populate: {
+            path: "owner",
+            select: "_id surname name avatarURL",
+            populate: { path: "avatarURL", select: "url" },
+          },
         },
       ],
     })
@@ -52,13 +84,29 @@ const userDelete = async (req, res) => {
             {
               path: "comments",
               select: "owner description likes mediaFiles createdAt updatedAt",
-              populate: { path: "owner", select: "_id surname name avatarURL" },
+              populate: {
+                path: "owner",
+                select: "_id surname name avatarURL",
+                populate: { path: "avatarURL", select: "url" },
+              },
             },
-            { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+            {
+              path: "likes",
+              select: "owner type",
+              populate: {
+                path: "owner",
+                select: "_id surname name avatarURL",
+                populate: { path: "avatarURL", select: "url" },
+              },
+            },
             {
               path: "mediaFiles",
               select: "url type owner location createdAt updatedAt",
-              populate: { path: "owner", select: "_id surname name avatarURL" },
+              populate: {
+                path: "owner",
+                select: "_id surname name avatarURL",
+                populate: { path: "avatarURL", select: "url" },
+              },
             },
           ],
         },
@@ -69,13 +117,29 @@ const userDelete = async (req, res) => {
             {
               path: "comments",
               select: "owner description likes mediaFiles createdAt updatedAt",
-              populate: { path: "owner", select: "_id surname name avatarURL" },
+              populate: {
+                path: "owner",
+                select: "_id surname name avatarURL",
+                populate: { path: "avatarURL", select: "url" },
+              },
             },
-            { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+            {
+              path: "likes",
+              select: "owner type",
+              populate: {
+                path: "owner",
+                select: "_id surname name avatarURL",
+                populate: { path: "avatarURL", select: "url" },
+              },
+            },
             {
               path: "mediaFiles",
               select: "url type owner location createdAt updatedAt",
-              populate: { path: "owner", select: "_id surname name avatarURL" },
+              populate: {
+                path: "owner",
+                select: "_id surname name avatarURL",
+                populate: { path: "avatarURL", select: "url" },
+              },
             },
           ],
         },
@@ -83,6 +147,11 @@ const userDelete = async (req, res) => {
           path: "subscription",
           select:
             "name surname site phone headLine about languages education frame experience email avatarURL subscription posts",
+          populate: { path: "avatarURL", select: "url" },
+        },
+        {
+          path: "avatarURL",
+          select: "url",
         },
       ],
     })

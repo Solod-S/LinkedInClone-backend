@@ -33,10 +33,12 @@ const getAllUsers = async (req, res, next) => {
     .limit(perPage)
     .populate({
       path: "posts",
+      options: { limit: 10, sort: { createdAt: -1 } },
       select: "description createdAt updatedAt",
       populate: [
         {
           path: "comments",
+          options: { limit: 10, sort: { createdAt: -1 } },
           select: "owner description likes mediaFiles createdAt updatedAt",
           populate: { path: "owner", select: "_id surname name avatarURL" },
         },
@@ -50,10 +52,12 @@ const getAllUsers = async (req, res, next) => {
     })
     .populate({
       path: "favorite",
+      options: { limit: 10, sort: { createdAt: -1 } },
       select: "description createdAt updatedAt",
       populate: [
         {
           path: "comments",
+          options: { limit: 10, sort: { createdAt: -1 } },
           select: "owner description likes mediaFiles createdAt updatedAt",
           populate: { path: "owner", select: "_id surname name avatarURL" },
         },
@@ -72,10 +76,12 @@ const getAllUsers = async (req, res, next) => {
       populate: [
         {
           path: "posts",
+          options: { limit: 10, sort: { createdAt: -1 } },
           select: "description createdAt updatedAt",
           populate: [
             {
               path: "comments",
+              options: { limit: 10, sort: { createdAt: -1 } },
               select: "owner description likes mediaFiles createdAt updatedAt",
               populate: { path: "owner", select: "_id surname name avatarURL" },
             },
@@ -89,10 +95,12 @@ const getAllUsers = async (req, res, next) => {
         },
         {
           path: "favorite",
+          options: { limit: 10, sort: { createdAt: -1 } },
           select: "description createdAt updatedAt",
           populate: [
             {
               path: "comments",
+              options: { limit: 10, sort: { createdAt: -1 } },
               select: "owner description likes mediaFiles createdAt updatedAt",
               populate: { path: "owner", select: "_id surname name avatarURL" },
             },
@@ -106,6 +114,7 @@ const getAllUsers = async (req, res, next) => {
         },
         {
           path: "subscription",
+          options: { limit: 10, sort: { createdAt: -1 } },
           select:
             "name surname site phone headLine about languages education frame experience email avatarURL subscription posts",
         },

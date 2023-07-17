@@ -18,10 +18,12 @@ const authenticate = async (req, res, next) => {
     const user = await User.findById(id)
       .populate({
         path: "posts",
+        options: { limit: 10, sort: { createdAt: -1 } },
         select: "description createdAt updatedAt",
         populate: [
           {
             path: "comments",
+            options: { limit: 10, sort: { createdAt: -1 } },
             select: "owner description likes mediaFiles createdAt updatedAt",
             populate: { path: "owner", select: "_id surname name avatarURL" },
           },
@@ -35,10 +37,12 @@ const authenticate = async (req, res, next) => {
       })
       .populate({
         path: "favorite",
+        options: { limit: 10, sort: { createdAt: -1 } },
         select: "description createdAt updatedAt",
         populate: [
           {
             path: "comments",
+            options: { limit: 10, sort: { createdAt: -1 } },
             select: "owner description likes mediaFiles createdAt updatedAt",
             populate: { path: "owner", select: "_id surname name avatarURL" },
           },
@@ -52,15 +56,18 @@ const authenticate = async (req, res, next) => {
       })
       .populate({
         path: "subscription",
+        options: { limit: 10, sort: { createdAt: -1 } },
         select:
           "name surname site phone headLine about languages education frame experience email avatarURL subscription posts",
         populate: [
           {
             path: "posts",
+            options: { limit: 10, sort: { createdAt: -1 } },
             select: "description createdAt updatedAt",
             populate: [
               {
                 path: "comments",
+                options: { limit: 10, sort: { createdAt: -1 } },
                 select: "owner description likes mediaFiles createdAt updatedAt",
                 populate: { path: "owner", select: "_id surname name avatarURL" },
               },
@@ -78,10 +85,12 @@ const authenticate = async (req, res, next) => {
           },
           {
             path: "favorite",
+            options: { limit: 10, sort: { createdAt: -1 } },
             select: "description createdAt updatedAt",
             populate: [
               {
                 path: "comments",
+                options: { limit: 10, sort: { createdAt: -1 } },
                 select: "owner description likes mediaFiles createdAt updatedAt",
                 populate: { path: "owner", select: "_id surname name avatarURL" },
               },
@@ -99,10 +108,15 @@ const authenticate = async (req, res, next) => {
           },
           {
             path: "subscription",
+            options: { limit: 10, sort: { createdAt: -1 } },
             select:
               "name surname site phone headLine about languages education frame experience email avatarURL subscription posts",
           },
         ],
+      })
+      .populate({
+        path: "avatarURL",
+        select: "url",
       });
 
     const tokenData = await Token.findOne({ token });

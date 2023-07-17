@@ -12,6 +12,7 @@
 A Social Network developed with MERN stack.
 
 ## Technologies Used
+
     express
     morgan
     nodemon
@@ -32,6 +33,73 @@ A Social Network developed with MERN stack.
     multer
     chalk
     uuid
+
+## Project structure
+
+```sh
+.
+├── app.js
+├── package.json
+├── bin
+│   └── www
+├── controllers
+│   ├── AuthController.js
+│   └── BookController.js
+├── models
+│   ├── BookModel.js
+│   └── UserModel.js
+├── routes
+│   ├── api.js
+│   ├── auth.js
+│   └── book.js
+├── middlewares
+│   ├── jwt.js
+├── helpers
+│   ├── apiResponse.js
+│   ├── constants.js
+│   ├── mailer.js
+│   └── utility.js
+├── test
+│   ├── testConfig.js
+│   ├── auth.js
+│   └── book.js
+└── public
+    ├── index.html
+    └── stylesheets
+        └── style.css
+```
+
+## How to install
+
+### Using Git (recommended)
+
+1.  Clone the project from github. Change "myproject" to your project name.
+
+```bash
+git clone https://github.com/maitraysuthar/rest-api-nodejs-mongodb.git ./myproject
+```
+
+### Using manual download ZIP
+
+1.  Download repository
+2.  Uncompress to your desired directory
+
+### Install npm dependencies after installing (Git or manual download)
+
+```bash
+cd myproject
+npm install
+```
+
+### Setting up environments
+
+1.  You will find a file named `.env.example` on root directory of project.
+2.  Create a new file by copying and pasting the file and then renaming it to just `.env`
+    ```bash
+    cp .env.example .env
+    ```
+3.  The file `.env` is already ignored, so you never commit your credentials.
+4.  Change the values of the file to your environment. Helpful comments added to `.env.example` file to understand the constants.
 
 ## How to build your own..?
 

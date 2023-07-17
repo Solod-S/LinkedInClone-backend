@@ -5101,9 +5101,20 @@
                     "example": "Sergey Nikolayovich"
                   },
                   "avatarURL": {
-                    "type": "string",
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
                     "description": "User's avatar link",
-                    "example": "User's avatar link"
+                    "example": {
+                      "_id": "64b28c4ffe873daadea81b50",
+                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                    }
                   },
                   "favorite": {
                     "type": "array",
@@ -5151,9 +5162,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               }
@@ -5211,9 +5233,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               },
@@ -5343,9 +5376,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               }
@@ -5397,9 +5441,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               },
@@ -5461,9 +5516,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner name",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               },
@@ -5499,9 +5565,20 @@
                               "example": "Solod"
                             },
                             "avatarURL": {
-                              "type": "string",
-                              "description": "Owner name",
-                              "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "type": "string"
+                                }
+                              },
+                              "description": "User's avatar link",
+                              "example": {
+                                "_id": "64b28c4ffe873daadea81b50",
+                                "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                              }
                             }
                           }
                         },
@@ -5545,9 +5622,20 @@
                           "format": "email"
                         },
                         "avatarURL": {
-                          "type": "string",
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
                           "description": "User's avatar link",
-                          "example": "User's avatar link"
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         },
                         "posts": {
                           "type": "array",
@@ -5767,9 +5855,20 @@
                                           "example": "Solod"
                                         },
                                         "avatarURL": {
-                                          "type": "string",
-                                          "description": "Owner avatar",
-                                          "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                          "type": "object",
+                                          "properties": {
+                                            "_id": {
+                                              "type": "string"
+                                            },
+                                            "url": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "description": "User's avatar link",
+                                          "example": {
+                                            "_id": "64b28c4ffe873daadea81b50",
+                                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                          }
                                         }
                                       }
                                     }
@@ -5827,9 +5926,20 @@
                                           "example": "Solod"
                                         },
                                         "avatarURL": {
-                                          "type": "string",
-                                          "description": "Owner avatar",
-                                          "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                          "type": "object",
+                                          "properties": {
+                                            "_id": {
+                                              "type": "string"
+                                            },
+                                            "url": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "description": "User's avatar link",
+                                          "example": {
+                                            "_id": "64b28c4ffe873daadea81b50",
+                                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                          }
                                         }
                                       }
                                     },
@@ -6190,9 +6300,20 @@
                     "example": "Sergey Nikolayovich"
                   },
                   "avatarURL": {
-                    "type": "string",
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
                     "description": "User's avatar link",
-                    "example": "User's avatar link"
+                    "example": {
+                      "_id": "64b28c4ffe873daadea81b50",
+                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                    }
                   },
                   "favorite": {
                     "type": "array",
@@ -6240,9 +6361,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               }
@@ -6300,9 +6432,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               },
@@ -6432,9 +6575,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               }
@@ -6486,9 +6640,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               },
@@ -6550,9 +6715,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner name",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               },
@@ -6588,9 +6764,20 @@
                               "example": "Solod"
                             },
                             "avatarURL": {
-                              "type": "string",
-                              "description": "Owner name",
-                              "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "type": "string"
+                                }
+                              },
+                              "description": "User's avatar link",
+                              "example": {
+                                "_id": "64b28c4ffe873daadea81b50",
+                                "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                              }
                             }
                           }
                         },
@@ -6634,9 +6821,20 @@
                           "format": "email"
                         },
                         "avatarURL": {
-                          "type": "string",
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
                           "description": "User's avatar link",
-                          "example": "User's avatar link"
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         },
                         "posts": {
                           "type": "array",
@@ -6856,9 +7054,20 @@
                                           "example": "Solod"
                                         },
                                         "avatarURL": {
-                                          "type": "string",
-                                          "description": "Owner avatar",
-                                          "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                          "type": "object",
+                                          "properties": {
+                                            "_id": {
+                                              "type": "string"
+                                            },
+                                            "url": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "description": "User's avatar link",
+                                          "example": {
+                                            "_id": "64b28c4ffe873daadea81b50",
+                                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                          }
                                         }
                                       }
                                     }
@@ -6916,9 +7125,20 @@
                                           "example": "Solod"
                                         },
                                         "avatarURL": {
-                                          "type": "string",
-                                          "description": "Owner avatar",
-                                          "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                          "type": "object",
+                                          "properties": {
+                                            "_id": {
+                                              "type": "string"
+                                            },
+                                            "url": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "description": "User's avatar link",
+                                          "example": {
+                                            "_id": "64b28c4ffe873daadea81b50",
+                                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                          }
                                         }
                                       }
                                     },
@@ -7280,9 +7500,20 @@
                 "example": "Sergey Nikolayovich"
               },
               "avatarURL": {
-                "type": "string",
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  }
+                },
                 "description": "User's avatar link",
-                "example": "User's avatar link"
+                "example": {
+                  "_id": "64b28c4ffe873daadea81b50",
+                  "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                }
               },
               "favorite": {
                 "type": "array",
@@ -7330,9 +7561,20 @@
                                 "example": "Solod"
                               },
                               "avatarURL": {
-                                "type": "string",
-                                "description": "Owner avatar",
-                                "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                "type": "object",
+                                "properties": {
+                                  "_id": {
+                                    "type": "string"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  }
+                                },
+                                "description": "User's avatar link",
+                                "example": {
+                                  "_id": "64b28c4ffe873daadea81b50",
+                                  "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                }
                               }
                             }
                           }
@@ -7390,9 +7632,20 @@
                                 "example": "Solod"
                               },
                               "avatarURL": {
-                                "type": "string",
-                                "description": "Owner avatar",
-                                "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                "type": "object",
+                                "properties": {
+                                  "_id": {
+                                    "type": "string"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  }
+                                },
+                                "description": "User's avatar link",
+                                "example": {
+                                  "_id": "64b28c4ffe873daadea81b50",
+                                  "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                }
                               }
                             }
                           },
@@ -7522,9 +7775,20 @@
                                 "example": "Solod"
                               },
                               "avatarURL": {
-                                "type": "string",
-                                "description": "Owner avatar",
-                                "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                "type": "object",
+                                "properties": {
+                                  "_id": {
+                                    "type": "string"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  }
+                                },
+                                "description": "User's avatar link",
+                                "example": {
+                                  "_id": "64b28c4ffe873daadea81b50",
+                                  "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                }
                               }
                             }
                           }
@@ -7576,9 +7840,20 @@
                                 "example": "Solod"
                               },
                               "avatarURL": {
-                                "type": "string",
-                                "description": "Owner avatar",
-                                "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                "type": "object",
+                                "properties": {
+                                  "_id": {
+                                    "type": "string"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  }
+                                },
+                                "description": "User's avatar link",
+                                "example": {
+                                  "_id": "64b28c4ffe873daadea81b50",
+                                  "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                }
                               }
                             }
                           },
@@ -7640,9 +7915,20 @@
                                 "example": "Solod"
                               },
                               "avatarURL": {
-                                "type": "string",
-                                "description": "Owner name",
-                                "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                "type": "object",
+                                "properties": {
+                                  "_id": {
+                                    "type": "string"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  }
+                                },
+                                "description": "User's avatar link",
+                                "example": {
+                                  "_id": "64b28c4ffe873daadea81b50",
+                                  "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                }
                               }
                             }
                           },
@@ -7678,9 +7964,20 @@
                           "example": "Solod"
                         },
                         "avatarURL": {
-                          "type": "string",
-                          "description": "Owner name",
-                          "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
+                          "description": "User's avatar link",
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         }
                       }
                     },
@@ -7724,9 +8021,20 @@
                       "format": "email"
                     },
                     "avatarURL": {
-                      "type": "string",
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        }
+                      },
                       "description": "User's avatar link",
-                      "example": "User's avatar link"
+                      "example": {
+                        "_id": "64b28c4ffe873daadea81b50",
+                        "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                      }
                     },
                     "posts": {
                       "type": "array",
@@ -7946,9 +8254,20 @@
                                       "example": "Solod"
                                     },
                                     "avatarURL": {
-                                      "type": "string",
-                                      "description": "Owner avatar",
-                                      "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                      "type": "object",
+                                      "properties": {
+                                        "_id": {
+                                          "type": "string"
+                                        },
+                                        "url": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "description": "User's avatar link",
+                                      "example": {
+                                        "_id": "64b28c4ffe873daadea81b50",
+                                        "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                      }
                                     }
                                   }
                                 }
@@ -8006,9 +8325,20 @@
                                       "example": "Solod"
                                     },
                                     "avatarURL": {
-                                      "type": "string",
-                                      "description": "Owner avatar",
-                                      "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                      "type": "object",
+                                      "properties": {
+                                        "_id": {
+                                          "type": "string"
+                                        },
+                                        "url": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "description": "User's avatar link",
+                                      "example": {
+                                        "_id": "64b28c4ffe873daadea81b50",
+                                        "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                      }
                                     }
                                   }
                                 },
@@ -8387,9 +8717,20 @@
                     "format": "email"
                   },
                   "avatarURL": {
-                    "type": "string",
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
                     "description": "User's avatar link",
-                    "example": "User's avatar link"
+                    "example": {
+                      "_id": "64b28c4ffe873daadea81b50",
+                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                    }
                   },
                   "favorite": {
                     "type": "array",
@@ -8437,9 +8778,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               }
@@ -8497,9 +8849,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               },
@@ -8629,9 +8992,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               }
@@ -8683,9 +9057,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               },
@@ -8747,9 +9132,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner name",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               },
@@ -8785,9 +9181,20 @@
                               "example": "Solod"
                             },
                             "avatarURL": {
-                              "type": "string",
-                              "description": "Owner name",
-                              "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "type": "string"
+                                }
+                              },
+                              "description": "User's avatar link",
+                              "example": {
+                                "_id": "64b28c4ffe873daadea81b50",
+                                "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                              }
                             }
                           }
                         },
@@ -8831,9 +9238,20 @@
                           "format": "email"
                         },
                         "avatarURL": {
-                          "type": "string",
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
                           "description": "User's avatar link",
-                          "example": "User's avatar link"
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         },
                         "posts": {
                           "type": "array",
@@ -9053,9 +9471,20 @@
                                           "example": "Solod"
                                         },
                                         "avatarURL": {
-                                          "type": "string",
-                                          "description": "Owner avatar",
-                                          "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                          "type": "object",
+                                          "properties": {
+                                            "_id": {
+                                              "type": "string"
+                                            },
+                                            "url": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "description": "User's avatar link",
+                                          "example": {
+                                            "_id": "64b28c4ffe873daadea81b50",
+                                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                          }
                                         }
                                       }
                                     }
@@ -9113,9 +9542,20 @@
                                           "example": "Solod"
                                         },
                                         "avatarURL": {
-                                          "type": "string",
-                                          "description": "Owner avatar",
-                                          "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                          "type": "object",
+                                          "properties": {
+                                            "_id": {
+                                              "type": "string"
+                                            },
+                                            "url": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "description": "User's avatar link",
+                                          "example": {
+                                            "_id": "64b28c4ffe873daadea81b50",
+                                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                          }
                                         }
                                       }
                                     },
@@ -9429,9 +9869,20 @@
                     "example": "Sergey Nikolayovich"
                   },
                   "avatarURL": {
-                    "type": "string",
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
                     "description": "User's avatar link",
-                    "example": "User's avatar link"
+                    "example": {
+                      "_id": "64b28c4ffe873daadea81b50",
+                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                    }
                   },
                   "favorite": {
                     "type": "array",
@@ -9479,9 +9930,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               }
@@ -9539,9 +10001,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               },
@@ -9671,9 +10144,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               }
@@ -9725,9 +10209,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               },
@@ -9789,9 +10284,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner name",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               },
@@ -9827,9 +10333,20 @@
                               "example": "Solod"
                             },
                             "avatarURL": {
-                              "type": "string",
-                              "description": "Owner name",
-                              "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "type": "string"
+                                }
+                              },
+                              "description": "User's avatar link",
+                              "example": {
+                                "_id": "64b28c4ffe873daadea81b50",
+                                "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                              }
                             }
                           }
                         },
@@ -9873,9 +10390,20 @@
                           "format": "email"
                         },
                         "avatarURL": {
-                          "type": "string",
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
                           "description": "User's avatar link",
-                          "example": "User's avatar link"
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         },
                         "posts": {
                           "type": "array",
@@ -10095,9 +10623,20 @@
                                           "example": "Solod"
                                         },
                                         "avatarURL": {
-                                          "type": "string",
-                                          "description": "Owner avatar",
-                                          "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                          "type": "object",
+                                          "properties": {
+                                            "_id": {
+                                              "type": "string"
+                                            },
+                                            "url": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "description": "User's avatar link",
+                                          "example": {
+                                            "_id": "64b28c4ffe873daadea81b50",
+                                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                          }
                                         }
                                       }
                                     }
@@ -10155,9 +10694,20 @@
                                           "example": "Solod"
                                         },
                                         "avatarURL": {
-                                          "type": "string",
-                                          "description": "Owner avatar",
-                                          "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                          "type": "object",
+                                          "properties": {
+                                            "_id": {
+                                              "type": "string"
+                                            },
+                                            "url": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "description": "User's avatar link",
+                                          "example": {
+                                            "_id": "64b28c4ffe873daadea81b50",
+                                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                          }
                                         }
                                       }
                                     },
@@ -10477,9 +11027,20 @@
                     "example": "Sergey Nikolayovich"
                   },
                   "avatarURL": {
-                    "type": "string",
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
                     "description": "User's avatar link",
-                    "example": "User's avatar link"
+                    "example": {
+                      "_id": "64b28c4ffe873daadea81b50",
+                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                    }
                   },
                   "favorite": {
                     "type": "array",
@@ -10527,9 +11088,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               }
@@ -10587,9 +11159,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               },
@@ -10719,9 +11302,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               }
@@ -10773,9 +11367,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               },
@@ -10837,9 +11442,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner name",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               },
@@ -10875,9 +11491,20 @@
                               "example": "Solod"
                             },
                             "avatarURL": {
-                              "type": "string",
-                              "description": "Owner name",
-                              "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "type": "string"
+                                }
+                              },
+                              "description": "User's avatar link",
+                              "example": {
+                                "_id": "64b28c4ffe873daadea81b50",
+                                "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                              }
                             }
                           }
                         },
@@ -10921,9 +11548,20 @@
                           "format": "email"
                         },
                         "avatarURL": {
-                          "type": "string",
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
                           "description": "User's avatar link",
-                          "example": "User's avatar link"
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         },
                         "posts": {
                           "type": "array",
@@ -11143,9 +11781,20 @@
                                           "example": "Solod"
                                         },
                                         "avatarURL": {
-                                          "type": "string",
-                                          "description": "Owner avatar",
-                                          "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                          "type": "object",
+                                          "properties": {
+                                            "_id": {
+                                              "type": "string"
+                                            },
+                                            "url": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "description": "User's avatar link",
+                                          "example": {
+                                            "_id": "64b28c4ffe873daadea81b50",
+                                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                          }
                                         }
                                       }
                                     }
@@ -11203,9 +11852,20 @@
                                           "example": "Solod"
                                         },
                                         "avatarURL": {
-                                          "type": "string",
-                                          "description": "Owner avatar",
-                                          "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                          "type": "object",
+                                          "properties": {
+                                            "_id": {
+                                              "type": "string"
+                                            },
+                                            "url": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "description": "User's avatar link",
+                                          "example": {
+                                            "_id": "64b28c4ffe873daadea81b50",
+                                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                          }
                                         }
                                       }
                                     },
@@ -11519,9 +12179,20 @@
                                 "example": "Solod"
                               },
                               "avatarURL": {
-                                "type": "string",
-                                "description": "Owner avatar",
-                                "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                "type": "object",
+                                "properties": {
+                                  "_id": {
+                                    "type": "string"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  }
+                                },
+                                "description": "User's avatar link",
+                                "example": {
+                                  "_id": "64b28c4ffe873daadea81b50",
+                                  "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                }
                               }
                             }
                           }
@@ -11573,9 +12244,20 @@
                                 "example": "Solod"
                               },
                               "avatarURL": {
-                                "type": "string",
-                                "description": "Owner avatar",
-                                "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                "type": "object",
+                                "properties": {
+                                  "_id": {
+                                    "type": "string"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  }
+                                },
+                                "description": "User's avatar link",
+                                "example": {
+                                  "_id": "64b28c4ffe873daadea81b50",
+                                  "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                }
                               }
                             }
                           },
@@ -11637,9 +12319,20 @@
                                 "example": "Solod"
                               },
                               "avatarURL": {
-                                "type": "string",
-                                "description": "Owner name",
-                                "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                "type": "object",
+                                "properties": {
+                                  "_id": {
+                                    "type": "string"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  }
+                                },
+                                "description": "User's avatar link",
+                                "example": {
+                                  "_id": "64b28c4ffe873daadea81b50",
+                                  "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                }
                               }
                             }
                           },
@@ -11675,9 +12368,20 @@
                           "example": "Solod"
                         },
                         "avatarURL": {
-                          "type": "string",
-                          "description": "Owner name",
-                          "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
+                          "description": "User's avatar link",
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         }
                       }
                     },
@@ -11743,9 +12447,20 @@
                       "format": "email"
                     },
                     "avatarURL": {
-                      "type": "string",
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        }
+                      },
                       "description": "User's avatar link",
-                      "example": "User's avatar link"
+                      "example": {
+                        "_id": "64b28c4ffe873daadea81b50",
+                        "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                      }
                     },
                     "posts": {
                       "type": "array",
@@ -11989,9 +12704,20 @@
                       "format": "email"
                     },
                     "avatarURL": {
-                      "type": "string",
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        }
+                      },
                       "description": "User's avatar link",
-                      "example": "User's avatar link"
+                      "example": {
+                        "_id": "64b28c4ffe873daadea81b50",
+                        "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                      }
                     },
                     "posts": {
                       "type": "array",
@@ -12232,9 +12958,20 @@
                     "example": "Sergey Nikolayovich"
                   },
                   "avatarURL": {
-                    "type": "string",
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
                     "description": "User's avatar link",
-                    "example": "User's avatar link"
+                    "example": {
+                      "_id": "64b28c4ffe873daadea81b50",
+                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                    }
                   },
                   "favorite": {
                     "type": "array",
@@ -12282,9 +13019,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               }
@@ -12342,9 +13090,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               },
@@ -12474,9 +13233,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               }
@@ -12528,9 +13298,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               },
@@ -12592,9 +13373,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner name",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               },
@@ -12630,9 +13422,20 @@
                               "example": "Solod"
                             },
                             "avatarURL": {
-                              "type": "string",
-                              "description": "Owner name",
-                              "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "type": "string"
+                                }
+                              },
+                              "description": "User's avatar link",
+                              "example": {
+                                "_id": "64b28c4ffe873daadea81b50",
+                                "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                              }
                             }
                           }
                         },
@@ -12676,9 +13479,20 @@
                           "format": "email"
                         },
                         "avatarURL": {
-                          "type": "string",
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
                           "description": "User's avatar link",
-                          "example": "User's avatar link"
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         },
                         "posts": {
                           "type": "array",
@@ -12898,9 +13712,20 @@
                                           "example": "Solod"
                                         },
                                         "avatarURL": {
-                                          "type": "string",
-                                          "description": "Owner avatar",
-                                          "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                          "type": "object",
+                                          "properties": {
+                                            "_id": {
+                                              "type": "string"
+                                            },
+                                            "url": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "description": "User's avatar link",
+                                          "example": {
+                                            "_id": "64b28c4ffe873daadea81b50",
+                                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                          }
                                         }
                                       }
                                     }
@@ -12958,9 +13783,20 @@
                                           "example": "Solod"
                                         },
                                         "avatarURL": {
-                                          "type": "string",
-                                          "description": "Owner avatar",
-                                          "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                          "type": "object",
+                                          "properties": {
+                                            "_id": {
+                                              "type": "string"
+                                            },
+                                            "url": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "description": "User's avatar link",
+                                          "example": {
+                                            "_id": "64b28c4ffe873daadea81b50",
+                                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                          }
                                         }
                                       }
                                     },
@@ -15785,9 +16621,20 @@
                                       "example": "Sergey Nikolayovich"
                                     },
                                     "avatarURL": {
-                                      "type": "string",
+                                      "type": "object",
+                                      "properties": {
+                                        "_id": {
+                                          "type": "string"
+                                        },
+                                        "url": {
+                                          "type": "string"
+                                        }
+                                      },
                                       "description": "User's avatar link",
-                                      "example": "User's avatar link"
+                                      "example": {
+                                        "_id": "64b28c4ffe873daadea81b50",
+                                        "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                      }
                                     },
                                     "favorite": {
                                       "type": "array",
@@ -16049,9 +16896,20 @@
                                       "example": "Sergey Nikolayovich"
                                     },
                                     "avatarURL": {
-                                      "type": "string",
+                                      "type": "object",
+                                      "properties": {
+                                        "_id": {
+                                          "type": "string"
+                                        },
+                                        "url": {
+                                          "type": "string"
+                                        }
+                                      },
                                       "description": "User's avatar link",
-                                      "example": "User's avatar link"
+                                      "example": {
+                                        "_id": "64b28c4ffe873daadea81b50",
+                                        "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                      }
                                     },
                                     "favorite": {
                                       "type": "array",
@@ -16331,9 +17189,20 @@
                                 "example": "Sergey Nikolayovich"
                               },
                               "avatarURL": {
-                                "type": "string",
+                                "type": "object",
+                                "properties": {
+                                  "_id": {
+                                    "type": "string"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  }
+                                },
                                 "description": "User's avatar link",
-                                "example": "User's avatar link"
+                                "example": {
+                                  "_id": "64b28c4ffe873daadea81b50",
+                                  "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                }
                               },
                               "favorite": {
                                 "type": "array",
@@ -16595,9 +17464,20 @@
                                 "example": "Sergey Nikolayovich"
                               },
                               "avatarURL": {
-                                "type": "string",
+                                "type": "object",
+                                "properties": {
+                                  "_id": {
+                                    "type": "string"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  }
+                                },
                                 "description": "User's avatar link",
-                                "example": "User's avatar link"
+                                "example": {
+                                  "_id": "64b28c4ffe873daadea81b50",
+                                  "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                }
                               },
                               "favorite": {
                                 "type": "array",
@@ -16843,9 +17723,20 @@
                           "example": "Sergey Nikolayovich"
                         },
                         "avatarURL": {
-                          "type": "string",
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
                           "description": "User's avatar link",
-                          "example": "User's avatar link"
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         },
                         "favorite": {
                           "type": "array",
@@ -17097,11 +17988,6 @@
             "type": "string",
             "description": "Post's text",
             "example": "Tequila is an excellent teacher… Just last night it taught me to count… One Tequila, Two Tequila, Three Tequila, Floor!"
-          },
-          "mediaFiles": {
-            "type": "array",
-            "description": "Media files",
-            "example": "6457a79b23576cf0aa13adec"
           }
         }
       },
@@ -17109,11 +17995,6 @@
         "required": [],
         "type": "object",
         "properties": {
-          "mediaFiles": {
-            "type": "array",
-            "description": "Media file's id",
-            "example": "645f8eecfd6f00cbb75f950f"
-          },
           "description": {
             "type": "string",
             "description": "Post's description",
@@ -17203,9 +18084,20 @@
                                     "example": "Sergey Nikolayovich"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
                                     "description": "User's avatar link",
-                                    "example": "User's avatar link"
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   },
                                   "favorite": {
                                     "type": "array",
@@ -17467,9 +18359,20 @@
                                     "example": "Sergey Nikolayovich"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
                                     "description": "User's avatar link",
-                                    "example": "User's avatar link"
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   },
                                   "favorite": {
                                     "type": "array",
@@ -17749,9 +18652,20 @@
                               "example": "Sergey Nikolayovich"
                             },
                             "avatarURL": {
-                              "type": "string",
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "type": "string"
+                                }
+                              },
                               "description": "User's avatar link",
-                              "example": "User's avatar link"
+                              "example": {
+                                "_id": "64b28c4ffe873daadea81b50",
+                                "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                              }
                             },
                             "favorite": {
                               "type": "array",
@@ -18013,9 +18927,20 @@
                               "example": "Sergey Nikolayovich"
                             },
                             "avatarURL": {
-                              "type": "string",
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "type": "string"
+                                }
+                              },
                               "description": "User's avatar link",
-                              "example": "User's avatar link"
+                              "example": {
+                                "_id": "64b28c4ffe873daadea81b50",
+                                "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                              }
                             },
                             "favorite": {
                               "type": "array",
@@ -18261,9 +19186,20 @@
                         "example": "Sergey Nikolayovich"
                       },
                       "avatarURL": {
-                        "type": "string",
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          }
+                        },
                         "description": "User's avatar link",
-                        "example": "User's avatar link"
+                        "example": {
+                          "_id": "64b28c4ffe873daadea81b50",
+                          "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                        }
                       },
                       "favorite": {
                         "type": "array",
@@ -18582,9 +19518,20 @@
                               "example": "Sergey Nikolayovich"
                             },
                             "avatarURL": {
-                              "type": "string",
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "type": "string"
+                                }
+                              },
                               "description": "User's avatar link",
-                              "example": "User's avatar link"
+                              "example": {
+                                "_id": "64b28c4ffe873daadea81b50",
+                                "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                              }
                             },
                             "favorite": {
                               "type": "array",
@@ -18830,9 +19777,20 @@
                         "example": "Sergey Nikolayovich"
                       },
                       "avatarURL": {
-                        "type": "string",
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          }
+                        },
                         "description": "User's avatar link",
-                        "example": "User's avatar link"
+                        "example": {
+                          "_id": "64b28c4ffe873daadea81b50",
+                          "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                        }
                       },
                       "favorite": {
                         "type": "array",
@@ -19139,9 +20097,20 @@
                                     "example": "Sergey Nikolayovich"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
                                     "description": "User's avatar link",
-                                    "example": "User's avatar link"
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   },
                                   "favorite": {
                                     "type": "array",
@@ -19403,9 +20372,20 @@
                                     "example": "Sergey Nikolayovich"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
                                     "description": "User's avatar link",
-                                    "example": "User's avatar link"
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   },
                                   "favorite": {
                                     "type": "array",
@@ -19685,9 +20665,20 @@
                               "example": "Sergey Nikolayovich"
                             },
                             "avatarURL": {
-                              "type": "string",
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "type": "string"
+                                }
+                              },
                               "description": "User's avatar link",
-                              "example": "User's avatar link"
+                              "example": {
+                                "_id": "64b28c4ffe873daadea81b50",
+                                "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                              }
                             },
                             "favorite": {
                               "type": "array",
@@ -19949,9 +20940,20 @@
                               "example": "Sergey Nikolayovich"
                             },
                             "avatarURL": {
-                              "type": "string",
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "type": "string"
+                                }
+                              },
                               "description": "User's avatar link",
-                              "example": "User's avatar link"
+                              "example": {
+                                "_id": "64b28c4ffe873daadea81b50",
+                                "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                              }
                             },
                             "favorite": {
                               "type": "array",
@@ -20197,9 +21199,20 @@
                         "example": "Sergey Nikolayovich"
                       },
                       "avatarURL": {
-                        "type": "string",
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          }
+                        },
                         "description": "User's avatar link",
-                        "example": "User's avatar link"
+                        "example": {
+                          "_id": "64b28c4ffe873daadea81b50",
+                          "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                        }
                       },
                       "favorite": {
                         "type": "array",
@@ -20509,9 +21522,20 @@
                                       "example": "Sergey Nikolayovich"
                                     },
                                     "avatarURL": {
-                                      "type": "string",
+                                      "type": "object",
+                                      "properties": {
+                                        "_id": {
+                                          "type": "string"
+                                        },
+                                        "url": {
+                                          "type": "string"
+                                        }
+                                      },
                                       "description": "User's avatar link",
-                                      "example": "User's avatar link"
+                                      "example": {
+                                        "_id": "64b28c4ffe873daadea81b50",
+                                        "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                      }
                                     },
                                     "favorite": {
                                       "type": "array",
@@ -20773,9 +21797,20 @@
                                       "example": "Sergey Nikolayovich"
                                     },
                                     "avatarURL": {
-                                      "type": "string",
+                                      "type": "object",
+                                      "properties": {
+                                        "_id": {
+                                          "type": "string"
+                                        },
+                                        "url": {
+                                          "type": "string"
+                                        }
+                                      },
                                       "description": "User's avatar link",
-                                      "example": "User's avatar link"
+                                      "example": {
+                                        "_id": "64b28c4ffe873daadea81b50",
+                                        "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                      }
                                     },
                                     "favorite": {
                                       "type": "array",
@@ -21055,9 +22090,20 @@
                                 "example": "Sergey Nikolayovich"
                               },
                               "avatarURL": {
-                                "type": "string",
+                                "type": "object",
+                                "properties": {
+                                  "_id": {
+                                    "type": "string"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  }
+                                },
                                 "description": "User's avatar link",
-                                "example": "User's avatar link"
+                                "example": {
+                                  "_id": "64b28c4ffe873daadea81b50",
+                                  "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                }
                               },
                               "favorite": {
                                 "type": "array",
@@ -21319,9 +22365,20 @@
                                 "example": "Sergey Nikolayovich"
                               },
                               "avatarURL": {
-                                "type": "string",
+                                "type": "object",
+                                "properties": {
+                                  "_id": {
+                                    "type": "string"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  }
+                                },
                                 "description": "User's avatar link",
-                                "example": "User's avatar link"
+                                "example": {
+                                  "_id": "64b28c4ffe873daadea81b50",
+                                  "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                }
                               },
                               "favorite": {
                                 "type": "array",
@@ -21567,9 +22624,20 @@
                           "example": "Sergey Nikolayovich"
                         },
                         "avatarURL": {
-                          "type": "string",
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
                           "description": "User's avatar link",
-                          "example": "User's avatar link"
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         },
                         "favorite": {
                           "type": "array",
@@ -21898,9 +22966,20 @@
                                       "example": "Sergey Nikolayovich"
                                     },
                                     "avatarURL": {
-                                      "type": "string",
+                                      "type": "object",
+                                      "properties": {
+                                        "_id": {
+                                          "type": "string"
+                                        },
+                                        "url": {
+                                          "type": "string"
+                                        }
+                                      },
                                       "description": "User's avatar link",
-                                      "example": "User's avatar link"
+                                      "example": {
+                                        "_id": "64b28c4ffe873daadea81b50",
+                                        "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                      }
                                     },
                                     "favorite": {
                                       "type": "array",
@@ -22162,9 +23241,20 @@
                                       "example": "Sergey Nikolayovich"
                                     },
                                     "avatarURL": {
-                                      "type": "string",
+                                      "type": "object",
+                                      "properties": {
+                                        "_id": {
+                                          "type": "string"
+                                        },
+                                        "url": {
+                                          "type": "string"
+                                        }
+                                      },
                                       "description": "User's avatar link",
-                                      "example": "User's avatar link"
+                                      "example": {
+                                        "_id": "64b28c4ffe873daadea81b50",
+                                        "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                      }
                                     },
                                     "favorite": {
                                       "type": "array",
@@ -22444,9 +23534,20 @@
                                 "example": "Sergey Nikolayovich"
                               },
                               "avatarURL": {
-                                "type": "string",
+                                "type": "object",
+                                "properties": {
+                                  "_id": {
+                                    "type": "string"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  }
+                                },
                                 "description": "User's avatar link",
-                                "example": "User's avatar link"
+                                "example": {
+                                  "_id": "64b28c4ffe873daadea81b50",
+                                  "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                }
                               },
                               "favorite": {
                                 "type": "array",
@@ -22708,9 +23809,20 @@
                                 "example": "Sergey Nikolayovich"
                               },
                               "avatarURL": {
-                                "type": "string",
+                                "type": "object",
+                                "properties": {
+                                  "_id": {
+                                    "type": "string"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  }
+                                },
                                 "description": "User's avatar link",
-                                "example": "User's avatar link"
+                                "example": {
+                                  "_id": "64b28c4ffe873daadea81b50",
+                                  "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                }
                               },
                               "favorite": {
                                 "type": "array",
@@ -22956,9 +24068,20 @@
                           "example": "Sergey Nikolayovich"
                         },
                         "avatarURL": {
-                          "type": "string",
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
                           "description": "User's avatar link",
-                          "example": "User's avatar link"
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         },
                         "favorite": {
                           "type": "array",
@@ -23287,9 +24410,20 @@
                                       "example": "Sergey Nikolayovich"
                                     },
                                     "avatarURL": {
-                                      "type": "string",
+                                      "type": "object",
+                                      "properties": {
+                                        "_id": {
+                                          "type": "string"
+                                        },
+                                        "url": {
+                                          "type": "string"
+                                        }
+                                      },
                                       "description": "User's avatar link",
-                                      "example": "User's avatar link"
+                                      "example": {
+                                        "_id": "64b28c4ffe873daadea81b50",
+                                        "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                      }
                                     },
                                     "favorite": {
                                       "type": "array",
@@ -23551,9 +24685,20 @@
                                       "example": "Sergey Nikolayovich"
                                     },
                                     "avatarURL": {
-                                      "type": "string",
+                                      "type": "object",
+                                      "properties": {
+                                        "_id": {
+                                          "type": "string"
+                                        },
+                                        "url": {
+                                          "type": "string"
+                                        }
+                                      },
                                       "description": "User's avatar link",
-                                      "example": "User's avatar link"
+                                      "example": {
+                                        "_id": "64b28c4ffe873daadea81b50",
+                                        "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                      }
                                     },
                                     "favorite": {
                                       "type": "array",
@@ -23833,9 +24978,20 @@
                                 "example": "Sergey Nikolayovich"
                               },
                               "avatarURL": {
-                                "type": "string",
+                                "type": "object",
+                                "properties": {
+                                  "_id": {
+                                    "type": "string"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  }
+                                },
                                 "description": "User's avatar link",
-                                "example": "User's avatar link"
+                                "example": {
+                                  "_id": "64b28c4ffe873daadea81b50",
+                                  "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                }
                               },
                               "favorite": {
                                 "type": "array",
@@ -24097,9 +25253,20 @@
                                 "example": "Sergey Nikolayovich"
                               },
                               "avatarURL": {
-                                "type": "string",
+                                "type": "object",
+                                "properties": {
+                                  "_id": {
+                                    "type": "string"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  }
+                                },
                                 "description": "User's avatar link",
-                                "example": "User's avatar link"
+                                "example": {
+                                  "_id": "64b28c4ffe873daadea81b50",
+                                  "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                }
                               },
                               "favorite": {
                                 "type": "array",
@@ -24345,9 +25512,20 @@
                           "example": "Sergey Nikolayovich"
                         },
                         "avatarURL": {
-                          "type": "string",
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
                           "description": "User's avatar link",
-                          "example": "User's avatar link"
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         },
                         "favorite": {
                           "type": "array",
@@ -24673,9 +25851,20 @@
                                     "example": "Sergey Nikolayovich"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
                                     "description": "User's avatar link",
-                                    "example": "User's avatar link"
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   },
                                   "favorite": {
                                     "type": "array",
@@ -24937,9 +26126,20 @@
                                     "example": "Sergey Nikolayovich"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
                                     "description": "User's avatar link",
-                                    "example": "User's avatar link"
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   },
                                   "favorite": {
                                     "type": "array",
@@ -25219,9 +26419,20 @@
                               "example": "Sergey Nikolayovich"
                             },
                             "avatarURL": {
-                              "type": "string",
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "type": "string"
+                                }
+                              },
                               "description": "User's avatar link",
-                              "example": "User's avatar link"
+                              "example": {
+                                "_id": "64b28c4ffe873daadea81b50",
+                                "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                              }
                             },
                             "favorite": {
                               "type": "array",
@@ -25483,9 +26694,20 @@
                               "example": "Sergey Nikolayovich"
                             },
                             "avatarURL": {
-                              "type": "string",
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "type": "string"
+                                }
+                              },
                               "description": "User's avatar link",
-                              "example": "User's avatar link"
+                              "example": {
+                                "_id": "64b28c4ffe873daadea81b50",
+                                "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                              }
                             },
                             "favorite": {
                               "type": "array",
@@ -25731,9 +26953,20 @@
                         "example": "Sergey Nikolayovich"
                       },
                       "avatarURL": {
-                        "type": "string",
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          }
+                        },
                         "description": "User's avatar link",
-                        "example": "User's avatar link"
+                        "example": {
+                          "_id": "64b28c4ffe873daadea81b50",
+                          "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                        }
                       },
                       "favorite": {
                         "type": "array",
@@ -26016,9 +27249,20 @@
                           "example": "Solod"
                         },
                         "avatarURL": {
-                          "type": "string",
-                          "description": "User name",
-                          "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
+                          "description": "User's avatar link",
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         }
                       }
                     },
@@ -26080,9 +27324,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "User name",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               }
@@ -26142,9 +27397,20 @@
                                     "example": "Solod"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
-                                    "description": "Owner avatar",
-                                    "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "description": "User's avatar link",
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   }
                                 }
                               },
@@ -26287,9 +27553,20 @@
                         "example": "Solod"
                       },
                       "avatarURL": {
-                        "type": "string",
-                        "description": "Owner avatar",
-                        "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          }
+                        },
+                        "description": "User's avatar link",
+                        "example": {
+                          "_id": "64b28c4ffe873daadea81b50",
+                          "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                        }
                       }
                     }
                   },
@@ -26351,9 +27628,20 @@
                                   "example": "Solod"
                                 },
                                 "avatarURL": {
-                                  "type": "string",
-                                  "description": "User name",
-                                  "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                  "type": "object",
+                                  "properties": {
+                                    "_id": {
+                                      "type": "string"
+                                    },
+                                    "url": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "description": "User's avatar link",
+                                  "example": {
+                                    "_id": "64b28c4ffe873daadea81b50",
+                                    "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                  }
                                 }
                               }
                             }
@@ -26411,9 +27699,20 @@
                                   "example": "Solod"
                                 },
                                 "avatarURL": {
-                                  "type": "string",
-                                  "description": "Owner avatar",
-                                  "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                                  "type": "object",
+                                  "properties": {
+                                    "_id": {
+                                      "type": "string"
+                                    },
+                                    "url": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "description": "User's avatar link",
+                                  "example": {
+                                    "_id": "64b28c4ffe873daadea81b50",
+                                    "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                  }
                                 }
                               }
                             },
@@ -26931,9 +28230,20 @@
                         "example": "Solod"
                       },
                       "avatarURL": {
-                        "type": "string",
-                        "description": "Owner avatar",
-                        "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          }
+                        },
+                        "description": "User's avatar link",
+                        "example": {
+                          "_id": "64b28c4ffe873daadea81b50",
+                          "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                        }
                       }
                     }
                   }
@@ -27122,9 +28432,20 @@
                         "example": "Solod"
                       },
                       "avatarURL": {
-                        "type": "string",
-                        "description": "Owner avatar",
-                        "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          }
+                        },
+                        "description": "User's avatar link",
+                        "example": {
+                          "_id": "64b28c4ffe873daadea81b50",
+                          "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                        }
                       }
                     }
                   }
@@ -27300,9 +28621,20 @@
                           "example": "Solod"
                         },
                         "avatarURL": {
-                          "type": "string",
-                          "description": "Owner avatar",
-                          "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
+                          "description": "User's avatar link",
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         }
                       }
                     }
@@ -27494,9 +28826,20 @@
                         "example": "Solod"
                       },
                       "avatarURL": {
-                        "type": "string",
-                        "description": "Owner avatar",
-                        "example": "//www.gravatar.com/avatar/5c149180b293da43a77943cb15ff0700"
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          }
+                        },
+                        "description": "User's avatar link",
+                        "example": {
+                          "_id": "64b28c4ffe873daadea81b50",
+                          "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                        }
                       }
                     }
                   }
@@ -27772,9 +29115,20 @@
                                       "example": "Sergey Nikolayovich"
                                     },
                                     "avatarURL": {
-                                      "type": "string",
+                                      "type": "object",
+                                      "properties": {
+                                        "_id": {
+                                          "type": "string"
+                                        },
+                                        "url": {
+                                          "type": "string"
+                                        }
+                                      },
                                       "description": "User's avatar link",
-                                      "example": "User's avatar link"
+                                      "example": {
+                                        "_id": "64b28c4ffe873daadea81b50",
+                                        "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                      }
                                     },
                                     "favorite": {
                                       "type": "array",
@@ -28036,9 +29390,20 @@
                                       "example": "Sergey Nikolayovich"
                                     },
                                     "avatarURL": {
-                                      "type": "string",
+                                      "type": "object",
+                                      "properties": {
+                                        "_id": {
+                                          "type": "string"
+                                        },
+                                        "url": {
+                                          "type": "string"
+                                        }
+                                      },
                                       "description": "User's avatar link",
-                                      "example": "User's avatar link"
+                                      "example": {
+                                        "_id": "64b28c4ffe873daadea81b50",
+                                        "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                      }
                                     },
                                     "favorite": {
                                       "type": "array",
@@ -28318,9 +29683,20 @@
                                 "example": "Sergey Nikolayovich"
                               },
                               "avatarURL": {
-                                "type": "string",
+                                "type": "object",
+                                "properties": {
+                                  "_id": {
+                                    "type": "string"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  }
+                                },
                                 "description": "User's avatar link",
-                                "example": "User's avatar link"
+                                "example": {
+                                  "_id": "64b28c4ffe873daadea81b50",
+                                  "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                }
                               },
                               "favorite": {
                                 "type": "array",
@@ -28582,9 +29958,20 @@
                                 "example": "Sergey Nikolayovich"
                               },
                               "avatarURL": {
-                                "type": "string",
+                                "type": "object",
+                                "properties": {
+                                  "_id": {
+                                    "type": "string"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  }
+                                },
                                 "description": "User's avatar link",
-                                "example": "User's avatar link"
+                                "example": {
+                                  "_id": "64b28c4ffe873daadea81b50",
+                                  "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                }
                               },
                               "favorite": {
                                 "type": "array",
@@ -28830,9 +30217,20 @@
                           "example": "Sergey Nikolayovich"
                         },
                         "avatarURL": {
-                          "type": "string",
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
                           "description": "User's avatar link",
-                          "example": "User's avatar link"
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         },
                         "favorite": {
                           "type": "array",
@@ -29158,9 +30556,20 @@
                                     "example": "Sergey Nikolayovich"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
                                     "description": "User's avatar link",
-                                    "example": "User's avatar link"
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   },
                                   "favorite": {
                                     "type": "array",
@@ -29422,9 +30831,20 @@
                                     "example": "Sergey Nikolayovich"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
                                     "description": "User's avatar link",
-                                    "example": "User's avatar link"
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   },
                                   "favorite": {
                                     "type": "array",
@@ -29704,9 +31124,20 @@
                               "example": "Sergey Nikolayovich"
                             },
                             "avatarURL": {
-                              "type": "string",
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "type": "string"
+                                }
+                              },
                               "description": "User's avatar link",
-                              "example": "User's avatar link"
+                              "example": {
+                                "_id": "64b28c4ffe873daadea81b50",
+                                "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                              }
                             },
                             "favorite": {
                               "type": "array",
@@ -29968,9 +31399,20 @@
                               "example": "Sergey Nikolayovich"
                             },
                             "avatarURL": {
-                              "type": "string",
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "type": "string"
+                                }
+                              },
                               "description": "User's avatar link",
-                              "example": "User's avatar link"
+                              "example": {
+                                "_id": "64b28c4ffe873daadea81b50",
+                                "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                              }
                             },
                             "favorite": {
                               "type": "array",
@@ -30216,9 +31658,20 @@
                         "example": "Sergey Nikolayovich"
                       },
                       "avatarURL": {
-                        "type": "string",
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          }
+                        },
                         "description": "User's avatar link",
-                        "example": "User's avatar link"
+                        "example": {
+                          "_id": "64b28c4ffe873daadea81b50",
+                          "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                        }
                       },
                       "favorite": {
                         "type": "array",
@@ -30547,9 +32000,20 @@
                                     "example": "Sergey Nikolayovich"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
                                     "description": "User's avatar link",
-                                    "example": "User's avatar link"
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   },
                                   "favorite": {
                                     "type": "array",
@@ -30811,9 +32275,20 @@
                                     "example": "Sergey Nikolayovich"
                                   },
                                   "avatarURL": {
-                                    "type": "string",
+                                    "type": "object",
+                                    "properties": {
+                                      "_id": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
                                     "description": "User's avatar link",
-                                    "example": "User's avatar link"
+                                    "example": {
+                                      "_id": "64b28c4ffe873daadea81b50",
+                                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                                    }
                                   },
                                   "favorite": {
                                     "type": "array",
@@ -31093,9 +32568,20 @@
                               "example": "Sergey Nikolayovich"
                             },
                             "avatarURL": {
-                              "type": "string",
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "type": "string"
+                                }
+                              },
                               "description": "User's avatar link",
-                              "example": "User's avatar link"
+                              "example": {
+                                "_id": "64b28c4ffe873daadea81b50",
+                                "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                              }
                             },
                             "favorite": {
                               "type": "array",
@@ -31357,9 +32843,20 @@
                               "example": "Sergey Nikolayovich"
                             },
                             "avatarURL": {
-                              "type": "string",
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "type": "string"
+                                }
+                              },
                               "description": "User's avatar link",
-                              "example": "User's avatar link"
+                              "example": {
+                                "_id": "64b28c4ffe873daadea81b50",
+                                "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                              }
                             },
                             "favorite": {
                               "type": "array",
@@ -31605,9 +33102,20 @@
                         "example": "Sergey Nikolayovich"
                       },
                       "avatarURL": {
-                        "type": "string",
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          }
+                        },
                         "description": "User's avatar link",
-                        "example": "User's avatar link"
+                        "example": {
+                          "_id": "64b28c4ffe873daadea81b50",
+                          "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                        }
                       },
                       "favorite": {
                         "type": "array",
@@ -31853,9 +33361,20 @@
             "example": "SuperDuperCompany"
           },
           "avatarURL": {
-            "type": "string",
-            "description": "Company's avatar",
-            "example": ""
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            },
+            "description": "User's avatar link",
+            "example": {
+              "_id": "64b28c4ffe873daadea81b50",
+              "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+            }
           },
           "description": {
             "type": "string",
@@ -31955,9 +33474,20 @@
                     "example": "SuperDuperCompany"
                   },
                   "avatarURL": {
-                    "type": "string",
-                    "description": "Company's avatar URL",
-                    "example": ""
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "User's avatar link",
+                    "example": {
+                      "_id": "64b28c4ffe873daadea81b50",
+                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                    }
                   },
                   "description": {
                     "type": "string",
@@ -32115,9 +33645,20 @@
                     "example": "SuperDuperCompany 2022"
                   },
                   "avatarURL": {
-                    "type": "string",
-                    "description": "Company's avatar URL",
-                    "example": ""
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "User's avatar link",
+                    "example": {
+                      "_id": "64b28c4ffe873daadea81b50",
+                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                    }
                   },
                   "description": {
                     "type": "string",
@@ -32248,9 +33789,20 @@
                     "example": "SuperDuperCompany 2022"
                   },
                   "avatarURL": {
-                    "type": "string",
-                    "description": "Company's avatar URL",
-                    "example": ""
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "User's avatar link",
+                    "example": {
+                      "_id": "64b28c4ffe873daadea81b50",
+                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                    }
                   },
                   "description": {
                     "type": "string",
@@ -32392,9 +33944,20 @@
                     "example": "SuperDuperCompany 2022"
                   },
                   "avatarURL": {
-                    "type": "string",
-                    "description": "Company's avatar URL",
-                    "example": ""
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "User's avatar link",
+                    "example": {
+                      "_id": "64b28c4ffe873daadea81b50",
+                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                    }
                   },
                   "description": {
                     "type": "string",
@@ -32525,9 +34088,20 @@
                     "example": "SuperDuperCompany 2022"
                   },
                   "avatarURL": {
-                    "type": "string",
-                    "description": "Company's avatar URL",
-                    "example": ""
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "User's avatar link",
+                    "example": {
+                      "_id": "64b28c4ffe873daadea81b50",
+                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                    }
                   },
                   "description": {
                     "type": "string",
@@ -32669,9 +34243,20 @@
                     "example": "SuperDuperCompany 2022"
                   },
                   "avatarURL": {
-                    "type": "string",
-                    "description": "Company's avatar URL",
-                    "example": ""
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "User's avatar link",
+                    "example": {
+                      "_id": "64b28c4ffe873daadea81b50",
+                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                    }
                   },
                   "description": {
                     "type": "string",
@@ -32805,9 +34390,20 @@
                       "example": "SuperDuperCompany 2022"
                     },
                     "avatarURL": {
-                      "type": "string",
-                      "description": "Company's avatar URL",
-                      "example": ""
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "User's avatar link",
+                      "example": {
+                        "_id": "64b28c4ffe873daadea81b50",
+                        "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                      }
                     },
                     "description": {
                       "type": "string",
@@ -32960,9 +34556,20 @@
                       "example": "SuperDuperCompany 2022"
                     },
                     "avatarURL": {
-                      "type": "string",
-                      "description": "Company's avatar URL",
-                      "example": ""
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        }
+                      },
+                      "description": "User's avatar link",
+                      "example": {
+                        "_id": "64b28c4ffe873daadea81b50",
+                        "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                      }
                     },
                     "description": {
                       "type": "string",
@@ -33112,9 +34719,20 @@
                     "example": "SuperDuperCompany 2022"
                   },
                   "avatarURL": {
-                    "type": "string",
-                    "description": "Company's avatar URL",
-                    "example": ""
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "User's avatar link",
+                    "example": {
+                      "_id": "64b28c4ffe873daadea81b50",
+                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                    }
                   },
                   "description": {
                     "type": "string",
@@ -33272,9 +34890,20 @@
                     "example": "SuperDuperCompany 2022"
                   },
                   "avatarURL": {
-                    "type": "string",
-                    "description": "Company's avatar URL",
-                    "example": ""
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string"
+                      }
+                    },
+                    "description": "User's avatar link",
+                    "example": {
+                      "_id": "64b28c4ffe873daadea81b50",
+                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                    }
                   },
                   "description": {
                     "type": "string",
@@ -33461,9 +35090,20 @@
                         "example": "Very Good Company"
                       },
                       "avatarURL": {
-                        "type": "string",
-                        "description": "Company's avatar link",
-                        "example": "User's avatar link"
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          }
+                        },
+                        "description": "User's avatar link",
+                        "example": {
+                          "_id": "64b28c4ffe873daadea81b50",
+                          "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                        }
                       },
                       "description": {
                         "type": "string",
@@ -33616,9 +35256,20 @@
                         "example": "Very Good Company"
                       },
                       "avatarURL": {
-                        "type": "string",
-                        "description": "Company's avatar link",
-                        "example": "User's avatar link"
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          }
+                        },
+                        "description": "User's avatar link",
+                        "example": {
+                          "_id": "64b28c4ffe873daadea81b50",
+                          "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                        }
                       },
                       "description": {
                         "type": "string",
@@ -33758,9 +35409,20 @@
                           "example": "Very Good Company"
                         },
                         "avatarURL": {
-                          "type": "string",
-                          "description": "Company's avatar link",
-                          "example": "User's avatar link"
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
+                          "description": "User's avatar link",
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         },
                         "description": {
                           "type": "string",
@@ -33916,9 +35578,20 @@
                         "example": "Very Good Company"
                       },
                       "avatarURL": {
-                        "type": "string",
-                        "description": "Company's avatar link",
-                        "example": "User's avatar link"
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          }
+                        },
+                        "description": "User's avatar link",
+                        "example": {
+                          "_id": "64b28c4ffe873daadea81b50",
+                          "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                        }
                       },
                       "description": {
                         "type": "string",
@@ -34058,9 +35731,20 @@
                           "example": "Very Good Company"
                         },
                         "avatarURL": {
-                          "type": "string",
-                          "description": "Company's avatar link",
-                          "example": "User's avatar link"
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
+                          "description": "User's avatar link",
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         },
                         "description": {
                           "type": "string",
@@ -34219,9 +35903,20 @@
                           "example": "Very Good Company"
                         },
                         "avatarURL": {
-                          "type": "string",
-                          "description": "Company's avatar link",
-                          "example": "User's avatar link"
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
+                          "description": "User's avatar link",
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         },
                         "description": {
                           "type": "string",
@@ -34380,9 +36075,20 @@
                           "example": "Very Good Company"
                         },
                         "avatarURL": {
-                          "type": "string",
-                          "description": "Company's avatar link",
-                          "example": "User's avatar link"
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
+                          "description": "User's avatar link",
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         },
                         "description": {
                           "type": "string",
@@ -34538,9 +36244,20 @@
                         "example": "Very Good Company"
                       },
                       "avatarURL": {
-                        "type": "string",
-                        "description": "Company's avatar link",
-                        "example": "User's avatar link"
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          }
+                        },
+                        "description": "User's avatar link",
+                        "example": {
+                          "_id": "64b28c4ffe873daadea81b50",
+                          "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                        }
                       },
                       "description": {
                         "type": "string",
@@ -34795,9 +36512,20 @@
                         "example": "Very Good Company"
                       },
                       "avatarURL": {
-                        "type": "string",
-                        "description": "Company's avatar link",
-                        "example": "User's avatar link"
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          }
+                        },
+                        "description": "User's avatar link",
+                        "example": {
+                          "_id": "64b28c4ffe873daadea81b50",
+                          "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                        }
                       },
                       "description": {
                         "type": "string",
@@ -35032,9 +36760,20 @@
                         "example": "Very Good Company"
                       },
                       "avatarURL": {
-                        "type": "string",
-                        "description": "Company's avatar link",
-                        "example": "User's avatar link"
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          }
+                        },
+                        "description": "User's avatar link",
+                        "example": {
+                          "_id": "64b28c4ffe873daadea81b50",
+                          "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                        }
                       },
                       "description": {
                         "type": "string",
@@ -35195,9 +36934,20 @@
                           "example": "Very Good Company"
                         },
                         "avatarURL": {
-                          "type": "string",
-                          "description": "Company's avatar link",
-                          "example": "User's avatar link"
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
+                          "description": "User's avatar link",
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         },
                         "description": {
                           "type": "string",
@@ -35338,9 +37088,20 @@
                         "example": "Very Good Company"
                       },
                       "avatarURL": {
-                        "type": "string",
-                        "description": "Company's avatar link",
-                        "example": "User's avatar link"
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          }
+                        },
+                        "description": "User's avatar link",
+                        "example": {
+                          "_id": "64b28c4ffe873daadea81b50",
+                          "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                        }
                       },
                       "description": {
                         "type": "string",
@@ -35516,9 +37277,20 @@
                           "example": "Very Good Company"
                         },
                         "avatarURL": {
-                          "type": "string",
-                          "description": "Company's avatar link",
-                          "example": "User's avatar link"
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
+                          "description": "User's avatar link",
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         },
                         "description": {
                           "type": "string",
@@ -35698,9 +37470,20 @@
                           "example": "Very Good Company"
                         },
                         "avatarURL": {
-                          "type": "string",
-                          "description": "Company's avatar link",
-                          "example": "User's avatar link"
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
+                          "description": "User's avatar link",
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         },
                         "description": {
                           "type": "string",
@@ -35881,9 +37664,20 @@
                           "example": "Very Good Company"
                         },
                         "avatarURL": {
-                          "type": "string",
-                          "description": "Company's avatar link",
-                          "example": "User's avatar link"
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
+                          "description": "User's avatar link",
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         },
                         "description": {
                           "type": "string",
@@ -36063,9 +37857,20 @@
                           "example": "Very Good Company"
                         },
                         "avatarURL": {
-                          "type": "string",
-                          "description": "Company's avatar link",
-                          "example": "User's avatar link"
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string"
+                            }
+                          },
+                          "description": "User's avatar link",
+                          "example": {
+                            "_id": "64b28c4ffe873daadea81b50",
+                            "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                          }
                         },
                         "description": {
                           "type": "string",
@@ -36242,9 +38047,20 @@
                         "example": "Very Good Company"
                       },
                       "avatarURL": {
-                        "type": "string",
-                        "description": "Company's avatar link",
-                        "example": "User's avatar link"
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          }
+                        },
+                        "description": "User's avatar link",
+                        "example": {
+                          "_id": "64b28c4ffe873daadea81b50",
+                          "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                        }
                       },
                       "description": {
                         "type": "string",
@@ -36402,9 +38218,20 @@
                         "example": "Very Good Company"
                       },
                       "avatarURL": {
-                        "type": "string",
-                        "description": "Company's avatar link",
-                        "example": "User's avatar link"
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          }
+                        },
+                        "description": "User's avatar link",
+                        "example": {
+                          "_id": "64b28c4ffe873daadea81b50",
+                          "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
+                        }
                       },
                       "description": {
                         "type": "string",

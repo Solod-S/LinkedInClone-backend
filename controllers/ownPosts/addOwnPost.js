@@ -24,6 +24,10 @@ const addOwnPost = async (req, res, next) => {
           path: "owner",
           select:
             "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+          populate: {
+            path: "avatarURL",
+            select: "url",
+          },
         },
         {
           path: "mediaFiles",
@@ -32,6 +36,10 @@ const addOwnPost = async (req, res, next) => {
             path: "owner",
             select:
               "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+            populate: {
+              path: "avatarURL",
+              select: "url",
+            },
           },
         },
         {
@@ -41,6 +49,10 @@ const addOwnPost = async (req, res, next) => {
             path: "owner",
             select:
               "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+            populate: {
+              path: "avatarURL",
+              select: "url",
+            },
           },
         },
       ],
@@ -52,6 +64,10 @@ const addOwnPost = async (req, res, next) => {
         path: "owner",
         select:
           "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+        populate: {
+          path: "avatarURL",
+          select: "url",
+        },
       },
     })
     .populate({
@@ -61,12 +77,20 @@ const addOwnPost = async (req, res, next) => {
         path: "owner",
         select:
           "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+        populate: {
+          path: "avatarURL",
+          select: "url",
+        },
       },
     })
     .populate({
       path: "owner",
       select:
         "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+      populate: {
+        path: "avatarURL",
+        select: "url",
+      },
     });
 
   res.status(201).json({
