@@ -5,7 +5,7 @@ const { validateBody, authenticate } = require("../../middlewares");
 const { publicationSchemas } = require("../../models");
 
 //  get own publications
-ownPublicationsRouter.get("/", authenticate, ownPublications.getOwnPublication);
+ownPublicationsRouter.get("/", authenticate, ownPublications.getOwnPublications);
 
 //  create a new publication
 ownPublicationsRouter.post(

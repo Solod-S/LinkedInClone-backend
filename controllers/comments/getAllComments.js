@@ -19,7 +19,7 @@ const getAllComments = async (req, res, next) => {
   if ((await Comment.find({ owner: _id })).length <= 0) {
     return res.json({
       status: "success",
-      message: "Successfully get media comments",
+      message: "Successfully get comments",
       data: {
         comments: [],
         totalPages,

@@ -1,5 +1,4 @@
-const { Comment, MediaFile, Education, Experience } = require("../models");
-const { Post, User, Token } = require("../models");
+const { Comment, MediaFile, Education, Experience, Post, User, Token } = require("../models");
 
 const request = require("supertest");
 const mongoose = require("mongoose");

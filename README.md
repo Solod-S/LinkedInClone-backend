@@ -40,11 +40,109 @@ A Social Network developed with MERN stack.
 .
 ├── app.js
 ├── package.json
-├── bin
-│   └── www
 ├── controllers
-│   ├── AuthController.js
-│   └── BookController.js
+│   ├── comments
+│   │   ├── addComment
+│   │   ├── deleteOwnComment
+│   │   ├── getAllComments
+│   │   └── updateOwnComment
+│   ├── companies
+│   │   ├── createCompany
+│   │   ├── deleteCompany
+│   │   ├── getAllCompanies
+│   │   ├── getCompaniesByQuery
+│   │   ├── getCompanyById
+│   │   ├── ownerAdd
+│   │   ├── ownerRemove
+│   │   ├── updateCompany
+│   │   ├── workerAdd
+│   │   └── workerRemove
+│   ├── educations
+│   │   ├── addEducation
+│   │   ├── deleteEducation
+│   │   ├── getOwnEducations
+│   │   └── updateEducation
+│   ├── experiences
+│   │   ├── addExperience
+│   │   ├── deleteExperience
+│   │   ├── getOwnExperience
+│   │   └── updateExperience
+│   ├── favorites
+│   │   ├── addFavorite
+│   │   ├── deleteFavorite
+│   │   └── getOwnFavorite
+│   ├── jobs
+│   │   ├── applyJobById
+│   │   ├── getAllJobs
+│   │   ├── getAppliedJobs
+│   │   ├── getJobById
+│   │   ├── getJobsByQuery
+│   │   ├── getPopularJobs
+│   │   └── unApplyJobById
+│   ├── languages
+│   │   ├── addLanguage
+│   │   ├── deleteLanguage
+│   │   ├── getOwnLanguage
+│   │   └── updateLanguage
+│   ├── likes
+│   │   ├── addLike
+│   │   └── deleteLike
+│   ├── mediaFiles
+│   │   ├── addMediaFile
+│   │   ├── deleteMediaFile
+│   │   ├── getAllMediaFiles
+│   │   ├── getMediaFileById
+│   │   └── updateOwnMediaFile
+│   ├── ownJobs
+│   │   ├── addOwnJob
+│   │   ├── deleteOwnJob
+│   │   ├── getOwnJobs
+│   │   └── updateOwnJob
+│   ├── ownPosts
+│   │   ├── addOwnPost
+│   │   ├── deleteOwnPost
+│   │   ├── getOwnPosts
+│   │   └── updateOwnPost
+│   ├── ownPublications
+│   │   ├── addOwnPublication
+│   │   ├── deleteOwnPublication
+│   │   ├── getOwnPublications
+│   │   └── updateOwnPublication
+│   ├── posts
+│   │   ├── getAllPosts
+│   │   ├── getPopularPosts
+│   │   ├── getPostById
+│   │   └── getPostsByQuery
+│   ├── publications
+│   │   ├── getAllPublications
+│   │   ├── getPopularPublications
+│   │   ├── getPublicationById
+│   │   └── getPublicationsByQuery
+│   ├── skills
+│   │   ├── createSkill
+│   │   ├── deleteSkill
+│   │   ├── getAllSkills
+│   │   ├── getOwnSkills
+│   │   ├── getSkillById
+│   │   ├── getSkillByQuery
+│   │   ├── updateSkill
+│   │   ├── userAdd
+│   │   └── userRemove
+│   └── users
+│   │   ├── getAllUsers
+│   │   ├── getCurrent
+│   │   ├── getUserById
+│   │   ├── getUsersByQuery
+│   │   ├── passwordChange
+│   │   ├── passwordReset
+│   │   ├── passwordResetByEmail
+│   │   ├── resendVerifyEmail
+│   │   ├── userDelete
+│   │   ├── userLogin
+│   │   ├── userLogout
+│   │   ├── userRegister
+│   │   ├── userUpdate
+│   │   └── verifyEmail
 ├── models
 │   ├── BookModel.js
 │   └── UserModel.js

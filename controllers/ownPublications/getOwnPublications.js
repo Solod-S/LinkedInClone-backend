@@ -2,14 +2,14 @@ const { Publication, Company } = require("../../models");
 
 const { publicationTransformer } = require("../../helpers/index");
 
-const getOwnPublication = async (req, res, next) => {
+const getOwnPublications = async (req, res, next) => {
   const { _id } = req.user;
   let page = parseInt(req.query.page) || 1;
   const perPage = parseInt(req.query.perPage) || 10;
 
   const company = await Company.findOne({ owners: _id });
 
-  if ( !company) {
+  if (!company) {
     return res.json({
       status: "success",
       message: "Successfully get publications",
@@ -112,4 +112,4 @@ const getOwnPublication = async (req, res, next) => {
   });
 };
 
-module.exports = getOwnPublication;
+module.exports = getOwnPublications;
