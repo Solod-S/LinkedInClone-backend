@@ -1,7 +1,7 @@
 const { User, userSchemas } = require("./users");
 const { Token, tokenSchemas } = require("./token");
 const { Post, postSchemas } = require("./posts");
-const { Skill, skillsSchemas } = require("./skils");
+const { Skill, skillsSchemas } = require("./skills");
 const { MediaFile, mediaFileSchemas } = require("./mediaFiles");
 const { Like, likeSchemas } = require("./likes");
 const { Comment, commentSchemas } = require("./comments");

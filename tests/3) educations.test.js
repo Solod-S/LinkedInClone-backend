@@ -9,10 +9,11 @@ require("dotenv").config();
 const { DB_HOST, WRONG_TOKEN } = process.env;
 const { testsUtils } = require("../helpers/index");
 
-let testToken = null;
-let educationId = null;
 const EMAIL = "education@gmail.com";
 const PASS = "qwer1234";
+
+let testToken = null;
+let educationId = null;
 
 describe("Experience Test Suite", () => {
   let server;
@@ -41,7 +42,7 @@ describe("Experience Test Suite", () => {
     const { data } = res.body;
 
     testToken = data.token;
-  }, 5000);
+  }, 7000);
 
   test("POST /education with invalid token, should return 401 status", async () => {
     const res = await request(app).post(`/educations/add`).set("Authorization", `Bearer ${WRONG_TOKEN}`).send({
@@ -57,7 +58,7 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 5000);
+  }, 7000);
 
   test("POST /education without body, should return 400 status", async () => {
     const res = await request(app).post(`/educations/add`).set("Authorization", `Bearer ${testToken}`).send({});
@@ -65,7 +66,7 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"school" is required');
-  }, 5000);
+  }, 7000);
 
   test("POST /education with invalid body, should return 400 status", async () => {
     const res = await request(app)
@@ -76,7 +77,7 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"school" is required');
-  }, 5000);
+  }, 7000);
 
   test("POST /education with valid token, should return 201 status and valid education data", async () => {
     const res = await request(app).post(`/educations/add`).set("Authorization", `Bearer ${testToken}`).send({
@@ -113,7 +114,7 @@ describe("Experience Test Suite", () => {
     expect(typeof education.updatedAt).toBe("string");
     expect(typeof education.startDate).toBe("string");
     expect(typeof education.endDate).toBe("string");
-  }, 5000);
+  }, 7000);
 
   test("PATCH /education file with valid token, should return 200 status and valid education data", async () => {
     const res = await request(app)
@@ -158,7 +159,7 @@ describe("Experience Test Suite", () => {
     expect(education.startDate).toEqual("2021-07-17T08:35:03.692Z");
     expect(typeof education.endDate).toBe("string");
     expect(education.endDate).toEqual("2023-04-17T08:35:03.692Z");
-  }, 5000);
+  }, 7000);
 
   test("PATCH /education file with invalid token, should return 401 status", async () => {
     const res = await request(app)
@@ -177,7 +178,7 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 5000);
+  }, 7000);
 
   test("PATCH /education file with valid token without body, should return 400 status", async () => {
     const res = await request(app)
@@ -191,7 +192,7 @@ describe("Experience Test Suite", () => {
       "message",
       '"value" must contain at least one of [school, degree, fieldOfStudy, grade, activitiesAndSocieties, description, startDate, endDate, skills, mediaFiles]'
     );
-  }, 5000);
+  }, 7000);
 
   test("GET /educations with valid token, should return 200 status and valid educations data", async () => {
     const res = await request(app).get(`/educations`).set("Authorization", `Bearer ${testToken}`);
@@ -246,7 +247,7 @@ describe("Experience Test Suite", () => {
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 5000);
+  }, 7000);
 
   test("GET /educations with valid token + pagination, should return 200 status and valid educations data", async () => {
     const res = await request(app).get(`/educations?page=1&perPage=10`).set("Authorization", `Bearer ${testToken}`);
@@ -301,7 +302,7 @@ describe("Experience Test Suite", () => {
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 5000);
+  }, 7000);
 
   test("GET /educations with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/educations`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -309,7 +310,7 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 5000);
+  }, 7000);
 
   test("GET /educations with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app).get(`/educations?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -317,7 +318,7 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 5000);
+  }, 7000);
 
   test("DELETE /education with invalid token, should return 401 status", async () => {
     const res = await request(app)
@@ -327,7 +328,7 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 5000);
+  }, 7000);
 
   test("DELETE /education with invalid id, should return 404 status", async () => {
     const res = await request(app)
@@ -337,7 +338,7 @@ describe("Experience Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 5000);
+  }, 7000);
 
   test("DELETE /education with valid token, should return 200 status and valid education data", async () => {
     const res = await request(app)
@@ -376,7 +377,7 @@ describe("Experience Test Suite", () => {
 
     const deletedEducation = await Education.findById({ _id: educationId });
     expect(deletedEducation).toBe(null);
-  }, 5000);
+  }, 7000);
 
   test("END", async () => {
     const res = await request(app).delete(`/users/remove`).set("Authorization", `Bearer ${testToken}`);
@@ -388,5 +389,5 @@ describe("Experience Test Suite", () => {
 
     const deletedToken = await Token.findOne({ testToken });
     expect(deletedToken).toBe(null);
-  }, 5000);
+  }, 7000);
 });

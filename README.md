@@ -42,110 +42,171 @@ A Social Network developed with MERN stack.
 ├── package.json
 ├── controllers
 │   ├── comments
-│   │   ├── addComment
-│   │   ├── deleteOwnComment
-│   │   ├── getAllComments
-│   │   └── updateOwnComment
+│   │   ├── addComment.js
+│   │   ├── deleteOwnComment.js
+│   │   ├── getAllComments.js
+│   │   ├── updateOwnComment.js
+│   │   └── index.js
 │   ├── companies
-│   │   ├── createCompany
-│   │   ├── deleteCompany
-│   │   ├── getAllCompanies
-│   │   ├── getCompaniesByQuery
-│   │   ├── getCompanyById
-│   │   ├── ownerAdd
-│   │   ├── ownerRemove
-│   │   ├── updateCompany
-│   │   ├── workerAdd
-│   │   └── workerRemove
+│   │   ├── createCompany.js
+│   │   ├── deleteCompany.js
+│   │   ├── getAllCompanies.js
+│   │   ├── getCompaniesByQuery.js
+│   │   ├── getCompanyById.js
+│   │   ├── ownerAdd.js
+│   │   ├── ownerRemove.js
+│   │   ├── updateCompany.js
+│   │   ├── workerAdd.js
+│   │   ├── workerRemove.js
+│   │   └── index.js
 │   ├── educations
-│   │   ├── addEducation
-│   │   ├── deleteEducation
-│   │   ├── getOwnEducations
-│   │   └── updateEducation
+│   │   ├── addEducation.js
+│   │   ├── deleteEducation.js
+│   │   ├── getOwnEducations.js
+│   │   ├── updateEducation.js
+│   │   └── index.js
 │   ├── experiences
-│   │   ├── addExperience
-│   │   ├── deleteExperience
-│   │   ├── getOwnExperience
-│   │   └── updateExperience
+│   │   ├── addExperience.js
+│   │   ├── deleteExperience.js
+│   │   ├── getOwnExperience.js
+│   │   ├── updateExperience.js
+│   │   └── index.js
 │   ├── favorites
-│   │   ├── addFavorite
-│   │   ├── deleteFavorite
-│   │   └── getOwnFavorite
+│   │   ├── addFavorite.js
+│   │   ├── deleteFavorite.js
+│   │   ├── getOwnFavorite.js
+│   │   └── index.js
 │   ├── jobs
-│   │   ├── applyJobById
-│   │   ├── getAllJobs
-│   │   ├── getAppliedJobs
-│   │   ├── getJobById
-│   │   ├── getJobsByQuery
-│   │   ├── getPopularJobs
-│   │   └── unApplyJobById
+│   │   ├── applyJobById.js
+│   │   ├── getAllJobs.js
+│   │   ├── getAppliedJobs.js
+│   │   ├── getJobById.js
+│   │   ├── getJobsByQuery.js
+│   │   ├── getPopularJobs.js
+│   │   ├── unApplyJobById.js
+│   │   └── index.js
 │   ├── languages
-│   │   ├── addLanguage
-│   │   ├── deleteLanguage
-│   │   ├── getOwnLanguage
-│   │   └── updateLanguage
+│   │   ├── addLanguage.js
+│   │   ├── deleteLanguage.js
+│   │   ├── getOwnLanguage.js
+│   │   ├── updateLanguage.js
+│   │   └── index.js
 │   ├── likes
-│   │   ├── addLike
-│   │   └── deleteLike
+│   │   ├── addLike.js
+│   │   ├── deleteLike.js
+│   │   └── index.js
 │   ├── mediaFiles
-│   │   ├── addMediaFile
-│   │   ├── deleteMediaFile
-│   │   ├── getAllMediaFiles
-│   │   ├── getMediaFileById
-│   │   └── updateOwnMediaFile
+│   │   ├── addMediaFile.js
+│   │   ├── deleteMediaFile.js
+│   │   ├── getAllMediaFiles.js
+│   │   ├── getMediaFileById.js
+│   │   ├── updateOwnMediaFile.js
+│   │   └── index.js
 │   ├── ownJobs
-│   │   ├── addOwnJob
-│   │   ├── deleteOwnJob
-│   │   ├── getOwnJobs
-│   │   └── updateOwnJob
+│   │   ├── addOwnJob.js
+│   │   ├── deleteOwnJob.js
+│   │   ├── getOwnJobs.js
+│   │   ├── updateOwnJob.js
+│   │   └── index.js
 │   ├── ownPosts
-│   │   ├── addOwnPost
-│   │   ├── deleteOwnPost
-│   │   ├── getOwnPosts
-│   │   └── updateOwnPost
+│   │   ├── addOwnPost.js
+│   │   ├── deleteOwnPost.js
+│   │   ├── getOwnPosts.js
+│   │   ├── updateOwnPost.js
+│   │   └── index.js
 │   ├── ownPublications
-│   │   ├── addOwnPublication
-│   │   ├── deleteOwnPublication
-│   │   ├── getOwnPublications
-│   │   └── updateOwnPublication
+│   │   ├── addOwnPublication.js
+│   │   ├── deleteOwnPublication.js
+│   │   ├── getOwnPublications.js
+│   │   ├── updateOwnPublication.js
+│   │   └── index.js
 │   ├── posts
-│   │   ├── getAllPosts
-│   │   ├── getPopularPosts
-│   │   ├── getPostById
-│   │   └── getPostsByQuery
+│   │   ├── getAllPosts.js
+│   │   ├── getPopularPosts.js
+│   │   ├── getPostById.js
+│   │   ├── getPostsByQuery.js
+│   │   └── index.js
 │   ├── publications
-│   │   ├── getAllPublications
-│   │   ├── getPopularPublications
-│   │   ├── getPublicationById
-│   │   └── getPublicationsByQuery
+│   │   ├── getAllPublications.js
+│   │   ├── getPopularPublications.js
+│   │   ├── getPublicationById.js
+│   │   ├── getPublicationsByQuery.js
+│   │   └── index.js
 │   ├── skills
-│   │   ├── createSkill
-│   │   ├── deleteSkill
-│   │   ├── getAllSkills
-│   │   ├── getOwnSkills
-│   │   ├── getSkillById
-│   │   ├── getSkillByQuery
-│   │   ├── updateSkill
-│   │   ├── userAdd
-│   │   └── userRemove
+│   │   ├── createSkill.js
+│   │   ├── deleteSkill.js
+│   │   ├── getAllSkills.js
+│   │   ├── getOwnSkills.js
+│   │   ├── getSkillById.js
+│   │   ├── getSkillByQuery.js
+│   │   ├── updateSkill.js
+│   │   ├── userAdd.js
+│   │   ├── userRemove.js
+│   │   └── index.js
 │   └── users
-│   │   ├── getAllUsers
-│   │   ├── getCurrent
-│   │   ├── getUserById
-│   │   ├── getUsersByQuery
-│   │   ├── passwordChange
-│   │   ├── passwordReset
-│   │   ├── passwordResetByEmail
-│   │   ├── resendVerifyEmail
-│   │   ├── userDelete
-│   │   ├── userLogin
-│   │   ├── userLogout
-│   │   ├── userRegister
-│   │   ├── userUpdate
-│   │   └── verifyEmail
+│   │   ├── getAllUsers.js
+│   │   ├── getCurrent.js
+│   │   ├── getUserById.js
+│   │   ├── getUsersByQuery.js
+│   │   ├── passwordChange.js
+│   │   ├── passwordReset.js
+│   │   ├── passwordResetByEmail.js
+│   │   ├── resendVerifyEmail.js
+│   │   ├── userDelete.js
+│   │   ├── userLogin.js
+│   │   ├── userLogout.js
+│   │   ├── userRegister.js
+│   │   ├── userUpdate.js
+│   │   ├── verifyEmail.js
+│   │   └── index.js
+│   └── index.js
+├── helpers
+│   ├── email
+│   │   ├── createRestorePasswordEmail.js
+│   │   ├── createVerifyEmail.js
+│   │   └── index.js
+│   ├── testsUtils
+│   │   ├── createUser.js
+│   │   ├── deleteUser.js
+│   │   └── index.js
+│   ├── transformer
+│   │   ├── commentTransformer.js
+│   │   ├── companyTransformer.js
+│   │   ├── educationTransformer.js
+│   │   ├── experienceTransformer.js
+│   │   ├── jobTransformer.js
+│   │   ├── languageTransformer.js
+│   │   ├── likeTransformer.js
+│   │   ├── mediaFileTransformer.js
+│   │   ├── postTransformer.js
+│   │   ├── publicationTransformer.js
+│   │   ├── skillTransformer.js
+│   │   ├── userTransformer.js
+│   │   └── index.js
+│   ├── utils
+│   │   └── handleMongooseError.js
+│   └── index.js
+├── middlewares
+│   ├── auth.js
+│   ├── ctrlWrapper.js
+│   ├── isAdminMiddleware.js
+│   ├── validateBody.js
+│   └── index.js
 ├── models
-│   ├── BookModel.js
-│   └── UserModel.js
+│   ├── comments.js
+│   ├── companies.js
+│   ├── educations.js
+│   ├── experience.js
+│   ├── jobs.js
+│   ├── language.js
+│   ├── likes.js
+│   ├── mediaFiles.js
+│   ├── posts.js
+│   ├── publications.js
+│   ├── skills.js
+│   ├── token.js
+│   ├── users.js
+│   └── index.js
 ├── routes
 │   ├── api.js
 │   ├── auth.js
