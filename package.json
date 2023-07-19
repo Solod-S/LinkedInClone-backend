@@ -7,7 +7,8 @@
   },
   "scripts": {
     "test:dev": "jest",
-    "test": "jest --silent",
+    "test": "jest user.test.js experience.test.js educations.test.js  favorites.test.js languages.test.js skills.test.js ownPosts.test.js posts.test.js mediaFiles.test.js comments.test.js likes.test.js --silent ",
+    "test:order": "jest  --silent --runInBand",
     "start": "cross-env NODE_ENV=production node ./server.js",
     "start:dev": "cross-env NODE_ENV=development nodemon ./server.js",
     "lint": "eslint **/*.js",

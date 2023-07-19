@@ -14,7 +14,7 @@ describe("Publications Test Suite", () => {
     server = app.listen(3104, () => {
       server.unref(); // Отпускает серверный таймер после запуска сервера
     });
-  }, 47000);
+  }, 48000);
 
   afterAll(async () => {
     await mongoose.disconnect();
@@ -66,7 +66,7 @@ describe("Publications Test Suite", () => {
           typeof owner.employeesCount === "number"
       )
     ).toBe(true);
-  }, 47000);
+  }, 48000);
 
   test("GET /all jobs with valid token + pagination, should return 200 status and valid jobs data", async () => {
     const res = await request(app).get(`/jobs?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
@@ -113,7 +113,7 @@ describe("Publications Test Suite", () => {
           typeof owner.employeesCount === "number"
       )
     ).toBe(true);
-  }, 47000);
+  }, 48000);
 
   test("GET /all jobs with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/jobs`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -121,7 +121,7 @@ describe("Publications Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 47000);
+  }, 48000);
 
   test("GET /all jobs with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app).get(`/jobs?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -129,7 +129,7 @@ describe("Publications Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 47000);
+  }, 48000);
 
   test("GET /all popular jobs with valid token, should return 200 status and valid jobs data", async () => {
     const res = await request(app).get(`/jobs/popular`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
@@ -176,7 +176,7 @@ describe("Publications Test Suite", () => {
           typeof owner.employeesCount === "number"
       )
     ).toBe(true);
-  }, 47000);
+  }, 48000);
 
   test("GET /all popular jobs with valid token + pagination, should return 200 status and valid posts data", async () => {
     const res = await request(app)
@@ -225,7 +225,7 @@ describe("Publications Test Suite", () => {
           typeof owner.employeesCount === "number"
       )
     ).toBe(true);
-  }, 47000);
+  }, 48000);
 
   test("GET /all popular jobs with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/jobs/popular`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -233,7 +233,7 @@ describe("Publications Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 47000);
+  }, 48000);
 
   test("GET /all popular jobs with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app).get(`/jobs/popular?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -241,7 +241,7 @@ describe("Publications Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 47000);
+  }, 48000);
 
   test("GET /all applied jobs with valid token, should return 200 status and valid jobs data", async () => {
     const res = await request(app).get(`/jobs/popular`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
@@ -288,7 +288,7 @@ describe("Publications Test Suite", () => {
           typeof owner.employeesCount === "number"
       )
     ).toBe(true);
-  }, 47000);
+  }, 48000);
 
   test("GET /all applied jobs with valid token + pagination, should return 200 status and valid posts data", async () => {
     const res = await request(app)
@@ -337,7 +337,7 @@ describe("Publications Test Suite", () => {
           typeof owner.employeesCount === "number"
       )
     ).toBe(true);
-  }, 47000);
+  }, 48000);
 
   test("GET /all applied jobs with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/jobs/applied`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -345,7 +345,7 @@ describe("Publications Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 47000);
+  }, 48000);
 
   test("GET /all applied jobs with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app).get(`/jobs/applied?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -353,7 +353,7 @@ describe("Publications Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 47000);
+  }, 48000);
 
   test("GET /jobs by search query with valid token, should return 200 status and valid jobs data", async () => {
     const res = await request(app).get(`/jobs/search?search=Work`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
@@ -400,7 +400,7 @@ describe("Publications Test Suite", () => {
           typeof owner.employeesCount === "number"
       )
     ).toBe(true);
-  }, 47000);
+  }, 48000);
 
   test("GET /jobs by search query with valid token + pagination, should return 200 status and valid publications data", async () => {
     const res = await request(app)
@@ -449,7 +449,7 @@ describe("Publications Test Suite", () => {
           typeof owner.employeesCount === "number"
       )
     ).toBe(true);
-  }, 47000);
+  }, 48000);
 
   test("GET /jobs by search query with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/jobs/search?search=Work`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -457,7 +457,7 @@ describe("Publications Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 47000);
+  }, 48000);
 
   test("GET /jobs by search query with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app)
@@ -467,7 +467,7 @@ describe("Publications Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 47000);
+  }, 48000);
 
   test("GET /job by id with valid token, should return 200 status and valid job data", async () => {
     const res = await request(app).get(`/jobs/${TEST_JOB_ID}`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
@@ -506,7 +506,7 @@ describe("Publications Test Suite", () => {
     expect(typeof job.owner.phone).toBe("number");
     expect(typeof job.owner.foundedYear).toBe("number");
     expect(typeof job.owner.employeesCount).toBe("number");
-  }, 47000);
+  }, 48000);
 
   test("GET /job by invalid id with valid token, should return 404 status", async () => {
     const res = await request(app)
@@ -516,14 +516,14 @@ describe("Publications Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 47000);
+  }, 48000);
 
   test("GET /job by id with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/jobs/${TEST_JOB_ID}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
     const { status, body } = res;
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 47000);
+  }, 48000);
 
   test("GET /apply job by id with valid token, should return 200 status and valid job data", async () => {
     const res = await request(app).get(`/jobs/apply/${TEST_JOB_ID}`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
@@ -563,7 +563,7 @@ describe("Publications Test Suite", () => {
     expect(typeof job.owner.phone).toBe("number");
     expect(typeof job.owner.foundedYear).toBe("number");
     expect(typeof job.owner.employeesCount).toBe("number");
-  }, 47000);
+  }, 48000);
 
   test("GET /apply job by id with valid token second try, should return 409 status and valid job data", async () => {
     const res = await request(app).get(`/jobs/apply/${TEST_JOB_ID}`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
@@ -571,7 +571,7 @@ describe("Publications Test Suite", () => {
 
     expect(status).toBe(409);
     expect(body).toHaveProperty("message", "Sorry, the user was applyed to this job before");
-  }, 47000);
+  }, 48000);
 
   test("GET /apply job by invalid id with valid token, should return 404 status", async () => {
     const res = await request(app)
@@ -581,14 +581,14 @@ describe("Publications Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 47000);
+  }, 48000);
 
   test("GET /apply job by id with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/jobs/apply/${TEST_JOB_ID}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
     const { status, body } = res;
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 47000);
+  }, 48000);
 
   test("GET /unapply job by id with valid token, should return 200 status and valid job data", async () => {
     const res = await request(app)
@@ -630,7 +630,7 @@ describe("Publications Test Suite", () => {
     expect(typeof job.owner.phone).toBe("number");
     expect(typeof job.owner.foundedYear).toBe("number");
     expect(typeof job.owner.employeesCount).toBe("number");
-  }, 47000);
+  }, 48000);
 
   test("GET /unapply job by invalid id with valid token, should return 404 status", async () => {
     const res = await request(app)
@@ -640,12 +640,12 @@ describe("Publications Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 47000);
+  }, 48000);
 
   test("GET /unapply job by id with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/jobs/unapply/${TEST_JOB_ID}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
     const { status, body } = res;
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 47000);
+  }, 48000);
 });

@@ -208,9 +208,28 @@ A Social Network developed with MERN stack.
 │   ├── users.js
 │   └── index.js
 ├── routes
-│   ├── api.js
-│   ├── auth.js
-│   └── book.js
+│   ├── api
+│   │   ├── comments.js
+│   │   ├── companies.js
+│   │   ├── educations.js
+│   │   ├── experiences.js
+│   │   ├── favorites.js
+│   │   ├── jobs.js
+│   │   ├── languages.js
+│   │   ├── likes.js
+│   │   ├── mediaFiles.js
+│   │   ├── ownJobs.js
+│   │   ├── ownPosts.js
+│   │   ├── ownPublications.js
+│   │   ├── posts.js
+│   │   ├── publications.js
+│   │   ├── skills.js
+│   │   ├── users.js
+│   │   └── index.js
+│   ├── errors
+│   │   └── HttpErrors.js
+│   └── swagger
+│   │   └── openapi.js
 ├── middlewares
 │   ├── jwt.js
 ├── helpers
