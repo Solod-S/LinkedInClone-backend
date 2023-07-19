@@ -431,7 +431,7 @@ describe("Likes Test Suite", () => {
     const deletedComment = await Comment.findById({ _id: commentId });
     expect(deletedComment).toBe(null);
 
-    const deletedToken = await Token.findOne({ testToken });
+    const deletedToken = await Token.findOne({ token: testToken });
     expect(deletedToken).toBe(null);
   }, 8000);
 });

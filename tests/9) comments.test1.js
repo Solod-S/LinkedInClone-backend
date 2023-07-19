@@ -516,7 +516,7 @@ describe("Comments Test Suite", () => {
     const deletedPublication = await Publication.findById({ _id: publicationId });
     expect(deletedPublication).toBe(null);
 
-    const deletedToken = await Token.findOne({ testToken });
+    const deletedToken = await Token.findOne({ token: testToken });
     expect(deletedToken).toBe(null);
   }, 8000);
 });

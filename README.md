@@ -230,6 +230,10 @@ A Social Network developed with MERN stack.
 │   │   └── HttpErrors.js
 │   └── swagger
 │   │   └── openapi.js
+├── tests
+│   ├── 1_user.test.js
+│   ├── auth.js
+│   └── book.js
 ├── middlewares
 │   ├── jwt.js
 ├── helpers
@@ -237,10 +241,6 @@ A Social Network developed with MERN stack.
 │   ├── constants.js
 │   ├── mailer.js
 │   └── utility.js
-├── test
-│   ├── testConfig.js
-│   ├── auth.js
-│   └── book.js
 └── public
     ├── index.html
     └── stylesheets

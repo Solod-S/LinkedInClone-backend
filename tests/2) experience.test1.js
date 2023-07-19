@@ -380,7 +380,7 @@ describe("Experience Test Suite", () => {
     const deletedUser = await User.findById({ _id: user._id });
     expect(deletedUser).toBe(null);
 
-    const deletedToken = await Token.findOne({ testToken });
+    const deletedToken = await Token.findOne({ token: testToken });
     expect(deletedToken).toBe(null);
   }, 8000);
 });

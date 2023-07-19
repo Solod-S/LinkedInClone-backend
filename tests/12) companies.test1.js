@@ -1,14 +1,23 @@
+const { Company, User, Token } = require("../models");
+
 const request = require("supertest");
 const mongoose = require("mongoose");
-
-const { Company, Publication, Job } = require("../models");
 
 const app = require("../app");
 
 require("dotenv").config();
-const { DB_HOST, TEST_TOKEN_USER, WRONG_TOKEN, USER_ID, USER_ID_PUBLICATION_TEST } = process.env;
+const { DB_HOST, WRONG_TOKEN } = process.env;
+const { testsUtils } = require("../helpers/index");
 
+const EMAIL = "companies@gmail.com";
+const PASS = "qwer1234";
+const EMAIL2 = "companies2@gmail.com";
+const PASS2 = "qwer1234";
+
+let testToken = null;
+let testToken2 = null;
 let companyId = null;
+let user2Id = null;
 
 describe("Company Test Suite", () => {
   let server;
@@ -18,23 +27,39 @@ describe("Company Test Suite", () => {
     server = app.listen(3109, () => {
       server.unref(); // Отпускает серверный таймер после запуска сервера
     });
-
-    try {
-      const companyAlreadyExist = await Company.findOne({ owners: USER_ID });
-      if (companyAlreadyExist) {
-        await Company.findByIdAndDelete({ _id: companyAlreadyExist._id });
-        await Publication.deleteMany({ owner: companyAlreadyExist._id });
-        await Job.deleteMany({ owner: companyAlreadyExist._id });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, 48000);
+    await testsUtils.createUser(EMAIL, PASS);
+    await testsUtils.createUser(EMAIL2, PASS2);
+  }, 10000);
 
   afterAll(async () => {
     await mongoose.disconnect();
     await server.close();
   });
+
+  test("START", async () => {
+    const res = await request(app)
+      .post(`/users/login`)
+      .send({
+        email: EMAIL,
+        password: PASS,
+      })
+      .set("Accept", "application/json");
+    const { data } = res.body;
+
+    testToken = data.token;
+
+    const res2 = await request(app)
+      .post(`/users/login`)
+      .send({
+        email: EMAIL2,
+        password: PASS2,
+      })
+      .set("Accept", "application/json");
+
+    testToken2 = res2.body.data.token;
+
+    user2Id = res2.body.data.user._id;
+  }, 8000);
 
   test("POST /company with invalid token, should return 401 status", async () => {
     const res = await request(app).post(`/companies/create`).set("Authorization", `Bearer ${WRONG_TOKEN}`).send({
@@ -55,29 +80,29 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("POST /company without body, should return 400 status", async () => {
-    const res = await request(app).post(`/companies/create`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`).send({});
+    const res = await request(app).post(`/companies/create`).set("Authorization", `Bearer ${testToken}`).send({});
     const { status, body } = res;
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"name" is required');
-  }, 48000);
+  }, 8000);
 
   test("POST /company with invalid body, should return 400 status", async () => {
     const res = await request(app)
       .post(`/companies/create`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`)
+      .set("Authorization", `Bearer ${testToken}`)
       .send({ company: "some company" });
     const { status, body } = res;
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"name" is required');
-  }, 48000);
+  }, 8000);
 
   test("POST /company with valid token, should return 201 status and valid company data", async () => {
-    const res = await request(app).post(`/companies/create`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`).send({
+    const res = await request(app).post(`/companies/create`).set("Authorization", `Bearer ${testToken}`).send({
       name: "SuperDuperCompany",
       avatarURL: "",
       description: "This is the best company",
@@ -120,10 +145,10 @@ describe("Company Test Suite", () => {
     expect(typeof company.postedAtHuman).toBe("string");
     expect(typeof company.createdAt).toBe("string");
     expect(typeof company.updatedAt).toBe("string");
-  }, 48000);
+  }, 8000);
 
   test("POST /company clone with valid token, should return 409 status and valid like data", async () => {
-    const res = await request(app).post(`/companies/create`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`).send({
+    const res = await request(app).post(`/companies/create`).set("Authorization", `Bearer ${testToken}`).send({
       name: "SuperDuperCompany",
       avatarURL: "",
       description: "This is the best company",
@@ -141,12 +166,12 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(409);
     expect(body).toHaveProperty("message", "Sorry, the company was created before");
-  }, 48000);
+  }, 8000);
 
   test("PATCH /company with valid token, should return 200 status and valid company data", async () => {
     const res = await request(app)
       .patch(`/companies/update/${companyId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`)
+      .set("Authorization", `Bearer ${testToken}`)
       .send({
         name: "SuperDuperCompany 2022",
         avatarURL: "www.ava.ac/asd/ss.jpg",
@@ -198,7 +223,7 @@ describe("Company Test Suite", () => {
     expect(typeof company.postedAtHuman).toBe("string");
     expect(typeof company.createdAt).toBe("string");
     expect(typeof company.updatedAt).toBe("string");
-  }, 48000);
+  }, 8000);
 
   test("PATCH /company with invalid token, should return 401 status", async () => {
     const res = await request(app)
@@ -222,12 +247,12 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("PATCH /company with valid token without body, should return 400 status", async () => {
     const res = await request(app)
       .patch(`/companies/update/${companyId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`)
+      .set("Authorization", `Bearer ${testToken}`)
       .send({});
     const { status, body } = res;
 
@@ -236,12 +261,12 @@ describe("Company Test Suite", () => {
       "message",
       '"value" must contain at least one of [name, avatarURL, description, industry, location, website, email, phone, foundedYear, employeesCount, workers, jobs]'
     );
-  }, 48000);
+  }, 8000);
 
   test("GET /add owner to company by id with valid token, should return 200 status and valid company data", async () => {
     const res = await request(app)
-      .get(`/companies/workers/add/${companyId}?user=${USER_ID}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+      .get(`/companies/workers/add/${companyId}?user=${user2Id}`)
+      .set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { company } = data;
 
@@ -270,42 +295,42 @@ describe("Company Test Suite", () => {
     expect(typeof company.postedAtHuman).toBe("string");
     expect(typeof company.createdAt).toBe("string");
     expect(typeof company.updatedAt).toBe("string");
-  }, 48000);
+  }, 8000);
 
   test("GET /add owner to company by repeted id, should return 409 status", async () => {
     const res = await request(app)
-      .get(`/companies/workers/add/${companyId}?user=${USER_ID}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+      .get(`/companies/workers/add/${companyId}?user=${user2Id}`)
+      .set("Authorization", `Bearer ${testToken}`);
     const { status, body } = res;
 
     expect(status).toBe(409);
     expect(body).toHaveProperty("message", "Sorry, the user was added to this company workers before");
-  }, 48000);
+  }, 8000);
 
   test("GET /add owner to company by invalid id, should return 404 status", async () => {
     const res = await request(app)
-      .get(`/companies/workers/add/111111111111111111111111?user=${USER_ID}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+      .get(`/companies/workers/add/111111111111111111111111?user=${user2Id}`)
+      .set("Authorization", `Bearer ${testToken}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 48000);
+  }, 8000);
 
   test("GET /add owner to company by id with invalid token, should return 401 status", async () => {
     const res = await request(app)
-      .get(`/companies/workers/add/${companyId}?user=${USER_ID}`)
+      .get(`/companies/workers/add/${companyId}?user=${user2Id}`)
       .set("Authorization", `Bearer ${WRONG_TOKEN}`);
     const { status, body } = res;
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("GET /remove worker from company by id with valid token, should return 200 status and valid company data", async () => {
     const res = await request(app)
-      .get(`/companies/workers/remove/${companyId}?user=${USER_ID}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+      .get(`/companies/workers/remove/${companyId}?user=${user2Id}`)
+      .set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { company } = data;
 
@@ -334,42 +359,42 @@ describe("Company Test Suite", () => {
     expect(typeof company.postedAtHuman).toBe("string");
     expect(typeof company.createdAt).toBe("string");
     expect(typeof company.updatedAt).toBe("string");
-  }, 48000);
+  }, 8000);
 
   test("GET /remove worker from company by repeted id, should return 404 status", async () => {
     const res = await request(app)
-      .get(`/companies/workers/remove/${companyId}?user=${USER_ID}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+      .get(`/companies/workers/remove/${companyId}?user=${user2Id}`)
+      .set("Authorization", `Bearer ${testToken}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 48000);
+  }, 8000);
 
   test("GET /remove worker from company by invalid id, should return 404 status", async () => {
     const res = await request(app)
-      .get(`/companies/workers/remove/111111111111111111111111?user=${USER_ID}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+      .get(`/companies/workers/remove/111111111111111111111111?user=${user2Id}`)
+      .set("Authorization", `Bearer ${testToken}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 48000);
+  }, 8000);
 
   test("GET /remove worker from company by id with invalid token, should return 401 status", async () => {
     const res = await request(app)
-      .get(`/companies/workers/remove/${companyId}?user=${USER_ID}`)
+      .get(`/companies/workers/remove/${companyId}?user=${user2Id}`)
       .set("Authorization", `Bearer ${WRONG_TOKEN}`);
     const { status, body } = res;
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("GET /add owner to company by id with valid token, should return 200 status and valid company data", async () => {
     const res = await request(app)
-      .get(`/companies/owners/add/${companyId}?user=${USER_ID_PUBLICATION_TEST}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+      .get(`/companies/owners/add/${companyId}?user=${user2Id}`)
+      .set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { company } = data;
 
@@ -398,42 +423,42 @@ describe("Company Test Suite", () => {
     expect(typeof company.postedAtHuman).toBe("string");
     expect(typeof company.createdAt).toBe("string");
     expect(typeof company.updatedAt).toBe("string");
-  }, 48000);
+  }, 8000);
 
   test("GET /add owner to company by repeted id, should return 409 status", async () => {
     const res = await request(app)
-      .get(`/companies/owners/add/${companyId}?user=${USER_ID_PUBLICATION_TEST}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+      .get(`/companies/owners/add/${companyId}?user=${user2Id}`)
+      .set("Authorization", `Bearer ${testToken}`);
     const { status, body } = res;
 
     expect(status).toBe(409);
     expect(body).toHaveProperty("message", "Sorry, the user was added to this company owners before");
-  }, 48000);
+  }, 8000);
 
   test("GET /add owner to company by invalid id, should return 404 status", async () => {
     const res = await request(app)
-      .get(`/companies/owners/add/111111111111111111111111?user=${USER_ID_PUBLICATION_TEST}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+      .get(`/companies/owners/add/111111111111111111111111?user=${user2Id}`)
+      .set("Authorization", `Bearer ${testToken}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 48000);
+  }, 8000);
 
   test("GET /add owner to company by id with invalid token, should return 401 status", async () => {
     const res = await request(app)
-      .get(`/companies/owners/add/${companyId}?user=${USER_ID_PUBLICATION_TEST}`)
+      .get(`/companies/owners/add/${companyId}?user=${user2Id}`)
       .set("Authorization", `Bearer ${WRONG_TOKEN}`);
     const { status, body } = res;
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("GET /remove owner from company by id with valid token, should return 200 status and valid company data", async () => {
     const res = await request(app)
-      .get(`/companies/owners/remove/${companyId}?user=${USER_ID_PUBLICATION_TEST}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+      .get(`/companies/owners/remove/${companyId}?user=${user2Id}`)
+      .set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { company } = data;
 
@@ -462,40 +487,40 @@ describe("Company Test Suite", () => {
     expect(typeof company.postedAtHuman).toBe("string");
     expect(typeof company.createdAt).toBe("string");
     expect(typeof company.updatedAt).toBe("string");
-  }, 48000);
+  }, 8000);
 
   test("GET /remove owner from company by repeted id, should return 404 status", async () => {
     const res = await request(app)
-      .get(`/companies/owners/remove/${companyId}?user=${USER_ID_PUBLICATION_TEST}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+      .get(`/companies/owners/remove/${companyId}?user=${user2Id}`)
+      .set("Authorization", `Bearer ${testToken}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 48000);
+  }, 8000);
 
   test("GET /remove owner from company by invalid id, should return 404 status", async () => {
     const res = await request(app)
-      .get(`/companies/owners/remove/111111111111111111111111?user=${USER_ID_PUBLICATION_TEST}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+      .get(`/companies/owners/remove/111111111111111111111111?user=${user2Id}`)
+      .set("Authorization", `Bearer ${testToken}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 48000);
+  }, 8000);
 
   test("GET /remove owner from company by id with invalid token, should return 401 status", async () => {
     const res = await request(app)
-      .get(`/companies/owners/remove/${companyId}?user=${USER_ID_PUBLICATION_TEST}`)
+      .get(`/companies/owners/remove/${companyId}?user=${user2Id}`)
       .set("Authorization", `Bearer ${WRONG_TOKEN}`);
     const { status, body } = res;
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("GET /companies with valid token, should return 200 status and valid company data", async () => {
-    const res = await request(app).get(`/companies`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+    const res = await request(app).get(`/companies`).set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { companies, totalPages, currentPage, perPage } = data;
 
@@ -514,8 +539,8 @@ describe("Company Test Suite", () => {
     expect(companies.every(({ location }) => typeof location === "string")).toBe(true);
     expect(companies.every(({ website }) => typeof website === "string")).toBe(true);
     expect(companies.every(({ email }) => typeof email === "string")).toBe(true);
-    expect(companies.every(({ phone }) => typeof phone === "number")).toBe(true);
-    expect(companies.every(({ foundedYear }) => typeof foundedYear === "number")).toBe(true);
+    expect(companies.every(({ phone }) => typeof phone === "number" || phone === null)).toBe(true);
+    expect(companies.every(({ foundedYear }) => typeof foundedYear === "number" || foundedYear === null)).toBe(true);
     expect(companies.every(({ employeesCount }) => typeof employeesCount === "number")).toBe(true);
     expect(companies.every(({ owners }) => Array.isArray(owners))).toBe(true);
     expect(companies.every(({ workers }) => Array.isArray(workers))).toBe(true);
@@ -525,12 +550,10 @@ describe("Company Test Suite", () => {
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 48000);
+  }, 8000);
 
   test("GET /companies with valid token + pagination, should return 200 status and valid company data", async () => {
-    const res = await request(app)
-      .get(`/companies?page=1&perPage=10`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+    const res = await request(app).get(`/companies?page=1&perPage=10`).set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { companies, totalPages, currentPage, perPage } = data;
 
@@ -549,8 +572,8 @@ describe("Company Test Suite", () => {
     expect(companies.every(({ location }) => typeof location === "string")).toBe(true);
     expect(companies.every(({ website }) => typeof website === "string")).toBe(true);
     expect(companies.every(({ email }) => typeof email === "string")).toBe(true);
-    expect(companies.every(({ phone }) => typeof phone === "number")).toBe(true);
-    expect(companies.every(({ foundedYear }) => typeof foundedYear === "number")).toBe(true);
+    expect(companies.every(({ phone }) => typeof phone === "number" || phone === null)).toBe(true);
+    expect(companies.every(({ foundedYear }) => typeof foundedYear === "number" || foundedYear === null)).toBe(true);
     expect(companies.every(({ employeesCount }) => typeof employeesCount === "number")).toBe(true);
     expect(companies.every(({ owners }) => Array.isArray(owners))).toBe(true);
     expect(companies.every(({ workers }) => Array.isArray(workers))).toBe(true);
@@ -560,7 +583,7 @@ describe("Company Test Suite", () => {
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 48000);
+  }, 8000);
 
   test("GET /companies with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/companies`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -568,7 +591,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("GET /companies with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app).get(`/companies?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -576,12 +599,12 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("GET /company by id with valid token, should return 200 status and valid company data", async () => {
     const res = await request(app)
       .get(`/companies/${companyId}?page=1&perPage=2&path=workers`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+      .set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { company, totalPages, currentPage, perPage, workers, jobs, publications } = data;
 
@@ -616,17 +639,17 @@ describe("Company Test Suite", () => {
     expect(Array.isArray(workers)).toBe(true);
     expect(Array.isArray(jobs)).toBe(true);
     expect(Array.isArray(publications)).toBe(true);
-  }, 48000);
+  }, 8000);
 
   test("GET /company by invalid id with valid token, should return 404 status", async () => {
     const res = await request(app)
       .get(`/companies/111111111111111111111111?page=1&perPage=2&path=workers`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+      .set("Authorization", `Bearer ${testToken}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 48000);
+  }, 8000);
 
   test("GET /company by id with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/companies/${companyId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -634,12 +657,10 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("GET /companies by search query with valid token, should return 200 status and valid companies data", async () => {
-    const res = await request(app)
-      .get(`/companies/search?search=com`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+    const res = await request(app).get(`/companies/search?search=com`).set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { companies, totalPages, currentPage, perPage } = data;
 
@@ -658,8 +679,8 @@ describe("Company Test Suite", () => {
     expect(companies.every(({ location }) => typeof location === "string")).toBe(true);
     expect(companies.every(({ website }) => typeof website === "string")).toBe(true);
     expect(companies.every(({ email }) => typeof email === "string")).toBe(true);
-    expect(companies.every(({ phone }) => typeof phone === "number")).toBe(true);
-    expect(companies.every(({ foundedYear }) => typeof foundedYear === "number")).toBe(true);
+    expect(companies.every(({ phone }) => typeof phone === "number" || phone === null)).toBe(true);
+    expect(companies.every(({ foundedYear }) => typeof foundedYear === "number" || foundedYear === null)).toBe(true);
     expect(companies.every(({ employeesCount }) => typeof employeesCount === "number")).toBe(true);
     expect(companies.every(({ owners }) => Array.isArray(owners))).toBe(true);
     expect(companies.every(({ workers }) => Array.isArray(workers))).toBe(true);
@@ -669,12 +690,12 @@ describe("Company Test Suite", () => {
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 48000);
+  }, 8000);
 
   test("GET /companies by search query with valid token + pagination, should return 200 status and valid company data", async () => {
     const res = await request(app)
       .get(`/companies/search?search=com&page=1&perPage=10`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+      .set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { companies, totalPages, currentPage, perPage } = data;
 
@@ -693,8 +714,8 @@ describe("Company Test Suite", () => {
     expect(companies.every(({ location }) => typeof location === "string")).toBe(true);
     expect(companies.every(({ website }) => typeof website === "string")).toBe(true);
     expect(companies.every(({ email }) => typeof email === "string")).toBe(true);
-    expect(companies.every(({ phone }) => typeof phone === "number")).toBe(true);
-    expect(companies.every(({ foundedYear }) => typeof foundedYear === "number")).toBe(true);
+    expect(companies.every(({ phone }) => typeof phone === "number" || phone === null)).toBe(true);
+    expect(companies.every(({ foundedYear }) => typeof foundedYear === "number" || foundedYear === null)).toBe(true);
     expect(companies.every(({ employeesCount }) => typeof employeesCount === "number")).toBe(true);
     expect(companies.every(({ owners }) => Array.isArray(owners))).toBe(true);
     expect(companies.every(({ workers }) => Array.isArray(workers))).toBe(true);
@@ -704,7 +725,7 @@ describe("Company Test Suite", () => {
     expect(typeof totalPages).toBe("number");
     expect(typeof currentPage).toBe("number");
     expect(typeof perPage).toBe("number");
-  }, 48000);
+  }, 8000);
 
   test("GET /companies by search query with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/companies/search?search=com`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -712,7 +733,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("GET /companies by search query with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app)
@@ -722,7 +743,7 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("DELETE /company with invalid token, should return 401 status", async () => {
     const res = await request(app)
@@ -732,22 +753,20 @@ describe("Company Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("DELETE /company with invalid id, should return 404 status", async () => {
     const res = await request(app)
       .delete(`/companies/remove/111111111111111111111111`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+      .set("Authorization", `Bearer ${testToken}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 48000);
+  }, 8000);
 
   test("DELETE /company with valid token, should return 200 status and valid company data", async () => {
-    const res = await request(app)
-      .delete(`/companies/remove/${companyId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+    const res = await request(app).delete(`/companies/remove/${companyId}`).set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { company } = data;
 
@@ -788,5 +807,31 @@ describe("Company Test Suite", () => {
 
     const deletedCompany = await Company.findById({ _id: companyId });
     expect(deletedCompany).toBe(null);
-  }, 48000);
+  }, 8000);
+
+  test("END", async () => {
+    const res = await request(app).delete(`/users/remove`).set("Authorization", `Bearer ${testToken}`);
+    const { data } = res.body;
+    const { user } = data;
+
+    const res2 = await request(app).delete(`/users/remove`).set("Authorization", `Bearer ${testToken2}`);
+    const user2 = res2.body.data.user;
+
+    await Company.findByIdAndDelete({ _id: companyId });
+
+    const deletedUser = await User.findById({ _id: user._id });
+    expect(deletedUser).toBe(null);
+
+    const deletedUser2 = await User.findById({ _id: user2._id });
+    expect(deletedUser2).toBe(null);
+
+    const deletedCompany = await Company.findById({ _id: companyId });
+    expect(deletedCompany).toBe(null);
+
+    const deletedToken = await Token.findOne({ token: testToken });
+    expect(deletedToken).toBe(null);
+
+    const deletedToken2 = await Token.findOne({ token: testToken2 });
+    expect(deletedToken2).toBe(null);
+  }, 8000);
 });

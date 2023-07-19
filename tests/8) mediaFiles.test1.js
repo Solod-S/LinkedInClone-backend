@@ -778,7 +778,7 @@ describe("Media-files Test Suite", () => {
     const deletedExperience = await Experience.findById({ _id: experienceId });
     expect(deletedExperience).toBe(null);
 
-    const deletedToken = await Token.findOne({ testToken });
+    const deletedToken = await Token.findOne({ token: testToken });
     expect(deletedToken).toBe(null);
   }, 8000);
 });

@@ -610,7 +610,7 @@ describe("Post Test Suite", () => {
     const deletedPost = await Post.findById({ _id: postId });
     expect(deletedPost).toBe(null);
 
-    const deletedToken = await Token.findOne({ testToken });
+    const deletedToken = await Token.findOne({ token: testToken });
     expect(deletedToken).toBe(null);
   }, 8000);
 });
