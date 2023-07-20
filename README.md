@@ -28,7 +28,6 @@ A Social Network developed with MERN stack.
     jest
     supertest
     chance
-    gravatar
     human-time
     multer
     chalk
@@ -39,7 +38,11 @@ A Social Network developed with MERN stack.
 ```sh
 .
 ├── app.js
+├── server.js
 ├── package.json
+├── .env
+├── .env.example
+├── README.md
 ├── controllers
 │   ├── comments
 │   │   ├── addComment.js
@@ -232,8 +235,21 @@ A Social Network developed with MERN stack.
 │   │   └── openapi.js
 ├── tests
 │   ├── 1_user.test.js
-│   ├── auth.js
-│   └── book.js
+│   ├── 2_experience.test.js
+│   ├── 3_educations.test.js
+│   ├── 4_languages.test.js
+│   ├── 5_skills.test.js
+│   ├── 6_ownPosts.test.js
+│   ├── 7_posts.test.js
+│   ├── 8_mediaFiles.test.js
+│   ├── 9_comments.test.js
+│   ├── 10_likes.test.js
+│   ├── 11_favorites.test.js
+│   ├── 12_companies.test.js
+│   ├── 13_ownPublications.test.js
+│   ├── 14_publications.test.js
+│   ├── 15_ownJobs.test.js
+│   └── 16_jobs.test.js
 ├── middlewares
 │   ├── jwt.js
 ├── helpers

@@ -24,7 +24,7 @@ describe("Company Test Suite", () => {
 
   beforeAll(async () => {
     await mongoose.connect(DB_HOST);
-    server = app.listen(3109, () => {
+    server = app.listen(3012, () => {
       server.unref(); // Отпускает серверный таймер после запуска сервера
     });
     await testsUtils.createUser(EMAIL, PASS);

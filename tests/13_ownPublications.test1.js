@@ -21,7 +21,7 @@ describe("Own-publication Test Suite", () => {
 
   beforeAll(async () => {
     await mongoose.connect(DB_HOST);
-    server = app.listen(3107, () => {
+    server = app.listen(3013, () => {
       server.unref(); // Отпускает серверный таймер после запуска сервера
     });
     await testsUtils.createUser(EMAIL, PASS);
