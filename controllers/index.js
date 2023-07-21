@@ -4,6 +4,7 @@ const mediaFiles = require("./mediaFiles");
 const likes = require("./likes");
 const comments = require("./comments");
 const favorites = require("./favorites");
+const subscriptions = require("./subscriptions");
 const posts = require("./posts");
 const skills = require("./skills");
 const experiences = require("./experiences");
@@ -22,6 +23,7 @@ module.exports = {
   likes,
   comments,
   favorites,
+  subscriptions,
   posts,
   skills,
   experiences,

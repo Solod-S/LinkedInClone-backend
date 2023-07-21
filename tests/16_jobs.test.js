@@ -1,10 +1,21 @@
+const { Job, Company, User, Token } = require("../models");
+
 const request = require("supertest");
 const mongoose = require("mongoose");
 
 const app = require("../app");
 
 require("dotenv").config();
-const { DB_HOST, TEST_TOKEN_USER, WRONG_TOKEN, TEST_JOB_ID, USER_ID } = process.env;
+const { DB_HOST, WRONG_TOKEN } = process.env;
+const { testsUtils } = require("../helpers/index");
+
+const EMAIL = "jobs@gmail.com";
+const PASS = "qwer1234";
+
+let testToken = null;
+let companyId = null;
+let userId = null;
+let jobId = null;
 
 describe("Publications Test Suite", () => {
   let server;
@@ -14,15 +25,60 @@ describe("Publications Test Suite", () => {
     server = app.listen(3104, () => {
       server.unref(); // Отпускает серверный таймер после запуска сервера
     });
-  }, 48000);
+    await testsUtils.createUser(EMAIL, PASS);
+  }, 10000);
 
   afterAll(async () => {
     await mongoose.disconnect();
     await server.close();
   });
 
+  test("START", async () => {
+    const res = await request(app)
+      .post(`/users/login`)
+      .send({
+        email: EMAIL,
+        password: PASS,
+      })
+      .set("Accept", "application/json");
+    const { data } = res.body;
+
+    testToken = data.token;
+    userId = data.user._id;
+
+    const res2 = await request(app).post(`/companies/create`).set("Authorization", `Bearer ${testToken}`).send({
+      name: "SuperDuperJobsCompany",
+      avatarURL: "",
+      description: "This is the best company",
+      industry: "Information Technology (IT)",
+      location: "Ukraine, Kiev",
+      website: "www.website.com",
+      email: "email@website.com",
+      phone: 3999999999,
+      foundedYear: 2001,
+      employeesCount: 12321,
+      workers: [],
+      jobs: [],
+    });
+
+    companyId = res2.body.data.company._id;
+
+    const res3 = await request(app).post(`/own-jobs/add`).set("Authorization", `Bearer ${testToken}`).send({
+      title: "Work of your dream",
+      location: "Ukraine, Kiev",
+      description: "Hello!!",
+      employmentType: "Full-time",
+      seniorityLevel: "Junior",
+      industry: "Other",
+      applyURL: "",
+      skills: [],
+    });
+
+    jobId = res3.body.data.job._id;
+  }, 8000);
+
   test("GET /all jobs with valid token, should return 200 status and valid jobs data", async () => {
-    const res = await request(app).get(`/jobs`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+    const res = await request(app).get(`/jobs`).set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { jobs, totalPages, currentPage, perPage } = data;
 
@@ -69,7 +125,7 @@ describe("Publications Test Suite", () => {
   }, 48000);
 
   test("GET /all jobs with valid token + pagination, should return 200 status and valid jobs data", async () => {
-    const res = await request(app).get(`/jobs?page=1&perPage=10`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+    const res = await request(app).get(`/jobs?page=1&perPage=10`).set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { jobs, totalPages, currentPage, perPage } = data;
 
@@ -132,7 +188,7 @@ describe("Publications Test Suite", () => {
   }, 48000);
 
   test("GET /all popular jobs with valid token, should return 200 status and valid jobs data", async () => {
-    const res = await request(app).get(`/jobs/popular`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+    const res = await request(app).get(`/jobs/popular`).set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { jobs, totalPages, currentPage, perPage } = data;
 
@@ -179,9 +235,7 @@ describe("Publications Test Suite", () => {
   }, 48000);
 
   test("GET /all popular jobs with valid token + pagination, should return 200 status and valid posts data", async () => {
-    const res = await request(app)
-      .get(`/jobs/popular?page=1&perPage=10`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+    const res = await request(app).get(`/jobs/popular?page=1&perPage=10`).set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { jobs, totalPages, currentPage, perPage } = data;
 
@@ -243,8 +297,73 @@ describe("Publications Test Suite", () => {
     expect(body).toHaveProperty("message", "Unauthorized");
   }, 48000);
 
+  test("GET /apply job by id with valid token, should return 200 status and valid job data", async () => {
+    const res = await request(app).get(`/jobs/apply/${jobId}`).set("Authorization", `Bearer ${testToken}`);
+    const { status, message, data } = res.body;
+    const { job } = data;
+
+    expect(res.status).toBe(200);
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("User successfully applyed to this job");
+    expect(typeof data).toBe("object");
+    expect(typeof job).toBe("object");
+    expect(typeof job._id).toBe("string");
+    expect(typeof job.description).toBe("string");
+    expect(typeof job.title).toBe("string");
+    expect(typeof job.location).toBe("string");
+    expect(typeof job.employmentType).toBe("string");
+    expect(typeof job.seniorityLevel).toBe("string");
+    expect(typeof job.industry).toBe("string");
+    expect(typeof job.applyURL).toBe("string");
+    expect(Array.isArray(job.skills)).toBe(true);
+    expect(Array.isArray(job.applied)).toBe(true);
+    expect(job.applied.includes(userId)).toBe(true);
+    expect(typeof job.postedAtHuman).toBe("string");
+    expect(typeof job.createdAt).toBe("string");
+    expect(typeof job.updatedAt).toBe("string");
+    expect(typeof job.owner).toBe("object");
+    expect(typeof job.owner._id).toBe("string");
+    expect(typeof job.owner.name).toBe("string");
+    expect(typeof job.owner.avatarURL).toBe("string");
+    expect(typeof job.owner.description).toBe("string");
+    expect(typeof job.owner.industry).toBe("string");
+    expect(typeof job.owner.location).toBe("string");
+    expect(typeof job.owner.website).toBe("string");
+    expect(typeof job.owner.email).toBe("string");
+    expect(typeof job.owner.phone).toBe("number");
+    expect(typeof job.owner.foundedYear).toBe("number");
+    expect(typeof job.owner.employeesCount).toBe("number");
+  }, 48000);
+
+  test("GET /apply job by id with valid token second try, should return 409 status and valid job data", async () => {
+    const res = await request(app).get(`/jobs/apply/${jobId}`).set("Authorization", `Bearer ${testToken}`);
+    const { status, body } = res;
+
+    expect(status).toBe(409);
+    expect(body).toHaveProperty("message", "Sorry, the user was applyed to this job before");
+  }, 48000);
+
+  test("GET /apply job by invalid id with valid token, should return 404 status", async () => {
+    const res = await request(app)
+      .get(`/jobs/apply/111111111111111111111111`)
+      .set("Authorization", `Bearer ${testToken}`);
+    const { status, body } = res;
+
+    expect(status).toBe(404);
+    expect(body).toHaveProperty("message", "Not found");
+  }, 48000);
+
+  test("GET /apply job by id with invalid token, should return 401 status", async () => {
+    const res = await request(app).get(`/jobs/apply/${jobId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+    const { status, body } = res;
+    expect(status).toBe(401);
+    expect(body).toHaveProperty("message", "Unauthorized");
+  }, 48000);
+
   test("GET /all applied jobs with valid token, should return 200 status and valid jobs data", async () => {
-    const res = await request(app).get(`/jobs/popular`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+    const res = await request(app).get(`/jobs/popular`).set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { jobs, totalPages, currentPage, perPage } = data;
 
@@ -291,9 +410,7 @@ describe("Publications Test Suite", () => {
   }, 48000);
 
   test("GET /all applied jobs with valid token + pagination, should return 200 status and valid posts data", async () => {
-    const res = await request(app)
-      .get(`/jobs/applied?page=1&perPage=10`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+    const res = await request(app).get(`/jobs/applied?page=1&perPage=10`).set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { jobs, totalPages, currentPage, perPage } = data;
 
@@ -355,8 +472,65 @@ describe("Publications Test Suite", () => {
     expect(body).toHaveProperty("message", "Unauthorized");
   }, 48000);
 
+  test("GET /unapply job by id with valid token, should return 200 status and valid job data", async () => {
+    const res = await request(app).get(`/jobs/unapply/${jobId}`).set("Authorization", `Bearer ${testToken}`);
+    const { status, message, data } = res.body;
+    const { job } = data;
+
+    expect(res.status).toBe(200);
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("User successfully unapplyed from this job");
+    expect(typeof data).toBe("object");
+    expect(typeof job).toBe("object");
+    expect(typeof job._id).toBe("string");
+    expect(typeof job.description).toBe("string");
+    expect(typeof job.title).toBe("string");
+    expect(typeof job.location).toBe("string");
+    expect(typeof job.employmentType).toBe("string");
+    expect(typeof job.seniorityLevel).toBe("string");
+    expect(typeof job.industry).toBe("string");
+    expect(typeof job.applyURL).toBe("string");
+    expect(Array.isArray(job.skills)).toBe(true);
+    expect(Array.isArray(job.applied)).toBe(true);
+    expect(job.applied.includes(userId)).toBe(false);
+    expect(typeof job.postedAtHuman).toBe("string");
+    expect(typeof job.createdAt).toBe("string");
+    expect(typeof job.updatedAt).toBe("string");
+    expect(typeof job.owner).toBe("object");
+    expect(typeof job.owner._id).toBe("string");
+    expect(typeof job.owner.name).toBe("string");
+    expect(typeof job.owner.avatarURL).toBe("string");
+    expect(typeof job.owner.description).toBe("string");
+    expect(typeof job.owner.industry).toBe("string");
+    expect(typeof job.owner.location).toBe("string");
+    expect(typeof job.owner.website).toBe("string");
+    expect(typeof job.owner.email).toBe("string");
+    expect(typeof job.owner.phone).toBe("number");
+    expect(typeof job.owner.foundedYear).toBe("number");
+    expect(typeof job.owner.employeesCount).toBe("number");
+  }, 48000);
+
+  test("GET /unapply job by invalid id with valid token, should return 404 status", async () => {
+    const res = await request(app)
+      .get(`/jobs/unapply/111111111111111111111111`)
+      .set("Authorization", `Bearer ${testToken}`);
+    const { status, body } = res;
+
+    expect(status).toBe(404);
+    expect(body).toHaveProperty("message", "Not found");
+  }, 48000);
+
+  test("GET /unapply job by id with invalid token, should return 401 status", async () => {
+    const res = await request(app).get(`/jobs/unapply/${jobId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+    const { status, body } = res;
+    expect(status).toBe(401);
+    expect(body).toHaveProperty("message", "Unauthorized");
+  }, 48000);
+
   test("GET /jobs by search query with valid token, should return 200 status and valid jobs data", async () => {
-    const res = await request(app).get(`/jobs/search?search=Work`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+    const res = await request(app).get(`/jobs/search?search=Work`).set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { jobs, totalPages, currentPage, perPage } = data;
 
@@ -405,7 +579,7 @@ describe("Publications Test Suite", () => {
   test("GET /jobs by search query with valid token + pagination, should return 200 status and valid publications data", async () => {
     const res = await request(app)
       .get(`/jobs/search?search=Workpage=1&perPage=10`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+      .set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { jobs, totalPages, currentPage, perPage } = data;
 
@@ -470,7 +644,7 @@ describe("Publications Test Suite", () => {
   }, 48000);
 
   test("GET /job by id with valid token, should return 200 status and valid job data", async () => {
-    const res = await request(app).get(`/jobs/${TEST_JOB_ID}`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+    const res = await request(app).get(`/jobs/${jobId}`).set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { job } = data;
 
@@ -509,9 +683,7 @@ describe("Publications Test Suite", () => {
   }, 48000);
 
   test("GET /job by invalid id with valid token, should return 404 status", async () => {
-    const res = await request(app)
-      .get(`/jobs/111111111111111111111111`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
+    const res = await request(app).get(`/jobs/111111111111111111111111`).set("Authorization", `Bearer ${testToken}`);
     const { status, body } = res;
 
     expect(status).toBe(404);
@@ -519,133 +691,30 @@ describe("Publications Test Suite", () => {
   }, 48000);
 
   test("GET /job by id with invalid token, should return 401 status", async () => {
-    const res = await request(app).get(`/jobs/${TEST_JOB_ID}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+    const res = await request(app).get(`/jobs/${jobId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
     const { status, body } = res;
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
   }, 48000);
 
-  test("GET /apply job by id with valid token, should return 200 status and valid job data", async () => {
-    const res = await request(app).get(`/jobs/apply/${TEST_JOB_ID}`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
-    const { status, message, data } = res.body;
-    const { job } = data;
+  test("END", async () => {
+    const res = await request(app).delete(`/users/remove`).set("Authorization", `Bearer ${testToken}`);
+    const { data } = res.body;
+    const { user } = data;
 
-    expect(res.status).toBe(200);
-    expect(typeof status).toBe("string");
-    expect(status).toEqual("success");
-    expect(typeof message).toBe("string");
-    expect(message).toEqual("User successfully applyed to this job");
-    expect(typeof data).toBe("object");
-    expect(typeof job).toBe("object");
-    expect(typeof job._id).toBe("string");
-    expect(typeof job.description).toBe("string");
-    expect(typeof job.title).toBe("string");
-    expect(typeof job.location).toBe("string");
-    expect(typeof job.employmentType).toBe("string");
-    expect(typeof job.seniorityLevel).toBe("string");
-    expect(typeof job.industry).toBe("string");
-    expect(typeof job.applyURL).toBe("string");
-    expect(Array.isArray(job.skills)).toBe(true);
-    expect(Array.isArray(job.applied)).toBe(true);
-    expect(job.applied.includes(USER_ID)).toBe(true);
-    expect(typeof job.postedAtHuman).toBe("string");
-    expect(typeof job.createdAt).toBe("string");
-    expect(typeof job.updatedAt).toBe("string");
-    expect(typeof job.owner).toBe("object");
-    expect(typeof job.owner._id).toBe("string");
-    expect(typeof job.owner.name).toBe("string");
-    expect(typeof job.owner.avatarURL).toBe("string");
-    expect(typeof job.owner.description).toBe("string");
-    expect(typeof job.owner.industry).toBe("string");
-    expect(typeof job.owner.location).toBe("string");
-    expect(typeof job.owner.website).toBe("string");
-    expect(typeof job.owner.email).toBe("string");
-    expect(typeof job.owner.phone).toBe("number");
-    expect(typeof job.owner.foundedYear).toBe("number");
-    expect(typeof job.owner.employeesCount).toBe("number");
-  }, 48000);
+    await Company.findByIdAndDelete({ _id: companyId });
+    await Job.findByIdAndDelete({ _id: jobId });
 
-  test("GET /apply job by id with valid token second try, should return 409 status and valid job data", async () => {
-    const res = await request(app).get(`/jobs/apply/${TEST_JOB_ID}`).set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
-    const { status, body } = res;
+    const deletedUser = await User.findById({ _id: user._id });
+    expect(deletedUser).toBe(null);
 
-    expect(status).toBe(409);
-    expect(body).toHaveProperty("message", "Sorry, the user was applyed to this job before");
-  }, 48000);
+    const deletedCompany = await Company.findById({ _id: companyId });
+    expect(deletedCompany).toBe(null);
 
-  test("GET /apply job by invalid id with valid token, should return 404 status", async () => {
-    const res = await request(app)
-      .get(`/jobs/apply/111111111111111111111111`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
-    const { status, body } = res;
+    const deletedJob = await Job.findById({ _id: jobId });
+    expect(deletedJob).toBe(null);
 
-    expect(status).toBe(404);
-    expect(body).toHaveProperty("message", "Not found");
-  }, 48000);
-
-  test("GET /apply job by id with invalid token, should return 401 status", async () => {
-    const res = await request(app).get(`/jobs/apply/${TEST_JOB_ID}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
-    const { status, body } = res;
-    expect(status).toBe(401);
-    expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
-
-  test("GET /unapply job by id with valid token, should return 200 status and valid job data", async () => {
-    const res = await request(app)
-      .get(`/jobs/unapply/${TEST_JOB_ID}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
-    const { status, message, data } = res.body;
-    const { job } = data;
-
-    expect(res.status).toBe(200);
-    expect(typeof status).toBe("string");
-    expect(status).toEqual("success");
-    expect(typeof message).toBe("string");
-    expect(message).toEqual("User successfully unapplyed from this job");
-    expect(typeof data).toBe("object");
-    expect(typeof job).toBe("object");
-    expect(typeof job._id).toBe("string");
-    expect(typeof job.description).toBe("string");
-    expect(typeof job.title).toBe("string");
-    expect(typeof job.location).toBe("string");
-    expect(typeof job.employmentType).toBe("string");
-    expect(typeof job.seniorityLevel).toBe("string");
-    expect(typeof job.industry).toBe("string");
-    expect(typeof job.applyURL).toBe("string");
-    expect(Array.isArray(job.skills)).toBe(true);
-    expect(Array.isArray(job.applied)).toBe(true);
-    expect(job.applied.includes(USER_ID)).toBe(false);
-    expect(typeof job.postedAtHuman).toBe("string");
-    expect(typeof job.createdAt).toBe("string");
-    expect(typeof job.updatedAt).toBe("string");
-    expect(typeof job.owner).toBe("object");
-    expect(typeof job.owner._id).toBe("string");
-    expect(typeof job.owner.name).toBe("string");
-    expect(typeof job.owner.avatarURL).toBe("string");
-    expect(typeof job.owner.description).toBe("string");
-    expect(typeof job.owner.industry).toBe("string");
-    expect(typeof job.owner.location).toBe("string");
-    expect(typeof job.owner.website).toBe("string");
-    expect(typeof job.owner.email).toBe("string");
-    expect(typeof job.owner.phone).toBe("number");
-    expect(typeof job.owner.foundedYear).toBe("number");
-    expect(typeof job.owner.employeesCount).toBe("number");
-  }, 48000);
-
-  test("GET /unapply job by invalid id with valid token, should return 404 status", async () => {
-    const res = await request(app)
-      .get(`/jobs/unapply/111111111111111111111111`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_USER}`);
-    const { status, body } = res;
-
-    expect(status).toBe(404);
-    expect(body).toHaveProperty("message", "Not found");
-  }, 48000);
-
-  test("GET /unapply job by id with invalid token, should return 401 status", async () => {
-    const res = await request(app).get(`/jobs/unapply/${TEST_JOB_ID}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
-    const { status, body } = res;
-    expect(status).toBe(401);
-    expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+    const deletedToken = await Token.findOne({ token: testToken });
+    expect(deletedToken).toBe(null);
+  }, 8000);
 });

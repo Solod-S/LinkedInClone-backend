@@ -1,13 +1,19 @@
+const { Job, Company, User, Token } = require("../models");
+
 const request = require("supertest");
 const mongoose = require("mongoose");
-
-const { Job } = require("../models");
 
 const app = require("../app");
 
 require("dotenv").config();
-const { DB_HOST, TEST_TOKEN_COMPANY_TEST, WRONG_TOKEN } = process.env;
+const { DB_HOST, WRONG_TOKEN } = process.env;
+const { testsUtils } = require("../helpers/index");
 
+const EMAIL = "own-jobs@gmail.com";
+const PASS = "qwer1234";
+
+let testToken = null;
+let companyId = null;
 let jobId = null;
 
 describe("Own-jobs Test Suite", () => {
@@ -18,27 +24,55 @@ describe("Own-jobs Test Suite", () => {
     server = app.listen(3105, () => {
       server.unref(); // Отпускает серверный таймер после запуска сервера
     });
-  }, 48000);
+    await testsUtils.createUser(EMAIL, PASS);
+  }, 10000);
 
   afterAll(async () => {
     await mongoose.disconnect();
     await server.close();
   });
 
-  test("POST /job with valid token, should return 200 status and valid job data", async () => {
+  test("START", async () => {
     const res = await request(app)
-      .post(`/own-jobs/add`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_COMPANY_TEST}`)
+      .post(`/users/login`)
       .send({
-        title: "Work of your dream",
-        location: "Ukraine, Kiev",
-        description: "Hello!!",
-        employmentType: "Full-time",
-        seniorityLevel: "Junior",
-        industry: "Other",
-        applyURL: "",
-        skills: [],
-      });
+        email: EMAIL,
+        password: PASS,
+      })
+      .set("Accept", "application/json");
+    const { data } = res.body;
+
+    testToken = data.token;
+
+    const res2 = await request(app).post(`/companies/create`).set("Authorization", `Bearer ${testToken}`).send({
+      name: "SuperDuperOwnJobsCompany",
+      avatarURL: "",
+      description: "This is the best company",
+      industry: "Information Technology (IT)",
+      location: "Ukraine, Kiev",
+      website: "www.website.com",
+      email: "email@website.com",
+      phone: 3999999999,
+      foundedYear: 2001,
+      employeesCount: 12321,
+      workers: [],
+      jobs: [],
+    });
+
+    companyId = res2.body.data.company._id;
+  }, 8000);
+
+  test("POST /job with valid token, should return 200 status and valid job data", async () => {
+    const res = await request(app).post(`/own-jobs/add`).set("Authorization", `Bearer ${testToken}`).send({
+      title: "Work of your dream",
+      location: "Ukraine, Kiev",
+      description: "Hello!!",
+      employmentType: "Full-time",
+      seniorityLevel: "Junior",
+      industry: "Other",
+      applyURL: "",
+      skills: [],
+    });
 
     const { status, message, data } = res.body;
     const { job } = data;
@@ -77,7 +111,7 @@ describe("Own-jobs Test Suite", () => {
     expect(typeof job.owner.phone).toBe("number");
     expect(typeof job.owner.foundedYear).toBe("number");
     expect(typeof job.owner.employeesCount).toBe("number");
-  }, 48000);
+  }, 8000);
 
   test("POST /job with invalid token, should return 401 status", async () => {
     const res = await request(app).post(`/own-jobs/add`).set("Authorization", `Bearer ${WRONG_TOKEN}`).send({
@@ -94,44 +128,35 @@ describe("Own-jobs Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("POST /job without body, should return 400 status", async () => {
-    const res = await request(app)
-      .post(`/own-jobs/add`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_COMPANY_TEST}`)
-      .send({});
+    const res = await request(app).post(`/own-jobs/add`).set("Authorization", `Bearer ${testToken}`).send({});
     const { status, body } = res;
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"title" is required');
-  }, 48000);
+  }, 8000);
 
   test("POST /job with invalid body, should return 400 status", async () => {
-    const res = await request(app)
-      .post(`/own-jobs/add`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_COMPANY_TEST}`)
-      .send({ 11: "ss" });
+    const res = await request(app).post(`/own-jobs/add`).set("Authorization", `Bearer ${testToken}`).send({ 11: "ss" });
     const { status, body } = res;
 
     expect(status).toBe(400);
     expect(body).toHaveProperty("message", '"title" is required');
-  }, 48000);
+  }, 8000);
 
   test("PATCH /job with valid token, should return 200 status and valid job data", async () => {
-    const res = await request(app)
-      .patch(`/own-jobs/update/${jobId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_COMPANY_TEST}`)
-      .send({
-        title: "Work of your dream!!!",
-        location: "Ukraine, Lviv",
-        description: "Hello??",
-        employmentType: "Part-time",
-        seniorityLevel: "Internship",
-        industry: "Finance and Banking",
-        applyURL: "www.co.com",
-        skills: [],
-      });
+    const res = await request(app).patch(`/own-jobs/update/${jobId}`).set("Authorization", `Bearer ${testToken}`).send({
+      title: "Work of your dream!!!",
+      location: "Ukraine, Lviv",
+      description: "Hello??",
+      employmentType: "Part-time",
+      seniorityLevel: "Internship",
+      industry: "Finance and Banking",
+      applyURL: "www.co.com",
+      skills: [],
+    });
     const { status, message, data } = res.body;
     const { job } = data;
 
@@ -176,12 +201,12 @@ describe("Own-jobs Test Suite", () => {
     expect(typeof job.owner.phone).toBe("number");
     expect(typeof job.owner.foundedYear).toBe("number");
     expect(typeof job.owner.employeesCount).toBe("number");
-  }, 48000);
+  }, 8000);
 
   test("PATCH /job with invalid id, should return 404 status", async () => {
     const res = await request(app)
       .patch(`/own-jobs/update/111111111111111111111111`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_COMPANY_TEST}`)
+      .set("Authorization", `Bearer ${testToken}`)
       .send({
         title: "Work of your dream!!!",
         location: "Ukraine, Lviv",
@@ -196,12 +221,12 @@ describe("Own-jobs Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 48000);
+  }, 8000);
 
   test("PATCH /job with valid token without body, should return 400 status", async () => {
     const res = await request(app)
       .patch(`/own-jobs/update/${jobId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_COMPANY_TEST}`)
+      .set("Authorization", `Bearer ${testToken}`)
       .send({});
     const { status, body } = res;
 
@@ -210,7 +235,7 @@ describe("Own-jobs Test Suite", () => {
       "message",
       '"value" must contain at least one of [title, location, description, employmentType, seniorityLevel, skills, applyURL, industry]'
     );
-  }, 48000);
+  }, 8000);
 
   test("PATCH /job with invalid token, should return 401 status", async () => {
     const res = await request(app)
@@ -230,10 +255,10 @@ describe("Own-jobs Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("GET /own jobs with valid token, should return 200 status and valid jobs data", async () => {
-    const res = await request(app).get(`/own-jobs`).set("Authorization", `Bearer ${TEST_TOKEN_COMPANY_TEST}`);
+    const res = await request(app).get(`/own-jobs`).set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { jobs, totalPages, currentPage, perPage } = data;
 
@@ -277,12 +302,10 @@ describe("Own-jobs Test Suite", () => {
           typeof owner.employeesCount === "number"
       )
     ).toBe(true);
-  }, 48000);
+  }, 8000);
 
   test("GET /own jobs with valid token + pagination, should return 200 status and valid posts data", async () => {
-    const res = await request(app)
-      .get(`/own-jobs?page=1&perPage=10`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_COMPANY_TEST}`);
+    const res = await request(app).get(`/own-jobs?page=1&perPage=10`).set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { jobs, totalPages, currentPage, perPage } = data;
 
@@ -326,7 +349,7 @@ describe("Own-jobs Test Suite", () => {
           typeof owner.employeesCount === "number"
       )
     );
-  }, 48000);
+  }, 8000);
 
   test("GET /own jobs with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/own-jobs`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -334,7 +357,7 @@ describe("Own-jobs Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("GET /own jobs with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app).get(`/own-jobs?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -342,7 +365,7 @@ describe("Own-jobs Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("DELETE /publication with invalid token, should return 401 status", async () => {
     const res = await request(app).delete(`/own-jobs/remove/${jobId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -350,12 +373,10 @@ describe("Own-jobs Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("DELETE /publication with valid token, should return 200 status", async () => {
-    const res = await request(app)
-      .delete(`/own-jobs/remove/${jobId}`)
-      .set("Authorization", `Bearer ${TEST_TOKEN_COMPANY_TEST}`);
+    const res = await request(app).delete(`/own-jobs/remove/${jobId}`).set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { job } = data;
 
@@ -394,5 +415,22 @@ describe("Own-jobs Test Suite", () => {
 
     const deletedPublication = await Job.findById({ _id: jobId });
     expect(deletedPublication).toBe(null);
-  }, 48000);
+  }, 8000);
+
+  test("END", async () => {
+    const res = await request(app).delete(`/users/remove`).set("Authorization", `Bearer ${testToken}`);
+    const { data } = res.body;
+    const { user } = data;
+
+    await Company.findByIdAndDelete({ _id: companyId });
+
+    const deletedUser = await User.findById({ _id: user._id });
+    expect(deletedUser).toBe(null);
+
+    const deletedCompany = await Company.findById({ _id: companyId });
+    expect(deletedCompany).toBe(null);
+
+    const deletedToken = await Token.findOne({ token: testToken });
+    expect(deletedToken).toBe(null);
+  }, 8000);
 });

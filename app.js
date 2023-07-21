@@ -12,6 +12,7 @@ const {
   mediaFilesRouter,
   likesRouter,
   favoritesRouter,
+  subscriptionsRouter,
   commentsRouter,
   skillsRouter,
   experiencesRouter,
@@ -39,6 +40,7 @@ app.use("/posts", postsRouter);
 app.use("/media-files", mediaFilesRouter);
 app.use("/likes", likesRouter);
 app.use("/favorites", favoritesRouter);
+app.use("/subscriptions", subscriptionsRouter);
 app.use("/comments", commentsRouter);
 app.use("/skills", skillsRouter);
 app.use("/experiences", experiencesRouter);

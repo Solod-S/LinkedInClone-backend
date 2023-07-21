@@ -77,7 +77,7 @@ A Social Network developed with MERN stack.
 │   ├── favorites
 │   │   ├── addFavorite.js
 │   │   ├── deleteFavorite.js
-│   │   ├── getOwnFavorite.js
+│   │   ├── getFavorite.js
 │   │   └── index.js
 │   ├── jobs
 │   │   ├── applyJobById.js
@@ -145,6 +145,11 @@ A Social Network developed with MERN stack.
 │   │   ├── updateSkill.js
 │   │   ├── userAdd.js
 │   │   ├── userRemove.js
+│   │   └── index.js
+│   ├── subscriptions
+│   │   ├── addSubscription.js
+│   │   ├── deleteSubscription.js
+│   │   ├── getSubscriptions.js
 │   │   └── index.js
 │   └── users
 │   │   ├── getAllUsers.js

@@ -3,6 +3,7 @@ const ownPostsRouter = require("./ownPosts");
 const mediaFilesRouter = require("./mediaFiles");
 const likesRouter = require("./likes");
 const favoritesRouter = require("./favorites");
+const subscriptionsRouter = require("./subscriptions");
 const commentsRouter = require("./comments");
 const postsRouter = require("./posts");
 const skillsRouter = require("./skills");
@@ -21,6 +22,7 @@ module.exports = {
   mediaFilesRouter,
   likesRouter,
   favoritesRouter,
+  subscriptionsRouter,
   commentsRouter,
   postsRouter,
   skillsRouter,
