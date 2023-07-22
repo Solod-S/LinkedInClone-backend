@@ -1730,7 +1730,7 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "Successfully add user to skill",
             "content": {
               "application/json": {
@@ -3010,7 +3010,7 @@
         ],
 
         "responses": {
-          "201": {
+          "200": {
             "description": "Post was added to favorites",
             "content": {
               "application/json": {
@@ -36654,20 +36654,9 @@
             "example": "SuperDuperCompany"
           },
           "avatarURL": {
-            "type": "object",
-            "properties": {
-              "_id": {
-                "type": "string"
-              },
-              "url": {
-                "type": "string"
-              }
-            },
-            "description": "User's avatar link",
-            "example": {
-              "_id": "64b28c4ffe873daadea81b50",
-              "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
-            }
+            "type": "string",
+            "description": "Company's avatar",
+            "example": ""
           },
           "description": {
             "type": "string",
@@ -36767,20 +36756,9 @@
                     "example": "SuperDuperCompany"
                   },
                   "avatarURL": {
-                    "type": "object",
-                    "properties": {
-                      "_id": {
-                        "type": "string"
-                      },
-                      "url": {
-                        "type": "string"
-                      }
-                    },
-                    "description": "User's avatar link",
-                    "example": {
-                      "_id": "64b28c4ffe873daadea81b50",
-                      "url": "https://res.cloudinary.com/dbclstp7c/image/upload/v1682247086/mnf8tsnyxfhztfemh4dq.jpg"
-                    }
+                    "type": "string",
+                    "description": "Company's avatar",
+                    "example": null
                   },
                   "description": {
                     "type": "string",

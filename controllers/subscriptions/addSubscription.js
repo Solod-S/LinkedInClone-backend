@@ -182,7 +182,7 @@ const addFavorite = async (req, res) => {
   user.subscription.push(newSubscribe._id);
   await user.save();
 
-  res.status(201).json({
+  res.status(200).json({
     status: "success",
     message: "Data successfully added to your subscription",
     data: { user: userTransformer(newSubscribe) },

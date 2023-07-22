@@ -250,11 +250,12 @@ A Social Network developed with MERN stack.
 │   ├── 9_comments.test.js
 │   ├── 10_likes.test.js
 │   ├── 11_favorites.test.js
-│   ├── 12_companies.test.js
-│   ├── 13_ownPublications.test.js
-│   ├── 14_publications.test.js
-│   ├── 15_ownJobs.test.js
-│   └── 16_jobs.test.js
+│   ├── 12_subscriptions.test.js
+│   ├── 13_companies.test.js
+│   ├── 14_ownPublications.test.js
+│   ├── 15_publications.test.js
+│   ├── 16_ownJobs.test.js
+│   └── 17_jobs.test.js
 ├── middlewares
 │   ├── jwt.js
 ├── helpers
@@ -300,7 +301,7 @@ npm install
 3.  The file `.env` is already ignored, so you never commit your credentials.
 4.  Change the values of the file to your environment. Helpful comments added to `.env.example` file to understand the constants.
 
-## How to build your own..?
+## How to build your own..
 
 1. First install all dependencies with npm or Yarn:
    ```javascript
@@ -310,7 +311,7 @@ npm install
    ```javascript
    yarn;
    ```
-2. Create a `.env` file and insert the following code. Replace values with yours!!
+2. Exemple of `.env` file. Replace values with yours!!
 
    ```javascript
    PORT = YOUR_PORT;
@@ -333,6 +334,8 @@ npm install
 ## Features and Fuctionality
 
 #### User account operations
+
+![LinkedIn Clone Demo](/public/pictures/structure.gif)
 
 - Register user
 - Verify user by email
@@ -396,6 +399,12 @@ npm install
 - Get all favorites
 - Add to favorites
 - Remove from favorites
+
+#### User subsciptions operations
+
+- Get all subsciptions
+- Add to subsciptions
+- Remove from subsciptions
 
 #### Media files operations
 

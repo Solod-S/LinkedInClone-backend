@@ -342,12 +342,12 @@ describe("Skill Test Suite", () => {
     expect(body).toHaveProperty("message", "Unauthorized");
   }, 8000);
 
-  test("GET /add user to skill by id with valid token, should return 201 status and valid skill data", async () => {
+  test("GET /add user to skill by id with valid token, should return 200 status and valid skill data", async () => {
     const res = await request(app).get(`/skills/users/add/${skillId}`).set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { skill } = data;
 
-    expect(res.status).toBe(201);
+    expect(res.status).toBe(200);
     expect(typeof status).toBe("string");
     expect(status).toEqual("success");
     expect(typeof message).toBe("string");

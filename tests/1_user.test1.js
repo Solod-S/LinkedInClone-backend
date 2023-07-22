@@ -219,7 +219,7 @@ describe("User Test Suite", () => {
     expect(typeof user.email).toBe("string");
     expect(typeof user.name).toBe("string");
     expect(typeof user.surname).toBe("string");
-    expect(typeof user.avatarURL).toBe("object");
+    expect(typeof user.avatarURL === "object" || user.avatarURL === null).toBe(true);
     expect(Array.isArray(user.favorite)).toBe(true);
     expect(Array.isArray(user.posts)).toBe(true);
     expect(Array.isArray(user.subscription)).toBe(true);
@@ -369,7 +369,7 @@ describe("User Test Suite", () => {
     expect(typeof user.email).toBe("string");
     expect(typeof user.name).toBe("string");
     expect(typeof user.surname).toBe("string");
-    expect(typeof user.avatarURL).toBe("object");
+    expect(typeof user.avatarURL === "object" || user.avatarURL === null).toBe(true);
     expect(Array.isArray(user.favorite)).toBe(true);
     expect(Array.isArray(user.posts)).toBe(true);
     expect(Array.isArray(user.subscription)).toBe(true);
@@ -454,7 +454,7 @@ describe("User Test Suite", () => {
     expect(typeof user.email).toBe("string");
     expect(typeof user.name).toBe("string");
     expect(typeof user.surname).toBe("string");
-    expect(typeof user.avatarURL).toBe("object");
+    expect(typeof user.avatarURL === "object" || user.avatarURL === null).toBe(true);
     expect(Array.isArray(user.favorite)).toBe(true);
     expect(Array.isArray(user.posts)).toBe(true);
     expect(Array.isArray(user.subscription)).toBe(true);
@@ -503,7 +503,7 @@ describe("User Test Suite", () => {
     expect(typeof user.email).toBe("string");
     expect(typeof user.name).toBe("string");
     expect(typeof user.surname).toBe("string");
-    expect(typeof user.avatarURL).toBe("object");
+    expect(typeof user.avatarURL === "object" || user.avatarURL === null).toBe(true);
     expect(Array.isArray(user.favorite)).toBe(true);
     expect(Array.isArray(user.posts)).toBe(true);
     expect(Array.isArray(user.subscription)).toBe(true);
@@ -584,7 +584,7 @@ describe("User Test Suite", () => {
     expect(typeof user.email).toBe("string");
     expect(typeof user.name).toBe("string");
     expect(typeof user.surname).toBe("string");
-    expect(typeof user.avatarURL).toBe("object");
+    expect(typeof user.avatarURL === "object" || user.avatarURL === null).toBe(true);
     expect(Array.isArray(user.favorite)).toBe(true);
     expect(Array.isArray(user.posts)).toBe(true);
     expect(Array.isArray(user.subscription)).toBe(true);
@@ -613,7 +613,7 @@ describe("User Test Suite", () => {
           typeof owner._id === "string" &&
           typeof owner.name === "string" &&
           typeof owner.email === "string" &&
-          typeof owner.avatarURL === "string" &&
+          (owner.owner.avatarURL === null || typeof owner.owner.avatarURL === "object") &&
           Array.isArray(owner.subscription) &&
           Array.isArray(owner.favorite) &&
           Array.isArray(owner.posts) &&
@@ -825,7 +825,7 @@ describe("User Test Suite", () => {
     expect(typeof user.email).toBe("string");
     expect(typeof user.name).toBe("string");
     expect(typeof user.surname).toBe("string");
-    expect(typeof user.avatarURL).toBe("object");
+    expect(typeof user.avatarURL === "object" || user.avatarURL === null).toBe(true);
     expect(Array.isArray(user.favorite)).toBe(true);
     expect(Array.isArray(user.posts)).toBe(true);
     expect(Array.isArray(user.subscription)).toBe(true);

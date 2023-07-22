@@ -10,10 +10,7 @@ const companySchema = new Schema(
       required: true,
       default: "",
     },
-    avatarURL: {
-      type: String,
-      default: "",
-    },
+    avatarURL: { type: Schema.Types.ObjectId, ref: "MediaFile", default: null },
     description: {
       type: String,
       required: true,

@@ -20,7 +20,7 @@ const userAdd = async (req, res, next) => {
   skill.users.push(_id);
   await skill.save();
 
-  res.status(201).json({
+  res.status(200).json({
     status: "success",
     message: "User was successfully added to this skill",
     data: {

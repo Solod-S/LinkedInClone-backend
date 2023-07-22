@@ -1,4 +1,4 @@
-const { MediaFile, Post, Comment, Education, Experience, Publication, User } = require("../../models");
+const { MediaFile, Post, Comment, Education, Experience, Publication, User, Company } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
 const { mediaFileTransformer } = require("../../helpers/index");
@@ -40,10 +40,13 @@ const deleteMediaFile = async (req, res, next) => {
     case "users":
       model = User;
       break;
+    case "companies":
+      model = Company;
+      break;
     default:
       break;
   }
-  result.location !== "users"
+  result.location !== "users" && result.location !== "companies"
     ? await model.updateOne(
         { mediaFiles: { $elemMatch: { $eq: mediaFileId } } },
         { $pull: { mediaFiles: mediaFileId } }

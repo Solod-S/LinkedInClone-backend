@@ -36,6 +36,10 @@ const addMediaFile = async (req, res, next) => {
       mediaFileId = req.body.userId;
       model = User;
       break;
+    case "companies":
+      mediaFileId = req.body.companyId;
+      model = Company;
+      break;
     default:
       break;
   }
@@ -47,10 +51,11 @@ const addMediaFile = async (req, res, next) => {
   }
 
   if (location !== "users") {
-    const company = await Company.findById({ _id: mediaFileDestination.owner });
+    const company =
+      location !== "companies" ? await Company.findById({ _id: mediaFileDestination.owner }) : mediaFileDestination;
 
     if (
-      !mediaFileDestination || location !== "publications"
+      !mediaFileDestination || (location !== "publications" && location !== "companies")
         ? mediaFileDestination.owner.toString() !== _id.toString()
         : !company.owners.includes(new ObjectId(_id))
     ) {
@@ -67,11 +72,11 @@ const addMediaFile = async (req, res, next) => {
     owner: req.user._id,
   });
 
-  if (location === "users" && mediaFileDestination.avatarURL) {
+  if (location === "users" || (location === "companies" && mediaFileDestination.avatarURL)) {
     await MediaFile.findByIdAndDelete({ _id: mediaFileDestination.avatarURL });
   }
 
-  location !== "users"
+  location !== "users" && location !== "companies"
     ? mediaFileDestination.mediaFiles.push(newMediaFile._id)
     : (mediaFileDestination.avatarURL = newMediaFile._id);
   await mediaFileDestination.save();

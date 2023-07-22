@@ -51,12 +51,12 @@ describe("Favorites Test Suite", () => {
     postId = res2.body.data.post._id;
   }, 8000);
 
-  test("POST /post to favorites with valid token and valid post id, should return 201 status", async () => {
+  test("GET /add to favorites with valid token and valid post id, should return 200 status", async () => {
     const res = await request(app).get(`/favorites/posts/add/${postId}`).set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
     const { post } = data;
 
-    expect(res.status).toBe(201);
+    expect(res.status).toBe(200);
     expect(typeof status).toBe("string");
     expect(status).toEqual("success");
     expect(typeof message).toBe("string");
@@ -92,7 +92,7 @@ describe("Favorites Test Suite", () => {
     expect(typeof post.owner.other3).toBe("string");
   }, 8000);
 
-  test("POST /post to favorites with invalid token and valid post id, should return 401 status", async () => {
+  test("GET /add to favorites with invalid token and valid post id, should return 401 status", async () => {
     const res = await request(app).get(`/favorites/posts/add/${postId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
     const { status, body } = res;
 
@@ -100,7 +100,7 @@ describe("Favorites Test Suite", () => {
     expect(body).toHaveProperty("message", "Unauthorized");
   }, 8000);
 
-  test("POST /post to favorites with valid token and invalid post id, should return 404 status", async () => {
+  test("GET /add to favorites with valid token and invalid post id, should return 404 status", async () => {
     const res = await request(app)
       .post(`/favorites/posts/add/123456789123456789123456`)
       .set("Authorization", `Bearer ${testToken}`);
