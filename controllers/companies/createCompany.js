@@ -23,7 +23,6 @@ const createCompany = async (req, res, next) => {
     name: formattedName,
     owners: [_id],
   });
-
   res.status(201).json({
     status: "success",
     message: "Company successfully created",

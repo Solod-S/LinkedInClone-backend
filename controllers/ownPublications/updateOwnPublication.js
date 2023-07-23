@@ -25,7 +25,11 @@ const updateOwnPublication = async (req, res, next) => {
         {
           path: "owner",
           select:
-            "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
+            "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+          populate: {
+            path: "avatarURL",
+            select: "url",
+          },
         },
         {
           path: "mediaFiles",
@@ -33,7 +37,11 @@ const updateOwnPublication = async (req, res, next) => {
           populate: {
             path: "owner",
             select:
-              "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
+              "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+            populate: {
+              path: "avatarURL",
+              select: "url",
+            },
           },
         },
         {
@@ -42,7 +50,11 @@ const updateOwnPublication = async (req, res, next) => {
           populate: {
             path: "owner",
             select:
-              "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
+              "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+            populate: {
+              path: "avatarURL",
+              select: "url",
+            },
           },
         },
       ],
@@ -53,7 +65,11 @@ const updateOwnPublication = async (req, res, next) => {
       populate: {
         path: "owner",
         select:
-          "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
+          "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+        populate: {
+          path: "avatarURL",
+          select: "url",
+        },
       },
     })
     .populate({
@@ -62,12 +78,20 @@ const updateOwnPublication = async (req, res, next) => {
       populate: {
         path: "owner",
         select:
-          "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
+          "_id surname name avatarURL email subscription favorite posts about education experience frame headLine languages other1 other2 other3 phone site",
+        populate: {
+          path: "avatarURL",
+          select: "url",
+        },
       },
     })
     .populate({
       path: "owner",
       select: "_id name description industry location website email phone foundedYear employeesCount avatarURL",
+      populate: {
+        path: "avatarURL",
+        select: "url",
+      },
     });
 
   if (!updatedPublication) {

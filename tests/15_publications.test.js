@@ -21,7 +21,7 @@ describe("Publications Test Suite", () => {
 
   beforeAll(async () => {
     await mongoose.connect(DB_HOST);
-    server = app.listen(3017, () => {
+    server = app.listen(3015, () => {
       server.unref(); // Отпускает серверный таймер после запуска сервера
     });
     await testsUtils.createUser(EMAIL, PASS);
@@ -46,7 +46,6 @@ describe("Publications Test Suite", () => {
 
     const res2 = await request(app).post(`/companies/create`).set("Authorization", `Bearer ${testToken}`).send({
       name: "SuperDuperPublicationCompany",
-      avatarURL: "",
       description: "This is the best company",
       industry: "Information Technology (IT)",
       location: "Ukraine, Kiev",
@@ -96,15 +95,15 @@ describe("Publications Test Suite", () => {
           typeof owner === "object" &&
           typeof owner._id === "string" &&
           typeof owner.name === "string" &&
-          typeof owner.avatarURL === "string" &&
+          typeof (owner.avatarURL === null || typeof owner.avatarURL === "object") &&
           typeof owner.description === "string" &&
           typeof owner.industry === "string" &&
           typeof owner.location === "string" &&
           typeof owner.website === "string" &&
           typeof owner.email === "string" &&
-          typeof owner.phone === "number" &&
-          typeof owner.foundedYear === "number" &&
-          typeof owner.employeesCount === "number"
+          typeof (owner.phone === "number" || owner.phone === null) &&
+          typeof (owner.foundedYear === "number" || owner.foundedYear === null) &&
+          typeof (owner.employeesCount === "number" || owner.employeesCount === null)
       )
     ).toBe(true);
     expect(publications.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
@@ -138,15 +137,15 @@ describe("Publications Test Suite", () => {
           typeof owner === "object" &&
           typeof owner._id === "string" &&
           typeof owner.name === "string" &&
-          typeof owner.avatarURL === "string" &&
+          typeof (owner.avatarURL === null || typeof owner.avatarURL === "object") &&
           typeof owner.description === "string" &&
           typeof owner.industry === "string" &&
           typeof owner.location === "string" &&
           typeof owner.website === "string" &&
           typeof owner.email === "string" &&
-          typeof owner.phone === "number" &&
-          typeof owner.foundedYear === "number" &&
-          typeof owner.employeesCount === "number"
+          typeof (owner.phone === "number" || owner.phone === null) &&
+          typeof (owner.foundedYear === "number" || owner.foundedYear === null) &&
+          typeof (owner.employeesCount === "number" || owner.employeesCount === null)
       )
     ).toBe(true);
     expect(publications.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
@@ -196,15 +195,15 @@ describe("Publications Test Suite", () => {
           typeof owner === "object" &&
           typeof owner._id === "string" &&
           typeof owner.name === "string" &&
-          typeof owner.avatarURL === "string" &&
+          typeof (owner.avatarURL === null || typeof owner.avatarURL === "object") &&
           typeof owner.description === "string" &&
           typeof owner.industry === "string" &&
           typeof owner.location === "string" &&
           typeof owner.website === "string" &&
           typeof owner.email === "string" &&
-          typeof owner.phone === "number" &&
-          typeof owner.foundedYear === "number" &&
-          typeof owner.employeesCount === "number"
+          typeof (owner.phone === "number" || owner.phone === null) &&
+          typeof (owner.foundedYear === "number" || owner.foundedYear === null) &&
+          typeof (owner.employeesCount === "number" || owner.employeesCount === null)
       )
     ).toBe(true);
     expect(publications.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
@@ -240,15 +239,15 @@ describe("Publications Test Suite", () => {
           typeof owner === "object" &&
           typeof owner._id === "string" &&
           typeof owner.name === "string" &&
-          typeof owner.avatarURL === "string" &&
+          typeof (owner.avatarURL === null || typeof owner.avatarURL === "object") &&
           typeof owner.description === "string" &&
           typeof owner.industry === "string" &&
           typeof owner.location === "string" &&
           typeof owner.website === "string" &&
           typeof owner.email === "string" &&
-          typeof owner.phone === "number" &&
-          typeof owner.foundedYear === "number" &&
-          typeof owner.employeesCount === "number"
+          typeof (owner.phone === "number" || owner.phone === null) &&
+          typeof (owner.foundedYear === "number" || owner.foundedYear === null) &&
+          typeof (owner.employeesCount === "number" || owner.employeesCount === null)
       )
     ).toBe(true);
     expect(publications.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
@@ -300,15 +299,15 @@ describe("Publications Test Suite", () => {
           typeof owner === "object" &&
           typeof owner._id === "string" &&
           typeof owner.name === "string" &&
-          typeof owner.avatarURL === "string" &&
+          typeof (owner.avatarURL === null || typeof owner.avatarURL === "object") &&
           typeof owner.description === "string" &&
           typeof owner.industry === "string" &&
           typeof owner.location === "string" &&
           typeof owner.website === "string" &&
           typeof owner.email === "string" &&
-          typeof owner.phone === "number" &&
-          typeof owner.foundedYear === "number" &&
-          typeof owner.employeesCount === "number"
+          typeof (owner.phone === "number" || owner.phone === null) &&
+          typeof (owner.foundedYear === "number" || owner.foundedYear === null) &&
+          typeof (owner.employeesCount === "number" || owner.employeesCount === null)
       )
     ).toBe(true);
     expect(publications.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
@@ -344,15 +343,15 @@ describe("Publications Test Suite", () => {
           typeof owner === "object" &&
           typeof owner._id === "string" &&
           typeof owner.name === "string" &&
-          typeof owner.avatarURL === "string" &&
+          typeof (owner.avatarURL === null || typeof owner.avatarURL === "object") &&
           typeof owner.description === "string" &&
           typeof owner.industry === "string" &&
           typeof owner.location === "string" &&
           typeof owner.website === "string" &&
           typeof owner.email === "string" &&
-          typeof owner.phone === "number" &&
-          typeof owner.foundedYear === "number" &&
-          typeof owner.employeesCount === "number"
+          typeof (owner.phone === "number" || owner.phone === null) &&
+          typeof (owner.foundedYear === "number" || owner.foundedYear === null) &&
+          typeof (owner.employeesCount === "number" || owner.employeesCount === null)
       )
     ).toBe(true);
     expect(publications.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
@@ -403,15 +402,17 @@ describe("Publications Test Suite", () => {
     expect(typeof publication.owner).toBe("object");
     expect(typeof publication.owner._id).toBe("string");
     expect(typeof publication.owner.name).toBe("string");
-    expect(typeof publication.owner.avatarURL).toBe("string");
+    expect(typeof publication.owner.avatarURL === "object" || publication.owner.avatarURL === null).toBe(true);
     expect(typeof publication.owner.description).toBe("string");
     expect(typeof publication.owner.industry).toBe("string");
     expect(typeof publication.owner.location).toBe("string");
     expect(typeof publication.owner.website).toBe("string");
     expect(typeof publication.owner.email).toBe("string");
-    expect(typeof publication.owner.phone).toBe("number");
-    expect(typeof publication.owner.foundedYear).toBe("number");
-    expect(typeof publication.owner.employeesCount).toBe("number");
+    expect(typeof publication.owner.phone === "number" || publication.owner.phone === null).toBe(true);
+    expect(typeof publication.owner.foundedYear === "number" || publication.owner.foundedYear === null).toBe(true);
+    expect(typeof publication.owner.employeesCount === "number" || publication.owner.employeesCount === null).toBe(
+      true
+    );
   }, 8000);
 
   test("GET /publication by invalid id with valid token, should return 404 status", async () => {

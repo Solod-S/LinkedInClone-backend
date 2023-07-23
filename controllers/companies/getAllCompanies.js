@@ -32,7 +32,11 @@ const getAllCompanies = async (req, res, next) => {
     .sort({ createdAt: -1 })
     .skip(skip < 0 ? 0 : skip)
     .limit(perPage)
-    .select("-publications -jobs ");
+    .select("-publications -jobs ")
+    .populate({
+      path: "avatarURL",
+      select: "url",
+    });
 
   res.json({
     status: "success",

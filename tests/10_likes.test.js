@@ -65,7 +65,6 @@ describe("Likes Test Suite", () => {
 
     const res4 = await request(app).post(`/companies/create`).set("Authorization", `Bearer ${testToken}`).send({
       name: "SuperDuperLikesCompany",
-      avatarURL: "",
       description: "This is the best company",
       industry: "Information Technology (IT)",
       location: "Ukraine, Kiev",

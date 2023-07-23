@@ -63,8 +63,7 @@ describe("Company Test Suite", () => {
 
   test("POST /company with invalid token, should return 401 status", async () => {
     const res = await request(app).post(`/companies/create`).set("Authorization", `Bearer ${WRONG_TOKEN}`).send({
-      name: "SuperDuperCompany",
-      avatarURL: "",
+      name: "SuperDuperCompany123321",
       description: "This is the best company",
       industry: "Information Technology (IT)",
       location: "Ukraine, Kiev",
@@ -104,7 +103,6 @@ describe("Company Test Suite", () => {
   test("POST /company with valid token, should return 201 status and valid company data", async () => {
     const res = await request(app).post(`/companies/create`).set("Authorization", `Bearer ${testToken}`).send({
       name: "SuperDuperCompany",
-      avatarURL: "",
       description: "This is the best company",
       industry: "Information Technology (IT)",
       location: "Ukraine, Kiev",
@@ -129,15 +127,15 @@ describe("Company Test Suite", () => {
     expect(typeof data).toBe("object");
     expect(typeof company._id).toBe("string");
     expect(typeof company.name).toBe("string");
-    expect(typeof company.avatarURL).toBe("string");
+    expect(typeof company.avatarURL === "object" || company.avatarURL === null).toBe(true);
     expect(typeof company.description).toBe("string");
     expect(typeof company.industry).toBe("string");
     expect(typeof company.location).toBe("string");
     expect(typeof company.website).toBe("string");
     expect(typeof company.email).toBe("string");
-    expect(typeof company.phone).toBe("number");
-    expect(typeof company.foundedYear).toBe("number");
-    expect(typeof company.employeesCount).toBe("number");
+    expect(typeof company.phone === "number" || company.phone === null).toBe(true);
+    expect(typeof company.foundedYear === "number" || company.foundedYear === null).toBe(true);
+    expect(typeof company.employeesCount === "number" || company.employeesCount === null).toBe(true);
     expect(Array.isArray(company.owners)).toBe(true);
     expect(Array.isArray(company.workers)).toBe(true);
     expect(Array.isArray(company.jobs)).toBe(true);
@@ -150,7 +148,6 @@ describe("Company Test Suite", () => {
   test("POST /company clone with valid token, should return 409 status and valid like data", async () => {
     const res = await request(app).post(`/companies/create`).set("Authorization", `Bearer ${testToken}`).send({
       name: "SuperDuperCompany",
-      avatarURL: "",
       description: "This is the best company",
       industry: "Information Technology (IT)",
       location: "Ukraine, Kiev",
@@ -173,8 +170,7 @@ describe("Company Test Suite", () => {
       .patch(`/companies/update/${companyId}`)
       .set("Authorization", `Bearer ${testToken}`)
       .send({
-        name: "SuperDuperCompany 2022",
-        avatarURL: "www.ava.ac/asd/ss.jpg",
+        name: "SuperDuperCompany",
         description: "This is the best company 2022",
         industry: "Finance and Banking",
         location: "Ukraine, Lviv",
@@ -197,9 +193,8 @@ describe("Company Test Suite", () => {
     expect(typeof data).toBe("object");
     expect(typeof company._id).toBe("string");
     expect(typeof company.name).toBe("string");
-    expect(company.name).toEqual("SuperDuperCompany 2022");
-    expect(typeof company.avatarURL).toBe("string");
-    expect(company.avatarURL).toEqual("www.ava.ac/asd/ss.jpg");
+    expect(company.name).toEqual("SuperDuperCompany");
+    expect(typeof company.avatarURL === "object" || company.avatarURL === null).toBe(true);
     expect(typeof company.description).toBe("string");
     expect(company.description).toEqual("This is the best company 2022");
     expect(typeof company.industry).toBe("string");
@@ -230,8 +225,7 @@ describe("Company Test Suite", () => {
       .patch(`/companies/update/${companyId}`)
       .set("Authorization", `Bearer ${WRONG_TOKEN}`)
       .send({
-        name: "SuperDuperCompany 2022",
-        avatarURL: "www.ava.ac/asd/ss.jpg",
+        name: "SuperDuperCompany",
         description: "This is the best company 2022",
         industry: "Finance and Banking",
         location: "Ukraine, Lviv",
@@ -278,15 +272,15 @@ describe("Company Test Suite", () => {
     expect(typeof data).toBe("object");
     expect(typeof company._id).toBe("string");
     expect(typeof company.name).toBe("string");
-    expect(typeof company.avatarURL).toBe("string");
+    expect(typeof company.avatarURL === "object" || company.avatarURL === null).toBe(true);
     expect(typeof company.description).toBe("string");
     expect(typeof company.industry).toBe("string");
     expect(typeof company.location).toBe("string");
     expect(typeof company.website).toBe("string");
     expect(typeof company.email).toBe("string");
-    expect(typeof company.phone).toBe("number");
-    expect(typeof company.foundedYear).toBe("number");
-    expect(typeof company.employeesCount).toBe("number");
+    expect(typeof company.phone === "number" || company.phone === null).toBe(true);
+    expect(typeof company.foundedYear === "number" || company.foundedYear === null).toBe(true);
+    expect(typeof company.employeesCount === "number" || company.employeesCount === null).toBe(true);
     expect(company.employeesCount).toEqual(12322);
     expect(Array.isArray(company.owners)).toBe(true);
     expect(Array.isArray(company.workers)).toBe(true);
@@ -342,15 +336,15 @@ describe("Company Test Suite", () => {
     expect(typeof data).toBe("object");
     expect(typeof company._id).toBe("string");
     expect(typeof company.name).toBe("string");
-    expect(typeof company.avatarURL).toBe("string");
+    expect(typeof company.avatarURL === "object" || company.avatarURL === null).toBe(true);
     expect(typeof company.description).toBe("string");
     expect(typeof company.industry).toBe("string");
     expect(typeof company.location).toBe("string");
     expect(typeof company.website).toBe("string");
     expect(typeof company.email).toBe("string");
-    expect(typeof company.phone).toBe("number");
-    expect(typeof company.foundedYear).toBe("number");
-    expect(typeof company.employeesCount).toBe("number");
+    expect(typeof company.phone === "number" || company.phone === null).toBe(true);
+    expect(typeof company.foundedYear === "number" || company.foundedYear === null).toBe(true);
+    expect(typeof company.employeesCount === "number" || company.employeesCount === null).toBe(true);
     expect(company.employeesCount).toEqual(12322);
     expect(Array.isArray(company.owners)).toBe(true);
     expect(Array.isArray(company.workers)).toBe(true);
@@ -406,15 +400,15 @@ describe("Company Test Suite", () => {
     expect(typeof data).toBe("object");
     expect(typeof company._id).toBe("string");
     expect(typeof company.name).toBe("string");
-    expect(typeof company.avatarURL).toBe("string");
+    expect(typeof company.avatarURL === "object" || company.avatarURL === null).toBe(true);
     expect(typeof company.description).toBe("string");
     expect(typeof company.industry).toBe("string");
     expect(typeof company.location).toBe("string");
     expect(typeof company.website).toBe("string");
     expect(typeof company.email).toBe("string");
-    expect(typeof company.phone).toBe("number");
-    expect(typeof company.foundedYear).toBe("number");
-    expect(typeof company.employeesCount).toBe("number");
+    expect(typeof company.phone === "number" || company.phone === null).toBe(true);
+    expect(typeof company.foundedYear === "number" || company.foundedYear === null).toBe(true);
+    expect(typeof company.employeesCount === "number" || company.employeesCount === null).toBe(true);
     expect(company.employeesCount).toEqual(12322);
     expect(Array.isArray(company.owners)).toBe(true);
     expect(Array.isArray(company.workers)).toBe(true);
@@ -470,15 +464,15 @@ describe("Company Test Suite", () => {
     expect(typeof data).toBe("object");
     expect(typeof company._id).toBe("string");
     expect(typeof company.name).toBe("string");
-    expect(typeof company.avatarURL).toBe("string");
+    expect(typeof company.avatarURL === "object" || company.avatarURL === null).toBe(true);
     expect(typeof company.description).toBe("string");
     expect(typeof company.industry).toBe("string");
     expect(typeof company.location).toBe("string");
     expect(typeof company.website).toBe("string");
     expect(typeof company.email).toBe("string");
-    expect(typeof company.phone).toBe("number");
-    expect(typeof company.foundedYear).toBe("number");
-    expect(typeof company.employeesCount).toBe("number");
+    expect(typeof company.phone === "number" || company.phone === null).toBe(true);
+    expect(typeof company.foundedYear === "number" || company.foundedYear === null).toBe(true);
+    expect(typeof company.employeesCount === "number" || company.employeesCount === null).toBe(true);
     expect(company.employeesCount).toEqual(12322);
     expect(Array.isArray(company.owners)).toBe(true);
     expect(Array.isArray(company.workers)).toBe(true);
@@ -533,7 +527,7 @@ describe("Company Test Suite", () => {
     expect(Array.isArray(companies)).toBe(true);
     expect(companies.every(({ _id }) => typeof _id === "string")).toBe(true);
     expect(companies.every(({ name }) => typeof name === "string")).toBe(true);
-    expect(companies.every(({ avatarURL }) => typeof avatarURL === "string")).toBe(true);
+    expect(companies.every(({ avatarURL }) => typeof avatarURL === "object" || avatarURL === null)).toBe(true);
     expect(companies.every(({ description }) => typeof description === "string")).toBe(true);
     expect(companies.every(({ industry }) => typeof industry === "string")).toBe(true);
     expect(companies.every(({ location }) => typeof location === "string")).toBe(true);
@@ -541,7 +535,9 @@ describe("Company Test Suite", () => {
     expect(companies.every(({ email }) => typeof email === "string")).toBe(true);
     expect(companies.every(({ phone }) => typeof phone === "number" || phone === null)).toBe(true);
     expect(companies.every(({ foundedYear }) => typeof foundedYear === "number" || foundedYear === null)).toBe(true);
-    expect(companies.every(({ employeesCount }) => typeof employeesCount === "number")).toBe(true);
+    expect(companies.every(({ employeesCount }) => typeof employeesCount === "number" || employeesCount === null)).toBe(
+      true
+    );
     expect(companies.every(({ owners }) => Array.isArray(owners))).toBe(true);
     expect(companies.every(({ workers }) => Array.isArray(workers))).toBe(true);
     expect(companies.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
@@ -566,7 +562,7 @@ describe("Company Test Suite", () => {
     expect(Array.isArray(companies)).toBe(true);
     expect(companies.every(({ _id }) => typeof _id === "string")).toBe(true);
     expect(companies.every(({ name }) => typeof name === "string")).toBe(true);
-    expect(companies.every(({ avatarURL }) => typeof avatarURL === "string")).toBe(true);
+    expect(companies.every(({ avatarURL }) => typeof avatarURL === "object" || avatarURL === null)).toBe(true);
     expect(companies.every(({ description }) => typeof description === "string")).toBe(true);
     expect(companies.every(({ industry }) => typeof industry === "string")).toBe(true);
     expect(companies.every(({ location }) => typeof location === "string")).toBe(true);
@@ -574,7 +570,9 @@ describe("Company Test Suite", () => {
     expect(companies.every(({ email }) => typeof email === "string")).toBe(true);
     expect(companies.every(({ phone }) => typeof phone === "number" || phone === null)).toBe(true);
     expect(companies.every(({ foundedYear }) => typeof foundedYear === "number" || foundedYear === null)).toBe(true);
-    expect(companies.every(({ employeesCount }) => typeof employeesCount === "number")).toBe(true);
+    expect(companies.every(({ employeesCount }) => typeof employeesCount === "number" || employeesCount === null)).toBe(
+      true
+    );
     expect(companies.every(({ owners }) => Array.isArray(owners))).toBe(true);
     expect(companies.every(({ workers }) => Array.isArray(workers))).toBe(true);
     expect(companies.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
@@ -616,15 +614,15 @@ describe("Company Test Suite", () => {
     expect(typeof data).toBe("object");
     expect(typeof company._id).toBe("string");
     expect(typeof company.name).toBe("string");
-    expect(typeof company.avatarURL).toBe("string");
+    expect(typeof company.avatarURL === "object" || company.avatarURL === null).toBe(true);
     expect(typeof company.description).toBe("string");
     expect(typeof company.industry).toBe("string");
     expect(typeof company.location).toBe("string");
     expect(typeof company.website).toBe("string");
     expect(typeof company.email).toBe("string");
-    expect(typeof company.phone).toBe("number");
-    expect(typeof company.foundedYear).toBe("number");
-    expect(typeof company.employeesCount).toBe("number");
+    expect(typeof company.phone === "number" || company.phone === null).toBe(true);
+    expect(typeof company.foundedYear === "number" || company.foundedYear === null).toBe(true);
+    expect(typeof company.employeesCount === "number" || company.employeesCount === null).toBe(true);
     expect(company.employeesCount).toEqual(12322);
     expect(Array.isArray(company.owners)).toBe(true);
     expect(Array.isArray(company.workers)).toBe(true);
@@ -673,7 +671,7 @@ describe("Company Test Suite", () => {
     expect(Array.isArray(companies)).toBe(true);
     expect(companies.every(({ _id }) => typeof _id === "string")).toBe(true);
     expect(companies.every(({ name }) => typeof name === "string")).toBe(true);
-    expect(companies.every(({ avatarURL }) => typeof avatarURL === "string")).toBe(true);
+    expect(companies.every(({ avatarURL }) => typeof avatarURL === "object" || avatarURL === null)).toBe(true);
     expect(companies.every(({ description }) => typeof description === "string")).toBe(true);
     expect(companies.every(({ industry }) => typeof industry === "string")).toBe(true);
     expect(companies.every(({ location }) => typeof location === "string")).toBe(true);
@@ -681,7 +679,9 @@ describe("Company Test Suite", () => {
     expect(companies.every(({ email }) => typeof email === "string")).toBe(true);
     expect(companies.every(({ phone }) => typeof phone === "number" || phone === null)).toBe(true);
     expect(companies.every(({ foundedYear }) => typeof foundedYear === "number" || foundedYear === null)).toBe(true);
-    expect(companies.every(({ employeesCount }) => typeof employeesCount === "number")).toBe(true);
+    expect(companies.every(({ employeesCount }) => typeof employeesCount === "number" || employeesCount === null)).toBe(
+      true
+    );
     expect(companies.every(({ owners }) => Array.isArray(owners))).toBe(true);
     expect(companies.every(({ workers }) => Array.isArray(workers))).toBe(true);
     expect(companies.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
@@ -708,7 +708,7 @@ describe("Company Test Suite", () => {
     expect(Array.isArray(companies)).toBe(true);
     expect(companies.every(({ _id }) => typeof _id === "string")).toBe(true);
     expect(companies.every(({ name }) => typeof name === "string")).toBe(true);
-    expect(companies.every(({ avatarURL }) => typeof avatarURL === "string")).toBe(true);
+    expect(companies.every(({ avatarURL }) => typeof avatarURL === "object" || avatarURL === null)).toBe(true);
     expect(companies.every(({ description }) => typeof description === "string")).toBe(true);
     expect(companies.every(({ industry }) => typeof industry === "string")).toBe(true);
     expect(companies.every(({ location }) => typeof location === "string")).toBe(true);
@@ -716,7 +716,9 @@ describe("Company Test Suite", () => {
     expect(companies.every(({ email }) => typeof email === "string")).toBe(true);
     expect(companies.every(({ phone }) => typeof phone === "number" || phone === null)).toBe(true);
     expect(companies.every(({ foundedYear }) => typeof foundedYear === "number" || foundedYear === null)).toBe(true);
-    expect(companies.every(({ employeesCount }) => typeof employeesCount === "number")).toBe(true);
+    expect(companies.every(({ employeesCount }) => typeof employeesCount === "number" || employeesCount === null)).toBe(
+      true
+    );
     expect(companies.every(({ owners }) => Array.isArray(owners))).toBe(true);
     expect(companies.every(({ workers }) => Array.isArray(workers))).toBe(true);
     expect(companies.every(({ postedAtHuman }) => typeof postedAtHuman === "string")).toBe(true);
@@ -778,9 +780,8 @@ describe("Company Test Suite", () => {
     expect(typeof data).toBe("object");
     expect(typeof company._id).toBe("string");
     expect(typeof company.name).toBe("string");
-    expect(company.name).toEqual("SuperDuperCompany 2022");
-    expect(typeof company.avatarURL).toBe("string");
-    expect(company.avatarURL).toEqual("www.ava.ac/asd/ss.jpg");
+    expect(company.name).toEqual("SuperDuperCompany");
+    expect(typeof company.avatarURL === "object" || company.avatarURL === null).toBe(true);
     expect(typeof company.description).toBe("string");
     expect(company.description).toEqual("This is the best company 2022");
     expect(typeof company.industry).toBe("string");

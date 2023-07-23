@@ -3428,7 +3428,7 @@
           }
         ],
         "responses": {
-          "201": {
+          "200": {
             "description": "The worker was successfully added to the company",
             "content": {
               "application/json": {
@@ -36651,12 +36651,7 @@
           "name": {
             "type": "string",
             "description": "Company's name",
-            "example": "SuperDuperCompany"
-          },
-          "avatarURL": {
-            "type": "string",
-            "description": "Company's avatar",
-            "example": ""
+            "example": "SupeCompany"
           },
           "description": {
             "type": "string",
@@ -36753,7 +36748,7 @@
                   "name": {
                     "type": "string",
                     "description": "Company's name",
-                    "example": "SuperDuperCompany"
+                    "example": "SupeCompany"
                   },
                   "avatarURL": {
                     "type": "string",
@@ -36875,7 +36870,7 @@
           "name": {
             "type": "string",
             "description": "Company's name",
-            "example": "SuperDuperCompany 2023"
+            "example": "SupeCompany 2023"
           },
           "description": {
             "type": "string",
@@ -36913,7 +36908,7 @@
                   "name": {
                     "type": "string",
                     "description": "Company's name",
-                    "example": "SuperDuperCompany 2022"
+                    "example": "SupeCompany 2022"
                   },
                   "avatarURL": {
                     "type": "object",
@@ -37057,7 +37052,7 @@
                   "name": {
                     "type": "string",
                     "description": "Company's name",
-                    "example": "SuperDuperCompany 2022"
+                    "example": "SupeCompany 2022"
                   },
                   "avatarURL": {
                     "type": "object",
@@ -37212,7 +37207,7 @@
                   "name": {
                     "type": "string",
                     "description": "Company's name",
-                    "example": "SuperDuperCompany 2022"
+                    "example": "SupeCompany 2022"
                   },
                   "avatarURL": {
                     "type": "object",
@@ -37356,7 +37351,7 @@
                   "name": {
                     "type": "string",
                     "description": "Company's name",
-                    "example": "SuperDuperCompany 2022"
+                    "example": "SupeCompany 2022"
                   },
                   "avatarURL": {
                     "type": "object",
@@ -37511,7 +37506,7 @@
                   "name": {
                     "type": "string",
                     "description": "Company's name",
-                    "example": "SuperDuperCompany 2022"
+                    "example": "SupeCompany 2022"
                   },
                   "avatarURL": {
                     "type": "object",
@@ -37658,7 +37653,7 @@
                     "name": {
                       "type": "string",
                       "description": "Company's name",
-                      "example": "SuperDuperCompany 2022"
+                      "example": "SupeCompany 2022"
                     },
                     "avatarURL": {
                       "type": "object",
@@ -37715,24 +37710,6 @@
                       "type": "string",
                       "description": "Company's employees count",
                       "example": 12321
-                    },
-                    "jobs": {
-                      "type": "array",
-                      "description": "Array of jobs associated with this company",
-                      "items": {
-                        "type": "string",
-                        "description": "Jobs ID"
-                      },
-                      "default": []
-                    },
-                    "publications": {
-                      "type": "array",
-                      "description": "Array of publications associated with this company",
-                      "items": {
-                        "type": "string",
-                        "description": "Publications ID"
-                      },
-                      "default": []
                     },
                     "workers": {
                       "type": "array",
@@ -37824,7 +37801,7 @@
                     "name": {
                       "type": "string",
                       "description": "Company's name",
-                      "example": "SuperDuperCompany 2022"
+                      "example": "SupeCompany 2022"
                     },
                     "avatarURL": {
                       "type": "object",
@@ -37881,24 +37858,6 @@
                       "type": "string",
                       "description": "Company's employees count",
                       "example": 12321
-                    },
-                    "jobs": {
-                      "type": "array",
-                      "description": "Array of jobs associated with this company",
-                      "items": {
-                        "type": "string",
-                        "description": "Jobs ID"
-                      },
-                      "default": []
-                    },
-                    "publications": {
-                      "type": "array",
-                      "description": "Array of publications associated with this company",
-                      "items": {
-                        "type": "string",
-                        "description": "Publications ID"
-                      },
-                      "default": []
                     },
                     "workers": {
                       "type": "array",
@@ -37987,7 +37946,7 @@
                   "name": {
                     "type": "string",
                     "description": "Company's name",
-                    "example": "SuperDuperCompany 2022"
+                    "example": "SupeCompany 2022"
                   },
                   "avatarURL": {
                     "type": "object",
@@ -38158,7 +38117,7 @@
                   "name": {
                     "type": "string",
                     "description": "Company's name",
-                    "example": "SuperDuperCompany 2022"
+                    "example": "SupeCompany 2022"
                   },
                   "avatarURL": {
                     "type": "object",

@@ -16,6 +16,9 @@ const updateCompany = async (req, res, next) => {
 
   const updatedCompany = await Company.findByIdAndUpdate(companyId, updateData, {
     new: true, // return updated company
+  }).populate({
+    path: "avatarURL",
+    select: "url",
   });
 
   if (!updatedCompany) {

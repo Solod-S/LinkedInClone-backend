@@ -43,6 +43,10 @@ const getPublicationsByQuery = async (req, res, next) => {
           path: "owner",
           select:
             "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
+          populate: {
+            path: "avatarURL",
+            select: "url",
+          },
         },
         {
           path: "mediaFiles",
@@ -51,6 +55,10 @@ const getPublicationsByQuery = async (req, res, next) => {
             path: "owner",
             select:
               "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
+            populate: {
+              path: "avatarURL",
+              select: "url",
+            },
           },
         },
         {
@@ -60,6 +68,10 @@ const getPublicationsByQuery = async (req, res, next) => {
             path: "owner",
             select:
               "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
+            populate: {
+              path: "avatarURL",
+              select: "url",
+            },
           },
         },
       ],
@@ -71,6 +83,10 @@ const getPublicationsByQuery = async (req, res, next) => {
         path: "owner",
         select:
           "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
+        populate: {
+          path: "avatarURL",
+          select: "url",
+        },
       },
     })
     .populate({
@@ -80,13 +96,20 @@ const getPublicationsByQuery = async (req, res, next) => {
         path: "owner",
         select:
           "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
+        populate: {
+          path: "avatarURL",
+          select: "url",
+        },
       },
     })
     .populate({
       path: "owner",
       select: "_id name description industry location website email phone foundedYear employeesCount avatarURL",
+      populate: {
+        path: "avatarURL",
+        select: "url",
+      },
     });
-
   res.status(200).json({
     status: "success",
     message: "Successfully found such publications",

@@ -72,10 +72,12 @@ const addMediaFile = async (req, res, next) => {
     owner: req.user._id,
   });
 
-  if (location === "users" || (location === "companies" && mediaFileDestination.avatarURL)) {
-    await MediaFile.findByIdAndDelete({ _id: mediaFileDestination.avatarURL });
+  if (
+    (location === "users" && mediaFileDestination.avatarURL) ||
+    (location === "companies" && mediaFileDestination.avatarURL)
+  ) {
+    await MediaFile.findByIdAndDelete({ _id: mediaFileDestination.avatarURL._id });
   }
-
   location !== "users" && location !== "companies"
     ? mediaFileDestination.mediaFiles.push(newMediaFile._id)
     : (mediaFileDestination.avatarURL = newMediaFile._id);

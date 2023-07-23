@@ -8,7 +8,10 @@ const workerRemove = async (req, res, next) => {
   const { user = "" } = req.query;
   const { companyId } = req.params;
 
-  const company = await Company.findById({ _id: companyId });
+  const company = await Company.findById({ _id: companyId }).populate({
+    path: "avatarURL",
+    select: "url",
+  });
 
   if (!company || !company.workers.includes(user) || !company.owners.includes(_id)) {
     throw HttpError(404, "Not found");

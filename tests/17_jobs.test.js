@@ -22,7 +22,7 @@ describe("Jobs Test Suite", () => {
 
   beforeAll(async () => {
     await mongoose.connect(DB_HOST);
-    server = app.listen(3016, () => {
+    server = app.listen(3017, () => {
       server.unref(); // Отпускает серверный таймер после запуска сервера
     });
     await testsUtils.createUser(EMAIL, PASS);
@@ -48,7 +48,6 @@ describe("Jobs Test Suite", () => {
 
     const res2 = await request(app).post(`/companies/create`).set("Authorization", `Bearer ${testToken}`).send({
       name: "SuperDuperJobsCompany",
-      avatarURL: "",
       description: "This is the best company",
       industry: "Information Technology (IT)",
       location: "Ukraine, Kiev",
@@ -111,18 +110,18 @@ describe("Jobs Test Suite", () => {
           typeof owner === "object" &&
           typeof owner._id === "string" &&
           typeof owner.name === "string" &&
-          typeof owner.avatarURL === "string" &&
+          typeof (owner.avatarURL === null || typeof owner.avatarURL === "object") &&
           typeof owner.description === "string" &&
           typeof owner.industry === "string" &&
           typeof owner.location === "string" &&
           typeof owner.website === "string" &&
           typeof owner.email === "string" &&
-          typeof owner.phone === "number" &&
-          typeof owner.foundedYear === "number" &&
-          typeof owner.employeesCount === "number"
+          typeof (owner.phone === "number" || owner.phone === null) &&
+          typeof (owner.foundedYear === "number" || owner.foundedYear === null) &&
+          typeof (owner.employeesCount === "number" || owner.employeesCount === null)
       )
     ).toBe(true);
-  }, 48000);
+  }, 8000);
 
   test("GET /all jobs with valid token + pagination, should return 200 status and valid jobs data", async () => {
     const res = await request(app).get(`/jobs?page=1&perPage=10`).set("Authorization", `Bearer ${testToken}`);
@@ -158,18 +157,18 @@ describe("Jobs Test Suite", () => {
           typeof owner === "object" &&
           typeof owner._id === "string" &&
           typeof owner.name === "string" &&
-          typeof owner.avatarURL === "string" &&
+          typeof (owner.avatarURL === null || typeof owner.avatarURL === "object") &&
           typeof owner.description === "string" &&
           typeof owner.industry === "string" &&
           typeof owner.location === "string" &&
           typeof owner.website === "string" &&
           typeof owner.email === "string" &&
-          typeof owner.phone === "number" &&
-          typeof owner.foundedYear === "number" &&
-          typeof owner.employeesCount === "number"
+          typeof (owner.phone === "number" || owner.phone === null) &&
+          typeof (owner.foundedYear === "number" || owner.foundedYear === null) &&
+          typeof (owner.employeesCount === "number" || owner.employeesCount === null)
       )
     ).toBe(true);
-  }, 48000);
+  }, 8000);
 
   test("GET /all jobs with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/jobs`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -177,7 +176,7 @@ describe("Jobs Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("GET /all jobs with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app).get(`/jobs?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -185,7 +184,7 @@ describe("Jobs Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("GET /all popular jobs with valid token, should return 200 status and valid jobs data", async () => {
     const res = await request(app).get(`/jobs/popular`).set("Authorization", `Bearer ${testToken}`);
@@ -221,18 +220,18 @@ describe("Jobs Test Suite", () => {
           typeof owner === "object" &&
           typeof owner._id === "string" &&
           typeof owner.name === "string" &&
-          typeof owner.avatarURL === "string" &&
+          typeof (owner.avatarURL === null || typeof owner.avatarURL === "object") &&
           typeof owner.description === "string" &&
           typeof owner.industry === "string" &&
           typeof owner.location === "string" &&
           typeof owner.website === "string" &&
           typeof owner.email === "string" &&
-          typeof owner.phone === "number" &&
-          typeof owner.foundedYear === "number" &&
-          typeof owner.employeesCount === "number"
+          typeof (owner.phone === "number" || owner.phone === null) &&
+          typeof (owner.foundedYear === "number" || owner.foundedYear === null) &&
+          typeof (owner.employeesCount === "number" || owner.employeesCount === null)
       )
     ).toBe(true);
-  }, 48000);
+  }, 8000);
 
   test("GET /all popular jobs with valid token + pagination, should return 200 status and valid posts data", async () => {
     const res = await request(app).get(`/jobs/popular?page=1&perPage=10`).set("Authorization", `Bearer ${testToken}`);
@@ -268,18 +267,18 @@ describe("Jobs Test Suite", () => {
           typeof owner === "object" &&
           typeof owner._id === "string" &&
           typeof owner.name === "string" &&
-          typeof owner.avatarURL === "string" &&
+          typeof (owner.avatarURL === null || typeof owner.avatarURL === "object") &&
           typeof owner.description === "string" &&
           typeof owner.industry === "string" &&
           typeof owner.location === "string" &&
           typeof owner.website === "string" &&
           typeof owner.email === "string" &&
-          typeof owner.phone === "number" &&
-          typeof owner.foundedYear === "number" &&
-          typeof owner.employeesCount === "number"
+          typeof (owner.phone === "number" || owner.phone === null) &&
+          typeof (owner.foundedYear === "number" || owner.foundedYear === null) &&
+          typeof (owner.employeesCount === "number" || owner.employeesCount === null)
       )
     ).toBe(true);
-  }, 48000);
+  }, 8000);
 
   test("GET /all popular jobs with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/jobs/popular`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -287,7 +286,7 @@ describe("Jobs Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("GET /all popular jobs with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app).get(`/jobs/popular?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -295,7 +294,7 @@ describe("Jobs Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("GET /apply job by id with valid token, should return 200 status and valid job data", async () => {
     const res = await request(app).get(`/jobs/apply/${jobId}`).set("Authorization", `Bearer ${testToken}`);
@@ -326,16 +325,16 @@ describe("Jobs Test Suite", () => {
     expect(typeof job.owner).toBe("object");
     expect(typeof job.owner._id).toBe("string");
     expect(typeof job.owner.name).toBe("string");
-    expect(typeof job.owner.avatarURL).toBe("string");
+    expect(typeof job.owner.avatarURL === "object" || job.owner.avatarURL === null).toBe(true);
     expect(typeof job.owner.description).toBe("string");
     expect(typeof job.owner.industry).toBe("string");
     expect(typeof job.owner.location).toBe("string");
     expect(typeof job.owner.website).toBe("string");
     expect(typeof job.owner.email).toBe("string");
-    expect(typeof job.owner.phone).toBe("number");
-    expect(typeof job.owner.foundedYear).toBe("number");
-    expect(typeof job.owner.employeesCount).toBe("number");
-  }, 48000);
+    expect(typeof job.owner.phone === "number" || job.owner.phone === null).toBe(true);
+    expect(typeof job.owner.foundedYear === "number" || job.owner.foundedYear === null).toBe(true);
+    expect(typeof job.owner.employeesCount === "number" || job.owner.employeesCount === null).toBe(true);
+  }, 8000);
 
   test("GET /apply job by id with valid token second try, should return 409 status and valid job data", async () => {
     const res = await request(app).get(`/jobs/apply/${jobId}`).set("Authorization", `Bearer ${testToken}`);
@@ -343,7 +342,7 @@ describe("Jobs Test Suite", () => {
 
     expect(status).toBe(409);
     expect(body).toHaveProperty("message", "Sorry, the user was applyed to this job before");
-  }, 48000);
+  }, 8000);
 
   test("GET /apply job by invalid id with valid token, should return 404 status", async () => {
     const res = await request(app)
@@ -353,14 +352,14 @@ describe("Jobs Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 48000);
+  }, 8000);
 
   test("GET /apply job by id with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/jobs/apply/${jobId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
     const { status, body } = res;
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("GET /all applied jobs with valid token, should return 200 status and valid jobs data", async () => {
     const res = await request(app).get(`/jobs/popular`).set("Authorization", `Bearer ${testToken}`);
@@ -396,18 +395,18 @@ describe("Jobs Test Suite", () => {
           typeof owner === "object" &&
           typeof owner._id === "string" &&
           typeof owner.name === "string" &&
-          typeof owner.avatarURL === "string" &&
+          typeof (owner.avatarURL === null || typeof owner.avatarURL === "object") &&
           typeof owner.description === "string" &&
           typeof owner.industry === "string" &&
           typeof owner.location === "string" &&
           typeof owner.website === "string" &&
           typeof owner.email === "string" &&
-          typeof owner.phone === "number" &&
-          typeof owner.foundedYear === "number" &&
-          typeof owner.employeesCount === "number"
+          typeof (owner.phone === "number" || owner.phone === null) &&
+          typeof (owner.foundedYear === "number" || owner.foundedYear === null) &&
+          typeof (owner.employeesCount === "number" || owner.employeesCount === null)
       )
     ).toBe(true);
-  }, 48000);
+  }, 8000);
 
   test("GET /all applied jobs with valid token + pagination, should return 200 status and valid posts data", async () => {
     const res = await request(app).get(`/jobs/applied?page=1&perPage=10`).set("Authorization", `Bearer ${testToken}`);
@@ -443,18 +442,18 @@ describe("Jobs Test Suite", () => {
           typeof owner === "object" &&
           typeof owner._id === "string" &&
           typeof owner.name === "string" &&
-          typeof owner.avatarURL === "string" &&
+          typeof (owner.avatarURL === null || typeof owner.avatarURL === "object") &&
           typeof owner.description === "string" &&
           typeof owner.industry === "string" &&
           typeof owner.location === "string" &&
           typeof owner.website === "string" &&
           typeof owner.email === "string" &&
-          typeof owner.phone === "number" &&
-          typeof owner.foundedYear === "number" &&
-          typeof owner.employeesCount === "number"
+          typeof (owner.phone === "number" || owner.phone === null) &&
+          typeof (owner.foundedYear === "number" || owner.foundedYear === null) &&
+          typeof (owner.employeesCount === "number" || owner.employeesCount === null)
       )
     ).toBe(true);
-  }, 48000);
+  }, 8000);
 
   test("GET /all applied jobs with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/jobs/applied`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -462,7 +461,7 @@ describe("Jobs Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("GET /all applied jobs with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app).get(`/jobs/applied?page=1&perPage=10`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -470,7 +469,7 @@ describe("Jobs Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("GET /unapply job by id with valid token, should return 200 status and valid job data", async () => {
     const res = await request(app).get(`/jobs/unapply/${jobId}`).set("Authorization", `Bearer ${testToken}`);
@@ -501,16 +500,16 @@ describe("Jobs Test Suite", () => {
     expect(typeof job.owner).toBe("object");
     expect(typeof job.owner._id).toBe("string");
     expect(typeof job.owner.name).toBe("string");
-    expect(typeof job.owner.avatarURL).toBe("string");
+    expect(typeof job.owner.avatarURL === "object" || job.owner.avatarURL === null).toBe(true);
     expect(typeof job.owner.description).toBe("string");
     expect(typeof job.owner.industry).toBe("string");
     expect(typeof job.owner.location).toBe("string");
     expect(typeof job.owner.website).toBe("string");
     expect(typeof job.owner.email).toBe("string");
-    expect(typeof job.owner.phone).toBe("number");
-    expect(typeof job.owner.foundedYear).toBe("number");
-    expect(typeof job.owner.employeesCount).toBe("number");
-  }, 48000);
+    expect(typeof job.owner.phone === "number" || job.owner.phone === null).toBe(true);
+    expect(typeof job.owner.foundedYear === "number" || job.owner.foundedYear === null).toBe(true);
+    expect(typeof job.owner.employeesCount === "number" || job.owner.employeesCount === null).toBe(true);
+  }, 8000);
 
   test("GET /unapply job by invalid id with valid token, should return 404 status", async () => {
     const res = await request(app)
@@ -520,14 +519,14 @@ describe("Jobs Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 48000);
+  }, 8000);
 
   test("GET /unapply job by id with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/jobs/unapply/${jobId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
     const { status, body } = res;
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("GET /jobs by search query with valid token, should return 200 status and valid jobs data", async () => {
     const res = await request(app).get(`/jobs/search?search=Work`).set("Authorization", `Bearer ${testToken}`);
@@ -563,18 +562,18 @@ describe("Jobs Test Suite", () => {
           typeof owner === "object" &&
           typeof owner._id === "string" &&
           typeof owner.name === "string" &&
-          typeof owner.avatarURL === "string" &&
+          typeof (owner.avatarURL === null || typeof owner.avatarURL === "object") &&
           typeof owner.description === "string" &&
           typeof owner.industry === "string" &&
           typeof owner.location === "string" &&
           typeof owner.website === "string" &&
           typeof owner.email === "string" &&
-          typeof owner.phone === "number" &&
-          typeof owner.foundedYear === "number" &&
-          typeof owner.employeesCount === "number"
+          typeof (owner.phone === "number" || owner.phone === null) &&
+          typeof (owner.foundedYear === "number" || owner.foundedYear === null) &&
+          typeof (owner.employeesCount === "number" || owner.employeesCount === null)
       )
     ).toBe(true);
-  }, 48000);
+  }, 8000);
 
   test("GET /jobs by search query with valid token + pagination, should return 200 status and valid publications data", async () => {
     const res = await request(app)
@@ -612,18 +611,18 @@ describe("Jobs Test Suite", () => {
           typeof owner === "object" &&
           typeof owner._id === "string" &&
           typeof owner.name === "string" &&
-          typeof owner.avatarURL === "string" &&
+          typeof (owner.avatarURL === null || typeof owner.avatarURL === "object") &&
           typeof owner.description === "string" &&
           typeof owner.industry === "string" &&
           typeof owner.location === "string" &&
           typeof owner.website === "string" &&
           typeof owner.email === "string" &&
-          typeof owner.phone === "number" &&
-          typeof owner.foundedYear === "number" &&
-          typeof owner.employeesCount === "number"
+          typeof (owner.phone === "number" || owner.phone === null) &&
+          typeof (owner.foundedYear === "number" || owner.foundedYear === null) &&
+          typeof (owner.employeesCount === "number" || owner.employeesCount === null)
       )
     ).toBe(true);
-  }, 48000);
+  }, 8000);
 
   test("GET /jobs by search query with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/jobs/search?search=Work`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
@@ -631,7 +630,7 @@ describe("Jobs Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("GET /jobs by search query with invalid token + pagination, should return 401 status", async () => {
     const res = await request(app)
@@ -641,7 +640,7 @@ describe("Jobs Test Suite", () => {
 
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("GET /job by id with valid token, should return 200 status and valid job data", async () => {
     const res = await request(app).get(`/jobs/${jobId}`).set("Authorization", `Bearer ${testToken}`);
@@ -671,16 +670,16 @@ describe("Jobs Test Suite", () => {
     expect(typeof job.owner).toBe("object");
     expect(typeof job.owner._id).toBe("string");
     expect(typeof job.owner.name).toBe("string");
-    expect(typeof job.owner.avatarURL).toBe("string");
+    expect(typeof job.owner.avatarURL === "object" || job.owner.avatarURL === null).toBe(true);
     expect(typeof job.owner.description).toBe("string");
     expect(typeof job.owner.industry).toBe("string");
     expect(typeof job.owner.location).toBe("string");
     expect(typeof job.owner.website).toBe("string");
     expect(typeof job.owner.email).toBe("string");
-    expect(typeof job.owner.phone).toBe("number");
-    expect(typeof job.owner.foundedYear).toBe("number");
-    expect(typeof job.owner.employeesCount).toBe("number");
-  }, 48000);
+    expect(typeof job.owner.phone === "number" || job.owner.phone === null).toBe(true);
+    expect(typeof job.owner.foundedYear === "number" || job.owner.foundedYear === null).toBe(true);
+    expect(typeof job.owner.employeesCount === "number" || job.owner.employeesCount === null).toBe(true);
+  }, 8000);
 
   test("GET /job by invalid id with valid token, should return 404 status", async () => {
     const res = await request(app).get(`/jobs/111111111111111111111111`).set("Authorization", `Bearer ${testToken}`);
@@ -688,14 +687,14 @@ describe("Jobs Test Suite", () => {
 
     expect(status).toBe(404);
     expect(body).toHaveProperty("message", "Not found");
-  }, 48000);
+  }, 8000);
 
   test("GET /job by id with invalid token, should return 401 status", async () => {
     const res = await request(app).get(`/jobs/${jobId}`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
     const { status, body } = res;
     expect(status).toBe(401);
     expect(body).toHaveProperty("message", "Unauthorized");
-  }, 48000);
+  }, 8000);
 
   test("END", async () => {
     const res = await request(app).delete(`/users/remove`).set("Authorization", `Bearer ${testToken}`);

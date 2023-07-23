@@ -45,6 +45,10 @@ const getPopularJobs = async (req, res, next) => {
       path: "owner",
       select:
         "_id name description industry location website email phone foundedYear employeesCount avatarURL createdAt updatedAt",
+      populate: {
+        path: "avatarURL",
+        select: "url",
+      },
     });
 
   res.json({

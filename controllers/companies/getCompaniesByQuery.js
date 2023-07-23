@@ -35,7 +35,11 @@ const getCompaniesByQuery = async (req, res, next) => {
     .sort({ createdAt: -1 })
     .skip(skip < 0 ? 0 : skip)
     .limit(perPage)
-    .select("-users");
+    .select("-publications -jobs")
+    .populate({
+      path: "avatarURL",
+      select: "url",
+    });
 
   res.status(200).json({
     status: "success",

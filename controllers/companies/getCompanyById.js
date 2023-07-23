@@ -53,6 +53,10 @@ const getCompanyById = async (req, res, next) => {
         limit: 20,
       },
     })
+    .populate({
+      path: "avatarURL",
+      select: "url",
+    })
     .lean();
 
   if (!company) {

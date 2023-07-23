@@ -55,7 +55,6 @@ describe("Comments Test Suite", () => {
 
     const res3 = await request(app).post(`/companies/create`).set("Authorization", `Bearer ${testToken}`).send({
       name: "SuperDuperCommentCompany",
-      avatarURL: "",
       description: "This is the best company",
       industry: "Information Technology (IT)",
       location: "Ukraine, Kiev",

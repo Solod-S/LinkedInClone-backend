@@ -6,10 +6,10 @@ const getOwnJobs = async (req, res, next) => {
   const { _id } = req.user;
   let page = parseInt(req.query.page) || 1;
   const perPage = parseInt(req.query.perPage) || 10;
- 
+
   const company = await Company.findOne({ owners: _id });
 
-  if ( !company) {
+  if (!company) {
     return res.json({
       status: "success",
       message: "Successfully get jobs",
@@ -31,7 +31,7 @@ const getOwnJobs = async (req, res, next) => {
 
   const skip = (page - 1) * perPage;
 
-  if ( (await Job.find({ owner: company._id })).length <= 0) {
+  if ((await Job.find({ owner: company._id })).length <= 0) {
     return res.json({
       status: "success",
       message: "Successfully get jobs",
@@ -52,13 +52,22 @@ const getOwnJobs = async (req, res, next) => {
       path: "applied",
       select:
         "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
+      populate: {
+        path: "avatarURL",
+        select: "url",
+      },
     })
     .populate({
       path: "skills",
       select: "_id skill",
-    }).populate({
+    })
+    .populate({
       path: "owner",
       select: "_id name description industry location website email phone foundedYear employeesCount avatarURL",
+      populate: {
+        path: "avatarURL",
+        select: "url",
+      },
     });
 
   res.json({

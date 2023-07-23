@@ -25,13 +25,22 @@ const addOwnJobs = async (req, res, next) => {
       path: "applied",
       select:
         "_id surname name avatarURL email subscription about education experience frame headLine languages other1 other2 other3 phone site",
+      populate: {
+        path: "avatarURL",
+        select: "url",
+      },
     })
     .populate({
       path: "skills",
       select: "_id skill",
-    }).populate({
+    })
+    .populate({
       path: "owner",
       select: "_id name description industry location website email phone foundedYear employeesCount avatarURL",
+      populate: {
+        path: "avatarURL",
+        select: "url",
+      },
     });
   res.status(201).json({
     status: "success",

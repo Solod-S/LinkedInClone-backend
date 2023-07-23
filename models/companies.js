@@ -73,7 +73,7 @@ const Company = model("Company", companySchema);
 
 const createCompanySchema = Joi.object({
   name: Joi.string().required(),
-  avatarURL: Joi.string().allow(""),
+  avatarURL: Joi.string(),
   description: Joi.string().required(),
   industry: Joi.string()
     .required()
@@ -103,7 +103,7 @@ const createCompanySchema = Joi.object({
 
 const updateCompanySchema = Joi.object({
   name: Joi.string(),
-  avatarURL: Joi.string().allow(""),
+  avatarURL: Joi.string(),
   description: Joi.string(),
   industry: Joi.string().valid(
     "Information Technology (IT)",

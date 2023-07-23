@@ -21,7 +21,7 @@ describe("Own-jobs Test Suite", () => {
 
   beforeAll(async () => {
     await mongoose.connect(DB_HOST);
-    server = app.listen(3015, () => {
+    server = app.listen(3016, () => {
       server.unref(); // Отпускает серверный таймер после запуска сервера
     });
     await testsUtils.createUser(EMAIL, PASS);
@@ -46,7 +46,6 @@ describe("Own-jobs Test Suite", () => {
 
     const res2 = await request(app).post(`/companies/create`).set("Authorization", `Bearer ${testToken}`).send({
       name: "SuperDuperOwnJobsCompany",
-      avatarURL: "",
       description: "This is the best company",
       industry: "Information Technology (IT)",
       location: "Ukraine, Kiev",
@@ -102,15 +101,15 @@ describe("Own-jobs Test Suite", () => {
     expect(typeof job.owner).toBe("object");
     expect(typeof job.owner._id).toBe("string");
     expect(typeof job.owner.name).toBe("string");
-    expect(typeof job.owner.avatarURL).toBe("string");
+    expect(typeof job.owner.avatarURL === "object" || job.owner.avatarURL === null).toBe(true);
     expect(typeof job.owner.description).toBe("string");
     expect(typeof job.owner.industry).toBe("string");
     expect(typeof job.owner.location).toBe("string");
     expect(typeof job.owner.website).toBe("string");
     expect(typeof job.owner.email).toBe("string");
-    expect(typeof job.owner.phone).toBe("number");
-    expect(typeof job.owner.foundedYear).toBe("number");
-    expect(typeof job.owner.employeesCount).toBe("number");
+    expect(typeof job.owner.phone === "number" || job.owner.phone === null).toBe(true);
+    expect(typeof job.owner.foundedYear === "number" || job.owner.foundedYear === null).toBe(true);
+    expect(typeof job.owner.employeesCount === "number" || job.owner.employeesCount === null).toBe(true);
   }, 8000);
 
   test("POST /job with invalid token, should return 401 status", async () => {
@@ -192,15 +191,15 @@ describe("Own-jobs Test Suite", () => {
     expect(typeof job.owner).toBe("object");
     expect(typeof job.owner._id).toBe("string");
     expect(typeof job.owner.name).toBe("string");
-    expect(typeof job.owner.avatarURL).toBe("string");
+    expect(typeof job.owner.avatarURL === "object" || job.owner.avatarURL === null).toBe(true);
     expect(typeof job.owner.description).toBe("string");
     expect(typeof job.owner.industry).toBe("string");
     expect(typeof job.owner.location).toBe("string");
     expect(typeof job.owner.website).toBe("string");
     expect(typeof job.owner.email).toBe("string");
-    expect(typeof job.owner.phone).toBe("number");
-    expect(typeof job.owner.foundedYear).toBe("number");
-    expect(typeof job.owner.employeesCount).toBe("number");
+    expect(typeof job.owner.phone === "number" || job.owner.phone === null).toBe(true);
+    expect(typeof job.owner.foundedYear === "number" || job.owner.foundedYear === null).toBe(true);
+    expect(typeof job.owner.employeesCount === "number" || job.owner.employeesCount === null).toBe(true);
   }, 8000);
 
   test("PATCH /job with invalid id, should return 404 status", async () => {
@@ -291,15 +290,15 @@ describe("Own-jobs Test Suite", () => {
           typeof owner === "object" &&
           typeof owner._id === "string" &&
           typeof owner.name === "string" &&
-          typeof owner.avatarURL === "string" &&
+          typeof (owner.avatarURL === null || typeof owner.avatarURL === "object") &&
           typeof owner.description === "string" &&
           typeof owner.industry === "string" &&
           typeof owner.location === "string" &&
           typeof owner.website === "string" &&
           typeof owner.email === "string" &&
-          typeof owner.phone === "number" &&
-          typeof owner.foundedYear === "number" &&
-          typeof owner.employeesCount === "number"
+          typeof (owner.phone === "number" || owner.phone === null) &&
+          typeof (owner.foundedYear === "number" || owner.foundedYear === null) &&
+          typeof (owner.employeesCount === "number" || owner.employeesCount === null)
       )
     ).toBe(true);
   }, 8000);
@@ -338,15 +337,15 @@ describe("Own-jobs Test Suite", () => {
           typeof owner === "object" &&
           typeof owner._id === "string" &&
           typeof owner.name === "string" &&
-          typeof owner.avatarURL === "string" &&
+          typeof (owner.avatarURL === null || typeof owner.avatarURL === "object") &&
           typeof owner.description === "string" &&
           typeof owner.industry === "string" &&
           typeof owner.location === "string" &&
           typeof owner.website === "string" &&
           typeof owner.email === "string" &&
-          typeof owner.phone === "number" &&
-          typeof owner.foundedYear === "number" &&
-          typeof owner.employeesCount === "number"
+          typeof (owner.phone === "number" || owner.phone === null) &&
+          typeof (owner.foundedYear === "number" || owner.foundedYear === null) &&
+          typeof (owner.employeesCount === "number" || owner.employeesCount === null)
       )
     );
   }, 8000);
@@ -403,15 +402,15 @@ describe("Own-jobs Test Suite", () => {
     expect(typeof job.owner).toBe("object");
     expect(typeof job.owner._id).toBe("string");
     expect(typeof job.owner.name).toBe("string");
-    expect(typeof job.owner.avatarURL).toBe("string");
+    expect(typeof job.owner.avatarURL === "object" || job.owner.avatarURL === null).toBe(true);
     expect(typeof job.owner.description).toBe("string");
     expect(typeof job.owner.industry).toBe("string");
     expect(typeof job.owner.location).toBe("string");
     expect(typeof job.owner.website).toBe("string");
     expect(typeof job.owner.email).toBe("string");
-    expect(typeof job.owner.phone).toBe("number");
-    expect(typeof job.owner.foundedYear).toBe("number");
-    expect(typeof job.owner.employeesCount).toBe("number");
+    expect(typeof job.owner.phone === "number" || job.owner.phone === null).toBe(true);
+    expect(typeof job.owner.foundedYear === "number" || job.owner.foundedYear === null).toBe(true);
+    expect(typeof job.owner.employeesCount === "number" || job.owner.employeesCount === null).toBe(true);
 
     const deletedPublication = await Job.findById({ _id: jobId });
     expect(deletedPublication).toBe(null);

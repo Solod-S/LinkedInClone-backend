@@ -13,7 +13,10 @@ const deleteCompany = async (req, res, next) => {
     throw HttpError(404, "Not found");
   }
 
-  const result = await Company.findByIdAndDelete({ _id: companyId });
+  const result = await Company.findByIdAndDelete({ _id: companyId }).populate({
+    path: "avatarURL",
+    select: "url",
+  });
   await Publication.deleteMany({ owner: result._id });
   await Job.deleteMany({ owner: result._id });
 
