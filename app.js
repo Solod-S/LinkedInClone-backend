@@ -4,6 +4,19 @@ const cors = require("cors");
 require("dotenv").config();
 const swaggerUi = require("swagger-ui-express");
 
+const options = {
+  dotfiles: "ignore", // allow, deny, ignore
+  etag: true,
+  extensions: ["htm", "html"],
+  index: false, // to disable directory indexing
+  maxAge: "7d",
+  redirect: false,
+  setHeaders: function (res, path, stat) {
+    // add this header to all static responses
+    res.set("x-timestamp", Date.now());
+  },
+};
+
 const swaggerDocument = require("./routes/swagger/openapi.json");
 const {
   usersRouter,
@@ -26,7 +39,6 @@ const {
 } = require("./routes/api/");
 
 const app = express();
-
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
 app.use(logger(formatsLogger));
@@ -51,6 +63,7 @@ app.use("/own-publications", ownPublicationsRouter);
 app.use("/publications", publicationsRouter);
 app.use("/own-jobs", ownJobsRouter);
 app.use("/jobs", jobsRouter);
+app.use(express.static("public", options));
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });

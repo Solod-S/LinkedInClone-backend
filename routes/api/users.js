@@ -4,6 +4,10 @@ const { users } = require("../../controllers");
 const { validateBody, authenticate } = require("../../middlewares");
 const { userSchemas } = require("../../models");
 
+//  google
+usersRouter.get("/google", users.googleAuth);
+usersRouter.get("/google-redirect", users.googleRedirect);
+
 //  sign-up
 usersRouter.post("/register", validateBody(userSchemas.registerSchema), users.userRegister);
 usersRouter.get("/verify/:verificationCode", users.verifyEmail);
