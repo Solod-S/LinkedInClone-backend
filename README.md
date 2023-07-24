@@ -156,6 +156,8 @@ A Social Network developed with MERN stack.
 │   │   ├── getCurrent.js
 │   │   ├── getUserById.js
 │   │   ├── getUsersByQuery.js
+│   │   ├── googleAuth.js
+│   │   ├── googleRedirect.js
 │   │   ├── passwordChange.js
 │   │   ├── passwordReset.js
 │   │   ├── passwordResetByEmail.js
