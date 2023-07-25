@@ -1,4 +1,5 @@
 const testsUtils = require("./testsUtils/index");
+const googleUtils = require("./google/index");
 const handleMongooseError = require("./utils/handleMongooseError");
 const sendEmail = require("./email/sendEmail");
 const createVerifyEmail = require("./email/createVerifyEmail");
@@ -18,6 +19,7 @@ const jobTransformer = require("./transformer/jobTransformer");
 
 module.exports = {
   testsUtils,
+  googleUtils,
   handleMongooseError,
   sendEmail,
   createVerifyEmail,

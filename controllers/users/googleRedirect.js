@@ -1,8 +1,12 @@
+const { User, Token } = require("../../models");
+
 const querystring = require("query-string");
 const axios = require("axios");
-// const { URL } = require("url");
+const jwt = require("jsonwebtoken");
 
-const { BASE_URL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, FRONTEND_BASE_URL } = process.env;
+const { BASE_URL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, FRONTEND_BASE_URL, SECRET_KEY } = process.env;
+const { userTransformer } = require("../../helpers/index");
+const { googleUtils } = require("../../helpers");
 
 const googleRedirect = async (req, res) => {
   const fullUrl = `${req.protocol}://${req.get("host")}${req.originalUrl}`;
@@ -25,6 +29,7 @@ const googleRedirect = async (req, res) => {
   });
   // console.log(`tokenData`, tokenData);
   // делаем запрос гуглу за токеном для дальнейших запросов гуглу
+
   const userData = await axios({
     url: "https://www.googleapis.com/oauth2/v2/userinfo",
     method: "get",
@@ -35,8 +40,308 @@ const googleRedirect = async (req, res) => {
   // console.log(`userdata.data`, userData.data.email);
   // делаем запрос гуглу за инфой пользователя и получаем информацию о пользователе (userData.data)
   // дальше проверяем базу данных на наличие пользователя с имейлом userData.data.email если его нету регистрируем, если он есть мы пускаем юзера (даем токен)
-  console.log(userData.data);
-  return res.redirect(`${FRONTEND_BASE_URL}?email=${userData.data.email}`);
+
+  const userExist = await User.findOne({ email: userData.data.email });
+  console.log(`userExist`, userExist);
+
+  if (userExist) {
+    const payload = {
+      id: userExist._id,
+    };
+
+    const user = await User.findOne({ email: userData.data.email })
+      .populate({
+        path: "posts",
+        options: { limit: 10, sort: { createdAt: -1 } },
+        select: "description createdAt updatedAt",
+        populate: [
+          {
+            path: "comments",
+            options: { limit: 10, sort: { createdAt: -1 } },
+            select: "owner description likes mediaFiles createdAt updatedAt",
+            populate: {
+              path: "owner",
+              select: "_id surname name avatarURL",
+              populate: { path: "avatarURL", select: "url" },
+            },
+          },
+          {
+            path: "likes",
+            select: "owner type",
+            populate: {
+              path: "owner",
+              select: "_id surname name avatarURL",
+              populate: { path: "avatarURL", select: "url" },
+            },
+          },
+          {
+            path: "mediaFiles",
+            select: "url type owner location createdAt updatedAt",
+            populate: {
+              path: "owner",
+              select: "_id surname name avatarURL",
+              populate: { path: "avatarURL", select: "url" },
+            },
+          },
+        ],
+      })
+      .populate({
+        path: "favorite",
+        options: { limit: 10, sort: { createdAt: -1 } },
+        select: "description createdAt updatedAt",
+        populate: [
+          {
+            path: "comments",
+            options: { limit: 10, sort: { createdAt: -1 } },
+            select: "owner description likes mediaFiles createdAt updatedAt",
+            populate: {
+              path: "owner",
+              select: "_id surname name avatarURL",
+              populate: { path: "avatarURL", select: "url" },
+            },
+          },
+          {
+            path: "likes",
+            select: "owner type",
+            populate: {
+              path: "owner",
+              select: "_id surname name avatarURL",
+              populate: { path: "avatarURL", select: "url" },
+            },
+          },
+          {
+            path: "mediaFiles",
+            select: "url type owner location createdAt updatedAt",
+            populate: {
+              path: "owner",
+              select: "_id surname name avatarURL",
+              populate: { path: "avatarURL", select: "url" },
+            },
+          },
+        ],
+      })
+      .populate({
+        path: "subscription",
+        options: { limit: 10, sort: { createdAt: -1 } },
+        select:
+          "name surname site phone headLine about languages education frame experience email avatarURL subscription posts",
+        populate: [
+          {
+            path: "posts",
+            options: { limit: 10, sort: { createdAt: -1 } },
+            select: "description createdAt updatedAt",
+            populate: [
+              {
+                path: "comments",
+                options: { limit: 10, sort: { createdAt: -1 } },
+                select: "owner description likes mediaFiles createdAt updatedAt",
+                populate: {
+                  path: "owner",
+                  select: "_id surname name avatarURL",
+                  populate: { path: "avatarURL", select: "url" },
+                },
+              },
+              {
+                path: "likes",
+                select: "owner type",
+                populate: {
+                  path: "owner",
+                  select: "_id surname name avatarURL",
+                  populate: { path: "avatarURL", select: "url" },
+                },
+              },
+              {
+                path: "mediaFiles",
+                select: "url type owner location createdAt updatedAt",
+                populate: {
+                  path: "owner",
+                  select: "_id surname name avatarURL",
+                  populate: { path: "avatarURL", select: "url" },
+                },
+              },
+            ],
+          },
+          {
+            path: "favorite",
+            options: { limit: 10, sort: { createdAt: -1 } },
+            select: "description createdAt updatedAt",
+            populate: [
+              {
+                path: "comments",
+                options: { limit: 10, sort: { createdAt: -1 } },
+                select: "owner description likes mediaFiles createdAt updatedAt",
+                populate: {
+                  path: "owner",
+                  select: "_id surname name avatarURL",
+                  populate: { path: "avatarURL", select: "url" },
+                },
+              },
+              {
+                path: "likes",
+                select: "owner type",
+                populate: {
+                  path: "owner",
+                  select: "_id surname name avatarURL",
+                  populate: { path: "avatarURL", select: "url" },
+                },
+              },
+              {
+                path: "mediaFiles",
+                select: "url type owner location createdAt updatedAt",
+                populate: {
+                  path: "owner",
+                  select: "_id surname name avatarURL",
+                  populate: { path: "avatarURL", select: "url" },
+                },
+              },
+            ],
+          },
+          {
+            path: "subscription",
+            options: { limit: 10, sort: { createdAt: -1 } },
+            select:
+              "name surname site phone headLine about languages education frame experience email avatarURL subscription posts",
+            populate: { path: "avatarURL", select: "url" },
+          },
+          {
+            path: "avatarURL",
+            select: "url",
+          },
+        ],
+      })
+      .populate({
+        path: "avatarURL",
+        select: "url",
+      });
+
+    const token = jwt.sign(payload, SECRET_KEY);
+    const newToken = await Token.create({ owner: userExist._id, token });
+    console.log(`newToken`, newToken);
+    user.token.push(newToken._id); // Добавляем новый токен к пользователю
+    await user.save(); // Сохраняем обновленную информацию о пользователе
+
+    res.status(200).json({
+      status: "success",
+      message: "Successful login",
+      data: { user: userTransformer(user), token },
+    });
+  } else {
+    const token = await googleUtils.createGoogleUser(userData.data);
+
+    const { id } = jwt.verify(token, SECRET_KEY);
+
+    const user = await User.findById(id)
+      .populate({
+        path: "posts",
+        options: { limit: 10, sort: { createdAt: -1 } },
+        select: "description createdAt updatedAt",
+        populate: [
+          {
+            path: "comments",
+            options: { limit: 10, sort: { createdAt: -1 } },
+            select: "owner description likes mediaFiles createdAt updatedAt",
+            populate: { path: "owner", select: "_id surname name avatarURL" },
+          },
+          { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+          {
+            path: "mediaFiles",
+            select: "url type owner location createdAt updatedAt",
+            populate: { path: "owner", select: "_id surname name avatarURL" },
+          },
+        ],
+      })
+      .populate({
+        path: "favorite",
+        options: { limit: 10, sort: { createdAt: -1 } },
+        select: "description createdAt updatedAt",
+        populate: [
+          {
+            path: "comments",
+            options: { limit: 10, sort: { createdAt: -1 } },
+            select: "owner description likes mediaFiles createdAt updatedAt",
+            populate: { path: "owner", select: "_id surname name avatarURL" },
+          },
+          { path: "likes", select: "owner type", populate: { path: "owner", select: "_id surname name avatarURL" } },
+          {
+            path: "mediaFiles",
+            select: "url type owner location createdAt updatedAt",
+            populate: { path: "owner", select: "_id surname name avatarURL" },
+          },
+        ],
+      })
+      .populate({
+        path: "subscription",
+        options: { limit: 10, sort: { createdAt: -1 } },
+        select:
+          "name surname site phone headLine about languages education frame experience email avatarURL subscription posts",
+        populate: [
+          {
+            path: "posts",
+            options: { limit: 10, sort: { createdAt: -1 } },
+            select: "description createdAt updatedAt",
+            populate: [
+              {
+                path: "comments",
+                options: { limit: 10, sort: { createdAt: -1 } },
+                select: "owner description likes mediaFiles createdAt updatedAt",
+                populate: { path: "owner", select: "_id surname name avatarURL" },
+              },
+              {
+                path: "likes",
+                select: "owner type",
+                populate: { path: "owner", select: "_id surname name avatarURL" },
+              },
+              {
+                path: "mediaFiles",
+                select: "url type owner location createdAt updatedAt",
+                populate: { path: "owner", select: "_id surname name avatarURL" },
+              },
+            ],
+          },
+          {
+            path: "favorite",
+            options: { limit: 10, sort: { createdAt: -1 } },
+            select: "description createdAt updatedAt",
+            populate: [
+              {
+                path: "comments",
+                options: { limit: 10, sort: { createdAt: -1 } },
+                select: "owner description likes mediaFiles createdAt updatedAt",
+                populate: { path: "owner", select: "_id surname name avatarURL" },
+              },
+              {
+                path: "likes",
+                select: "owner type",
+                populate: { path: "owner", select: "_id surname name avatarURL" },
+              },
+              {
+                path: "mediaFiles",
+                select: "url type owner location createdAt updatedAt",
+                populate: { path: "owner", select: "_id surname name avatarURL" },
+              },
+            ],
+          },
+          {
+            path: "subscription",
+            options: { limit: 10, sort: { createdAt: -1 } },
+            select:
+              "name surname site phone headLine about languages education frame experience email avatarURL subscription posts",
+          },
+        ],
+      })
+      .populate({
+        path: "avatarURL",
+        select: "url",
+      });
+
+    res.status(200).json({
+      status: "success",
+      message: "Successful login",
+      data: { user: userTransformer(user), token },
+    });
+  }
+
+  // return res.redirect(`${FRONTEND_BASE_URL}?email=${userData.data.email}`);
   // тут нужно будет использовать в теле токен
   //  return res.redirect(`${FRONTEND_BASE_URL}/google-redirect?token=${тут токен который мы создадим}`);
   // с квери параметров будем брать токен
