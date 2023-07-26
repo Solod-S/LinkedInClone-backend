@@ -38,7 +38,7 @@ describe("User Test Suite", () => {
 
   test("POST /register with valid body, should return 201 status and valid user data", async () => {
     const res = await request(app)
-      .post("/users/devregister")
+      .post("/auth/devregister")
       .send({
         email,
         name: "Sergey",
@@ -60,7 +60,7 @@ describe("User Test Suite", () => {
 
   test("POST /register with the same email, should return 409 status", async () => {
     const res = await request(app)
-      .post("/users/devregister")
+      .post("/auth/devregister")
       .send({
         email,
         name,
@@ -75,7 +75,7 @@ describe("User Test Suite", () => {
 
   test("POST /register without email, should return 400 status", async () => {
     const res = await request(app)
-      .post("/users/devregister")
+      .post("/auth/devregister")
       .send({
         name,
         password: PASS,
@@ -89,7 +89,7 @@ describe("User Test Suite", () => {
 
   test("POST /register without name, should return 400 status", async () => {
     const res = await request(app)
-      .post("/users/devregister")
+      .post("/auth/devregister")
       .send({
         email,
         password: PASS,
@@ -103,7 +103,7 @@ describe("User Test Suite", () => {
 
   test("POST /register without password, should return 400 status", async () => {
     const res = await request(app)
-      .post("/users/devregister")
+      .post("/auth/devregister")
       .send({
         email,
         name,
@@ -117,7 +117,7 @@ describe("User Test Suite", () => {
 
   test("POST /register without surname, should return 400 status", async () => {
     const res = await request(app)
-      .post("/users/devregister")
+      .post("/auth/devregister")
       .send({
         email,
         name,
@@ -130,7 +130,7 @@ describe("User Test Suite", () => {
   }, 8000);
 
   test("GET /send verify email without body, should return 400 status", async () => {
-    const res = await request(app).post(`/users/devverify`).set("Accept", "application/json");
+    const res = await request(app).post(`/auth/devverify`).set("Accept", "application/json");
 
     expect(res.status).toBe(400);
     expect(res.body).toEqual({
@@ -140,7 +140,7 @@ describe("User Test Suite", () => {
 
   test("GET /send verify email with valid email, should return 201 status", async () => {
     const res = await request(app)
-      .post(`/users/devverify`)
+      .post(`/auth/devverify`)
       .send({
         email,
       })
@@ -161,7 +161,7 @@ describe("User Test Suite", () => {
 
     veifyCode = await getVerificationCode(email);
 
-    const res = await request(app).get(`/users/verify/${veifyCode}`).set("Accept", "application/json");
+    const res = await request(app).get(`/auth/verify/${veifyCode}`).set("Accept", "application/json");
 
     expect(res.status).toBe(200);
     expect(res.body).toEqual({
@@ -172,7 +172,7 @@ describe("User Test Suite", () => {
 
   test("GET /send verify email with valid email to verified user, should return 401 status", async () => {
     const res = await request(app)
-      .post(`/users/devverify`)
+      .post(`/auth/devverify`)
       .send({
         email,
       })
@@ -185,7 +185,7 @@ describe("User Test Suite", () => {
   }, 8000);
 
   test("GET /verify email with invalid varification code, should return 404 status", async () => {
-    const res = await request(app).get(`/users/verify/${WRONG_VERIFY_CODE}`).set("Accept", "application/json");
+    const res = await request(app).get(`/auth/verify/${WRONG_VERIFY_CODE}`).set("Accept", "application/json");
 
     expect(res.status).toBe(404);
     expect(res.body).toEqual({
@@ -195,7 +195,7 @@ describe("User Test Suite", () => {
 
   test("POST /login with valid body, should return 200 status, token and valid user data", async () => {
     const res = await request(app)
-      .post(`/users/login`)
+      .post(`/auth/login`)
       .send({
         email,
         password: PASS,
@@ -239,7 +239,7 @@ describe("User Test Suite", () => {
 
   test("POST /login with invalid body, should return 400 status", async () => {
     const res = await request(app)
-      .post(`/users/login`)
+      .post(`/auth/login`)
       .send({
         email,
         password: PASS,
@@ -251,7 +251,7 @@ describe("User Test Suite", () => {
   }, 8000);
 
   test("POST /login without body, should return 400 status", async () => {
-    const res = await request(app).post(`/users/login`).set("Accept", "application/json");
+    const res = await request(app).post(`/auth/login`).set("Accept", "application/json");
 
     expect(res.status).toBe(400);
     expect(res.body).toEqual({
@@ -261,7 +261,7 @@ describe("User Test Suite", () => {
 
   test("POST /login without password, should return 400 status", async () => {
     const res = await request(app)
-      .post(`/users/login`)
+      .post(`/auth/login`)
       .send({
         email,
       })
@@ -275,7 +275,7 @@ describe("User Test Suite", () => {
 
   test("POST /login without email, should return 400 status", async () => {
     const res = await request(app)
-      .post(`/users/login`)
+      .post(`/auth/login`)
       .send({
         password: PASS,
       })
@@ -289,7 +289,7 @@ describe("User Test Suite", () => {
 
   test("POST /login with wrong email, should return 404 status", async () => {
     const res = await request(app)
-      .post(`/users/login`)
+      .post(`/auth/login`)
       .send({
         email: `das${email}`,
         password: PASS,
@@ -304,7 +304,7 @@ describe("User Test Suite", () => {
 
   test("POST /login with incorrect password, should return 404 status", async () => {
     const res = await request(app)
-      .post(`/users/login`)
+      .post(`/auth/login`)
       .send({
         email,
         password: "sdxczsaf12412",
@@ -319,7 +319,7 @@ describe("User Test Suite", () => {
 
   test("POST /login with invalid password, should return 400 status", async () => {
     const res = await request(app)
-      .post(`/users/login`)
+      .post(`/auth/login`)
       .send({
         email,
         password: INVALID_PASS,
@@ -334,7 +334,7 @@ describe("User Test Suite", () => {
 
   test("POST /change password with invalid token, should return 401 status", async () => {
     const res = await request(app)
-      .post(`/users/password-change`)
+      .post(`/auth/password-change`)
       .send({
         oldPassword: PASS,
         newPassword: PASS,
@@ -349,7 +349,7 @@ describe("User Test Suite", () => {
 
   test("POST /change password with valid body, should return 200 status and valid user data", async () => {
     const res = await request(app)
-      .post(`/users/password-change`)
+      .post(`/auth/password-change`)
       .send({
         oldPassword: PASS,
         newPassword: PASS,
@@ -389,7 +389,7 @@ describe("User Test Suite", () => {
 
   test("POST /change password with invalid body, should return 400 status", async () => {
     const res = await request(app)
-      .post(`/users/password-change`)
+      .post(`/auth/password-change`)
       .send({
         password: PASS,
       })
@@ -400,7 +400,7 @@ describe("User Test Suite", () => {
   }, 8000);
 
   test("POST /change password without body, should return 400 status", async () => {
-    const res = await request(app).post(`/users/password-change`).send().set("Authorization", `Bearer ${token}`);
+    const res = await request(app).post(`/auth/password-change`).send().set("Authorization", `Bearer ${token}`);
 
     expect(res.status).toBe(400);
     expect(res.body).toHaveProperty("message", '"oldPassword" is required');
@@ -421,7 +421,7 @@ describe("User Test Suite", () => {
     resetToken = await getResetToken(email);
 
     const res = await request(app)
-      .post(`/users/password-reset/${resetToken}`)
+      .post(`/auth/password-reset/${resetToken}`)
       .send({
         passssssword: PASS,
       })
@@ -435,7 +435,7 @@ describe("User Test Suite", () => {
 
   test("POST /reset password with valid resetToken, should return 200 status and valid user data", async () => {
     const res = await request(app)
-      .post(`/users/password-reset/${resetToken}`)
+      .post(`/auth/password-reset/${resetToken}`)
       .send({
         password: PASS,
       })
@@ -474,7 +474,7 @@ describe("User Test Suite", () => {
 
   test("POST /reset password with invalid resetToken, should return 404 status ", async () => {
     const res = await request(app)
-      .post(`/users/password-reset/${resetToken}`)
+      .post(`/auth/password-reset/${resetToken}`)
       .send({
         password: PASS,
       })
@@ -487,7 +487,7 @@ describe("User Test Suite", () => {
   }, 8000);
 
   test("GET /current user data with valid token, should return 200 status and valid user data", async () => {
-    const res = await request(app).get(`/users/current`).set("Authorization", `Bearer ${token}`);
+    const res = await request(app).get(`/auth/current`).set("Authorization", `Bearer ${token}`);
     const { status, message, data } = res.body;
     const { user } = data;
 
@@ -522,7 +522,7 @@ describe("User Test Suite", () => {
   }, 8000);
 
   test("GET /current user data with invalid token, should return 401 status", async () => {
-    const res = await request(app).get(`/users/current`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+    const res = await request(app).get(`/auth/current`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
 
     expect(res.status).toBe(401);
     expect(res.body).toEqual({
@@ -531,7 +531,7 @@ describe("User Test Suite", () => {
   }, 8000);
 
   test("GET /current user data with invalid token, should return 401 status", async () => {
-    const res = await request(app).get(`/users/current`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+    const res = await request(app).get(`/auth/current`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
 
     expect(res.status).toBe(401);
     expect(res.body).toEqual({
@@ -755,7 +755,7 @@ describe("User Test Suite", () => {
   }, 8000);
 
   test("GET /logout with valid token, should return 200 status", async () => {
-    const res = await request(app).get(`/users/logout`).set("Authorization", `Bearer ${token}`);
+    const res = await request(app).get(`/auth/logout`).set("Authorization", `Bearer ${token}`);
 
     expect(res.status).toBe(200);
     expect(res.body).toEqual({
@@ -765,7 +765,7 @@ describe("User Test Suite", () => {
   }, 8000);
 
   test("GET /logout with invalid token, should return 401 status", async () => {
-    const res = await request(app).get(`/users/logout`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
+    const res = await request(app).get(`/auth/logout`).set("Authorization", `Bearer ${WRONG_TOKEN}`);
 
     expect(res.status).toBe(401);
     expect(res.body).toEqual({
@@ -774,7 +774,7 @@ describe("User Test Suite", () => {
   }, 8000);
 
   test("GET /logout without token, should return 401 status", async () => {
-    const res = await request(app).get(`/users/logout`);
+    const res = await request(app).get(`/auth/logout`);
 
     expect(res.status).toBe(401);
     expect(res.body).toEqual({
@@ -800,7 +800,7 @@ describe("User Test Suite", () => {
 
   test("DELETE /delete user with valid token, should return 200 status and valid user data", async () => {
     const userData = await request(app)
-      .post(`/users/login`)
+      .post(`/auth/login`)
       .send({
         email,
         password: PASS,

@@ -1,3 +1,4 @@
+const auth = require("./auth");
 const users = require("./users");
 const ownPosts = require("./ownPosts");
 const mediaFiles = require("./mediaFiles");
@@ -17,6 +18,7 @@ const ownJobs = require("./ownJobs");
 const jobs = require("./jobs");
 
 module.exports = {
+  auth,
   users,
   ownPosts,
   mediaFiles,

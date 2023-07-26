@@ -6,7 +6,7 @@ const googleAuth = async (req, res) => {
   console.log(`googleAuth`);
   const stringifiedParams = querystring.stringify({
     client_id: GOOGLE_CLIENT_ID,
-    redirect_uri: `${BASE_URL}/users/google-redirect`,
+    redirect_uri: `${BASE_URL}/auth/google-redirect`,
     scope: ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"].join(
       " "
     ),

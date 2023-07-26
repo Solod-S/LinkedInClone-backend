@@ -1,3 +1,4 @@
+const authRouter = require("./auth");
 const usersRouter = require("./users");
 const ownPostsRouter = require("./ownPosts");
 const mediaFilesRouter = require("./mediaFiles");
@@ -17,6 +18,7 @@ const ownJobsRouter = require("./ownJobs");
 const jobsRouter = require("./jobs");
 
 module.exports = {
+  authRouter,
   usersRouter,
   ownPostsRouter,
   mediaFilesRouter,

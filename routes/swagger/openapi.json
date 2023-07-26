@@ -17,6 +17,10 @@
   ],
   "tags": [
     {
+      "name": "Auth",
+      "description": "Auth operation endpoints"
+    },
+    {
       "name": "Users",
       "description": "Users operation endpoints"
     },
@@ -86,9 +90,9 @@
     }
   ],
   "paths": {
-    "/users/register": {
+    "/auth/register": {
       "post": {
-        "tags": ["Users"],
+        "tags": ["Auth"],
         "summary": "User registration",
         "parameters": [],
         "requestBody": {
@@ -97,7 +101,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UsersRegistrationRequest"
+                "$ref": "#/components/schemas/AuthRegistrationRequest"
               }
             }
           }
@@ -108,7 +112,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UsersRegistrationResponse"
+                  "$ref": "#/components/schemas/AuthRegistrationResponse"
                 }
               }
             }
@@ -128,7 +132,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UsersRegistrationErrorResponse"
+                  "$ref": "#/components/schemas/AuthRegistrationErrorResponse"
                 }
               }
             }
@@ -136,9 +140,9 @@
         }
       }
     },
-    "/users/verify": {
+    "/auth/verify": {
       "post": {
-        "tags": ["Users"],
+        "tags": ["Auth"],
         "summary": "Send verification link by email",
         "parameters": [],
         "requestBody": {
@@ -147,7 +151,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UsersVerificstionRequest"
+                "$ref": "#/components/schemas/AuthVerificstionRequest"
               }
             }
           }
@@ -158,7 +162,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserVerificstionResponse"
+                  "$ref": "#/components/schemas/AuthVerificstionResponse"
                 }
               }
             }
@@ -178,7 +182,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UsersVerificstionErrorResponse"
+                  "$ref": "#/components/schemas/AuthVerificstionErrorResponse"
                 }
               }
             }
@@ -186,9 +190,9 @@
         }
       }
     },
-    "/users/login": {
+    "/auth/login": {
       "post": {
-        "tags": ["Users"],
+        "tags": ["Auth"],
         "summary": "User authentication",
         "parameters": [],
         "requestBody": {
@@ -197,7 +201,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UsersLoginRequest"
+                "$ref": "#/components/schemas/AuthsLoginRequest"
               }
             }
           }
@@ -208,7 +212,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UsersLoginResponse"
+                  "$ref": "#/components/schemas/AuthLoginResponse"
                 }
               }
             }
@@ -228,7 +232,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UsersLoginErrorResponse"
+                  "$ref": "#/components/schemas/AuthLoginErrorResponse"
                 }
               }
             }
@@ -236,9 +240,9 @@
         }
       }
     },
-    "/users/password-change": {
+    "/auth/password-change": {
       "post": {
-        "tags": ["Users"],
+        "tags": ["Auth"],
         "summary": "Change password",
         "security": [{ "Bearer": [] }],
         "parameters": [],
@@ -248,7 +252,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UsersChangePasswordRequest"
+                "$ref": "#/components/schemas/AuthChangePasswordRequest"
               }
             }
           }
@@ -259,7 +263,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UsersChangePasswordResponse"
+                  "$ref": "#/components/schemas/AuthChangePasswordResponse"
                 }
               }
             }
@@ -289,7 +293,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UsersChangePasswordErrorResponse"
+                  "$ref": "#/components/schemas/AuthChangePasswordErrorResponse"
                 }
               }
             }
@@ -297,9 +301,9 @@
         }
       }
     },
-    "/users/password-reset": {
+    "/auth/password-reset": {
       "post": {
-        "tags": ["Users"],
+        "tags": ["Auth"],
         "summary": "Send password reset link by email",
         "parameters": [],
         "requestBody": {
@@ -308,7 +312,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UsersSendPasswordResetRequest"
+                "$ref": "#/components/schemas/AuthSendPasswordResetRequest"
               }
             }
           }
@@ -319,7 +323,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserSendPasswordResetResponse"
+                  "$ref": "#/components/schemas/AuthSendPasswordResetResponse"
                 }
               }
             }
@@ -347,9 +351,9 @@
         }
       }
     },
-    "/users/password-reset/{resetToken}": {
+    "/auth/password-reset/{resetToken}": {
       "post": {
-        "tags": ["Users"],
+        "tags": ["Auth"],
         "summary": "Password reset request",
         "parameters": [
           {
@@ -368,7 +372,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UsersPasswordResetRequest"
+                "$ref": "#/components/schemas/AuthPasswordResetRequest"
               }
             }
           }
@@ -379,7 +383,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserPasswordResetResponse"
+                  "$ref": "#/components/schemas/AuthPasswordResetResponse"
                 }
               }
             }
@@ -400,6 +404,66 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/NotFoundResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/current": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get current user info",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Get current information successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthGetCurrentResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/remove": {
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Delete user",
+        "security": [{ "Bearer": [] }],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful user termination",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsersDeleteResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedResponse"
                 }
               }
             }
@@ -441,66 +505,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/BadRequestResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Token is invalid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users/current": {
-      "get": {
-        "tags": ["Users"],
-        "summary": "Get current user info",
-        "security": [{ "Bearer": [] }],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Get current information successful",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsersGetCurrentResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Token is invalid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users/logout": {
-      "get": {
-        "tags": ["Users"],
-        "summary": "User logout",
-        "security": [{ "Bearer": [] }],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Logout successful",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsersLogOutResponse"
                 }
               }
             }
@@ -687,36 +691,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/NotFoundResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users/remove": {
-      "delete": {
-        "tags": ["Users"],
-        "summary": "Delete user",
-        "security": [{ "Bearer": [] }],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Successful user termination",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsersDeleteResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Token is invalid",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedResponse"
                 }
               }
             }
@@ -5098,7 +5072,7 @@
           }
         }
       },
-      "UsersRegistrationRequest": {
+      "AuthRegistrationRequest": {
         "type": "object",
         "required": ["name", "surname", "email", "password"],
         "properties": {
@@ -5125,7 +5099,7 @@
           }
         }
       },
-      "UsersRegistrationResponse": {
+      "AuthRegistrationResponse": {
         "type": "object",
         "properties": {
           "status": {
@@ -5162,7 +5136,7 @@
           }
         }
       },
-      "UsersRegistrationErrorResponse": {
+      "AuthRegistrationErrorResponse": {
         "type": "object",
         "properties": {
           "message": {
@@ -5173,7 +5147,7 @@
           }
         }
       },
-      "UsersVerificstionRequest": {
+      "AuthVerificstionRequest": {
         "required": ["email"],
         "type": "object",
         "properties": {
@@ -5184,7 +5158,7 @@
           }
         }
       },
-      "UserVerificstionResponse": {
+      "AuthVerificstionResponse": {
         "type": "object",
         "properties": {
           "status": {
@@ -5201,7 +5175,7 @@
           }
         }
       },
-      "UsersVerificstionErrorResponse": {
+      "AuthVerificstionErrorResponse": {
         "type": "object",
         "properties": {
           "message": {
@@ -5211,7 +5185,7 @@
           }
         }
       },
-      "UsersLoginRequest": {
+      "AuthsLoginRequest": {
         "required": ["email", "password"],
         "type": "object",
         "properties": {
@@ -5228,7 +5202,7 @@
           }
         }
       },
-      "UsersLoginResponse": {
+      "AuthLoginResponse": {
         "type": "object",
         "properties": {
           "status": {
@@ -6386,7 +6360,7 @@
           }
         }
       },
-      "UsersLoginErrorResponse": {
+      "AuthLoginErrorResponse": {
         "type": "object",
         "properties": {
           "message": {
@@ -6411,7 +6385,7 @@
           }
         }
       },
-      "UsersChangePasswordRequest": {
+      "AuthChangePasswordRequest": {
         "required": ["oldPassword", "newPassword"],
         "type": "object",
         "properties": {
@@ -6427,7 +6401,7 @@
           }
         }
       },
-      "UsersChangePasswordResponse": {
+      "AuthChangePasswordResponse": {
         "type": "object",
         "properties": {
           "status": {
@@ -7579,7 +7553,7 @@
           }
         }
       },
-      "UsersChangePasswordErrorResponse": {
+      "AuthChangePasswordErrorResponse": {
         "type": "object",
         "properties": {
           "message": {
@@ -7589,7 +7563,7 @@
           }
         }
       },
-      "UsersSendPasswordResetRequest": {
+      "AuthSendPasswordResetRequest": {
         "required": ["email"],
         "type": "object",
         "properties": {
@@ -7601,7 +7575,7 @@
           }
         }
       },
-      "UserSendPasswordResetResponse": {
+      "AuthSendPasswordResetResponse": {
         "type": "object",
         "properties": {
           "status": {
@@ -7618,7 +7592,7 @@
           }
         }
       },
-      "UsersPasswordResetRequest": {
+      "AuthPasswordResetRequest": {
         "required": ["password"],
         "type": "object",
         "properties": {
@@ -7630,7 +7604,7 @@
           }
         }
       },
-      "UserPasswordResetResponse": {
+      "AuthPasswordResetResponse": {
         "type": "object",
         "properties": {
           "status": {
@@ -9996,7 +9970,7 @@
           }
         }
       },
-      "UsersGetCurrentResponse": {
+      "AuthGetCurrentResponse": {
         "type": "object",
         "properties": {
           "status": {

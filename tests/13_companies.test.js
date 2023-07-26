@@ -38,7 +38,7 @@ describe("Company Test Suite", () => {
 
   test("START", async () => {
     const res = await request(app)
-      .post(`/users/login`)
+      .post(`/auth/login`)
       .send({
         email: EMAIL,
         password: PASS,
@@ -49,7 +49,7 @@ describe("Company Test Suite", () => {
     testToken = data.token;
 
     const res2 = await request(app)
-      .post(`/users/login`)
+      .post(`/auth/login`)
       .send({
         email: EMAIL2,
         password: PASS2,

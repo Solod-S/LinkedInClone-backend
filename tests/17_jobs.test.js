@@ -35,7 +35,7 @@ describe("Jobs Test Suite", () => {
 
   test("START", async () => {
     const res = await request(app)
-      .post(`/users/login`)
+      .post(`/auth/login`)
       .send({
         email: EMAIL,
         password: PASS,
