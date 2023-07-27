@@ -1,6 +1,6 @@
 const { Skill } = require("../../models");
 
-const { skillTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getAllSkills = async (req, res, next) => {
   let page = parseInt(req.query.page) || 1;
@@ -38,7 +38,7 @@ const getAllSkills = async (req, res, next) => {
     status: "success",
     message: "Successfully get all skills",
     data: {
-      skills: skills.map((skill) => skillTransformer(skill)),
+      skills: skills.map((skill) => transformers.skillTransformer(skill)),
       totalPages,
       currentPage: page,
       perPage,

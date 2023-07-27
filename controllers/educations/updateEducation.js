@@ -1,7 +1,7 @@
 const { Education } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { educationTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const updateEducation = async (req, res, next) => {
   const updateData = req.body; // new data from req.body
@@ -33,7 +33,7 @@ const updateEducation = async (req, res, next) => {
   res.json({
     status: "success",
     message: "Successfully updated an education",
-    data: { education: educationTransformer(updatedEducation) },
+    data: { education: transformers.educationTransformer(updatedEducation) },
   });
 };
 

@@ -1,7 +1,7 @@
 const { Experience } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { experienceTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const updateExperience = async (req, res, next) => {
   const updateData = req.body; // new data from req.body
@@ -33,7 +33,7 @@ const updateExperience = async (req, res, next) => {
   res.json({
     status: "success",
     message: "Successfully updated an experience",
-    data: { experience: experienceTransformer(updatedExperience) },
+    data: { experience: transformers.experienceTransformer(updatedExperience) },
   });
 };
 

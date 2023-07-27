@@ -1,7 +1,7 @@
 const { Post, Comment, Like, MediaFile, Publication } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { commentTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const deleteOwnComment = async (req, res, next) => {
   const { _id } = req.user;
@@ -40,7 +40,7 @@ const deleteOwnComment = async (req, res, next) => {
   res.json({
     status: "success",
     message: "Comment successfully deleted",
-    data: { comment: commentTransformer(result) },
+    data: { comment: transformers.commentTransformer(result) },
   });
 };
 

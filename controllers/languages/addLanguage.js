@@ -1,6 +1,6 @@
 const { User, Language } = require("../../models");
 
-const { languageTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const addLanguage = async (req, res, next) => {
   const { _id } = req.user;
@@ -18,7 +18,7 @@ const addLanguage = async (req, res, next) => {
   res.status(201).json({
     status: "success",
     message: "Language successfully created",
-    data: { language: languageTransformer(newLanguage) },
+    data: { language: transformers.languageTransformer(newLanguage) },
   });
 };
 

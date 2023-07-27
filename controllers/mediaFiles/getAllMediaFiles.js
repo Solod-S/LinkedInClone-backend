@@ -1,6 +1,6 @@
 const { MediaFile } = require("../../models");
 
-const { mediaFileTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getAllMediaFiles = async (req, res, next) => {
   const { _id } = req.user;
@@ -236,7 +236,7 @@ const getAllMediaFiles = async (req, res, next) => {
     status: "success",
     message: "Successfully get media files",
     data: {
-      mediaFiles: allMediaFiles.map((mediaFiles) => mediaFileTransformer(mediaFiles)),
+      mediaFiles: allMediaFiles.map((mediaFiles) => transformers.mediaFileTransformer(mediaFiles)),
       totalPages,
       currentPage: page,
       perPage,

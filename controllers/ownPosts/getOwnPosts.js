@@ -1,6 +1,6 @@
 const { Post } = require("../../models");
 
-const { postTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getOwnPosts = async (req, res, next) => {
   const { _id } = req.user;
@@ -114,7 +114,7 @@ const getOwnPosts = async (req, res, next) => {
     status: "success",
     message: "Successfully get posts",
     data: {
-      posts: ownPosts.map((post) => postTransformer(post)),
+      posts: ownPosts.map((post) => transformers.postTransformer(post)),
       totalPages,
       currentPage: page,
       perPage,

@@ -1,7 +1,7 @@
 const { User, Education } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { educationTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const deleteEducation = async (req, res, next) => {
   const { _id } = req.user;
@@ -32,7 +32,7 @@ const deleteEducation = async (req, res, next) => {
   res.json({
     status: "success",
     message: "Education successfully deleted",
-    data: { education: educationTransformer(result) },
+    data: { education: transformers.educationTransformer(result) },
   });
 };
 

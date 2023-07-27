@@ -1,6 +1,6 @@
 const { Job } = require("../../models");
 
-const { jobTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getAppliedJobs = async (req, res, next) => {
   const { _id } = req.user;
@@ -56,7 +56,7 @@ const getAppliedJobs = async (req, res, next) => {
     status: "success",
     message: "Successfully get applied jobs",
     data: {
-      jobs: jobs.map((job) => jobTransformer(job)),
+      jobs: jobs.map((job) => transformers.jobTransformer(job)),
       totalPages,
       currentPage: page,
       perPage,

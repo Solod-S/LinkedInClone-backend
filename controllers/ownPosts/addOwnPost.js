@@ -1,6 +1,6 @@
 const { Post, User } = require("../../models");
 
-const { postTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const addOwnPost = async (req, res, next) => {
   const { _id } = req.user;
@@ -96,7 +96,7 @@ const addOwnPost = async (req, res, next) => {
   res.status(201).json({
     status: "success",
     message: "Post successfully created",
-    data: { post: postTransformer(post) },
+    data: { post: transformers.postTransformer(post) },
   });
 };
 

@@ -1,6 +1,6 @@
 const { Experience } = require("../../models");
 
-const { experienceTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getOwnExperiences = async (req, res, next) => {
   const { _id } = req.user;
@@ -46,7 +46,7 @@ const getOwnExperiences = async (req, res, next) => {
     status: "success",
     message: "Successfully get experiences",
     data: {
-      experiences: ownExperiences.map((experience) => experienceTransformer(experience)),
+      experiences: ownExperiences.map((experience) => transformers.experienceTransformer(experience)),
       totalPages,
       currentPage: page,
       perPage,

@@ -1,5 +1,5 @@
 const { User, Post } = require("../../models");
-const { postTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getFavorites = async (req, res, next) => {
   const { _id } = req.user;
@@ -92,7 +92,7 @@ const getFavorites = async (req, res, next) => {
     status: "success",
     message: "Successfully get favorites",
     data: {
-      posts: posts.map((post) => postTransformer(post)),
+      posts: posts.map((post) => transformers.postTransformer(post)),
       totalPages,
       currentPage: page,
       perPage,

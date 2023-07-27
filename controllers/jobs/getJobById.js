@@ -1,7 +1,7 @@
 const { Job } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { jobTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getJobById = async (req, res, next) => {
   const { jobId } = req.params;
@@ -33,7 +33,7 @@ const getJobById = async (req, res, next) => {
   res.status(200).json({
     status: "success",
     message: "Successfully found the job",
-    data: { job: jobTransformer(job) },
+    data: { job: transformers.jobTransformer(job) },
   });
 };
 

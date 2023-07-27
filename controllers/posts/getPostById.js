@@ -1,7 +1,7 @@
 const { Post } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { postTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getPostById = async (req, res, next) => {
   const { postId } = req.params;
@@ -91,7 +91,7 @@ const getPostById = async (req, res, next) => {
   res.status(200).json({
     status: "success",
     message: "Successfully found the post",
-    data: { post: postTransformer(post) },
+    data: { post: transformers.postTransformer(post) },
   });
 };
 

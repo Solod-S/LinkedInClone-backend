@@ -1,7 +1,7 @@
 const { User, Language } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { languageTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const deleteLanguage = async (req, res, next) => {
   const { _id } = req.user;
@@ -24,7 +24,7 @@ const deleteLanguage = async (req, res, next) => {
   res.json({
     status: "success",
     message: "Language successfully deleted",
-    data: { language: languageTransformer(result) },
+    data: { language: transformers.languageTransformer(result) },
   });
 };
 

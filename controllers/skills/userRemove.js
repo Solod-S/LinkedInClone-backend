@@ -1,7 +1,7 @@
 const { Skill } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { skillTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const userRemove = async (req, res, next) => {
   const { _id } = req.user;
@@ -20,7 +20,7 @@ const userRemove = async (req, res, next) => {
     status: "success",
     message: "User was successfully removed from this skill",
     data: {
-      skill: skillTransformer(skill),
+      skill: transformers.skillTransformer(skill),
     },
   });
 };

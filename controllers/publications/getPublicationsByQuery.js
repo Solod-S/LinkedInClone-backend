@@ -1,6 +1,6 @@
 const { Publication } = require("../../models");
 
-const { publicationTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getPublicationsByQuery = async (req, res, next) => {
   const { search = "" } = req.query;
@@ -114,7 +114,7 @@ const getPublicationsByQuery = async (req, res, next) => {
     status: "success",
     message: "Successfully found such publications",
     data: {
-      publications: publications.map((publication) => publicationTransformer(publication)),
+      publications: publications.map((publication) => transformers.publicationTransformer(publication)),
       totalPages,
       currentPage: page,
       perPage,

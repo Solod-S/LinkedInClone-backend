@@ -1,7 +1,7 @@
 const { User, Experience } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { experienceTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const deleteExperience = async (req, res, next) => {
   const { _id } = req.user;
@@ -35,7 +35,7 @@ const deleteExperience = async (req, res, next) => {
   res.json({
     status: "success",
     message: "Experience successfully deleted",
-    data: { experience: experienceTransformer(result) },
+    data: { experience: transformers.experienceTransformer(result) },
   });
 };
 

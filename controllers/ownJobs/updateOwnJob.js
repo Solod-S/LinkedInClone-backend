@@ -1,7 +1,7 @@
 const { Job, Company } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { jobTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const updateOwnJob = async (req, res, next) => {
   const updateData = req.body; // new data from req.body
@@ -47,7 +47,7 @@ const updateOwnJob = async (req, res, next) => {
   res.json({
     status: "success",
     message: "Successfully updated the job",
-    data: { job: jobTransformer(updatedJob) },
+    data: { job: transformers.jobTransformer(updatedJob) },
   });
 };
 

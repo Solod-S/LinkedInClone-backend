@@ -1,7 +1,7 @@
 const { Company } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { companyTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getCompanyById = async (req, res, next) => {
   const { companyId } = req.params;
@@ -72,7 +72,7 @@ const getCompanyById = async (req, res, next) => {
     status: "success",
     message: "Successfully found the company",
     data: {
-      company: companyTransformer(company),
+      company: transformers.companyTransformer(company),
       workers: company.workers,
       [path]: company[path],
       [othersPath[0]]: company[othersPath[0]],

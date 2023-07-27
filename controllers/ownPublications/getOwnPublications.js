@@ -1,6 +1,6 @@
 const { Publication, Company } = require("../../models");
 
-const { publicationTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getOwnPublications = async (req, res, next) => {
   const { _id } = req.user;
@@ -128,7 +128,7 @@ const getOwnPublications = async (req, res, next) => {
     status: "success",
     message: "Successfully get publications",
     data: {
-      publications: ownPublication.map((publication) => publicationTransformer(publication)),
+      publications: ownPublication.map((publication) => transformers.publicationTransformer(publication)),
       totalPages,
       currentPage: page,
       perPage,

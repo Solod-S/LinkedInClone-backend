@@ -1,6 +1,6 @@
 const { Education } = require("../../models");
 
-const { educationTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getOwnEducations = async (req, res, next) => {
   const { _id } = req.user;
@@ -46,7 +46,7 @@ const getOwnEducations = async (req, res, next) => {
     status: "success",
     message: "Successfully get educations",
     data: {
-      educations: ownExperiences.map((education) => educationTransformer(education)),
+      educations: ownExperiences.map((education) => transformers.educationTransformer(education)),
       totalPages,
       currentPage: page,
       perPage,

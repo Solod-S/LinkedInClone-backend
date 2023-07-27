@@ -1,6 +1,6 @@
 const { Job } = require("../../models");
 
-const { jobTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getPopularJobs = async (req, res, next) => {
   let page = parseInt(req.query.page) || 1;
@@ -55,7 +55,7 @@ const getPopularJobs = async (req, res, next) => {
     status: "success",
     message: "Successfully get popular jobs",
     data: {
-      jobs: jobs.map((job) => jobTransformer(job)),
+      jobs: jobs.map((job) => transformers.jobTransformer(job)),
       totalPages,
       currentPage: page,
       perPage,

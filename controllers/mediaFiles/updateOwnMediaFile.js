@@ -1,7 +1,7 @@
 const { MediaFile } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { mediaFileTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const updateOwnMediaFile = async (req, res, next) => {
   const updateData = req.body; // new data from req.body
@@ -25,7 +25,7 @@ const updateOwnMediaFile = async (req, res, next) => {
   res.json({
     status: "success",
     message: "Media file successfully updated",
-    data: { mediaFile: mediaFileTransformer(updatedMediaFile) },
+    data: { mediaFile: transformers.mediaFileTransformer(updatedMediaFile) },
   });
 };
 

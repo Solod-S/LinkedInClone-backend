@@ -1,7 +1,7 @@
 const { Skill, Education, Experience } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { skillTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const deleteSkill = async (req, res, next) => {
   const { skillId } = req.params;
@@ -17,7 +17,11 @@ const deleteSkill = async (req, res, next) => {
 
   const result = await Skill.findByIdAndDelete({ _id: skillId });
 
-  res.json({ status: "success", message: "Skill successfully deleted", data: { skill: skillTransformer(result) } });
+  res.json({
+    status: "success",
+    message: "Skill successfully deleted",
+    data: { skill: transformers.skillTransformer(result) },
+  });
 };
 
 module.exports = deleteSkill;

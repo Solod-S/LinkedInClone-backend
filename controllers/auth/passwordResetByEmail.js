@@ -2,8 +2,7 @@ const { User } = require("../../models");
 
 const uuid = require("uuid");
 
-const { sendEmail } = require("../../helpers");
-const { createRestorePasswordEmail } = require("../../helpers");
+const { emailUtils } = require("../../helpers");
 const { HttpError } = require("../../routes/errors/HttpErrors");
 
 const passwordResetByEmail = async (req, res) => {
@@ -25,8 +24,8 @@ const passwordResetByEmail = async (req, res) => {
   user.resetTokenExpires = Date.now() + 3600000; // 1 час
   await user.save();
 
-  const restorePassEmail = createRestorePasswordEmail(email, resetToken);
-  await sendEmail(restorePassEmail);
+  const restorePassEmail = emailUtils.createRestorePasswordEmail(email, resetToken);
+  await emailUtils.sendEmail(restorePassEmail);
 
   res.json({
     status: "success",

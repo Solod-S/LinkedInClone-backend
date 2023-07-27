@@ -1,6 +1,6 @@
 const { Skill } = require("../../models");
 
-const { skillTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const createSkill = async (req, res, next) => {
   const { _id } = req.user;
@@ -19,7 +19,7 @@ const createSkill = async (req, res, next) => {
     return res.status(200).json({
       status: "success",
       message: `The skill "${existingSkill.skill}" was created before`,
-      data: { skill: skillTransformer(existingSkill) },
+      data: { skill: transformers.skillTransformer(existingSkill) },
     });
   }
 
@@ -30,7 +30,11 @@ const createSkill = async (req, res, next) => {
 
   res
     .status(201)
-    .json({ status: "success", message: "Skill successfully created", data: { skill: skillTransformer(newSkill) } });
+    .json({
+      status: "success",
+      message: "Skill successfully created",
+      data: { skill: transformers.skillTransformer(newSkill) },
+    });
 };
 
 module.exports = createSkill;

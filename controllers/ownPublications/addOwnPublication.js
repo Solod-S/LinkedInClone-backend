@@ -1,7 +1,7 @@
 const { Publication, Company } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { publicationTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const addOwnPublication = async (req, res, next) => {
   const { _id } = req.user;
@@ -100,7 +100,7 @@ const addOwnPublication = async (req, res, next) => {
   res.status(201).json({
     status: "success",
     message: "Publication successfully created",
-    data: { publication: publicationTransformer(publication) },
+    data: { publication: transformers.publicationTransformer(publication) },
   });
 };
 

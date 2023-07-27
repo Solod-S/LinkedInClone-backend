@@ -1,7 +1,7 @@
 const { Company, Job } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { jobTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const deleteOwnJob = async (req, res, next) => {
   const { _id } = req.user;
@@ -50,7 +50,7 @@ const deleteOwnJob = async (req, res, next) => {
   res.json({
     status: "success",
     message: "Job successfully deleted",
-    data: { job: jobTransformer(result) },
+    data: { job: transformers.jobTransformer(result) },
   });
 };
 

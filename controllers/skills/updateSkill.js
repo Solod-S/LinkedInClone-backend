@@ -1,7 +1,7 @@
 const { Skill } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { skillTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const updateSkill = async (req, res, next) => {
   const updateData = req.body; // new data from req.body
@@ -24,7 +24,7 @@ const updateSkill = async (req, res, next) => {
   res.json({
     status: "success",
     message: "Successfully updated skill",
-    data: { skill: skillTransformer(updatedskill) },
+    data: { skill: transformers.skillTransformer(updatedskill) },
   });
 };
 

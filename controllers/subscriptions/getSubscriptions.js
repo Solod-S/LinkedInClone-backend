@@ -1,5 +1,5 @@
 const { User } = require("../../models");
-const { userTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getFavorites = async (req, res, next) => {
   const { _id } = req.user;
@@ -200,7 +200,7 @@ const getFavorites = async (req, res, next) => {
     status: "success",
     message: "Successfully get subscription",
     data: {
-      users: subscriptions.map((user) => userTransformer(user)),
+      users: subscriptions.map((user) => transformers.userTransformer(user)),
       totalPages,
       currentPage: page,
       perPage,

@@ -1,7 +1,7 @@
 const { Language } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { languageTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const updateLanguage = async (req, res, next) => {
   const updateData = req.body; // new data from req.body
@@ -25,7 +25,7 @@ const updateLanguage = async (req, res, next) => {
   res.json({
     status: "success",
     message: "Successfully updated the language",
-    data: { language: languageTransformer(updatedLanguage) },
+    data: { language: transformers.languageTransformer(updatedLanguage) },
   });
 };
 

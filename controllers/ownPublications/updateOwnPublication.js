@@ -1,7 +1,7 @@
 const { Publication, Company } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { publicationTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const updateOwnPublication = async (req, res, next) => {
   const updateData = req.body; // new data from req.body
@@ -101,7 +101,7 @@ const updateOwnPublication = async (req, res, next) => {
   res.json({
     status: "success",
     message: "Successfully updated the publication",
-    data: { publication: publicationTransformer(updatedPublication) },
+    data: { publication: transformers.publicationTransformer(updatedPublication) },
   });
 };
 

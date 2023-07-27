@@ -1,6 +1,6 @@
 const { Job } = require("../../models");
 
-const { jobTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getJobsByQuery = async (req, res, next) => {
   const { search = "" } = req.query;
@@ -63,7 +63,7 @@ const getJobsByQuery = async (req, res, next) => {
     status: "success",
     message: "Successfully found such jobs",
     data: {
-      jobs: jobs.map((publication) => jobTransformer(publication)),
+      jobs: jobs.map((publication) => transformers.jobTransformer(publication)),
       totalPages,
       currentPage: page,
       perPage,

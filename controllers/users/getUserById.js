@@ -1,7 +1,7 @@
 const { User, Post } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { postTransformer, userTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getUserById = async (req, res, next) => {
   const { userId } = req.params;
@@ -204,7 +204,7 @@ const getUserById = async (req, res, next) => {
   res.status(200).json({
     status: "success",
     message: "Successfully found the user",
-    data: { user: userTransformer(user), posts: posts.map((post) => postTransformer(post)) },
+    data: { user: transformers.userTransformer(user), posts: posts.map((post) => transformers.postTransformer(post)) },
   });
 };
 

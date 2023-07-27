@@ -1,12 +1,12 @@
 const { Skill } = require("../../models");
 
-const { skillTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getOwnSkills = async (req, res, next) => {
   const { _id } = req.user;
   let page = parseInt(req.query.page) || 1;
   const perPage = parseInt(req.query.perPage) || 10;
-  console.log(_id)
+  console.log(_id);
 
   const count = await Skill.countDocuments({ users: _id });
   const totalPages = Math.ceil(count / perPage);
@@ -40,7 +40,7 @@ const getOwnSkills = async (req, res, next) => {
     status: "success",
     message: "Successfully get own skills",
     data: {
-      skills: skills.map((skill) => skillTransformer(skill)),
+      skills: skills.map((skill) => transformers.skillTransformer(skill)),
       totalPages,
       currentPage: page,
       perPage,

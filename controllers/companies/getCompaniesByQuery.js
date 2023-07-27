@@ -1,6 +1,6 @@
 const { Skill, Company } = require("../../models");
 
-const { companyTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getCompaniesByQuery = async (req, res, next) => {
   const { search = "" } = req.query;
@@ -45,7 +45,7 @@ const getCompaniesByQuery = async (req, res, next) => {
     status: "success",
     message: "Successfully found such companies",
     data: {
-      companies: companies.map((company) => companyTransformer(company)),
+      companies: companies.map((company) => transformers.companyTransformer(company)),
       totalPages,
       currentPage: page,
       perPage,

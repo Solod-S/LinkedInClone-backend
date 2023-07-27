@@ -3,8 +3,7 @@ const { User } = require("../../models");
 const bcrypt = require("bcrypt");
 const uuid = require("uuid");
 
-const { sendEmail } = require("../../helpers");
-const { createVerifyEmail } = require("../../helpers");
+const { emailUtils } = require("../../helpers");
 const { HttpError } = require("../../routes/errors/HttpErrors");
 
 const userRegister = async (req, res) => {
@@ -25,8 +24,8 @@ const userRegister = async (req, res) => {
     verify: true,
   });
 
-  const verifyEmail = createVerifyEmail(email, verificationCode);
-  await sendEmail(verifyEmail);
+  const verifyEmail = emailUtils.createVerifyEmail(email, verificationCode);
+  await emailUtils.sendEmail(verifyEmail);
 
   res.status(201).json({
     status: "success",

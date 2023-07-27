@@ -4,15 +4,15 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const { SECRET_KEY } = process.env;
-
+// eslint-disable-next-line camelcase
 const createGoogleUser = async ({ email, id, name, family_name, picture }) => {
-  console.log(email, id, name, family_name, picture);
   const hashPassword = await bcrypt.hash(id, 10);
   try {
     const createdUser = await User.create({
       email: email,
       name: name,
-      surname: name,
+      // eslint-disable-next-line camelcase
+      surname: family_name || name,
       verify: true,
       password: hashPassword,
     });

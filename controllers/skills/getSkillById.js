@@ -1,7 +1,7 @@
 const { Skill } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { skillTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getSkillById = async (req, res, next) => {
   const { skillId } = req.params;
@@ -39,7 +39,7 @@ const getSkillById = async (req, res, next) => {
     status: "success",
     message: "Successfully found the skill",
     data: {
-      skill: skillTransformer(skill),
+      skill: transformers.skillTransformer(skill),
       users: skill.users,
       totalPages,
       currentPage,

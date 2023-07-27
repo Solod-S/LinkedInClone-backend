@@ -1,6 +1,6 @@
 const { Skill } = require("../../models");
 
-const { skillTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getSkillByQuery = async (req, res, next) => {
   const { search = "" } = req.query;
@@ -40,7 +40,12 @@ const getSkillByQuery = async (req, res, next) => {
   res.status(200).json({
     status: "success",
     message: "Successfully found such skills",
-    data: { skills: skills.map((skill) => skillTransformer(skill)), totalPages, currentPage: page, perPage },
+    data: {
+      skills: skills.map((skill) => transformers.skillTransformer(skill)),
+      totalPages,
+      currentPage: page,
+      perPage,
+    },
   });
 };
 

@@ -1,7 +1,7 @@
 const { Comment } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { commentTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const updateOwnComment = async (req, res, next) => {
   const updateData = req.body; // new data from req.body
@@ -16,17 +16,19 @@ const updateOwnComment = async (req, res, next) => {
 
   const updatedComment = await Comment.findByIdAndUpdate(commentId, updateData, {
     new: true, // return updated comment
-  }).populate({
-    path: "mediaFiles",
-    select: "url type providerPublicId location createdAt updatedAt"
-  }).populate({
-    path: "likes",
-    select: "owner type createdAt updatedAt",
-  }).populate({
-    path: "owner",
-    select:
-      "_id surname name avatarURL",
-  });
+  })
+    .populate({
+      path: "mediaFiles",
+      select: "url type providerPublicId location createdAt updatedAt",
+    })
+    .populate({
+      path: "likes",
+      select: "owner type createdAt updatedAt",
+    })
+    .populate({
+      path: "owner",
+      select: "_id surname name avatarURL",
+    });
 
   if (!updatedComment) {
     throw HttpError(404, "Not found");
@@ -35,7 +37,7 @@ const updateOwnComment = async (req, res, next) => {
   res.json({
     status: "success",
     message: "Comment successfully updated",
-    data: { comment: commentTransformer(updatedComment) },
+    data: { comment: transformers.commentTransformer(updatedComment) },
   });
 };
 

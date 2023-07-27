@@ -1,6 +1,6 @@
 const { Post } = require("../../models");
 
-const { postTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getPostsByQuery = async (req, res, next) => {
   const { search = "" } = req.query;
@@ -112,7 +112,7 @@ const getPostsByQuery = async (req, res, next) => {
   res.status(200).json({
     status: "success",
     message: "Successfully found such posts",
-    data: { posts: posts.map((post) => postTransformer(post)), totalPages, currentPage: page, perPage },
+    data: { posts: posts.map((post) => transformers.postTransformer(post)), totalPages, currentPage: page, perPage },
   });
 };
 

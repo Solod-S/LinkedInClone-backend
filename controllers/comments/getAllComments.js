@@ -1,6 +1,6 @@
 const { Comment } = require("../../models");
 
-const { commentTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getAllComments = async (req, res, next) => {
   const { _id } = req.user;
@@ -50,7 +50,7 @@ const getAllComments = async (req, res, next) => {
     status: "success",
     message: "Successfully get comments",
     data: {
-      comments: comments.map((post) => commentTransformer(post)),
+      comments: comments.map((post) => transformers.commentTransformer(post)),
       totalPages,
       currentPage: page,
       perPage,

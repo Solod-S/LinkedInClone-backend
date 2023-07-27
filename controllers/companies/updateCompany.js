@@ -1,7 +1,7 @@
 const { Company } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { companyTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const updateCompany = async (req, res, next) => {
   const { _id } = req.user;
@@ -28,7 +28,7 @@ const updateCompany = async (req, res, next) => {
   res.json({
     status: "success",
     message: "Successfully updated company",
-    data: { company: companyTransformer(updatedCompany) },
+    data: { company: transformers.companyTransformer(updatedCompany) },
   });
 };
 

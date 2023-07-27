@@ -1,7 +1,7 @@
 const { User } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { userTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const userUpdate = async (req, res, next) => {
   const { _id } = req.user;
@@ -23,7 +23,7 @@ const userUpdate = async (req, res, next) => {
   res.json({
     status: "success",
     message: "Successfully updated user",
-    data: { user: userTransformer(updatedUser) },
+    data: { user: transformers.userTransformer(updatedUser) },
   });
 };
 

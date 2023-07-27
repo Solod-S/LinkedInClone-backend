@@ -1,7 +1,7 @@
 const { Comment, MediaFile, Like, Company, Publication } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { publicationTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const deleteOwnPublication = async (req, res, next) => {
   const { _id } = req.user;
@@ -106,7 +106,7 @@ const deleteOwnPublication = async (req, res, next) => {
   res.json({
     status: "success",
     message: "Publication successfully deleted",
-    data: { publication: publicationTransformer(result) },
+    data: { publication: transformers.publicationTransformer(result) },
   });
 };
 

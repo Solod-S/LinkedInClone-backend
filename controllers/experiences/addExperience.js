@@ -1,6 +1,6 @@
 const { User, Experience } = require("../../models");
 
-const { experienceTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const addExperience = async (req, res, next) => {
   const { _id } = req.user;
@@ -18,7 +18,7 @@ const addExperience = async (req, res, next) => {
   res.status(201).json({
     status: "success",
     message: "Experience successfully created",
-    data: { experience: experienceTransformer(newExperience) },
+    data: { experience: transformers.experienceTransformer(newExperience) },
   });
 };
 

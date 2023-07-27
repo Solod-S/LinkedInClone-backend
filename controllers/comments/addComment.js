@@ -1,6 +1,6 @@
 const { Comment, Post, Publication } = require("../../models");
 
-const { commentTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 const { HttpError } = require("../../routes/errors/HttpErrors");
 
 const addComment = async (req, res, next) => {
@@ -39,7 +39,7 @@ const addComment = async (req, res, next) => {
   res.status(201).json({
     status: "success",
     message: "Comment successfully created",
-    data: { comment: { ...commentTransformer(comment), owner: { _id, name, surname, avatarURL } } },
+    data: { comment: { ...transformers.commentTransformer(comment), owner: { _id, name, surname, avatarURL } } },
   });
 };
 

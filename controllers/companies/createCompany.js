@@ -1,7 +1,7 @@
 const { Company } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { companyTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const createCompany = async (req, res, next) => {
   const { _id } = req.user;
@@ -26,7 +26,7 @@ const createCompany = async (req, res, next) => {
   res.status(201).json({
     status: "success",
     message: "Company successfully created",
-    data: { company: companyTransformer(newCompany) },
+    data: { company: transformers.companyTransformer(newCompany) },
   });
 };
 

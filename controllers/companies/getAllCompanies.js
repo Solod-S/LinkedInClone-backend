@@ -1,6 +1,6 @@
 const { Company } = require("../../models");
 
-const { companyTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getAllCompanies = async (req, res, next) => {
   let page = parseInt(req.query.page) || 1;
@@ -42,7 +42,7 @@ const getAllCompanies = async (req, res, next) => {
     status: "success",
     message: "Successfully get companies",
     data: {
-      companies: companies.map((company) => companyTransformer(company)),
+      companies: companies.map((company) => transformers.companyTransformer(company)),
       totalPages,
       currentPage: page,
       perPage,

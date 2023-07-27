@@ -1,7 +1,7 @@
 const { MediaFile } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { mediaFileTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getMediaFileById = async (req, res, next) => {
   const { mediaFileId } = req.params;
@@ -154,7 +154,7 @@ const getMediaFileById = async (req, res, next) => {
     status: "success",
     message: "Successfully get the media file",
     data: {
-      mediaFile: mediaFileTransformer(mediaFile),
+      mediaFile: transformers.mediaFileTransformer(mediaFile),
     },
   });
 };

@@ -1,6 +1,6 @@
 const { User, Education } = require("../../models");
 
-const { educationTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const addEducation = async (req, res, next) => {
   const { _id } = req.user;
@@ -18,7 +18,7 @@ const addEducation = async (req, res, next) => {
   res.status(201).json({
     status: "success",
     message: "Education successfully created",
-    data: { education: educationTransformer(newEducation) },
+    data: { education: transformers.educationTransformer(newEducation) },
   });
 };
 

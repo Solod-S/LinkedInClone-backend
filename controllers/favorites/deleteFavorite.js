@@ -1,7 +1,7 @@
 const { User, Post } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { postTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const deleteFavorite = async (req, res) => {
   const { postId } = req.params;
@@ -76,7 +76,7 @@ const deleteFavorite = async (req, res) => {
   res.json({
     status: "success",
     message: "Data successfully removed from your favorites",
-    data: { post: postTransformer(post) },
+    data: { post: transformers.postTransformer(post) },
   });
 };
 

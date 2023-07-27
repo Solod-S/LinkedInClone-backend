@@ -1,7 +1,7 @@
 const { Job } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { jobTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const unApplyJobById = async (req, res, next) => {
   const { _id } = req.user;
@@ -37,7 +37,7 @@ const unApplyJobById = async (req, res, next) => {
   res.status(200).json({
     status: "success",
     message: "User successfully unapplyed from this job",
-    data: { job: jobTransformer(job) },
+    data: { job: transformers.jobTransformer(job) },
   });
 };
 

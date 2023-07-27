@@ -1,7 +1,7 @@
 const { User } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { userTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const deleteFavorite = async (req, res) => {
   const { subscriptionId } = req.params;
@@ -185,7 +185,7 @@ const deleteFavorite = async (req, res) => {
   res.json({
     status: "success",
     message: "Data successfully removed from your subscription",
-    data: { user: userTransformer(deletedSubscribe) },
+    data: { user: transformers.userTransformer(deletedSubscribe) },
   });
 };
 

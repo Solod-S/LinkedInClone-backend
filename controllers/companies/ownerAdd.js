@@ -1,7 +1,7 @@
 const { Company } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { companyTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const ownerAdd = async (req, res, next) => {
   const { companyId } = req.params;
@@ -27,7 +27,7 @@ const ownerAdd = async (req, res, next) => {
     status: "success",
     message: "User was successfully added to this company owners",
     data: {
-      company: companyTransformer(company),
+      company: transformers.companyTransformer(company),
     },
   });
 };

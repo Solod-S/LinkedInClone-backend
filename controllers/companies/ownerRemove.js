@@ -1,7 +1,7 @@
 const { Company } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { companyTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const ownerRemove = async (req, res, next) => {
   const { _id } = req.user;
@@ -24,7 +24,7 @@ const ownerRemove = async (req, res, next) => {
     status: "success",
     message: "User was successfully removed from this company owners",
     data: {
-      company: companyTransformer(company),
+      company: transformers.companyTransformer(company),
     },
   });
 };

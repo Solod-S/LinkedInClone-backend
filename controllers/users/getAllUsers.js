@@ -1,5 +1,5 @@
 const { User } = require("../../models");
-const { userTransformer, postTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getAllUsers = async (req, res, next) => {
   let page = parseInt(req.query.page) || 1;
@@ -126,8 +126,8 @@ const getAllUsers = async (req, res, next) => {
     });
 
   const transformedUsers = users.map((user) => {
-    const transformedUser = userTransformer(user);
-    transformedUser.posts = user.posts.map((post) => postTransformer(post));
+    const transformedUser = transformers.userTransformer(user);
+    transformedUser.posts = user.posts.map((post) => transformers.postTransformer(post));
     return transformedUser;
   });
 

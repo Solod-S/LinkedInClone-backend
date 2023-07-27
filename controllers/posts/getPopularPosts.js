@@ -1,6 +1,6 @@
 const { Post } = require("../../models");
 
-const { postTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getPopularPosts = async (req, res, next) => {
   let page = parseInt(req.query.page) || 1;
@@ -110,7 +110,7 @@ const getPopularPosts = async (req, res, next) => {
     status: "success",
     message: "Successfully get popular posts",
     data: {
-      posts: posts.map((post) => postTransformer(post)),
+      posts: posts.map((post) => transformers.postTransformer(post)),
       totalPages,
       currentPage: page,
       perPage,

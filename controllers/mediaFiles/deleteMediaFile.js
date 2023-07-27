@@ -1,7 +1,7 @@
 const { MediaFile, Post, Comment, Education, Experience, Publication, User, Company } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { mediaFileTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const deleteMediaFile = async (req, res, next) => {
   const { _id } = req.user;
@@ -56,7 +56,7 @@ const deleteMediaFile = async (req, res, next) => {
   res.json({
     status: "success",
     message: "Media file successfully deleted",
-    data: { mediaFile: mediaFileTransformer(result) },
+    data: { mediaFile: transformers.mediaFileTransformer(result) },
   });
 };
 

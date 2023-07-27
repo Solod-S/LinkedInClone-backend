@@ -1,6 +1,6 @@
 const { User, Skill, Token, Job, MediaFile, Company, Experience, Education } = require("../../models");
 
-const { userTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const userDelete = async (req, res) => {
   const { _id } = req.user;
@@ -173,7 +173,7 @@ const userDelete = async (req, res) => {
   res.status(200).json({
     status: "success",
     message: "The user was successfully deleted",
-    data: { user: userTransformer(deletedUser) },
+    data: { user: transformers.userTransformer(deletedUser) },
   });
 };
 

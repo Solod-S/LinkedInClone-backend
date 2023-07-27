@@ -1,7 +1,7 @@
 const { Publication } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { publicationTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getPublicationById = async (req, res, next) => {
   const { publicationId } = req.params;
@@ -90,7 +90,7 @@ const getPublicationById = async (req, res, next) => {
   res.status(200).json({
     status: "success",
     message: "Successfully found the publication",
-    data: { publication: publicationTransformer(publication) },
+    data: { publication: transformers.publicationTransformer(publication) },
   });
 };
 

@@ -1,7 +1,7 @@
 const { Like, Post, Comment, Publication } = require("../../models");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { likeTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const addLike = async (req, res, next) => {
   const { _id } = req.user;
@@ -45,7 +45,11 @@ const addLike = async (req, res, next) => {
 
     res
       .status(201)
-      .json({ status: "success", message: "Like successfully created", data: { like: likeTransformer(updatedLike) } });
+      .json({
+        status: "success",
+        message: "Like successfully created",
+        data: { like: transformers.likeTransformer(updatedLike) },
+      });
   } else {
     const like = await Like.create({
       ...req.body,
@@ -56,7 +60,11 @@ const addLike = async (req, res, next) => {
 
     res
       .status(201)
-      .json({ status: "success", message: "Like successfully created", data: { like: likeTransformer(like) } });
+      .json({
+        status: "success",
+        message: "Like successfully created",
+        data: { like: transformers.likeTransformer(like) },
+      });
   }
 };
 

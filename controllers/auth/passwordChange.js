@@ -1,7 +1,7 @@
 const { User } = require("../../models");
 const bcrypt = require("bcrypt");
 
-const { userTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 const { HttpError } = require("../../routes/errors/HttpErrors");
 
 const passwordChange = async (req, res) => {
@@ -175,7 +175,7 @@ const passwordChange = async (req, res) => {
   res.json({
     status: "success",
     message: "Password has been successfully changed",
-    data: { user: userTransformer(user) },
+    data: { user: transformers.userTransformer(user) },
   });
 };
 

@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const { HttpError } = require("../../routes/errors/HttpErrors");
 const { SECRET_KEY } = process.env;
 
-const { userTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const userLogin = async (req, res) => {
   const { email, password } = req.body;
@@ -203,7 +203,7 @@ const userLogin = async (req, res) => {
   res.status(200).json({
     status: "success",
     message: "Successful login",
-    data: { user: userTransformer(currentUser), token },
+    data: { user: transformers.userTransformer(currentUser), token },
   });
 };
 

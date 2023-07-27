@@ -1,4 +1,4 @@
-const { userTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getCurrent = async (req, res) => {
   const user = req.user;
@@ -7,7 +7,7 @@ const getCurrent = async (req, res) => {
   res.status(200).json({
     status: "success",
     message: "Successfully collected the current data",
-    data: { user: userTransformer(user), token: token },
+    data: { user: transformers.userTransformer(user), token: token },
   });
 };
 

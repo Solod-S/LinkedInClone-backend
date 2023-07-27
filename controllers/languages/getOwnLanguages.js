@@ -1,6 +1,6 @@
 const { Language } = require("../../models");
 
-const { languageTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const getOwnLanguages = async (req, res, next) => {
   const { _id } = req.user;
@@ -38,7 +38,7 @@ const getOwnLanguages = async (req, res, next) => {
     status: "success",
     message: "Successfully get languages",
     data: {
-      languages: ownExperiences.map((education) => languageTransformer(education)),
+      languages: ownExperiences.map((education) => transformers.languageTransformer(education)),
       totalPages,
       currentPage: page,
       perPage,

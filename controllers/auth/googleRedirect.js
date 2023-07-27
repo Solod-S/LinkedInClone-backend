@@ -5,7 +5,7 @@ const axios = require("axios");
 const jwt = require("jsonwebtoken");
 
 const { BASE_URL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, FRONTEND_BASE_URL, SECRET_KEY } = process.env;
-const { userTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 const { googleUtils } = require("../../helpers");
 
 const googleRedirect = async (req, res) => {
@@ -223,7 +223,7 @@ const googleRedirect = async (req, res) => {
     res.status(200).json({
       status: "success",
       message: "Successful login",
-      data: { user: userTransformer(user), token },
+      data: { user: transformers.userTransformer(user), token },
     });
   } else {
     const token = await googleUtils.createGoogleUser(userData.data);
@@ -337,7 +337,7 @@ const googleRedirect = async (req, res) => {
     res.status(200).json({
       status: "success",
       message: "Successful login",
-      data: { user: userTransformer(user), token },
+      data: { user: transformers.userTransformer(user), token },
     });
   }
 

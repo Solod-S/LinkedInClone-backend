@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Types;
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { mediaFileTransformer } = require("../../helpers/index");
+const { transformers } = require("../../helpers/index");
 
 const addMediaFile = async (req, res, next) => {
   const { _id } = req.user;
@@ -79,7 +79,7 @@ const addMediaFile = async (req, res, next) => {
   res.status(201).json({
     status: "success",
     message: "Media file successfully created",
-    data: { mediaFile: mediaFileTransformer(newMediaFile) },
+    data: { mediaFile: transformers.mediaFileTransformer(newMediaFile) },
   });
 };
 
