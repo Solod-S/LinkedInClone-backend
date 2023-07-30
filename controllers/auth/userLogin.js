@@ -1,4 +1,4 @@
-const { User, Token } = require("../../models");
+const { User, AccessToken } = require("../../models");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -30,12 +30,12 @@ const userLogin = async (req, res) => {
   const payload = {
     id: user._id,
   };
-  // const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "700h" });
-  const token = jwt.sign(payload, SECRET_KEY);
-  const newToken = await Token.create({ owner: user._id, token });
-  await User.findByIdAndUpdate(user._id, { $push: { token: newToken._id } }, { new: true });
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
+  // const token = jwt.sign(payload, SECRET_KEY);
+  const newToken = await AccessToken.create({ owner: user._id, token });
+  await User.findByIdAndUpdate(user._id, { $push: { accessTokens: newToken._id } }, { new: true });
 
-  const currentUser = await User.findOne({ token: { $in: [newToken._id] } })
+  const currentUser = await User.findOne({ accessTokens: { $in: [newToken._id] } })
     .populate({
       path: "posts",
       options: { limit: 10, sort: { createdAt: -1 } },
@@ -203,7 +203,7 @@ const userLogin = async (req, res) => {
   res.status(200).json({
     status: "success",
     message: "Successful login",
-    data: { user: transformers.userTransformer(currentUser), token },
+    data: { user: transformers.userTransformer(currentUser), accessToken: token },
   });
 };
 

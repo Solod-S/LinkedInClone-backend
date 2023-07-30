@@ -1,4 +1,4 @@
-const { User, Skill, Token, Job, MediaFile, Company, Experience, Education } = require("../../models");
+const { User, Skill, AccessToken, Job, MediaFile, Company, Experience, Education } = require("../../models");
 
 const { transformers } = require("../../helpers/index");
 
@@ -160,7 +160,7 @@ const userDelete = async (req, res) => {
       select: "url",
     });
 
-  await Token.deleteMany({ owner: _id });
+  await AccessToken.deleteMany({ owner: _id });
   await Experience.deleteMany({ owner: _id });
   await Education.deleteMany({ owner: _id });
   await MediaFile.deleteOne({ location: "users", owner: _id });

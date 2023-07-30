@@ -1,4 +1,4 @@
-const { Comment, MediaFile, Education, Experience, Post, User, Token } = require("../models");
+const { Comment, MediaFile, Education, Experience, Post, User, AccessToken } = require("../models");
 
 const request = require("supertest");
 const mongoose = require("mongoose");
@@ -46,7 +46,7 @@ describe("Media-files Test Suite", () => {
       .set("Accept", "application/json");
     const { data } = res.body;
 
-    testToken = data.token;
+    testToken = data.accessToken;
     userId = data.user._id;
 
     const res2 = await request(app).post(`/own-posts/add`).set("Authorization", `Bearer ${testToken}`).send({
@@ -974,7 +974,7 @@ describe("Media-files Test Suite", () => {
     const deletedExperience = await Experience.findById({ _id: experienceId });
     expect(deletedExperience).toBe(null);
 
-    const deletedToken = await Token.findOne({ token: testToken });
+    const deletedToken = await AccessToken.findOne({ token: testToken });
     expect(deletedToken).toBe(null);
   }, 8000);
 });

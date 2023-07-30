@@ -1,4 +1,4 @@
-const { Language, User, Token } = require("../models");
+const { Language, User, AccessToken } = require("../models");
 
 const request = require("supertest");
 const mongoose = require("mongoose");
@@ -41,7 +41,7 @@ describe("Language Test Suite", () => {
       .set("Accept", "application/json");
     const { data } = res.body;
 
-    testToken = data.token;
+    testToken = data.accessToken;
   }, 8000);
 
   test("POST /language with invalid token, should return 401 status", async () => {
@@ -263,7 +263,7 @@ describe("Language Test Suite", () => {
     const deletedUser = await User.findById({ _id: user._id });
     expect(deletedUser).toBe(null);
 
-    const deletedToken = await Token.findOne({ token: testToken });
+    const deletedToken = await AccessToken.findOne({ token: testToken });
     expect(deletedToken).toBe(null);
   }, 8000);
 });

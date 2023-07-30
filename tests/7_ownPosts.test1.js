@@ -1,7 +1,7 @@
 const request = require("supertest");
 const mongoose = require("mongoose");
 
-const { Post, User, Token } = require("../models");
+const { Post, User, AccessToken } = require("../models");
 
 const app = require("../app");
 
@@ -41,7 +41,7 @@ describe("Own-post Test Suite", () => {
       .set("Accept", "application/json");
     const { data } = res.body;
 
-    testToken = data.token;
+    testToken = data.accessToken;
   }, 8000);
 
   test("POST /post with valid token, should return 200 status and valid post data", async () => {
@@ -470,7 +470,7 @@ describe("Own-post Test Suite", () => {
     const deletedUser = await User.findById({ _id: user._id });
     expect(deletedUser).toBe(null);
 
-    const deletedToken = await Token.findOne({ token: testToken });
+    const deletedToken = await AccessToken.findOne({ token: testToken });
     expect(deletedToken).toBe(null);
   }, 8000);
 });

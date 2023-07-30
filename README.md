@@ -278,7 +278,7 @@ A Social Network developed with MERN stack.
 1.  Clone the project from github. Change "myproject" to your project name.
 
 ```bash
-git clone https://github.com/maitraysuthar/rest-api-nodejs-mongodb.git ./myproject
+git clone https://github.com/Solod-S/LinkedInClone-backend.git ./myproject
 ```
 
 ### Using manual download ZIP

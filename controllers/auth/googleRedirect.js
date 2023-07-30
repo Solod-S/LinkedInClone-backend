@@ -1,4 +1,4 @@
-const { User, Token } = require("../../models");
+const { User, AccessToken } = require("../../models");
 
 const querystring = require("query-string");
 const axios = require("axios");
@@ -42,7 +42,6 @@ const googleRedirect = async (req, res) => {
   // дальше проверяем базу данных на наличие пользователя с имейлом userData.data.email если его нету регистрируем, если он есть мы пускаем юзера (даем токен)
 
   const userExist = await User.findOne({ email: userData.data.email });
-  console.log(`userExist`, userExist);
 
   if (userExist) {
     const payload = {
@@ -215,15 +214,14 @@ const googleRedirect = async (req, res) => {
       });
 
     const token = jwt.sign(payload, SECRET_KEY);
-    const newToken = await Token.create({ owner: userExist._id, token });
-    console.log(`newToken`, newToken);
-    user.token.push(newToken._id); // Добавляем новый токен к пользователю
+    const newToken = await AccessToken.create({ owner: userExist._id, token });
+    user.accessTokens.push(newToken._id); // Добавляем новый токен к пользователю
     await user.save(); // Сохраняем обновленную информацию о пользователе
 
     res.status(200).json({
       status: "success",
       message: "Successful login",
-      data: { user: transformers.userTransformer(user), token },
+      data: { user: transformers.userTransformer(user), accessToken: token },
     });
   } else {
     const token = await googleUtils.createGoogleUser(userData.data);
@@ -337,7 +335,7 @@ const googleRedirect = async (req, res) => {
     res.status(200).json({
       status: "success",
       message: "Successful login",
-      data: { user: transformers.userTransformer(user), token },
+      data: { user: transformers.userTransformer(user), accessToken: token },
     });
   }
 

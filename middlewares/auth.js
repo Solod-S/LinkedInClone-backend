@@ -1,4 +1,4 @@
-const { User, Token } = require("../models/");
+const { User, AccessToken } = require("../models/");
 
 const jwt = require("jsonwebtoken");
 
@@ -119,14 +119,14 @@ const authenticate = async (req, res, next) => {
         select: "url",
       });
 
-    const tokenData = await Token.findOne({ token });
+    const tokenData = await AccessToken.findOne({ token });
 
-    if (!user || !tokenData || !user.token.includes(tokenData._id)) {
+    if (!user || !tokenData || !user.accessTokens.includes(tokenData._id)) {
       next(HttpError(401, "Unauthorized"));
     }
 
     req.user = user;
-    req.token = { token, _id: tokenData.id };
+    req.accessToken = { token, _id: tokenData.id };
     next();
   } catch {
     next(HttpError(401));

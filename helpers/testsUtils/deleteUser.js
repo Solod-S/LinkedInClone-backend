@@ -1,4 +1,4 @@
-const { User, Token, MediaFile, Job, Skill, Company } = require("../../models");
+const { User, AccessToken, MediaFile, Job, Skill, Company } = require("../../models");
 
 const jwt = require("jsonwebtoken");
 
@@ -10,7 +10,7 @@ const deleteUser = async (token) => {
 
     await User.findOneAndDelete({ _id: id });
 
-    await Token.deleteMany({ owner: id });
+    await AccessToken.deleteMany({ owner: id });
     await MediaFile.deleteOne({ location: "users", owner: id });
     await Job.updateMany({ applied: { $elemMatch: { $eq: id } } }, { $pull: { applied: id } });
     await Skill.updateMany({ users: { $elemMatch: { $eq: id } } }, { $pull: { users: id } });

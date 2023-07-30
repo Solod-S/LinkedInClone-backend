@@ -1,4 +1,4 @@
-const { User, Token } = require("../models");
+const { User, AccessToken } = require("../models");
 
 const jwt = require("jsonwebtoken");
 
@@ -15,19 +15,6 @@ const isAdminMiddleware = async (req, res, next) => {
     next(HttpError(401));
   }
 
-  // try {
-  //   const { id } = jwt.verify(token, SECRET_KEY);
-  //   const user = await User.findById(id);
-  //   const mayPass = ADMINS.includes(user.email);
-
-  //   if (!user || !user.token || user.token !== token || !mayPass) {
-  //     next(HttpError(403, "Access denied. Admin rights required"));
-  //   }
-  //   req.user = user;
-  //   next();
-  // } catch {
-  //   next(HttpError(401));
-  // }
   try {
     const { id } = jwt.verify(token, SECRET_KEY);
     const user = await User.findById(id)
@@ -120,15 +107,15 @@ const isAdminMiddleware = async (req, res, next) => {
         ],
       });
 
-    const tokenData = await Token.findOne({ token });
+    const tokenData = await AccessToken.findOne({ token });
     const mayPass = ADMINS.includes(user.email);
 
-    if (!user || !tokenData || !user.token.includes(tokenData._id) || !mayPass) {
+    if (!user || !tokenData || !user.accessTokens.includes(tokenData._id) || !mayPass) {
       next(HttpError(401, "Unauthorized"));
     }
 
     req.user = user;
-    req.token = { token, _id: tokenData.id };
+    req.accessToken = { token, _id: tokenData.id };
     next();
   } catch {
     next(HttpError(401));

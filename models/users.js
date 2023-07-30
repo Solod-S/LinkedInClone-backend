@@ -54,11 +54,7 @@ const userSchema = Schema(
     subscription: [{ type: Schema.Types.ObjectId, ref: "User" }],
     favorite: [{ type: Schema.Types.ObjectId, ref: "Post" }],
     posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
-    token: [{ type: Schema.Types.ObjectId, ref: "Token" }],
-    // token: {
-    //   type: String,
-    //   default: "",
-    // },
+    accessTokens: [{ type: Schema.Types.ObjectId, ref: "AccessToken" }],
     verificationCode: {
       type: String,
       default: "",

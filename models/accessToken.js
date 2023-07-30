@@ -7,17 +7,19 @@ const tokenSchema = new Schema(
   {
     token: Joi.string().required(),
     owner: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    // sessionId: Joi.string().required(),
   },
   { versionKey: false, timestamps: true }
 );
 
 tokenSchema.post("save", mongooseErrorHandler);
 
-const Token = model("Token", tokenSchema);
+const AccessToken = model("Token", tokenSchema);
 
 const createTokenSchema = Joi.object({
   token: Joi.string().required(),
   owner: Joi.string().required(),
+  // sessionId: Joi.string().required(),
 });
 
 const tokenSchemas = {
@@ -25,6 +27,6 @@ const tokenSchemas = {
 };
 
 module.exports = {
-  Token,
+  AccessToken,
   tokenSchemas,
 };

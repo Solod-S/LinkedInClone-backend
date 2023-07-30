@@ -1,10 +1,10 @@
-const { User, Token } = require("../../models");
+const { User, AccessToken } = require("../../models");
 
 const userLogout = async (req, res) => {
-  const { token, _id } = req.token;
+  const { token, _id } = req.accessToken;
 
-  await User.updateOne({ token: { $elemMatch: { $eq: _id } } }, { $pull: { token: _id } });
-  await Token.findOneAndDelete({ token });
+  await User.updateOne({ accessTokens: { $elemMatch: { $eq: _id } } }, { $pull: { accessTokens: _id } });
+  await AccessToken.findOneAndDelete({ token });
 
   res.status(200).json({
     status: "success",

@@ -1,4 +1,4 @@
-const { Company, User, Token } = require("../models");
+const { Company, User, AccessToken } = require("../models");
 
 const request = require("supertest");
 const mongoose = require("mongoose");
@@ -46,7 +46,7 @@ describe("Company Test Suite", () => {
       .set("Accept", "application/json");
     const { data } = res.body;
 
-    testToken = data.token;
+    testToken = data.accessToken;
 
     const res2 = await request(app)
       .post(`/auth/login`)
@@ -56,7 +56,7 @@ describe("Company Test Suite", () => {
       })
       .set("Accept", "application/json");
 
-    testToken2 = res2.body.data.token;
+    testToken2 = res2.body.data.accessToken;
 
     user2Id = res2.body.data.user._id;
   }, 8000);
@@ -829,10 +829,10 @@ describe("Company Test Suite", () => {
     const deletedCompany = await Company.findById({ _id: companyId });
     expect(deletedCompany).toBe(null);
 
-    const deletedToken = await Token.findOne({ token: testToken });
+    const deletedToken = await AccessToken.findOne({ token: testToken });
     expect(deletedToken).toBe(null);
 
-    const deletedToken2 = await Token.findOne({ token: testToken2 });
+    const deletedToken2 = await AccessToken.findOne({ token: testToken2 });
     expect(deletedToken2).toBe(null);
   }, 8000);
 });

@@ -6380,7 +6380,7 @@
                   }
                 }
               },
-              "token": {
+              "accessToken": {
                 "type": "string",
                 "description": "Session's access token (needed for all requests)",
                 "format": "string",
@@ -9914,7 +9914,7 @@
                   }
                 }
               },
-              "token": {
+              "accessToken": {
                 "type": "string",
                 "description": "Session's access token (needed for all requests)",
                 "format": "string",
@@ -14236,12 +14236,6 @@
                     "example": "Original"
                   }
                 }
-              },
-              "token": {
-                "type": "string",
-                "description": "Session's access token (needed for all requests)",
-                "format": "string",
-                "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NTJhZGFlZGQ2MjkyZWIyMWIyZmIxNSIsImlhdCI6MTY4MzE0MTYwNCwiZXhwIjoxNjg1NjYxNjA0fQ.cOanoicelwJOE_Gsx2SEmNyQ60qOAzqURs9gvgHqf1c"
               }
             }
           }

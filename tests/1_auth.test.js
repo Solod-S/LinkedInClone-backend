@@ -1,4 +1,4 @@
-const { User, Token } = require("../models");
+const { User, AccessToken } = require("../models");
 
 const request = require("supertest");
 const mongoose = require("mongoose");
@@ -202,9 +202,9 @@ describe("Auth Test Suite", () => {
       })
       .set("Accept", "application/json");
     const { status, message, data } = res.body;
-    const { user } = data;
+    const { user, accessToken } = data;
 
-    token = data.token;
+    token = data.accessToken;
     userId = user._id;
 
     expect(res.status).toBe(200);
@@ -213,7 +213,7 @@ describe("Auth Test Suite", () => {
     expect(typeof message).toBe("string");
     expect(message).toEqual("Successful login");
     expect(typeof data).toBe("object");
-    expect(typeof token).toBe("string");
+    expect(typeof accessToken).toBe("string");
     expect(user instanceof Object).toBe(true);
     expect(typeof user._id).toBe("string");
     expect(typeof user.email).toBe("string");
@@ -489,7 +489,7 @@ describe("Auth Test Suite", () => {
   test("GET /current user data with valid token, should return 200 status and valid user data", async () => {
     const res = await request(app).get(`/auth/current`).set("Authorization", `Bearer ${token}`);
     const { status, message, data } = res.body;
-    const { user } = data;
+    const { user, accessToken } = data;
 
     expect(res.status).toBe(200);
     expect(typeof status).toBe("string");
@@ -497,7 +497,7 @@ describe("Auth Test Suite", () => {
     expect(typeof message).toBe("string");
     expect(message).toEqual("Successfully collected the current data");
     expect(typeof data).toBe("object");
-    expect(typeof token).toBe("string");
+    expect(typeof accessToken).toBe("string");
     expect(user instanceof Object).toBe(true);
     expect(typeof user._id).toBe("string");
     expect(typeof user.email).toBe("string");
@@ -577,7 +577,7 @@ describe("Auth Test Suite", () => {
       .set("Accept", "application/json");
     const { body } = userData;
 
-    token = body.data.token;
+    token = body.data.accessToken;
 
     const res = await request(app).delete(`/users/remove`).set("Authorization", `Bearer ${token}`);
     const { status, message, data } = res.body;
@@ -614,7 +614,7 @@ describe("Auth Test Suite", () => {
     const deletedUser = await User.findById({ _id: userId });
     expect(deletedUser).toBe(null);
 
-    const deletedToken = await Token.findOne({ token });
+    const deletedToken = await AccessToken.findOne({ token });
     expect(deletedToken).toBe(null);
   }, 8000);
 });

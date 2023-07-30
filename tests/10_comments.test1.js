@@ -1,4 +1,4 @@
-const { Comment, Publication, Company, Post, User, Token } = require("../models");
+const { Comment, Publication, Company, Post, User, AccessToken } = require("../models");
 
 const request = require("supertest");
 const mongoose = require("mongoose");
@@ -44,7 +44,7 @@ describe("Comments Test Suite", () => {
       .set("Accept", "application/json");
     const { data } = res.body;
 
-    testToken = data.token;
+    testToken = data.accessToken;
 
     const res2 = await request(app).post(`/own-posts/add`).set("Authorization", `Bearer ${testToken}`).send({
       description:
@@ -515,7 +515,7 @@ describe("Comments Test Suite", () => {
     const deletedPublication = await Publication.findById({ _id: publicationId });
     expect(deletedPublication).toBe(null);
 
-    const deletedToken = await Token.findOne({ token: testToken });
+    const deletedToken = await AccessToken.findOne({ token: testToken });
     expect(deletedToken).toBe(null);
   }, 8000);
 });

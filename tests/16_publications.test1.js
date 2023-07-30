@@ -1,4 +1,4 @@
-const { Company, Publication, User, Token } = require("../models");
+const { Company, Publication, User, AccessToken } = require("../models");
 
 const request = require("supertest");
 const mongoose = require("mongoose");
@@ -42,7 +42,7 @@ describe("Publications Test Suite", () => {
       .set("Accept", "application/json");
     const { data } = res.body;
 
-    testToken = data.token;
+    testToken = data.accessToken;
 
     const res2 = await request(app).post(`/companies/create`).set("Authorization", `Bearer ${testToken}`).send({
       name: "SuperDuperPublicationCompany",
@@ -449,7 +449,7 @@ describe("Publications Test Suite", () => {
     const deletedPublication = await Publication.findById({ _id: publicationId });
     expect(deletedPublication).toBe(null);
 
-    const deletedToken = await Token.findOne({ token: testToken });
+    const deletedToken = await AccessToken.findOne({ token: testToken });
     expect(deletedToken).toBe(null);
   }, 8000);
 });

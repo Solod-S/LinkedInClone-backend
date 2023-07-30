@@ -1,4 +1,4 @@
-const { User, Token, MediaFile } = require("../../models");
+const { User, AccessToken, MediaFile } = require("../../models");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -37,9 +37,8 @@ const createGoogleUser = async ({ email, id, name, family_name, picture }) => {
     };
     console.log(`payload`, payload);
     const token = jwt.sign(payload, SECRET_KEY);
-    console.log(`token11`);
-    const newToken = await Token.create({ owner: user._id, token });
-    user.token.push(newToken._id); // Добавляем новый токен к пользователю
+    const newToken = await AccessToken.create({ owner: user._id, token });
+    user.accessTokens.push(newToken._id); // Добавляем новый токен к пользователю
     await user.save(); // Сохраняем обновленную информацию о пользователе
 
     return token;
