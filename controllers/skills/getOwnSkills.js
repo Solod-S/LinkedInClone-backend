@@ -6,7 +6,6 @@ const getOwnSkills = async (req, res, next) => {
   const { _id } = req.user;
   let page = parseInt(req.query.page) || 1;
   const perPage = parseInt(req.query.perPage) || 10;
-  console.log(_id);
 
   const count = await Skill.countDocuments({ users: _id });
   const totalPages = Math.ceil(count / perPage);

@@ -7,6 +7,7 @@ const verifyEmail = require("./verifyEmail");
 const resendVerifyEmail = require("./resendVerifyEmail");
 const devResendVerifyEmail = require("./devResendVerifyEmail");
 const userLogin = require("./userLogin");
+const userRefreshToken = require("./userRefreshToken");
 const getCurrent = require("./getCurrent");
 const userLogout = require("./userLogout");
 const passwordChange = require("./passwordChange");
@@ -22,6 +23,7 @@ module.exports = {
   resendVerifyEmail: ctrlWrapper(resendVerifyEmail),
   devResendVerifyEmail: ctrlWrapper(devResendVerifyEmail),
   userLogin: ctrlWrapper(userLogin),
+  userRefreshToken: ctrlWrapper(userRefreshToken),
   getCurrent: ctrlWrapper(getCurrent),
   userLogout: ctrlWrapper(userLogout),
   passwordChange: ctrlWrapper(passwordChange),

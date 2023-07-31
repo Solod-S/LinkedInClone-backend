@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const { ADMINS } = process.env;
 
 const { HttpError } = require("../routes/errors/HttpErrors");
-const { SECRET_KEY } = process.env;
+const { ACCES_SECRET_KEY } = process.env;
 
 const isAdminMiddleware = async (req, res, next) => {
   const { authorization = "" } = req.headers;
@@ -16,7 +16,7 @@ const isAdminMiddleware = async (req, res, next) => {
   }
 
   try {
-    const { id } = jwt.verify(token, SECRET_KEY);
+    const { id } = jwt.verify(token, ACCES_SECRET_KEY);
     const user = await User.findById(id)
       .populate({
         path: "posts",

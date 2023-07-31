@@ -1,5 +1,6 @@
 const { User, userSchemas } = require("./users");
-const { AccessToken, tokenSchemas } = require("./accessToken");
+const { AccessToken } = require("./accessTokens");
+const { RefreshToken, refreshSchema } = require("./RefreshTokens");
 const { Post, postSchemas } = require("./posts");
 const { Skill, skillsSchemas } = require("./skills");
 const { MediaFile, mediaFileSchemas } = require("./mediaFiles");
@@ -16,7 +17,8 @@ module.exports = {
   User,
   userSchemas,
   AccessToken,
-  tokenSchemas,
+  RefreshToken,
+  refreshSchema,
   Post,
   postSchemas,
   Skill,

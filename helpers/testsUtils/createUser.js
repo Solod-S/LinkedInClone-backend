@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const uuid = require("uuid");
 const jwt = require("jsonwebtoken");
 
-const { SECRET_KEY } = process.env;
+const { ACCES_SECRET_KEY } = process.env;
 
 const createUserToken = async (email, password) => {
   try {
@@ -26,7 +26,7 @@ const createUserToken = async (email, password) => {
       id: user._id,
     };
 
-    const token = jwt.sign(payload, SECRET_KEY);
+    const token = jwt.sign(payload, ACCES_SECRET_KEY);
     const newToken = await AccessToken.create({ owner: user._id, token });
     user.accessTokens.push(newToken._id); // Добавляем новый токен к пользователю
     await user.save(); // Сохраняем обновленную информацию о пользователе

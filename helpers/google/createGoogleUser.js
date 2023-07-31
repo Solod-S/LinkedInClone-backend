@@ -3,7 +3,7 @@ const { User, AccessToken, MediaFile } = require("../../models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const { SECRET_KEY } = process.env;
+const { ACCES_SECRET_KEY } = process.env;
 // eslint-disable-next-line camelcase
 const createGoogleUser = async ({ email, id, name, family_name, picture }) => {
   const hashPassword = await bcrypt.hash(id, 10);
@@ -35,8 +35,8 @@ const createGoogleUser = async ({ email, id, name, family_name, picture }) => {
     const payload = {
       id: user._id,
     };
-    console.log(`payload`, payload);
-    const token = jwt.sign(payload, SECRET_KEY);
+
+    const token = jwt.sign(payload, ACCES_SECRET_KEY);
     const newToken = await AccessToken.create({ owner: user._id, token });
     user.accessTokens.push(newToken._id); // Добавляем новый токен к пользователю
     await user.save(); // Сохраняем обновленную информацию о пользователе

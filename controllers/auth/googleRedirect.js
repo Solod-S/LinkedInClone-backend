@@ -4,7 +4,7 @@ const querystring = require("query-string");
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
 
-const { BASE_URL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, FRONTEND_BASE_URL, SECRET_KEY } = process.env;
+const { BASE_URL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, FRONTEND_BASE_URL, ACCES_SECRET_KEY } = process.env;
 const { transformers } = require("../../helpers/index");
 const { googleUtils } = require("../../helpers");
 
@@ -213,7 +213,7 @@ const googleRedirect = async (req, res) => {
         select: "url",
       });
 
-    const token = jwt.sign(payload, SECRET_KEY);
+    const token = jwt.sign(payload, ACCES_SECRET_KEY);
     const newToken = await AccessToken.create({ owner: userExist._id, token });
     user.accessTokens.push(newToken._id); // Добавляем новый токен к пользователю
     await user.save(); // Сохраняем обновленную информацию о пользователе
@@ -226,7 +226,7 @@ const googleRedirect = async (req, res) => {
   } else {
     const token = await googleUtils.createGoogleUser(userData.data);
 
-    const { id } = jwt.verify(token, SECRET_KEY);
+    const { id } = jwt.verify(token, ACCES_SECRET_KEY);
 
     const user = await User.findById(id)
       .populate({

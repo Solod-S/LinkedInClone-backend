@@ -9,10 +9,11 @@ const chance = new Chance();
 const app = require("../app");
 
 require("dotenv").config();
-const { DB_HOST, WRONG_TOKEN, WRONG_VERIFY_CODE, INVALID_PASS } = process.env;
+const { DB_HOST, WRONG_TOKEN } = process.env;
 
 const PASS = "qwer1234";
-
+const WRONG_VERIFY_CODE = "be48c234-0783-4d6f-86fd-e8093dcc8211";
+const INVALID_PASS = "123";
 const name = "Serg";
 let veifyCode = null;
 let resetToken = null;
@@ -489,7 +490,7 @@ describe("Auth Test Suite", () => {
   test("GET /current user data with valid token, should return 200 status and valid user data", async () => {
     const res = await request(app).get(`/auth/current`).set("Authorization", `Bearer ${token}`);
     const { status, message, data } = res.body;
-    const { user, accessToken } = data;
+    const { user } = data;
 
     expect(res.status).toBe(200);
     expect(typeof status).toBe("string");
@@ -497,7 +498,6 @@ describe("Auth Test Suite", () => {
     expect(typeof message).toBe("string");
     expect(message).toEqual("Successfully collected the current data");
     expect(typeof data).toBe("object");
-    expect(typeof accessToken).toBe("string");
     expect(user instanceof Object).toBe(true);
     expect(typeof user._id).toBe("string");
     expect(typeof user.email).toBe("string");

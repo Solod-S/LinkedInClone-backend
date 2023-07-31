@@ -1,4 +1,14 @@
-const { User, Skill, AccessToken, Job, MediaFile, Company, Experience, Education } = require("../../models");
+const {
+  User,
+  Skill,
+  AccessToken,
+  Job,
+  MediaFile,
+  Company,
+  Experience,
+  Education,
+  RefreshToken,
+} = require("../../models");
 
 const { transformers } = require("../../helpers/index");
 
@@ -161,6 +171,7 @@ const userDelete = async (req, res) => {
     });
 
   await AccessToken.deleteMany({ owner: _id });
+  await RefreshToken.deleteMany({ owner: _id });
   await Experience.deleteMany({ owner: _id });
   await Education.deleteMany({ owner: _id });
   await MediaFile.deleteOne({ location: "users", owner: _id });

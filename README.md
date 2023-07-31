@@ -6,8 +6,11 @@
 [![runs with swagger](https://img.shields.io/badge/Runs%20with%20Swagger-000.svg?style=flat-square&logo=swagger&labelColor=f3f3f3&logoColor=#85EA2D)](https://swagger.io/)
 [![runs with jest](https://img.shields.io/badge/Runs%20with%20Jest-000.svg?style=flat-square&logo=jest&labelColor=f3f3f3&logoColor=944058)](https://jestjs.io/ru/)
 [![runs with nodemon](https://img.shields.io/badge/Runs%20with%20Nodemon-000.svg?style=flat-square&logo=nodemon&labelColor=f3f3f3&logoColor=nodemon)](https://www.npmjs.com/package/nodemon)
+[![runs with PassportJs](https://img.shields.io/badge/Runs%20with%20PassportJs-000.svg?style=flat-square&logo=Passport&labelColor=f3f3f3&logoColor=35DF79)](https://www.passportjs.org/)
 
 # MERN-Social-Network
+
+![LinkedIn Clone Demo](/public/pictures/about.jpg)
 
 A Social Network developed with MERN stack.
 
@@ -20,6 +23,7 @@ A Social Network developed with MERN stack.
     mongoose
     joi
     jsonwebtoken
+    passport-google-oauth20
     bcrypt
     cors
     cross-env
@@ -44,6 +48,22 @@ A Social Network developed with MERN stack.
 ├── .env.example
 ├── README.md
 ├── controllers
+│   ├── auth
+│   │   ├── devRegister.js
+│   │   ├── devResendVerifyEmail.js
+│   │   ├── getCurrent.js
+│   │   ├── googleAuth.js
+│   │   ├── googleRedirect.js
+│   │   ├── passwordChange.js
+│   │   ├── passwordReset.js
+│   │   ├── passwordResetByEmail.js
+│   │   ├── resendVerifyEmail.js
+│   │   ├── userLogin.js
+│   │   ├── userLogout.js
+│   │   ├── userRefreshToken.js
+│   │   ├── userRegister.js
+│   │   ├── verifyEmail.js
+│   │   └── index.js
 │   ├── comments
 │   │   ├── addComment.js
 │   │   ├── deleteOwnComment.js
@@ -153,19 +173,9 @@ A Social Network developed with MERN stack.
 │   │   └── index.js
 │   └── users
 │   │   ├── getAllUsers.js
-│   │   ├── getCurrent.js
 │   │   ├── getUserById.js
 │   │   ├── getUsersByQuery.js
-│   │   ├── googleAuth.js
-│   │   ├── googleRedirect.js
-│   │   ├── passwordChange.js
-│   │   ├── passwordReset.js
-│   │   ├── passwordResetByEmail.js
-│   │   ├── resendVerifyEmail.js
 │   │   ├── userDelete.js
-│   │   ├── userLogin.js
-│   │   ├── userLogout.js
-│   │   ├── userRegister.js
 │   │   ├── userUpdate.js
 │   │   ├── verifyEmail.js
 │   │   └── index.js
@@ -174,6 +184,10 @@ A Social Network developed with MERN stack.
 │   ├── email
 │   │   ├── createRestorePasswordEmail.js
 │   │   ├── createVerifyEmail.js
+│   │   ├── sendEmail.js
+│   │   └── index.js
+│   ├── google
+│   │   ├── createGoogleUser.js
 │   │   └── index.js
 │   ├── testsUtils
 │   │   ├── createUser.js
@@ -203,6 +217,7 @@ A Social Network developed with MERN stack.
 │   ├── validateBody.js
 │   └── index.js
 ├── models
+│   ├── accessTokens.js
 │   ├── comments.js
 │   ├── companies.js
 │   ├── educations.js
@@ -213,12 +228,17 @@ A Social Network developed with MERN stack.
 │   ├── mediaFiles.js
 │   ├── posts.js
 │   ├── publications.js
+│   ├── refreshToken.js
 │   ├── skills.js
-│   ├── token.js
 │   ├── users.js
 │   └── index.js
 ├── routes
+│   ├── pictures
+│   │   └── structure.gif
+│   └── home.html
+├── routes
 │   ├── api
+│   │   ├── auth.js
 │   │   ├── comments.js
 │   │   ├── companies.js
 │   │   ├── educations.js
@@ -234,6 +254,7 @@ A Social Network developed with MERN stack.
 │   │   ├── posts.js
 │   │   ├── publications.js
 │   │   ├── skills.js
+│   │   ├── subscriptions.js
 │   │   ├── users.js
 │   │   └── index.js
 │   ├── errors
@@ -241,23 +262,24 @@ A Social Network developed with MERN stack.
 │   └── swagger
 │   │   └── openapi.js
 ├── tests
-│   ├── 1_user.test.js
-│   ├── 2_experience.test.js
-│   ├── 3_educations.test.js
-│   ├── 4_languages.test.js
-│   ├── 5_skills.test.js
-│   ├── 6_ownPosts.test.js
-│   ├── 7_posts.test.js
-│   ├── 8_mediaFiles.test.js
-│   ├── 9_comments.test.js
-│   ├── 10_likes.test.js
-│   ├── 11_favorites.test.js
-│   ├── 12_subscriptions.test.js
-│   ├── 13_companies.test.js
-│   ├── 14_ownPublications.test.js
-│   ├── 15_publications.test.js
-│   ├── 16_ownJobs.test.js
-│   └── 17_jobs.test.js
+│   ├── 1_auth.test.js
+│   ├── 2_user.test.js
+│   ├── 3_experience.test.js
+│   ├── 4_educations.test.js
+│   ├── 5_languages.test.js
+│   ├── 6_skills.test.js
+│   ├── 7_ownPosts.test.js
+│   ├── 8_posts.test.js
+│   ├── 9_mediaFiles.test.js
+│   ├── 10_comments.test.js
+│   ├── 11_likes.test.js
+│   ├── 12_favorites.test.js
+│   ├── 13_subscriptions.test.js
+│   ├── 14_companies.test.js
+│   ├── 15_ownPublications.test.js
+│   ├── 16_publications.test.js
+│   ├── 17_ownJobs.test.js
+│   └── 18_jobs.test.js
 ├── middlewares
 │   ├── jwt.js
 ├── helpers
@@ -318,11 +340,16 @@ npm install
    ```javascript
    PORT = YOUR_PORT;
    DB_HOST = "mongo db";
-   SECRET_KEY = "anything-secret";
-   BASE_URL = "server base url";
-   FRONTEND_BASE_URL = "front end base url";
-   SENDGRID_API_KEY = "key for sendgrid ";
-   MAILER_EMAIL = "social-network@info.com";
+   BASE_URL = "api url";
+   ACCES_SECRET_KEY = "anything-secret";
+   REFRESH_SECRET_KEY = "anything-secret";
+   FRONTEND_BASE_URL = "frontend url";
+   SENDGRID_API_KEY = "sendgrid api key";
+   GOOGLE_CLIENT_ID = "google client id from google_console=>credentials";
+   GOOGLE_CLIENT_SECRET = "google client secret from google console=>credentials";
+   MAILER_EMAIL = "email for sending emails";
+   WRONG_TOKEN = "tokens for tests";
+   ADMINS = ["admin email"];
    ```
 
 3. Start the server
@@ -339,14 +366,19 @@ npm install
 
 ![LinkedIn Clone Demo](/public/pictures/structure.gif)
 
+#### Auth operations
+
 - Register user
 - Verify user by email
 - Login user
 - Change user password
 - Reset user password
-- Add/Change User Information (education/skills/expiriences/etc..)
 - Get current logined user information
 - Logout user
+
+#### User operations
+
+- Add/Change User Information (education/skills/expiriences/etc..)
 - Get current user information by id
 - Get all users information
 - Users search
@@ -410,7 +442,7 @@ npm install
 
 #### Media files operations
 
-- Create media file
+- Create media file (for posts, publications, avatars and etc)
 - Update media file
 - Get media files
 - Get own media files

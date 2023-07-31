@@ -3,7 +3,7 @@ const { User, AccessToken } = require("../models/");
 const jwt = require("jsonwebtoken");
 
 const { HttpError } = require("../routes/errors/HttpErrors");
-const { SECRET_KEY } = process.env;
+const { ACCES_SECRET_KEY } = process.env;
 
 const authenticate = async (req, res, next) => {
   const { authorization = "" } = req.headers;
@@ -14,7 +14,7 @@ const authenticate = async (req, res, next) => {
   }
 
   try {
-    const { id } = jwt.verify(token, SECRET_KEY);
+    const { id } = jwt.verify(token, ACCES_SECRET_KEY);
     const user = await User.findById(id)
       .populate({
         path: "posts",

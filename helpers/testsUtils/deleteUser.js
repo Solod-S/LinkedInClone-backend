@@ -2,11 +2,11 @@ const { User, AccessToken, MediaFile, Job, Skill, Company } = require("../../mod
 
 const jwt = require("jsonwebtoken");
 
-const { SECRET_KEY } = process.env;
+const { ACCES_SECRET_KEY } = process.env;
 
 const deleteUser = async (token) => {
   try {
-    const { id } = jwt.verify(token, SECRET_KEY);
+    const { id } = jwt.verify(token, ACCES_SECRET_KEY);
 
     await User.findOneAndDelete({ _id: id });
 

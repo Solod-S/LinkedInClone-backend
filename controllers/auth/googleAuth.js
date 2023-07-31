@@ -3,7 +3,6 @@ const querystring = require("query-string");
 const { BASE_URL, GOOGLE_CLIENT_ID } = process.env;
 
 const googleAuth = async (req, res) => {
-  console.log(`googleAuth`);
   const stringifiedParams = querystring.stringify({
     client_id: GOOGLE_CLIENT_ID,
     redirect_uri: `${BASE_URL}/auth/google-redirect`,

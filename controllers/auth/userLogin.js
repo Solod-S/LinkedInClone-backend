@@ -1,10 +1,11 @@
-const { User, AccessToken } = require("../../models");
+const { User, AccessToken, RefreshToken } = require("../../models");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const uuid = require("uuid");
 
 const { HttpError } = require("../../routes/errors/HttpErrors");
-const { SECRET_KEY } = process.env;
+const { ACCES_SECRET_KEY, REFRESH_SECRET_KEY } = process.env;
 
 const { transformers } = require("../../helpers/index");
 
@@ -22,7 +23,6 @@ const userLogin = async (req, res) => {
   }
 
   const comparePassword = await bcrypt.compare(password, user.password);
-
   if (!comparePassword) {
     throw HttpError(404, "Password wrong or invalid");
   }
@@ -30,12 +30,19 @@ const userLogin = async (req, res) => {
   const payload = {
     id: user._id,
   };
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
-  // const token = jwt.sign(payload, SECRET_KEY);
-  const newToken = await AccessToken.create({ owner: user._id, token });
-  await User.findByIdAndUpdate(user._id, { $push: { accessTokens: newToken._id } }, { new: true });
+  const sessionId = uuid.v4();
 
-  const currentUser = await User.findOne({ accessTokens: { $in: [newToken._id] } })
+  const accessToken = jwt.sign(payload, ACCES_SECRET_KEY, { expiresIn: "2h" });
+  // const accessToken = jwt.sign(payload, ACCES_SECRET_KEY);
+  const newAccesshToken = await AccessToken.create({ owner: user._id, token: accessToken, sessionId });
+
+  const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, { expiresIn: "7d" });
+  const newRefreshToken = await RefreshToken.create({ owner: user._id, token: refreshToken, sessionId });
+  await User.findByIdAndUpdate(user._id, { $push: { accessTokens: newAccesshToken._id } }, { new: true });
+  await User.findByIdAndUpdate(user._id, { $push: { refreshTokens: newRefreshToken._id } }, { new: true });
+
+  // const currentUser = await User.findOne({ accessTokens: { $in: [newRefreshToken._id] } })
+  const currentUser = await User.findOne({ email })
     .populate({
       path: "posts",
       options: { limit: 10, sort: { createdAt: -1 } },
@@ -203,7 +210,12 @@ const userLogin = async (req, res) => {
   res.status(200).json({
     status: "success",
     message: "Successful login",
-    data: { user: transformers.userTransformer(currentUser), accessToken: token },
+    data: {
+      user: transformers.userTransformer(currentUser),
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+      sessionId,
+    },
   });
 };
 

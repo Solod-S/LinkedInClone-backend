@@ -55,6 +55,7 @@ const userSchema = Schema(
     favorite: [{ type: Schema.Types.ObjectId, ref: "Post" }],
     posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
     accessTokens: [{ type: Schema.Types.ObjectId, ref: "AccessToken" }],
+    refreshTokens: [{ type: Schema.Types.ObjectId, ref: "refreshToken" }],
     verificationCode: {
       type: String,
       default: "",

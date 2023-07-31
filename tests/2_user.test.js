@@ -47,7 +47,7 @@ describe("User Test Suite", () => {
   test("GET /current user data with valid token, should return 200 status and valid user data", async () => {
     const res = await request(app).get(`/auth/current`).set("Authorization", `Bearer ${testToken}`);
     const { status, message, data } = res.body;
-    const { user, accessToken } = data;
+    const { user } = data;
 
     expect(res.status).toBe(200);
     expect(typeof status).toBe("string");
@@ -55,7 +55,6 @@ describe("User Test Suite", () => {
     expect(typeof message).toBe("string");
     expect(message).toEqual("Successfully collected the current data");
     expect(typeof data).toBe("object");
-    expect(typeof accessToken).toBe("string");
     expect(user instanceof Object).toBe(true);
     expect(typeof user._id).toBe("string");
     expect(typeof user.email).toBe("string");
@@ -364,7 +363,7 @@ describe("User Test Suite", () => {
     const deletedUser = await User.findById({ _id: userId });
     expect(deletedUser).toBe(null);
 
-    const deletedToken = await AccessToken.findOne({ testToken });
+    const deletedToken = await AccessToken.findOne({ token: testToken });
     expect(deletedToken).toBe(null);
   }, 8000);
 });

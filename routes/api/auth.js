@@ -2,7 +2,7 @@ const authRouter = require("express").Router();
 
 const { auth } = require("../../controllers");
 const { validateBody, authenticate } = require("../../middlewares");
-const { userSchemas } = require("../../models");
+const { userSchemas, refreshSchema } = require("../../models");
 
 //  google auth
 authRouter.get("/google", auth.googleAuth);
@@ -15,6 +15,9 @@ authRouter.post("/verify", validateBody(userSchemas.emailSchema), auth.resendVer
 
 //  sign-in
 authRouter.post("/login", validateBody(userSchemas.loginSchema), auth.userLogin);
+
+//  refresh token
+authRouter.post("/refresh", validateBody(refreshSchema), auth.userRefreshToken);
 
 //  chek user
 authRouter.get("/current", authenticate, auth.getCurrent);
