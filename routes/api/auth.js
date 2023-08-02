@@ -1,12 +1,16 @@
 const authRouter = require("express").Router();
 
 const { auth } = require("../../controllers");
-const { validateBody, authenticate } = require("../../middlewares");
+const { validateBody, authenticate, gPassport } = require("../../middlewares");
 const { userSchemas, refreshSchema } = require("../../models");
 
-//  google auth
-authRouter.get("/google", auth.googleAuth);
-authRouter.get("/google-redirect", auth.googleRedirect);
+//  google passport auth
+authRouter.get("/google", gPassport.authenticate("google", { scope: ["email", "profile"] }));
+authRouter.get("/google-redirect", gPassport.authenticate("google", { session: false }), auth.gPassportAuth);
+
+//  google auth v2
+// authRouter.get("/google", auth.googleAuth);
+// authRouter.get("/google-redirect", auth.googleRedirect);
 
 //  sign-up
 authRouter.post("/register", validateBody(userSchemas.registerSchema), auth.userRegister);

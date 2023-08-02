@@ -1,6 +1,7 @@
 const ctrlWrapper = require("../../middlewares/ctrlWrapper");
 const googleAuth = require("./googleAuth");
 const googleRedirect = require("./googleRedirect");
+const gPassportAuth = require("./gPassportAuth");
 const userRegister = require("./userRegister");
 const devRegister = require("./devRegister");
 const verifyEmail = require("./verifyEmail");
@@ -15,6 +16,7 @@ const passwordResetByEmail = require("./passwordResetByEmail");
 const passwordReset = require("./passwordReset");
 
 module.exports = {
+  gPassportAuth: ctrlWrapper(gPassportAuth),
   googleAuth: ctrlWrapper(googleAuth),
   googleRedirect: ctrlWrapper(googleRedirect),
   userRegister: ctrlWrapper(userRegister),
