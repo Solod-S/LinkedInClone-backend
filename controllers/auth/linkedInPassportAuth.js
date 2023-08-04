@@ -7,7 +7,7 @@ const { ACCES_SECRET_KEY, REFRESH_SECRET_KEY } = process.env;
 
 const { transformers } = require("../../helpers/index");
 
-const gPassportAuth = async (req, res) => {
+const linkedInPassportAuth = async (req, res) => {
   const { user } = req;
 
   const payload = {
@@ -36,4 +36,4 @@ const gPassportAuth = async (req, res) => {
   });
 };
 
-module.exports = gPassportAuth;
+module.exports = linkedInPassportAuth;

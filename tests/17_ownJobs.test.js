@@ -2,11 +2,19 @@ const { Job, Company, User, AccessToken } = require("../models");
 
 const request = require("supertest");
 const mongoose = require("mongoose");
+const https = require("https");
+const fs = require("fs");
+const path = require("path");
 
 const app = require("../app");
 
 require("dotenv").config();
 const { DB_HOST, WRONG_TOKEN } = process.env;
+const privateKeyPath = path.resolve(__dirname, "../certificates/key.pem");
+const certificatePath = path.resolve(__dirname, "../certificates/cert.pem");
+const privateKey = fs.readFileSync(privateKeyPath, "utf8");
+const certificate = fs.readFileSync(certificatePath, "utf8");
+const credentials = { key: privateKey, cert: certificate };
 const { testsUtils } = require("../helpers/index");
 
 const EMAIL = "own-jobs@gmail.com";
@@ -20,8 +28,9 @@ describe("Own-jobs Test Suite", () => {
   let server;
 
   beforeAll(async () => {
+    const httpsServer = https.createServer(credentials, app);
     await mongoose.connect(DB_HOST);
-    server = app.listen(3018, () => {
+    server = httpsServer.listen(3018, () => {
       server.unref(); // Отпускает серверный таймер после запуска сервера
     });
     await testsUtils.createUser(EMAIL, PASS);

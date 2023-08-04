@@ -1,12 +1,21 @@
 const authRouter = require("express").Router();
 
 const { auth } = require("../../controllers");
-const { validateBody, authenticate, gPassport } = require("../../middlewares");
+const { validateBody, authenticate, gPassport, lPassport } = require("../../middlewares");
 const { userSchemas, refreshSchema } = require("../../models");
 
 //  google passport auth
 authRouter.get("/google", gPassport.authenticate("google", { scope: ["email", "profile"] }));
-authRouter.get("/google-redirect", gPassport.authenticate("google", { session: false }), auth.gPassportAuth);
+authRouter.get("/google-redirect", gPassport.authenticate("google", { session: false }), auth.googlePassportAuth);
+
+// linkedin callback
+authRouter.get(
+  "/linkedin",
+  lPassport.authenticate("linkedin", {
+    scope: ["r_emailaddress", "r_liteprofile"],
+  })
+);
+authRouter.get("/linkedin-redirect", lPassport.authenticate("linkedin", { session: false }), auth.linkedInPassportAuth);
 
 //  google auth v2
 // authRouter.get("/google", auth.googleAuth);

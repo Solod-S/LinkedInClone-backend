@@ -163,9 +163,17 @@ body {
   padding: 0px;
   font-weight: 300;
 }
+.accountBlockSocial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .accountBlocks {
   width: 452px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .social-button a,
@@ -203,7 +211,7 @@ body {
 .btnFbLogin {
   background-color: #0054a6;
   float: left;
-  margin-left: 10px !important;
+  /* margin-left: 10px !important; */
 }
 .fbicon {
   background-image: url(http://www.tequipment.net/cms/images/socialmedia/fb-white24x24.png);
@@ -211,4 +219,12 @@ body {
 .social-button:after {
   clear: both;
   content: "";
+}
+
+.linked-auth {
+  background-color: #00415d;
+}
+
+.git-auth {
+  background-color: #333;
 }

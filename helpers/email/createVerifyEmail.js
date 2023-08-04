@@ -1,4 +1,4 @@
-const { BASE_URL } = process.env;
+const { BASE_HTTPS_URL } = process.env;
 
 const createVerifyEmail = (email, verificationCode) => ({
   to: email,
@@ -32,7 +32,7 @@ const createVerifyEmail = (email, verificationCode) => ({
                     <div style="color: rgb(25, 26, 20); text-align: left;">
                       <h1 style="margin: 1rem 0">Final step...</h1>
                       <p style="padding-bottom: 16px">Follow this link to verify your email address.</p>
-                      <p style="padding-bottom: 16px"><a target="_blank" href="${BASE_URL}/user/verify/${verificationCode}"
+                      <p style="padding-bottom: 16px"><a target="_blank" href="${BASE_HTTPS_URL}/user/verify/${verificationCode}"
                           style="padding: 12px 24px; border-radius: 4px; color: #FFF; background: #2B52F5;display: inline-block;margin: 0.5rem 0;">Confirm
                           now</a></p>
                       <p style="padding-bottom: 16px">If you didn’t ask to verify this address, you can ignore this email.</p>

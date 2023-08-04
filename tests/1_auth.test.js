@@ -3,13 +3,21 @@ const { User, AccessToken } = require("../models");
 const request = require("supertest");
 const mongoose = require("mongoose");
 const Chance = require("chance");
+const https = require("https");
+const fs = require("fs");
 const uuid = require("uuid");
+const path = require("path");
 
 const chance = new Chance();
 const app = require("../app");
 
 require("dotenv").config();
 const { DB_HOST, WRONG_TOKEN } = process.env;
+const privateKeyPath = path.resolve(__dirname, "../certificates/key.pem");
+const certificatePath = path.resolve(__dirname, "../certificates/cert.pem");
+const privateKey = fs.readFileSync(privateKeyPath, "utf8");
+const certificate = fs.readFileSync(certificatePath, "utf8");
+const credentials = { key: privateKey, cert: certificate };
 
 const PASS = "qwer1234";
 const WRONG_VERIFY_CODE = "be48c234-0783-4d6f-86fd-e8093dcc8211";
@@ -25,9 +33,10 @@ describe("Auth Test Suite", () => {
   let server;
 
   beforeAll(async () => {
+    const httpsServer = https.createServer(credentials, app);
     email = chance.email();
     await mongoose.connect(DB_HOST);
-    server = app.listen(3001, () => {
+    server = httpsServer.listen(3001, () => {
       server.unref(); // Отпускает серверный таймер после запуска сервера
     });
   }, 10000);

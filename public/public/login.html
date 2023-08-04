@@ -11,12 +11,12 @@
       <div class="login-box">
         <h2 class="login-heading">Get Started</h2>
         <div class="lb-header">
-          <div class="tabs active">
+          <!-- <div class="tabs active">
             <a href="#" class="active" id="login-box-link">Login</a>
-          </div>
-          <div class="tabs">
+          </div> -->
+          <!-- <div class="tabs">
             <a href="#" id="signup-box-link">Create Account</a>
-          </div>
+          </div> -->
         </div>
         <div class="form-area">
           <form class="email-login">
@@ -44,7 +44,7 @@
               <a href="#" class="forgot-password">Forgot password?</a>
             </div>
           </form>
-          <form class="email-signup">
+          <!-- <form class="email-signup">
             <div class="u-form-group">
               <input type="email" placeholder="Email" />
             </div>
@@ -68,16 +68,30 @@
                 </div>
               </div>
             </div>
-          </form>
+          </form> -->
         </div>
         <div class="social-login">
           <h2 class="login-heading">or login with:</h2>
           <div class="accountBlocks accountBlockSocial">
             <div class="social-button">
-              <a class="btnGoogleLogin google-auth" href="#"><span class="gicon s-ico"></span>Log in with Google</a>
+              <a class="btnGoogleLogin google-auth" href="https://localhost:3000/auth/google"
+                ><span class="gicon s-ico"></span>Login with Google</a
+              >
             </div>
             <div class="social-button">
-              <a class="btnFbLogin fb-auth" href="#"><span class="fbicon s-ico"></span>Log in with Facebook</a>
+              <a class="btnFbLogin linked-auth" href="https://localhost:3000/auth/linkedin"
+                ><span class="fbicon s-ico"></span>Login with linkedin</a
+              >
+            </div>
+            <div class="social-button">
+              <a class="btnFbLogin fb-auth" href="https://localhost:3000/auth/facebook"
+                ><span class="fbicon s-ico"></span>Login with Facebook</a
+              >
+            </div>
+            <div class="social-button">
+              <a class="btnFbLogin git-auth" href="https://localhost:3000/auth/github"
+                ><span class="fbicon s-ico"></span>Login with Github</a
+              >
             </div>
           </div>
         </div>
