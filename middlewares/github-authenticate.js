@@ -1,26 +1,27 @@
 const { User, MediaFile } = require("../models");
 
-const gPassport = require("passport");
-const { Strategy } = require("passport-google-oauth2");
+const gitPassport = require("passport");
+const { Strategy } = require("passport-github2");
 const bcrypt = require("bcrypt");
 const uuid = require("uuid");
 
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, BASE_HTTPS_URL } = process.env;
+const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, BASE_HTTPS_URL } = process.env;
 
-const googleParams = {
-  clientID: GOOGLE_CLIENT_ID,
-  clientSecret: GOOGLE_CLIENT_SECRET,
-  callbackURL: `${BASE_HTTPS_URL}/auth/google-redirect`,
-  passReqToCallback: true,
+const githubParams = {
+  clientID: GITHUB_CLIENT_ID,
+  clientSecret: GITHUB_CLIENT_SECRET,
+  callbackURL: `${BASE_HTTPS_URL}/auth/github-redirect`,
 };
 
-const gooogleCallback = async (req, accesssToken, refreshToken, profile, done) => {
+const facebookCallback = async (req, accesssToken, refreshToken, profile, done) => {
   try {
-    const { email, displayName, family_name, picture } = profile;
+    const { email, login, id } = profile._json;
+    const githubEmail = email || `github${id}@github.com`;
+    const picture = profile._json.avatar_url;
+    const user = await User.findOne({ email: githubEmail });
 
-    const user = await User.findOne({ email });
     if (user) {
-      const currentUser = await User.findOne({ email })
+      const currentUser = await User.findOne({ email: githubEmail })
         .populate({
           path: "posts",
           options: { limit: 10, sort: { createdAt: -1 } },
@@ -190,10 +191,10 @@ const gooogleCallback = async (req, accesssToken, refreshToken, profile, done) =
     const code = uuid.v4();
     const password = await bcrypt.hash(code, 10);
     const newUser = await User.create({
-      email,
+      email: githubEmail,
       password,
-      name: displayName,
-      surname: family_name || displayName,
+      name: login,
+      surname: login,
       verify: true,
     });
 
@@ -203,7 +204,7 @@ const gooogleCallback = async (req, accesssToken, refreshToken, profile, done) =
         userId: newUser.id,
         location: "users",
         url: picture,
-        providerPublicId: "google",
+        providerPublicId: "github",
         owner: newUser._id,
       });
       newUser.avatarURL = newMediaFile._id;
@@ -218,7 +219,7 @@ const gooogleCallback = async (req, accesssToken, refreshToken, profile, done) =
   }
 };
 
-const googleStrategy = new Strategy(googleParams, gooogleCallback);
-gPassport.use("google", googleStrategy);
+const githubStrategy = new Strategy(githubParams, facebookCallback);
+gitPassport.use("github", githubStrategy);
 
-module.exports = gPassport;
+module.exports = gitPassport;

@@ -350,6 +350,14 @@ npm install
    MAILER_EMAIL = "email for sending emails";
    WRONG_TOKEN = "tokens for tests";
    ADMINS = ["admin email"];
+   GOOGLE_CLIENT_ID = "client id";
+   GOOGLE_CLIENT_SECRET = "client secret";
+   LINKEDIN_CLIENT_ID = "client id";
+   LINKEDIN_CLIENT_SECRET = "client secret";
+   FACEBOOK_CLIENT_ID = "client id";
+   FACEBOOK_CLIENT_SECRET = "client secret";
+   GITHUB_CLIENT_ID = "client id";
+   GITHUB_CLIENT_SECRET = "client secret";
    ```
 
 3. Start the server

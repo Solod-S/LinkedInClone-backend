@@ -1,22 +1,24 @@
 const { User, MediaFile } = require("../models");
 
-const gPassport = require("passport");
-const { Strategy } = require("passport-google-oauth2");
+const fPassport = require("passport");
+const { Strategy } = require("passport-facebook");
 const bcrypt = require("bcrypt");
 const uuid = require("uuid");
 
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, BASE_HTTPS_URL } = process.env;
+const { FACEBOOK_CLIENT_ID, FACEBOOK_CLIENT_SECRET, BASE_HTTPS_URL } = process.env;
 
-const googleParams = {
-  clientID: GOOGLE_CLIENT_ID,
-  clientSecret: GOOGLE_CLIENT_SECRET,
-  callbackURL: `${BASE_HTTPS_URL}/auth/google-redirect`,
+const facebookParams = {
+  clientID: FACEBOOK_CLIENT_ID,
+  clientSecret: FACEBOOK_CLIENT_SECRET,
+  callbackURL: `${BASE_HTTPS_URL}/auth/facebook-redirect`,
+  profileFields: ["id", "displayName", "email", "name", "gender", "picture.type(large)"],
   passReqToCallback: true,
 };
 
-const gooogleCallback = async (req, accesssToken, refreshToken, profile, done) => {
+const facebookCallback = async (req, accesssToken, refreshToken, profile, done) => {
   try {
-    const { email, displayName, family_name, picture } = profile;
+    const { email, last_name, first_name } = profile._json;
+    const picture = profile.photos[0].value;
 
     const user = await User.findOne({ email });
     if (user) {
@@ -192,8 +194,8 @@ const gooogleCallback = async (req, accesssToken, refreshToken, profile, done) =
     const newUser = await User.create({
       email,
       password,
-      name: displayName,
-      surname: family_name || displayName,
+      name: first_name,
+      surname: last_name,
       verify: true,
     });
 
@@ -203,7 +205,7 @@ const gooogleCallback = async (req, accesssToken, refreshToken, profile, done) =
         userId: newUser.id,
         location: "users",
         url: picture,
-        providerPublicId: "google",
+        providerPublicId: "facebook",
         owner: newUser._id,
       });
       newUser.avatarURL = newMediaFile._id;
@@ -218,7 +220,7 @@ const gooogleCallback = async (req, accesssToken, refreshToken, profile, done) =
   }
 };
 
-const googleStrategy = new Strategy(googleParams, gooogleCallback);
-gPassport.use("google", googleStrategy);
+const googleStrategy = new Strategy(facebookParams, facebookCallback);
+fPassport.use("facebook", googleStrategy);
 
-module.exports = gPassport;
+module.exports = fPassport;

@@ -1,6 +1,6 @@
 const { User, userSchemas } = require("./users");
 const { AccessToken } = require("./accessTokens");
-const { RefreshToken, refreshSchema } = require("./RefreshTokens");
+const { RefreshToken, refreshSchema } = require("./refreshTokens");
 const { Post, postSchemas } = require("./posts");
 const { Skill, skillsSchemas } = require("./skills");
 const { MediaFile, mediaFileSchemas } = require("./mediaFiles");

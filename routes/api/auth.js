@@ -1,14 +1,18 @@
 const authRouter = require("express").Router();
 
 const { auth } = require("../../controllers");
-const { validateBody, authenticate, gPassport, lPassport } = require("../../middlewares");
+const { validateBody, authenticate, gPassport, lPassport, fPassport, gitPassport } = require("../../middlewares");
 const { userSchemas, refreshSchema } = require("../../models");
 
 //  google passport auth
 authRouter.get("/google", gPassport.authenticate("google", { scope: ["email", "profile"] }));
 authRouter.get("/google-redirect", gPassport.authenticate("google", { session: false }), auth.googlePassportAuth);
 
-// linkedin callback
+//  google auth v2
+// authRouter.get("/google", auth.googleAuth);
+// authRouter.get("/google-redirect", auth.googleRedirect);
+
+// linkedin passport auth
 authRouter.get(
   "/linkedin",
   lPassport.authenticate("linkedin", {
@@ -17,9 +21,13 @@ authRouter.get(
 );
 authRouter.get("/linkedin-redirect", lPassport.authenticate("linkedin", { session: false }), auth.linkedInPassportAuth);
 
-//  google auth v2
-// authRouter.get("/google", auth.googleAuth);
-// authRouter.get("/google-redirect", auth.googleRedirect);
+// github passport auth
+authRouter.get("/github", gitPassport.authenticate("github", { scope: ["email", "profile"] }));
+authRouter.get("/github-redirect", gitPassport.authenticate("github", { session: false }), auth.githubPassportAuth);
+
+// facebook passport auth
+authRouter.get("/facebook", fPassport.authenticate("facebook", { scope: ["email"] }));
+authRouter.get("/facebook-redirect", fPassport.authenticate("facebook", { session: false }), auth.facebookAuth);
 
 //  sign-up
 authRouter.post("/register", validateBody(userSchemas.registerSchema), auth.userRegister);

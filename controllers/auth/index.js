@@ -3,6 +3,8 @@ const googleAuth = require("./googleAuth");
 const googleRedirect = require("./googleRedirect");
 const googlePassportAuth = require("./googlePassportAuth");
 const linkedInPassportAuth = require("./linkedInPassportAuth");
+const facebookAuth = require("./facebookAuth");
+const githubPassportAuth = require("./githubPassportAuth");
 const userRegister = require("./userRegister");
 const devRegister = require("./devRegister");
 const verifyEmail = require("./verifyEmail");
@@ -20,6 +22,8 @@ module.exports = {
   googlePassportAuth: ctrlWrapper(googlePassportAuth),
   linkedInPassportAuth: ctrlWrapper(linkedInPassportAuth),
   googleAuth: ctrlWrapper(googleAuth),
+  facebookAuth: ctrlWrapper(facebookAuth),
+  githubPassportAuth: ctrlWrapper(githubPassportAuth),
   googleRedirect: ctrlWrapper(googleRedirect),
   userRegister: ctrlWrapper(userRegister),
   devRegister: ctrlWrapper(devRegister),
