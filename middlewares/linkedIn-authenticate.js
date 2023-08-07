@@ -17,7 +17,6 @@ const linkedinParams = {
 const linkedinCallback = async (req, accessToken, refreshToken, profile, done) => {
   try {
     const { id } = profile;
-    console.log(`emails`, profile);
     const linkedInEmail = profile.emails?.[0]?.value || `${id}@linkedin.com`;
     const existAvatart = profile.photos[2].value;
 

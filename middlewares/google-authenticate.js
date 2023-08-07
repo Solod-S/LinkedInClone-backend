@@ -16,8 +16,7 @@ const googleParams = {
 
 const gooogleCallback = async (req, accesssToken, refreshToken, profile, done) => {
   try {
-    const { email, displayName, family_name, picture } = profile;
-
+    const { email, given_name, family_name, picture } = profile;
     const user = await User.findOne({ email });
     if (user) {
       const currentUser = await User.findOne({ email })
@@ -192,8 +191,8 @@ const gooogleCallback = async (req, accesssToken, refreshToken, profile, done) =
     const newUser = await User.create({
       email,
       password,
-      name: displayName,
-      surname: family_name || displayName,
+      name: given_name,
+      surname: family_name,
       verify: true,
     });
 

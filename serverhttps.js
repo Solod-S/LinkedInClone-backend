@@ -29,7 +29,6 @@ mongoose
     console.log(successMsg(`Database connect success, ${BASE_HTTPS_URL}`));
   })
   .catch((error) => {
-    // console.log(error.message);
     console.log(errorMsg(error.message));
     process.exit(1);
   });

@@ -21,7 +21,7 @@ const userRegister = async (req, res) => {
     ...req.body,
     password: hashPassword,
     verificationCode,
-    verify: true,
+    // verify: true,
   });
 
   const verifyEmail = emailUtils.createVerifyEmail(email, verificationCode);

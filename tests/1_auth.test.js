@@ -173,11 +173,12 @@ describe("Auth Test Suite", () => {
 
     const res = await request(app).get(`/auth/verify/${veifyCode}`).set("Accept", "application/json");
 
-    expect(res.status).toBe(200);
-    expect(res.body).toEqual({
-      status: "success",
-      message: "Verification successful",
-    });
+    // expect(res.status).toBe(200);
+    expect(res.status).toBe(302);
+    // expect(res.body).toEqual({
+    //   status: "success",
+    //   message: "Verification successful",
+    // });
   }, 8000);
 
   test("GET /send verify email with valid email to verified user, should return 401 status", async () => {

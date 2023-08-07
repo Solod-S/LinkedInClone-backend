@@ -23,7 +23,6 @@ const userSchema = Schema(
     },
     phone: {
       type: String,
-      unique: true,
       default: "",
     },
     site: {

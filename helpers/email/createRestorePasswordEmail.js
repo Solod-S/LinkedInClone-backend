@@ -32,7 +32,7 @@ const createRestorePasswordEmail = (email, resetToken) => ({
                     <div style="color: rgb(25, 26, 20); text-align: left;">
                       <h1 style="margin: 1rem 0">Final step...</h1>
                       <p style="padding-bottom: 16px">Follow this link to restore your password.</p>
-                      <p style="padding-bottom: 16px"><a target="_blank" href="${BASE_HTTPS_URL}/users/password-restore/${resetToken}"
+                      <p style="padding-bottom: 16px"><a target="_blank" href="${BASE_HTTPS_URL}/auth/password-restore/${resetToken}"
                           style="padding: 12px 24px; border-radius: 4px; color: #FFF; background: #2B52F5;display: inline-block;margin: 0.5rem 0;">Restore now</a></p>
                       <p style="padding-bottom: 16px">If you didn’t ask to restore your password, you can ignore this email.</p>
                       <p style="padding-bottom: 16px">Thanks,<br>The Linked-in-clone team</p>
