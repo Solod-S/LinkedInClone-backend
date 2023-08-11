@@ -23,7 +23,7 @@ const getCompaniesByQuery = async (req, res, next) => {
       status: "success",
       message: "Successfully found such companies",
       data: {
-        skills: [],
+        companies: [],
         totalPages,
         currentPage: page,
         perPage,

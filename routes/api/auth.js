@@ -27,7 +27,7 @@ authRouter.get("/github-redirect", gitPassport.authenticate("github", { session:
 
 // facebook passport auth
 authRouter.get("/facebook", fPassport.authenticate("facebook", { scope: ["email"] }));
-authRouter.get("/facebook-redirect", fPassport.authenticate("facebook", { session: false }), auth.facebookAuth);
+authRouter.get("/facebook-redirect", fPassport.authenticate("facebook", { session: false }), auth.facebookPassportAuth);
 
 //  sign-up
 authRouter.post("/register", validateBody(userSchemas.registerSchema), auth.userRegister);

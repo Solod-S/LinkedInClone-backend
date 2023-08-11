@@ -27,6 +27,8 @@ let veifyCode = null;
 let resetToken = null;
 let email = null;
 let token = null;
+let refreshToken = null;
+let sessionId = null;
 let userId = null;
 
 describe("Auth Test Suite", () => {
@@ -139,7 +141,7 @@ describe("Auth Test Suite", () => {
     expect(res.body).toHaveProperty("message", '"surname" is required');
   }, 8000);
 
-  test("GET /send verify email without body, should return 400 status", async () => {
+  test("POST /send verify email without body, should return 400 status", async () => {
     const res = await request(app).post(`/auth/devverify`).set("Accept", "application/json");
 
     expect(res.status).toBe(400);
@@ -148,7 +150,7 @@ describe("Auth Test Suite", () => {
     });
   }, 8000);
 
-  test("GET /send verify email with valid email, should return 201 status", async () => {
+  test("POST /send verify email with valid email, should return 201 status", async () => {
     const res = await request(app)
       .post(`/auth/devverify`)
       .send({
@@ -181,7 +183,7 @@ describe("Auth Test Suite", () => {
     // });
   }, 8000);
 
-  test("GET /send verify email with valid email to verified user, should return 401 status", async () => {
+  test("POST /send verify email with valid email to verified user, should return 401 status", async () => {
     const res = await request(app)
       .post(`/auth/devverify`)
       .send({
@@ -216,6 +218,8 @@ describe("Auth Test Suite", () => {
     const { user, accessToken } = data;
 
     token = data.accessToken;
+    refreshToken = data.refreshToken;
+    sessionId = data.sessionId;
     userId = user._id;
 
     expect(res.status).toBe(200);
@@ -341,6 +345,74 @@ describe("Auth Test Suite", () => {
     expect(res.body).toEqual({
       message: '"password" length must be at least 6 characters long',
     });
+  }, 8000);
+
+  test("POST /send verify email without body, should return 400 status", async () => {
+    const res = await request(app).post(`/auth/refresh`).set("Accept", "application/json");
+
+    expect(res.status).toBe(400);
+    expect(res.body).toEqual({
+      message: '"refreshToken" is required',
+    });
+  }, 8000);
+
+  test("POST /send verify email with invalid body, should return 400 status", async () => {
+    const res = await request(app)
+      .post(`/auth/refresh`)
+      .send({
+        refreshToken,
+      })
+      .set("Accept", "application/json");
+
+    expect(res.status).toBe(400);
+    expect(res.body).toEqual({
+      message: '"sessionId" is required',
+    });
+  }, 8000);
+
+  test("POST /send verify email with valid email, should return 201 status", async () => {
+    const res = await request(app)
+      .post(`/auth/refresh`)
+      .send({
+        refreshToken,
+        sessionId,
+      })
+      .set("Accept", "application/json");
+
+    const { status, message, data } = res.body;
+    const { user, accessToken } = data;
+
+    token = data.accessToken;
+    refreshToken = data.refreshToken;
+    sessionId = data.sessionId;
+
+    expect(typeof status).toBe("string");
+    expect(status).toEqual("success");
+    expect(typeof message).toBe("string");
+    expect(message).toEqual("Token successfully refreshed");
+    expect(typeof data).toBe("object");
+    expect(typeof accessToken).toBe("string");
+    expect(user instanceof Object).toBe(true);
+    expect(typeof user._id).toBe("string");
+    expect(typeof user.email).toBe("string");
+    expect(typeof user.name).toBe("string");
+    expect(typeof user.surname).toBe("string");
+    expect(typeof user.avatarURL === "object" || user.avatarURL === null).toBe(true);
+    expect(Array.isArray(user.favorite)).toBe(true);
+    expect(Array.isArray(user.posts)).toBe(true);
+    expect(Array.isArray(user.subscription)).toBe(true);
+    expect(typeof user.phone).toBe("string");
+    expect(typeof user.site).toBe("string");
+    expect(typeof user.other1).toBe("string");
+    expect(typeof user.other2).toBe("string");
+    expect(typeof user.other3).toBe("string");
+    expect(typeof user.about).toBe("string");
+    expect(Array.isArray(user.experience)).toBe(true);
+    expect(Array.isArray(user.education)).toBe(true);
+    expect(Array.isArray(user.languages)).toBe(true);
+    expect(typeof user.frame).toBe("string");
+    expect(user.languages instanceof Object).toBe(true);
+    expect(typeof user.headLine).toBe("string");
   }, 8000);
 
   test("POST /change password with invalid token, should return 401 status", async () => {

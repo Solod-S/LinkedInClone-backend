@@ -7,7 +7,7 @@ const { ACCES_SECRET_KEY, REFRESH_SECRET_KEY } = process.env;
 
 const { transformers } = require("../../helpers/index");
 
-const facebookAuth = async (req, res) => {
+const facebookPassportAuth = async (req, res) => {
   const { user } = req;
 
   const payload = {
@@ -36,4 +36,4 @@ const facebookAuth = async (req, res) => {
   });
 };
 
-module.exports = facebookAuth;
+module.exports = facebookPassportAuth;

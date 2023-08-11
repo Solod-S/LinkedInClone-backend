@@ -2,7 +2,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![runs with nodeJs](https://img.shields.io/badge/Runs%20with%20Node.Js-000.svg?style=flat-square&logo=nodedotjs&labelColor=f3f3f3&logoColor=#3C823B)](https://nodejs.org/ru)
 [![runs with express](https://img.shields.io/badge/Runs%20with%20Express-000.svg?style=flat-square&logo=Express&labelColor=f3f3f3&logoColor=7D7D7D)](https://expressjs.com/ru/)
-[![runs with mongodb](https://img.shields.io/badge/Runs%20with%20MongoDB-000.svg?style=flat-square&logo=mongodb&labelColor=f3f3f3&logoColor=#47A248)](https://swagger.io/)
+[![runs with mongodb](https://img.shields.io/badge/Runs%20with%20MongoDB-000.svg?style=flat-square&logo=mongodb&labelColor=f3f3f3&logoColor=#47A248)](https://www.mongodb.com/)
 [![runs with swagger](https://img.shields.io/badge/Runs%20with%20Swagger-000.svg?style=flat-square&logo=swagger&labelColor=f3f3f3&logoColor=#85EA2D)](https://swagger.io/)
 [![runs with jest](https://img.shields.io/badge/Runs%20with%20Jest-000.svg?style=flat-square&logo=jest&labelColor=f3f3f3&logoColor=944058)](https://jestjs.io/ru/)
 [![runs with nodemon](https://img.shields.io/badge/Runs%20with%20Nodemon-000.svg?style=flat-square&logo=nodemon&labelColor=f3f3f3&logoColor=nodemon)](https://www.npmjs.com/package/nodemon)
@@ -12,30 +12,57 @@
 
 ![LinkedIn Clone Demo](/public/pictures/about.jpg)
 
-A Social Network developed with MERN stack.
+**Project Description:**
+
+The project is a Social Network built using the MERN stack, which stands for MongoDB, Express, React, and Node.js. The goal of this project is to create a web-based social networking platform that allows users to connect, interact, and share content with each other.
+
+![LinkedIn Clone Demo](/public/pictures/passport-js-min.jpg)
+
+**Main Technologies:**
+
+- Express: Express is a web application framework for Node.js that simplifies the process of building robust and scalable web applications. It provides a set of tools and features to handle routing, middleware, and HTTP requests.
+- Mongoose: Mongoose is an Object Data Modeling (ODM) library for MongoDB and Node.js. It provides a way to define data models using JavaScript objects and interact with MongoDB databases.
+- Passport: Passport is an authentication middleware for Node.js that offers a variety of authentication strategies. In this project, strategies like passport-facebook, passport-github2, passport-google-oauth2, and passport-linkedin-oauth2 are used to enable social media authentication.
+- SendGrid: SendGrid is a cloud-based email delivery service that is used to handle email notifications and communication within the application.
+- jsonwebtoken: JSON Web Tokens (JWT) are used for secure authentication and authorization. They are used to create and verify tokens for user authentication.
+- bcrypt: Bcrypt is a password-hashing library used to securely hash and store user passwords in the database.
+- swagger-ui-express: Swagger UI Express is used to generate interactive API documentation. It provides a user-friendly interface for developers to understand and test the available API endpoints.
+- jest: Jest is a testing framework for JavaScript that is often used for unit and integration testing. It helps ensure the reliability and correctness of the application code.
+- supertest: Supertest is a testing library that allows you to make HTTP requests and assert the responses. It is often used in combination with Jest for testing APIs.
+  nodemon: Nodemon is a utility that monitors changes in the source code and automatically restarts the server during development. This saves developers from manually restarting the server after code changes.
+
+By leveraging these technologies, the Social Network project aims to provide users with a seamless and engaging experience, allowing them to connect with others, share content, and make use of social media authentication for ease of access. The MERN stack, along with the various libraries and tools, ensures the development of a modern and feature-rich social networking platform.
 
 ## Technologies Used
 
+![LinkedIn Clone Demo](/public/pictures/test-min.jpg)
+
     express
-    morgan
-    nodemon
-    dotenv
     mongoose
-    joi
-    jsonwebtoken
-    passport-google-oauth20
-    bcrypt
-    cors
-    cross-env
+    passport
+    passport-facebook
+    passport-github2
+    passport-google-oauth2
+    passport-linkedin-oauth2
     sendgrid
+    jsonwebtoken
+    bcrypt
     swagger-ui-express
     jest
     supertest
+    morgan
+    nodemon
+    dotenv
+    joi
+    cors
+    cross-env
     chance
     human-time
     multer
     chalk
     uuid
+
+![LinkedIn Clone Demo](/public/pictures/email-min.jpg)
 
 ## Project structure
 
@@ -47,6 +74,10 @@ A Social Network developed with MERN stack.
 ├── .env
 ├── .env.example
 ├── README.md
+├── certificates
+│   ├── cert.pem
+│   ├── csr.pem
+│   └── key.pem
 ├── controllers
 │   ├── auth
 │   │   ├── devRegister.js
@@ -54,6 +85,10 @@ A Social Network developed with MERN stack.
 │   │   ├── getCurrent.js
 │   │   ├── googleAuth.js
 │   │   ├── googleRedirect.js
+│   │   ├── googlePassportAuth.js
+│   │   ├── facebookPassportAuth.js
+│   │   ├── githubPassportAuth.js
+│   │   ├── linkedInPassportAuth.js
 │   │   ├── passwordChange.js
 │   │   ├── passwordReset.js
 │   │   ├── passwordResetByEmail.js
@@ -213,6 +248,10 @@ A Social Network developed with MERN stack.
 ├── middlewares
 │   ├── auth.js
 │   ├── ctrlWrapper.js
+│   ├── facebook-authenticate.js
+│   ├── github-authenticate.js
+│   ├── google-authenticate.js
+│   ├── linkedIn-authenticate.js
 │   ├── isAdminMiddleware.js
 │   ├── validateBody.js
 │   └── index.js
@@ -280,8 +319,6 @@ A Social Network developed with MERN stack.
 │   ├── 16_publications.test.js
 │   ├── 17_ownJobs.test.js
 │   └── 18_jobs.test.js
-├── middlewares
-│   ├── jwt.js
 ├── helpers
 │   ├── apiResponse.js
 │   ├── constants.js
@@ -363,7 +400,7 @@ npm install
 3. Start the server
 
    ```javascript
-   npx nodemon server
+   npx nodemon server(serverhttps)
    ```
 
 4. Enjoy!!
@@ -378,7 +415,11 @@ npm install
 
 - Register user
 - Verify user by email
-- Login user
+- Login user by email
+- Login user by google
+- Login user by github
+- Login user by facebook
+- Login user by linkedin
 - Change user password
 - Reset user password
 - Get current logined user information
@@ -511,6 +552,7 @@ npm install
 
 - Write SPA (React/Redux/Axios/...)
 - Write mobile aplication (ReactNative/ExpoCLI/...)
+- Add chat functionality aplication (Socket.io)
 
 ## Contributing
 
