@@ -1,8 +1,12 @@
-const { User } = require("../../models");
+const { User, AccessToken, RefreshToken } = require("../../models");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const uuid = require("uuid");
 
 const { transformers } = require("../../helpers/index");
 const { HttpError } = require("../../routes/errors/HttpErrors");
+
+const { ACCES_SECRET_KEY, REFRESH_SECRET_KEY } = process.env;
 
 const passwordReset = async (req, res) => {
   const { resetToken } = req.params;
@@ -181,10 +185,25 @@ const passwordReset = async (req, res) => {
   user.password = hashPassword;
   await user.save();
 
+  const payload = {
+    id: user._id,
+  };
+  const sessionId = uuid.v4();
+
+  const accessToken = jwt.sign(payload, ACCES_SECRET_KEY, { expiresIn: "2h" });
+
+  const newAccesshToken = await AccessToken.create({ owner: user._id, token: accessToken, sessionId });
+
+  const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, { expiresIn: "7d" });
+  const newRefreshToken = await RefreshToken.create({ owner: user._id, token: refreshToken, sessionId });
+
+  await User.findByIdAndUpdate(user._id, { $push: { accessTokens: newAccesshToken._id } }, { new: true });
+  await User.findByIdAndUpdate(user._id, { $push: { refreshTokens: newRefreshToken._id } }, { new: true });
+
   res.status(200).json({
     status: "success",
     message: "Password has been successfully changed",
-    data: { user: transformers.userTransformer(user) },
+    data: { user: transformers.userTransformer(user), accessToken: accessToken, refreshToken: refreshToken, sessionId },
   });
 };
 

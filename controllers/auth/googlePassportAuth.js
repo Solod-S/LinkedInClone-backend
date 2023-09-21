@@ -3,9 +3,9 @@ const { User, AccessToken, RefreshToken } = require("../../models");
 const jwt = require("jsonwebtoken");
 const uuid = require("uuid");
 
-const { ACCES_SECRET_KEY, REFRESH_SECRET_KEY } = process.env;
+const { ACCES_SECRET_KEY, REFRESH_SECRET_KEY, FRONTEND_BASE_URL } = process.env;
 
-const { transformers } = require("../../helpers/index");
+// const { transformers } = require("../../helpers/index");
 
 const googlePassportAuth = async (req, res) => {
   const { user } = req;
@@ -23,17 +23,20 @@ const googlePassportAuth = async (req, res) => {
   const newRefreshToken = await RefreshToken.create({ owner: user._id, token: refreshToken, sessionId });
   await User.findByIdAndUpdate(user._id, { $push: { accessTokens: newAccesshToken._id } }, { new: true });
   await User.findByIdAndUpdate(user._id, { $push: { refreshTokens: newRefreshToken._id } }, { new: true });
+  res.redirect(
+    `${FRONTEND_BASE_URL}/social-redirect?accesstoken=${accessToken}&refreshtoken=${refreshToken}&sessionid=${sessionId}`
+  );
 
-  res.status(200).json({
-    status: "success",
-    message: "Successful login",
-    data: {
-      user: transformers.userTransformer(user),
-      accessToken: accessToken,
-      refreshToken: refreshToken,
-      sessionId,
-    },
-  });
+  // res.status(200).json({
+  //   status: "success",
+  //   message: "Successful login",
+  //   data: {
+  //     user: transformers.userTransformer(user),
+  //     accessToken: accessToken,
+  //     refreshToken: refreshToken,
+  //     sessionId,
+  //   },
+  // });
 };
 
 module.exports = googlePassportAuth;

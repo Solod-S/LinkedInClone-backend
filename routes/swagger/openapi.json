@@ -13,7 +13,8 @@
     },
     {
       "url": "http://localhost:3000"
-    }, {
+    },
+    {
       "url": "https://localhost:3000"
     }
   ],
@@ -10023,6 +10024,24 @@
                 "example": "Original"
               }
             }
+          },
+          "accessToken": {
+            "type": "string",
+            "description": "Session's access token (needed for all requests)",
+            "format": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NTJhZGFlZGQ2MjkyZWIyMWIyZmIxNSIsImlhdCI6MTY4MzE0MTYwNCwiZXhwIjoxNjg1NjYxNjA0fQ.cOanoicelwJOE_Gsx2SEmNyQ60qOAzqURs9gvgHqf1c"
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "Session's refresh token (needed for reseting accessToken)",
+            "format": "string",
+            "example": "1y4hbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NTJhZGFlZGQ2MjkyZWIyMWIyZmIxNSIs2mlhdCI6MTY4MzE0MTYwNCwiZXhwIjoxNjg1NjYxNjA0fQ.cOanoicelwJOE_Gsx2SEmNyQ60qOAzqURs9gvgHqf1c"
+          },
+          "sessionId": {
+            "type": "string",
+            "description": "Session Id",
+            "format": "string",
+            "example": "b32a191a-b9e2-436c-b2da-008a47c34d2d"
           }
         }
       },
