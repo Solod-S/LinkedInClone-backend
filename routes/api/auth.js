@@ -1,10 +1,24 @@
 const authRouter = require("express").Router();
 
 const { auth } = require("../../controllers");
-const { validateBody, authenticate, gPassport, lPassport, fPassport, gitPassport } = require("../../middlewares");
+const {
+  validateBody,
+  authenticate,
+  gPassport,
+  lPassport,
+  fPassport,
+  gitPassport,
+  instagramAuthRedirect,
+  instagramAuth,
+} = require("../../middlewares");
 const { userSchemas, refreshSchema } = require("../../models");
 
+//  instagram auth
+// https://localhost:3000/auth/instagram
+authRouter.get("/instagram", instagramAuthRedirect);
+authRouter.get("/instagram-redirect", instagramAuth, auth.instagramAuth);
 //  google passport auth
+// https://localhost:3000/auth/google
 authRouter.get("/google", gPassport.authenticate("google", { scope: ["email", "profile"] }));
 authRouter.get("/google-redirect", gPassport.authenticate("google", { session: false }), auth.googlePassportAuth);
 
@@ -13,6 +27,7 @@ authRouter.get("/google-redirect", gPassport.authenticate("google", { session: f
 // authRouter.get("/google-redirect", auth.googleRedirect);
 
 // linkedin passport auth
+// https://localhost:3000/auth/linkedin
 authRouter.get(
   "/linkedin",
   lPassport.authenticate("linkedin", {
@@ -22,6 +37,7 @@ authRouter.get(
 authRouter.get("/linkedin-redirect", lPassport.authenticate("linkedin", { session: false }), auth.linkedInPassportAuth);
 
 // github passport auth
+// https://localhost:3000/auth/github
 authRouter.get("/github", gitPassport.authenticate("github", { scope: ["email", "profile"] }));
 authRouter.get("/github-redirect", gitPassport.authenticate("github", { session: false }), auth.githubPassportAuth);
 

@@ -7,9 +7,9 @@ const { ACCES_SECRET_KEY, REFRESH_SECRET_KEY, FRONTEND_BASE_URL } = process.env;
 
 // const { transformers } = require("../../helpers/index");
 
-const facebookPassportAuth = async (req, res) => {
+const instagramAuth = async (req, res) => {
   const { user } = req;
-  console.log(`user`, user);
+
   const payload = {
     id: user._id,
   };
@@ -23,7 +23,6 @@ const facebookPassportAuth = async (req, res) => {
   const newRefreshToken = await RefreshToken.create({ owner: user._id, token: refreshToken, sessionId });
   await User.findByIdAndUpdate(user._id, { $push: { accessTokens: newAccesshToken._id } }, { new: true });
   await User.findByIdAndUpdate(user._id, { $push: { refreshTokens: newRefreshToken._id } }, { new: true });
-
   res.redirect(
     `${FRONTEND_BASE_URL}/social-redirect?accesstoken=${accessToken}&refreshtoken=${refreshToken}&sessionid=${sessionId}`
   );
@@ -32,7 +31,8 @@ const facebookPassportAuth = async (req, res) => {
   //   status: "success",
   //   message: "Successful login",
   //   data: {
-  //     user: transformers.userTransformer(user),
+  //     // user: transformers.userTransformer(user),
+  //     user: user,
   //     accessToken: accessToken,
   //     refreshToken: refreshToken,
   //     sessionId,
@@ -40,4 +40,4 @@ const facebookPassportAuth = async (req, res) => {
   // });
 };
 
-module.exports = facebookPassportAuth;
+module.exports = instagramAuth;

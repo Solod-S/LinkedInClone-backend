@@ -6,12 +6,16 @@ const gPassport = require("./google-authenticate");
 const lPassport = require("./linkedIn-authenticate");
 const fPassport = require("./facebook-authenticate");
 const gitPassport = require("./github-authenticate");
+const instagramAuthRedirect = require("./instagramAuthRedirect");
+const instagramAuth = require("./instagram-authenticate");
 
 module.exports = {
   authenticate,
   validateBody,
   ctrlWrapper,
   isAdminMiddleware,
+  instagramAuthRedirect,
+  instagramAuth,
   gPassport,
   lPassport,
   fPassport,

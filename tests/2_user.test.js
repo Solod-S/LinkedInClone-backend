@@ -29,7 +29,7 @@ describe("User Test Suite", () => {
   beforeAll(async () => {
     const httpsServer = https.createServer(credentials, app);
     await mongoose.connect(DB_HOST);
-    server = httpsServer.listen(3003, () => {
+    server = httpsServer.listen(3000, () => {
       server.unref(); // Отпускает серверный таймер после запуска сервера
     });
     await testsUtils.createUser(EMAIL, PASS);

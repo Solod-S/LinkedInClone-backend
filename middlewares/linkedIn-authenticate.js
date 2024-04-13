@@ -11,6 +11,7 @@ const linkedinParams = {
   clientSecret: LINKEDIN_CLIENT_SECRET,
   callbackURL: `${BASE_HTTPS_URL}/auth/linkedin-redirect`,
   profileFields: ["id", "displayName", "email"],
+  scope: ["r_emailaddress", "r_liteprofile"], // добавил новое (нужно тестить)
   passReqToCallback: true,
 };
 
