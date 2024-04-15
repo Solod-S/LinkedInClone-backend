@@ -1,4 +1,6 @@
 const express = require("express");
+const session = require("express-session");
+const passport = require("passport");
 const logger = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
@@ -45,6 +47,19 @@ const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
+
+// -----------
+// Initializing Passport and session management middleware (Needed for Twitter)
+app.use(
+  session({
+    secret: "PUT_YOUR_SECRET",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+// -----------
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/auth", authRouter);

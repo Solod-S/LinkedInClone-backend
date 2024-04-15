@@ -1,44 +1,28 @@
-const axios = require("axios");
+const { User, MediaFile } = require("../models");
+
+const twitterPassport = require("passport");
+const { Strategy } = require("passport-twitter");
 const bcrypt = require("bcrypt");
 const uuid = require("uuid");
-const { User } = require("../models");
-const { INSTAGRAM_CLIENT_ID, INSTAGRAM_CLIENT_SECRET } = process.env;
 
-const instagramAuth = async (req, res, next) => {
+const { TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, BASE_HTTPS_URL } = process.env;
+
+const twitterParams = {
+  consumerKey: TWITTER_CONSUMER_KEY,
+  consumerSecret: TWITTER_CONSUMER_SECRET,
+  callbackURL: `${BASE_HTTPS_URL}/auth/twitter-redirect`,
+  includeEmail: true,
+  scope: ["email", "profile"], // needs to be configured in the Developer Console (checkbox and URLs)
+};
+
+const twitterCallback = async (req, accesssToken, refreshToken, profile, done) => {
   try {
-    const code = req.query.code;
-
-    // Generate data for a request to exchange code for a token
-    const formData = new URLSearchParams();
-    formData.append("client_id", INSTAGRAM_CLIENT_ID);
-    formData.append("client_secret", INSTAGRAM_CLIENT_SECRET);
-    formData.append("code", code);
-    formData.append("grant_type", "authorization_code");
-    formData.append("redirect_uri", "https://localhost:3000/auth/instagram-redirect");
-
-    // Perform a POST request to exchange code for token
-    const tokenResponse = await axios.post("https://api.instagram.com/oauth/access_token", formData, {
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    });
-
-    // Get the access token from the response
-    const accessToken = tokenResponse.data.access_token;
-
-    // Make a request to the Instagram API using the received access token
-    const instagramResponse = await axios.get(
-      `https://graph.instagram.com/me?fields=id,username&access_token=${accessToken}`
-    );
-
-    // Get the Instagram user id from the response
-    const { id, username } = instagramResponse.data;
-    console.log(`instagramResponse.data`, instagramResponse.data);
-
-    // Form an email and send it in response
-    const email = `${id}@gmail.com`;
+    const { username, displayName } = profile;
+    const email = profile.emails[0].value;
+    const picture = profile.photos[0].value;
     console.log(`email`, email);
-
+    console.log(`picture`, picture);
     const user = await User.findOne({ email });
-    console.log(`user`, user);
     if (user) {
       const currentUser = await User.findOne({ email })
         .populate({
@@ -204,27 +188,39 @@ const instagramAuth = async (req, res, next) => {
           path: "avatarURL",
           select: "url",
         });
-      req.user = currentUser;
-      return next();
+      return done(null, currentUser);
       // передает работу дальше и закрепляет в req.user = user
     }
-    const codeV4 = uuid.v4();
-    const password = await bcrypt.hash(codeV4, 10);
+    const code = uuid.v4();
+    const password = await bcrypt.hash(code, 10);
     const newUser = await User.create({
       email,
       password,
-      name: username,
-      surname: username,
+      name: username || displayName,
+      surname: displayName || username,
       verify: true,
     });
-    console.log(`newUser`, newUser);
-    req.user = user;
-    return next();
+    if (picture) {
+      const newMediaFile = await MediaFile.create({
+        type: "img",
+        userId: newUser.id,
+        location: "users",
+        url: picture,
+        providerPublicId: "google",
+        owner: newUser._id,
+      });
+      newUser.avatarURL = newMediaFile._id;
+      await newUser.save();
+    }
+    return done(null, newUser);
     // passes the work on and assigns it to req.user = newUser
   } catch (error) {
-    console.error("Error fetching Instagram user data:", error.message);
-    res.status(500).send("Error fetching Instagram user data");
+    done(error, false);
+    // перекидывает на обработчик ошибок
   }
 };
 
-module.exports = instagramAuth;
+const twitterStrategy = new Strategy(twitterParams, twitterCallback);
+twitterPassport.use("twitter", twitterStrategy);
+
+module.exports = twitterPassport;

@@ -3,6 +3,7 @@ const validateBody = require("./validateBody");
 const ctrlWrapper = require("./ctrlWrapper");
 const isAdminMiddleware = require("./isAdminMiddleware");
 const gPassport = require("./google-authenticate");
+const twitterPassport = require("./twitter-authenticate");
 const lPassport = require("./linkedIn-authenticate");
 const fPassport = require("./facebook-authenticate");
 const gitPassport = require("./github-authenticate");
@@ -17,6 +18,7 @@ module.exports = {
   instagramAuthRedirect,
   instagramAuth,
   gPassport,
+  twitterPassport,
   lPassport,
   fPassport,
   gitPassport,

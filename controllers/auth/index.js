@@ -18,6 +18,7 @@ const passwordChange = require("./passwordChange");
 const passwordResetByEmail = require("./passwordResetByEmail");
 const passwordReset = require("./passwordReset");
 const instagramAuth = require("./instagramAuth");
+const twitterPassportAuth = require("./twitterPassportAuth");
 
 module.exports = {
   googlePassportAuth: ctrlWrapper(googlePassportAuth),
@@ -39,4 +40,5 @@ module.exports = {
   passwordResetByEmail: ctrlWrapper(passwordResetByEmail),
   passwordReset: ctrlWrapper(passwordReset),
   instagramAuth: ctrlWrapper(instagramAuth),
+  twitterPassportAuth: ctrlWrapper(twitterPassportAuth),
 };

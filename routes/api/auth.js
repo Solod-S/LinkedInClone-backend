@@ -5,6 +5,7 @@ const {
   validateBody,
   authenticate,
   gPassport,
+  twitterPassport,
   lPassport,
   fPassport,
   gitPassport,
@@ -17,6 +18,16 @@ const { userSchemas, refreshSchema } = require("../../models");
 // https://localhost:3000/auth/instagram
 authRouter.get("/instagram", instagramAuthRedirect);
 authRouter.get("/instagram-redirect", instagramAuth, auth.instagramAuth);
+
+//  twitter passport auth
+// https://localhost:3000/auth/twitter
+authRouter.get("/twitter", twitterPassport.authenticate("twitter", { scope: ["email", "profile"] }));
+authRouter.get(
+  "/twitter-redirect",
+  twitterPassport.authenticate("twitter", { session: false }),
+  auth.twitterPassportAuth
+);
+
 //  google passport auth
 // https://localhost:3000/auth/google
 authRouter.get("/google", gPassport.authenticate("google", { scope: ["email", "profile"] }));
@@ -42,6 +53,7 @@ authRouter.get("/github", gitPassport.authenticate("github", { scope: ["email", 
 authRouter.get("/github-redirect", gitPassport.authenticate("github", { session: false }), auth.githubPassportAuth);
 
 // facebook passport auth
+// https://localhost:3000/auth/facebook
 authRouter.get("/facebook", fPassport.authenticate("facebook", { scope: ["email"] }));
 authRouter.get("/facebook-redirect", fPassport.authenticate("facebook", { session: false }), auth.facebookPassportAuth);
 

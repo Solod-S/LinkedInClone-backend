@@ -44,6 +44,7 @@ By leveraging these technologies, the Social Network project aims to provide use
     passport-github2
     passport-google-oauth2
     passport-linkedin-oauth2
+    passport-twitter
     sendgrid
     jsonwebtoken
     bcrypt
@@ -89,15 +90,18 @@ By leveraging these technologies, the Social Network project aims to provide use
 │   │   ├── facebookPassportAuth.js
 │   │   ├── githubPassportAuth.js
 │   │   ├── linkedInPassportAuth.js
+│   │   ├── twitterPassportAuth
 │   │   ├── passwordChange.js
 │   │   ├── passwordReset.js
 │   │   ├── passwordResetByEmail.js
 │   │   ├── resendVerifyEmail.js
+│   │   ├── twitterPassportAuth.js
 │   │   ├── userLogin.js
 │   │   ├── userLogout.js
 │   │   ├── userRefreshToken.js
 │   │   ├── userRegister.js
 │   │   ├── verifyEmail.js
+│   │   ├── instagramAuth.js
 │   │   └── index.js
 │   ├── comments
 │   │   ├── addComment.js
@@ -252,7 +256,10 @@ By leveraging these technologies, the Social Network project aims to provide use
 │   ├── github-authenticate.js
 │   ├── google-authenticate.js
 │   ├── linkedIn-authenticate.js
+│   ├── instagram-authenticate.js
+│   ├── instagramAuthRedirect.js
 │   ├── isAdminMiddleware.js
+│   ├── twitter-authenticate.js
 │   ├── validateBody.js
 │   └── index.js
 ├── models
@@ -420,6 +427,8 @@ npm install
 - Login user by github
 - Login user by facebook
 - Login user by linkedin
+- Login user by instagram
+- Login user by twitter
 - Change user password
 - Reset user password
 - Get current logined user information

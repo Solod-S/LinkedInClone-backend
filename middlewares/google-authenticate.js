@@ -16,6 +16,7 @@ const googleParams = {
 
 const gooogleCallback = async (req, accesssToken, refreshToken, profile, done) => {
   try {
+    // eslint-disable-next-line camelcase
     const { email, given_name, family_name, picture } = profile;
     const user = await User.findOne({ email });
     if (user) {
